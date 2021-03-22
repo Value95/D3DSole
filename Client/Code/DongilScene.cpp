@@ -41,11 +41,19 @@ void CDongilScene::Start(void)
 
 	{
 		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
-		pObj->SetPosition(vector3(0, 0, 5));
+		pObj->SetName(L"Player");
+		pObj->SetPosition(vector3(0, 0, 2));
 		pObj->SetScale(vector3(1, 1, 1));
-		pObj->SetRotationY(30);
 		pObj->AddComponent<Engine::CTriangleComponent>();
 		pObj->AddComponent<CPlayer>();
+	}
+
+	{
+		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
+		pObj->SetPosition(vector3(0, 0, 4));
+		pObj->SetScale(vector3(1, 1, 1));
+		pObj->AddComponent<Engine::CTriangleComponent>();
+		pObj->AddComponent<CMonster>();
 	}
 
 	/*{

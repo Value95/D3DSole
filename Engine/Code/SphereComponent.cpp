@@ -76,7 +76,6 @@ _uint CSphereComponent::Render(void)
 {
 	D3DXCreateSphere(GET_DEVICE, 0.5f, 10, 10, &m_mesh, NULL); // D3D ÇÔ¼ö
 
-	GET_DEVICE->SetTransform(D3DTS_PROJECTION, &GET_CUR_SCENE->GetMainCamera()->GetProjMatrix());
 	m_mesh->DrawSubset(0);
 
 	return _uint();

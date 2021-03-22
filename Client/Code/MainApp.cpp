@@ -148,7 +148,7 @@ void CMainApp::InitStaticPrototype(void)
 	Engine::CObjectFactory::GetInstance()->AddPrototype(pDefault);
 
 	SHARED(Engine::CGameObject) pCamera = Engine::CGameObject::Create(L"Camera", L"Camera", true);
-	pCamera->SetPosition(vector3Zero);
+	pCamera->SetPosition(vector3(0,0,0));
 	pCamera->SetRotation(vector3Zero);
 	pCamera->AddComponent<Engine::CCameraComponent>();
 	Engine::CObjectFactory::GetInstance()->AddPrototype(pCamera);

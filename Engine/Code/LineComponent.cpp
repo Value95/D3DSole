@@ -101,9 +101,6 @@ _uint CLineComponent::Render(void)
 {
 
 	GET_DEVICE->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, m_meshDate->vertexCount, 0, m_meshDate->faceCount);
-
-
-	GET_DEVICE->SetTransform(D3DTS_PROJECTION, &GET_CUR_SCENE->GetMainCamera()->GetProjMatrix());
 	return _uint();
 }
 

@@ -8,6 +8,7 @@ protected:
 	GETTOR(matrix4x4, m_worldMat, {}, WorldMatrix)
 	GETTOR_SETTOR(vector3, m_position, vector3(0, 0, 0), Position)
 	GETTOR_SETTOR(vector3, m_rotation, vector3(0, 0, 0), Rotation)
+	GETTOR_SETTOR(quaternion, m_quaternion, vector4(0, 0, 0, 0), Quaternion)
 	GETTOR_SETTOR(vector3, m_scale, vector3(1, 1, 1), Scale)
 
 public:
@@ -19,9 +20,9 @@ protected:
 public:
 		 
 	void Translate(vector3 translation);
-	void MoveTowards(vector3& thisPosition, vector3 targetPosition, _float speed);
-	void Lerp(vector3& thisPosition, vector3 targetPosition, _float speed);
-	void LookAt(vector3 target, vector3 worldUp = vector3Up);
+	void MoveTowards(vector3 targetPosition, _float speed);
+	void Lerp(vector3 targetPosition, _float speed);
+	void LookAt(vector3 target, vector3 worldUp = vector3Forward);
 
 	void SetPositionX(_float x) { m_position.x = x; }
 	void SetPositionY(_float y) { m_position.y = y; }

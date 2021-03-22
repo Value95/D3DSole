@@ -75,9 +75,8 @@ _uint CBoxComponent::PreRender(void)
 
 _uint CBoxComponent::Render(void)
 {
-	D3DXCreateBox(GET_DEVICE, 2.0f, 2.0f, 2.0f, &m_mesh, NULL); // D3D 함수
+	D3DXCreateBox(GET_DEVICE, GetOwner()->GetScale().x, GetOwner()->GetScale().y, GetOwner()->GetScale().z, &m_mesh, NULL); // D3D 함수
 
-	GET_DEVICE->SetTransform(D3DTS_PROJECTION, &GET_CUR_SCENE->GetMainCamera()->GetProjMatrix());
 	m_mesh->DrawSubset(0);
 
 	return _uint();

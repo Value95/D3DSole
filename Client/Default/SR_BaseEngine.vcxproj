@@ -187,6 +187,7 @@
     <ClInclude Include="..\Header\ClientTypedef.h" />
     <ClInclude Include="..\Header\DongilScene.h" />
     <ClInclude Include="..\Header\MainApp.h" />
+    <ClInclude Include="..\Header\Monster.h" />
     <ClInclude Include="..\Header\Player.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Client.h" />
@@ -196,6 +197,7 @@
   <ItemGroup>
     <ClCompile Include="..\Code\DongilScene.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />
+    <ClCompile Include="..\Code\Monster.cpp" />
     <ClCompile Include="..\Code\Player.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="stdafx.cpp">

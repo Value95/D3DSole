@@ -18,5 +18,7 @@ namespace Engine
 	typedef D3DXVECTOR4 vector4;
 
 	typedef D3DXMATRIX matrix4x4;
+
+	typedef D3DXQUATERNION quaternion;
 }
 #endif // ENGINETYPEDEF_H

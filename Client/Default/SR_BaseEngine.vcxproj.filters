@@ -22,6 +22,9 @@
     <Filter Include="02.Components\00.Player">
       <UniqueIdentifier>{256d244e-7dbf-4fbd-893e-ecb9d016e6dc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.Components\01.Monster">
+      <UniqueIdentifier>{29ea7817-9ebc-447b-b5ee-8709e2bc3a79}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -66,6 +69,9 @@
     <ClInclude Include="..\Header\Player.h">
       <Filter>02.Components\00.Player</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Monster.h">
+      <Filter>02.Components\01.Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -82,6 +88,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Player.cpp">
       <Filter>02.Components\00.Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Monster.cpp">
+      <Filter>02.Components\01.Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
