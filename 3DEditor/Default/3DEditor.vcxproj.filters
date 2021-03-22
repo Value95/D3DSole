@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="99.Default">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="00.MainFrm">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="01.EditorView">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="02.EditorDoc">
+      <UniqueIdentifier>{91c0a368-1b6f-4094-b8d6-878f9faecb07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98.Include">
+      <UniqueIdentifier>{269e1bd1-d5b8-4e01-a0bf-12610106b4f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.MainEditor">
+      <UniqueIdentifier>{069ce46c-5f6b-4c23-9dcd-52f3f76b50c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Scene">
+      <UniqueIdentifier>{fa1f88a8-3f0d-482e-b122-56334c098cc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99.Default\00.ETC">
+      <UniqueIdentifier>{bd5af288-09a3-4bc1-8fd0-8e79c7aff2e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.EditorView\00.ProjectView">
+      <UniqueIdentifier>{245cf4b9-3d40-4dd0-8624-81eb943f51c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.EditorView\01.HierarchyView">
+      <UniqueIdentifier>{06ec01c7-517b-438f-9d1d-4291b04d6ac7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.EditorView\02.InspectorView">
+      <UniqueIdentifier>{d95bbffe-d063-40cb-bb87-9b3a763b032d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.EditorView\03.FeatureView">
+      <UniqueIdentifier>{15958617-d8a6-4082-90a4-8c755f502b3f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>99.Default</Filter>
+    </ClInclude>
+    <ClInclude Include="3DEditor.h">
+      <Filter>99.Default</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>99.Default</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MainFrm.h">
+      <Filter>00.MainFrm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\3DEditorDoc.h">
+      <Filter>02.EditorDoc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\EditorDefine.h">
+      <Filter>98.Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\EditorExtern.h">
+      <Filter>98.Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\EditorTypedef.h">
+      <Filter>98.Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\EditorStruct.h">
+      <Filter>98.Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MainEditor.h">
+      <Filter>97.MainEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\EditorScene.h">
+      <Filter>03.Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>99.Default\00.ETC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ProjectView.h">
+      <Filter>01.EditorView\00.ProjectView</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\HierarchyView.h">
+      <Filter>01.EditorView\01.HierarchyView</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\InspectorView.h">
+      <Filter>01.EditorView\02.InspectorView</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\FeatureView.h">
+      <Filter>01.EditorView\03.FeatureView</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\3DEditorView.h">
+      <Filter>01.EditorView</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="3DEditor.cpp">
+      <Filter>99.Default</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MainFrm.cpp">
+      <Filter>00.MainFrm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\3DEditorDoc.cpp">
+      <Filter>02.EditorDoc</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>99.Default</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MainEditor.cpp">
+      <Filter>97.MainEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\EditorScene.cpp">
+      <Filter>03.Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ProjectView.cpp">
+      <Filter>01.EditorView\00.ProjectView</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\HierarchyView.cpp">
+      <Filter>01.EditorView\01.HierarchyView</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\InspectorView.cpp">
+      <Filter>01.EditorView\02.InspectorView</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\FeatureView.cpp">
+      <Filter>01.EditorView\03.FeatureView</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\EditorExtern.cpp">
+      <Filter>98.Include</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\3DEditorView.cpp">
+      <Filter>01.EditorView</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\3DEditor.ico">
+      <Filter>99.Default\00.ETC</Filter>
+    </Image>
+    <Image Include="res\3DEditorDoc.ico">
+      <Filter>99.Default\00.ETC</Filter>
+    </Image>
+    <Image Include="res\Toolbar.bmp">
+      <Filter>99.Default\00.ETC</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\My3DEditor.rc2">
+      <Filter>99.Default\00.ETC</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="3DEditor.rc">
+      <Filter>99.Default\00.ETC</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
