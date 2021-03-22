@@ -9,7 +9,7 @@ class ENGINE_DLL CSceneManager final : public CEngine
 {
 	DECLARE_SINGLETON(CSceneManager)
 private:
-	std::stack<SHARED(CScene)>			m_sScene;
+	std::stack<SHARED(CScene)> m_sScene;
 
 	GETTOR_SETTOR(bool,				m_needToBeCleaned,	false,			NeedToBeCleaned)
 	GETTOR_SETTOR(SHARED(CScene),	m_pCurScene,		nullptr,		CurScene) // ÇöÀç¾À

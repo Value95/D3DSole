@@ -61,14 +61,14 @@ _uint CRigidBodyComponent::FixedUpdate(SHARED(CComponent) spThis)
 
 		ElasticCollision(col);
 
-		GetOwner()->AddPosition(GET_DT * m_velocity);
+		GetOwner()->AddPosition(deltaTime * m_velocity);
 	}
 	else if (!crushCheck || !m_groundCheck)
 	{
 		GravityDrag(m_velocity);
 
 		m_separatingVelocity = GetOwner()->GetPosition();
-		GetOwner()->AddPosition(GET_DT * m_velocity);
+		GetOwner()->AddPosition(deltaTime * m_velocity);
 		m_separatingVelocity = GetOwner()->GetPosition() - m_separatingVelocity;
 	}
 
@@ -103,7 +103,7 @@ void CRigidBodyComponent::GravityDrag(vector3 & velocity)
 	vector3 drag = velocity;
 	D3DXVec3Normalize(&drag, &drag);
 
-	velocity.y += GRAVITY.y * GET_DT;
+	velocity.y += GRAVITY.y * deltaTime;
 
 	/*drag.y = -drag.y * ((1 - drag.y) + (10 * (drag.y * drag.y)));
 	velocity.y -= drag.y;*/
@@ -126,7 +126,7 @@ void CRigidBodyComponent::AddForce(vector3 force)
 	if (m_velocity.y != 0)
 		m_groundCheck = false;
 
-	GetOwner()->AddPosition(GET_DT * m_velocity);
+	GetOwner()->AddPosition(deltaTime * m_velocity);
 }
 
 void CRigidBodyComponent::SetForce(vector3 force)
@@ -141,7 +141,7 @@ void CRigidBodyComponent::SetForce(vector3 force)
 	if (m_velocity.y != 0)
 		m_groundCheck = false;
 
-	GetOwner()->AddPosition(GET_DT * m_velocity);
+	GetOwner()->AddPosition(deltaTime * m_velocity);
 }
 
 void CRigidBodyComponent::TranslateForce(vector3 force)
@@ -162,7 +162,7 @@ void CRigidBodyComponent::TranslateForce(vector3 force)
 	if (m_velocity.y != 0)
 		m_groundCheck = false;
 
-	GetOwner()->AddPosition(GET_DT * m_velocity);
+	GetOwner()->AddPosition(deltaTime * m_velocity);
 
 }
 
@@ -227,13 +227,13 @@ void CRigidBodyComponent::DecelerationFunction(std::vector<CGameObject*>& col)
 	if (m_velocity != vector3Zero)
 	{
 		if (m_velocity.z > 0)
-			m_velocity.z = MathfMax(m_velocity.z - (GET_DT * m_damping), 0);
+			m_velocity.z = MathfMax(m_velocity.z - (deltaTime * m_damping), 0);
 		else if (m_velocity.z < 0)
-			m_velocity.z = MathfMin(m_velocity.z + (GET_DT * m_damping), 0);
+			m_velocity.z = MathfMin(m_velocity.z + (deltaTime * m_damping), 0);
 
 		if (m_velocity.x > 0)
-			m_velocity.x = MathfMax(m_velocity.x - (GET_DT * m_damping), 0);
+			m_velocity.x = MathfMax(m_velocity.x - (deltaTime * m_damping), 0);
 		else if (m_velocity.x < 0)
-			m_velocity.x = MathfMin(m_velocity.x + (GET_DT * m_damping), 0);
+			m_velocity.x = MathfMin(m_velocity.x + (deltaTime * m_damping), 0);
 	}
 }

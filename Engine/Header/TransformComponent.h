@@ -21,7 +21,8 @@ public:
 	void Translate(vector3 translation);
 	void MoveTowards(vector3& thisPosition, vector3 targetPosition, _float speed);
 	void Lerp(vector3& thisPosition, vector3 targetPosition, _float speed);
-		 
+	void LookAt(vector3 target, vector3 worldUp = vector3Up);
+
 	void SetPositionX(_float x) { m_position.x = x; }
 	void SetPositionY(_float y) { m_position.y = y; }
 	void SetPositionZ(_float z) { m_position.z = z; }

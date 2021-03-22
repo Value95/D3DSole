@@ -42,34 +42,34 @@ _uint CPlayer::Update(SHARED(CComponent) spThis)
 {
 	if (Engine::CInputManager::GetInstance()->KeyPress(KEY_W))
 	{
-		GetOwner()->Translate(vector3Forward * GET_DT * 50);
+		GetOwner()->Translate(vector3Forward * deltaTime * 50);
 	}
 	if (Engine::CInputManager::GetInstance()->KeyPress(KEY_S))
 	{
-		GetOwner()->Translate(vector3Back * GET_DT * 50);
+		GetOwner()->Translate(vector3Back * deltaTime * 50);
 	}
 	if (Engine::CInputManager::GetInstance()->KeyPress(KEY_A))
 	{
-		GetOwner()->Translate(vector3Left * GET_DT * 50);
+		GetOwner()->Translate(vector3Left * deltaTime * 50);
 	}
 	else if (Engine::CInputManager::GetInstance()->KeyPress(KEY_D))
 	{
-		GetOwner()->Translate(vector3Right * GET_DT * 50);
+		GetOwner()->Translate(vector3Right * deltaTime * 50);
 	}
 
 	if (Engine::CInputManager::GetInstance()->KeyPress(KEY_1))
 	{
-		GetOwner()->AddRotationX(5 * GET_DT * 50);
+		GetOwner()->AddRotationX(5 * deltaTime * 50);
 	}
 
 	if (Engine::CInputManager::GetInstance()->KeyPress(KEY_2))
 	{
-		GetOwner()->AddRotationY(5 * GET_DT * 50);
+		GetOwner()->AddRotationY(5 * deltaTime * 50);
 	}
 
 	if (Engine::CInputManager::GetInstance()->KeyPress(KEY_3))
 	{
-		GetOwner()->AddRotationZ(5 * GET_DT * 50);
+		GetOwner()->AddRotationZ(5 * deltaTime * 50);
 	}
 	return NO_EVENT;
 }

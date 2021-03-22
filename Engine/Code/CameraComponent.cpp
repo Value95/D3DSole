@@ -144,22 +144,22 @@ void CCameraComponent::CameraMove()
 
 	if (Engine::IMKEY_PRESS(KEY_W))
 	{
-		GetOwner()->Translate(vector3Forward * GET_DT * speed);
+		GetOwner()->Translate(vector3Forward * deltaTime * speed);
 	}
 
 	if (Engine::IMKEY_PRESS(KEY_S))
 	{
-		GetOwner()->Translate(vector3Back * GET_DT * speed);
+		GetOwner()->Translate(vector3Back * deltaTime * speed);
 	}
 
 	if (Engine::IMKEY_PRESS(KEY_A))
 	{
 
-		GetOwner()->Translate(vector3Left * GET_DT * speed);
+		GetOwner()->Translate(vector3Left * deltaTime * speed);
 	}
 	if (Engine::IMKEY_PRESS(KEY_D))
 	{
-		GetOwner()->Translate(vector3Right * GET_DT * speed);
+		GetOwner()->Translate(vector3Right * deltaTime * speed);
 	}
 }
 
@@ -172,13 +172,13 @@ void CCameraComponent::CameraRotation()
 	// 카메라 회전
 	if (curPt.y < m_centerPt.y) // mouse up look
 	{
-		_float angleY = GET_DT * (abs(curPt.y - m_centerPt.y) * m_mouseSensitivity);
+		_float angleY = deltaTime * (abs(curPt.y - m_centerPt.y) * m_mouseSensitivity);
 		GetOwner()->AddRotationX(-1 * angleY);
 	}
 
 	if (curPt.y > m_centerPt.y) // mouse down look
 	{
-		_float angleY = GET_DT * (abs(curPt.y - m_centerPt.y) * m_mouseSensitivity);
+		_float angleY = deltaTime * (abs(curPt.y - m_centerPt.y) * m_mouseSensitivity);
 		GetOwner()->AddRotationX(angleY);
 	}
 

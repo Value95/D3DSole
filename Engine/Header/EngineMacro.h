@@ -136,9 +136,9 @@ void ClassName::DestroyInstance(void)												\
 
 //FRC Macro
 #ifdef EXPORTS_ENGINE
-#define GET_DT CFRC::GetInstance()->GetDeltaTime()
+#define deltaTime CFRC::GetInstance()->GetDeltaTime()
 #else
-#define GET_DT Engine::CFRC::GetInstance()->GetDeltaTime()
+#define deltaTime Engine::CFRC::GetInstance()->GetDeltaTime()
 #endif
 #define TIME_MEASURE_START CFRC::GetInstance()->TimerStart()
 #define GET_ELAPSED_TIME CFRC::GetInstance()->GetElapsedTime()
