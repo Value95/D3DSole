@@ -50,17 +50,21 @@ void CTransformComponent::LookAt(vector3 target, vector3 worldUp)
 {
 	matrix4x4 matrix;
 	vector3 axis, dir;
-	_float angle;
+	_float angle, dot;
+
 	// Y의대한 회전
-	/*{
+	/*
+	{
 		dir = m_position - target;
 
 		D3DXVec3Normalize(&dir, &dir);
 
 		D3DXVec3Cross(&axis, &vector3Forward, &dir);
-		angle = acos(D3DXVec3Dot(&vector3Forward, &dir));
+		dot = D3DXVec3Dot(&vector3Forward, &dir);
+		angle = acos(dot);
+		angle = D3DXToDegree(angle);
 
-		m_rotation.y = D3DXToDegree(angle);
+		m_rotation.y = angle;
 	}
 
 	// X의대한 회전
@@ -70,38 +74,39 @@ void CTransformComponent::LookAt(vector3 target, vector3 worldUp)
 		D3DXVec3Normalize(&dir, &dir);
 
 		D3DXVec3Cross(&axis, &vector3Up, &dir);
-		angle = asin(D3DXVec3Dot(&vector3Up, &dir));
+		dot = D3DXVec3Dot(&vector3Up, &dir);
+		angle = asin(dot);
+		angle = D3DXToDegree(angle);
 
-		m_rotation.x = D3DXToDegree(angle);
-	}*/
+		m_rotation.x = angle;
+	}
+	//*/
 
-	dir = target - m_position;
+	//*
+	dir = m_position - target;
 	D3DXVec3Normalize(&dir, &dir);
 	D3DXVec3Cross(&axis, &vector3Forward, &dir);
 	D3DXVec3Normalize(&axis, &axis);
 
-	_float dot = D3DXVec3Dot(&vector3Forward, &dir);
+	dot = D3DXVec3Dot(&vector3Forward, &dir);
 
 	angle = acos(dot);
-	D3DXMatrixRotationAxis(&matrix, &vector3Forward, angle);
 	
 	quaternion qu;
 	D3DXQuaternionRotationAxis(&qu, &dir, angle);
+	qu.y = D3DXToDegree(qu.y) * 2;
+	qu.x = D3DXToDegree(qu.x) * 2;
 	if (dot <= 0)
 	{
-		qu.y = abs(qu.y);
-		qu.x = abs(qu.x);
+		qu.x = 90 + abs(qu.x - 90);
+	//	qu.y = 90 + abs(qu.y + 90);
 	}
 
-	m_rotation.x = D3DXToDegree(qu.y);
-	m_rotation.y = D3DXToDegree(qu.x);
+	cout << qu.y << endl;
 
-	cout << m_rotation.y << endl;
-
-	//matrix4x4 rotate;
-	//D3DXMatrixRotationYawPitchRoll(&rotate, D3DXToRadian(m_rotation.y), D3DXToRadian(m_rotation.x), D3DXToRadian(m_rotation.z));
-	//rotate *= matrix;
-	
+	m_rotation.x = qu.y;
+	m_rotation.y = qu.x;
+	//*/
 }
 
 void CTransformComponent::UpdateWorldmMatrix(void)
