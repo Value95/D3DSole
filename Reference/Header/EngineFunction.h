@@ -1,8 +1,6 @@
 #ifndef ENGINEFUNCTION_H
 #define ENGINEFUNCTION_H
 
-
-
 namespace Engine
 {
 	//smart pointer랑 private Destructor사이의 문제 해결
@@ -148,6 +146,7 @@ namespace Engine
 		_float c = sqrt((x * x) + (y * y) + (z * z));
 		return c;
 	}
+
 }
 
 

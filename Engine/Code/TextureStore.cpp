@@ -87,6 +87,7 @@ void CTextureStore::ParsingTexture(std::wstring filePath, std::wstring fileName)
 											  &pNewTex->pTexture)))
 			MSG_BOX(__FILE__, (L"TexKey : [" + texKey + L"] create texture failed in ParsingTexture").c_str());
 
+		pNewTex->name = texKey;
 		(*pCurMap)[texKey] = pNewTex;
 	}
 	else

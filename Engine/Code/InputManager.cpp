@@ -109,6 +109,8 @@ void CInputManager::KeyUpdate(void)
 		m_key |= KEY_SHIFT;
 	if (GetAsyncKeyState(VK_RBUTTON) & 0x8000)
 		m_key |= KEY_RBUTTON;
+	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
+		m_key |= KEY_LBUTTON;
 	if (GetAsyncKeyState('1') & 0x8000)
 		m_key |= KEY_1;
 	if (GetAsyncKeyState('2') & 0x8000)
@@ -121,8 +123,8 @@ void CInputManager::KeyUpdate(void)
 		m_key |= KEY_TAB;
 	if (GetAsyncKeyState(VK_DELETE) & 0x8000)
 		m_key |= KEY_DELETE;
-	if (GetAsyncKeyState('Z') & 0x8000)
-		m_key |= KEY_Z;
+	if (GetAsyncKeyState('Q') & 0x8000)
+		m_key |= KEY_Q;
 	if (GetAsyncKeyState('X') & 0x8000)
 		m_key |= KEY_X;
 }

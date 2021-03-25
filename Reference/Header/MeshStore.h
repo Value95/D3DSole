@@ -9,8 +9,8 @@ class ENGINE_DLL CMeshStore final : public CResourceStore
 	DECLARE_SINGLETON(CMeshStore)
 private:
 	typedef std::unordered_map<std::wstring, SHARED(_MeshData)>	_MeshDataMap;
-	_MeshDataMap		m_mCurSceneMeshData;
-	_MeshDataMap		m_mStaticMeshData;
+	GETTOR(_MeshDataMap, m_mCurSceneMeshData, {}, CurSceneMessData)
+	GETTOR(_MeshDataMap, m_mStaticMeshData, {}, StaticMeshData)
 
 public:
 	void Awake(void) override;

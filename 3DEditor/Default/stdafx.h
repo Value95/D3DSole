@@ -48,6 +48,24 @@
 #include <sstream>
 #include <string>
 
+// View
+#include "MainFrm.h"
+#include "ProjectView.h"
+#include "HierarchyView.h"
+#include "InspectorView.h"
+#include "FeatureView.h"
+#include "3DEditorView.h"
+
+
+//Engine
+#include "InputManager.h"
+#include "TextureStore.h"
+#include "Layer.h"
+#include "SceneManager.h"
+#include "GameObject.h"
+#include "ObjectFactory.h"
+#include "Raycast.h"
+
 using namespace std;
 
 #ifdef _UNICODE

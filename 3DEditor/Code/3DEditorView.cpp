@@ -147,9 +147,9 @@ void CMy3DEditorView::OnInitialUpdate()
 
 	RECT rcMainRect = {};
 	pMain->GetWindowRect(&rcMainRect);
-
+		
 	::SetRect(&rcMainRect, 0, 0, rcMainRect.right - rcMainRect.left, rcMainRect.bottom - rcMainRect.top);
-
+		
 	RECT rcView = {};
 	GetClientRect(&rcView);
 	int iGapX = rcMainRect.right - rcView.right;

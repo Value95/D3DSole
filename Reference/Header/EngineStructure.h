@@ -14,6 +14,7 @@ namespace Engine
 
 	typedef struct _MeshData
 	{
+		std::wstring name;
 		LPDIRECT3DVERTEXBUFFER9 vertexBuffer;
 		_uint vertexCount;
 		_uint vertexSize;
@@ -28,6 +29,7 @@ namespace Engine
 
 	typedef struct _TexData
 	{
+		std::wstring name;
 		LPDIRECT3DTEXTURE9 pTexture;
 		D3DXIMAGE_INFO imageInfo;
 	}TEXTURE_DATA;

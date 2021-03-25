@@ -41,8 +41,9 @@
 #define KEY_4		4194304
 #define KEY_TAB		8388608
 #define KEY_DELETE	16777216
-#define KEY_Z		33554432
+#define KEY_Q		33554432
 #define KEY_X		67108864
+#define KEY_LBUTTON	134217728
 
 #define _CRTDBG_MAP_ALLOC
 #ifdef _DEBUG

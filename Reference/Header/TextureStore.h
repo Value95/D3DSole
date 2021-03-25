@@ -10,8 +10,8 @@ class ENGINE_DLL CTextureStore final : public CResourceStore
 	DECLARE_SINGLETON(CTextureStore)
 private:
 	typedef std::unordered_map<std::wstring, SHARED(_TexData)>	_TexDataMap;
-	_TexDataMap			m_mCurSceneTextureData;
-	_TexDataMap			m_mStaticTextureData;
+	GETTOR(_TexDataMap, m_mCurSceneTextureData, {}, CurSceneTextureData);
+	GETTOR(_TexDataMap, m_mStaticTextureData, {}, StaticTextureData);
 
 public:
 	void Awake(void) override;
