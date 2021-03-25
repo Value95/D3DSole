@@ -7,12 +7,12 @@ class CEditorScene final : public Engine::CScene
 private:
 	_bool m_isPickingMode = false;
 	_bool m_AddFistCubeToListBox = true;
-	class Engine::CGameObject* m_pPreSelectedObject = nullptr;
-	class Engine::CGameObject* m_pCurSelectedObject = nullptr;
+	class Engine::CGameObject* m_PreSelectedObject = nullptr;
+	class Engine::CGameObject* m_CurSelectedObject = nullptr;
 
-	class CMainFrame * m_pMain;
-	class CMy3DEditorView* m_pEditorView;
-	class CObjectListView* m_pListView;
+	CMainFrame * m_main;
+	CMy3DEditorView* m_editorView;
+	CProjectView* m_projectView;
 
 public:
 	explicit CEditorScene();

@@ -39,7 +39,7 @@ void CDongilScene::Start(void)
 		pObj->AddComponent<Engine::CUIComponent>();
 	}*/
 
-	{
+	/*{
 		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
 		pObj->SetName(L"Player");
 		pObj->SetPosition(vector3(0, 0, 2));
@@ -54,17 +54,18 @@ void CDongilScene::Start(void)
 		pObj->SetScale(vector3(1, 1, 1));
 		pObj->AddComponent<Engine::CTriangleComponent>();
 		pObj->AddComponent<CMonster>();
-	}
+	}*/
 
-	/*{
+	{
 		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
 		pObj->SetPosition(vector3(0, 0, 7));
 		pObj->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(1, 1, 1), vector3Zero));
-		pObj->AddComponent<Engine::CMeshComponent>();
-		pObj->AddComponent<Engine::CTextureComponent>();
+		pObj->AddComponent<Engine::CMeshComponent>()->SetMeshKey(L"Cube");
+		pObj->AddComponent<Engine::CTextureComponent>()->SetTextureKey(L"Blue");
 		pObj->AddComponent<Engine::CGraphicsComponent>();
 	}
 
+	/*
 	{
 		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
 		pObj->SetPosition(vector3(7, 0, 0));
@@ -114,7 +115,7 @@ _uint CDongilScene::Update(void)
 	_uint event = 0;
 	if (event = __super::Update())
 		return event;
-	//m_pMainCamera->CameraMove();
+	m_pMainCamera->CameraMove();
 
 	return event;
 }

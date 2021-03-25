@@ -189,11 +189,11 @@ void CMeshStore::ParsingMesh(std::wstring filePath, std::wstring fileName)
 			pIndices[i] = i ;
 		newMesh->indexBuffer->Unlock();
 
-
+		newMesh->name = RemoveExtension(fileName);
 		if (m_isStatic)
-			m_mStaticMeshData[RemoveExtension(fileName)] = newMesh;
+			m_mStaticMeshData[newMesh->name] = newMesh;
 		else
-			m_mCurSceneMeshData[RemoveExtension(fileName)] = newMesh;
+			m_mCurSceneMeshData[newMesh->name] = newMesh;
 
 		newMesh.reset();
 	}

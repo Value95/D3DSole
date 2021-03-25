@@ -1,2 +1,16 @@
 ﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(368,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
-  stdafx.cpp
+  EditorScene.cpp
+3DEditorDoc.obj : warning LNK4258: '/entry:WinMainCRTStartup' 지시문은 '/ENTRY:wWinMainCRTStartup' 스위치와 호환되지 않습니다. 무시됩니다.
+3DEditorView.obj : warning LNK4258: '/entry:WinMainCRTStartup' 지시문은 '/ENTRY:wWinMainCRTStartup' 스위치와 호환되지 않습니다. 무시됩니다.
+EditorExtern.obj : warning LNK4258: '/entry:WinMainCRTStartup' 지시문은 '/ENTRY:wWinMainCRTStartup' 스위치와 호환되지 않습니다. 무시됩니다.
+EditorScene.obj : warning LNK4258: '/entry:WinMainCRTStartup' 지시문은 '/ENTRY:wWinMainCRTStartup' 스위치와 호환되지 않습니다. 무시됩니다.
+FeatureView.obj : warning LNK4258: '/entry:WinMainCRTStartup' 지시문은 '/ENTRY:wWinMainCRTStartup' 스위치와 호환되지 않습니다. 무시됩니다.
+HierarchyView.obj : warning LNK4258: '/entry:WinMainCRTStartup' 지시문은 '/ENTRY:wWinMainCRTStartup' 스위치와 호환되지 않습니다. 무시됩니다.
+InspectorView.obj : warning LNK4258: '/entry:WinMainCRTStartup' 지시문은 '/ENTRY:wWinMainCRTStartup' 스위치와 호환되지 않습니다. 무시됩니다.
+MainEditor.obj : warning LNK4258: '/entry:WinMainCRTStartup' 지시문은 '/ENTRY:wWinMainCRTStartup' 스위치와 호환되지 않습니다. 무시됩니다.
+MainFrm.obj : warning LNK4258: '/entry:WinMainCRTStartup' 지시문은 '/ENTRY:wWinMainCRTStartup' 스위치와 호환되지 않습니다. 무시됩니다.
+ProjectView.obj : warning LNK4258: '/entry:WinMainCRTStartup' 지시문은 '/ENTRY:wWinMainCRTStartup' 스위치와 호환되지 않습니다. 무시됩니다.
+3DEditor.obj : warning LNK4258: '/entry:WinMainCRTStartup' 지시문은 '/ENTRY:wWinMainCRTStartup' 스위치와 호환되지 않습니다. 무시됩니다.
+stdafx.obj : warning LNK4258: '/entry:WinMainCRTStartup' 지시문은 '/ENTRY:wWinMainCRTStartup' 스위치와 호환되지 않습니다. 무시됩니다.
+  3DEditor.vcxproj -> C:\Users\Administrator.JUSIN-20210122C\Desktop\D3DSole\3DEditor\Default\../../Bin/3DEditor/Debug/x86\3DEditor.exe
+  3DEditor.vcxproj -> ../../Bin/3DEditor/Debug/x86\3DEditor.pdb (Partial PDB)

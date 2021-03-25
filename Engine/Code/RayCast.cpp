@@ -17,7 +17,7 @@ CRaycast::~CRaycast()
 }
 
 // 원점(origin) , 방향(direction) , 거리(maxDistance) , 레이어(layerKey)
-CGameObject * CRaycast::RayCast(vector3 origin, vector3 direction, _float maxDistance, std::wstring layerKey)
+CGameObject * CRaycast::RayCast(vector3 origin, vector3 direction, _float maxDistance, std::wstring layerKey, vector3& outHit)
 {
 	_float t = FLT_MAX;
 	CGameObject* pGameObject = nullptr;
@@ -62,6 +62,7 @@ CGameObject * CRaycast::RayCast(vector3 origin, vector3 direction, _float maxDis
 			pGameObject = object.get();
 		}
 	}
+	outHit = origin + direction * t;
 
 	return pGameObject;
 }
@@ -100,6 +101,7 @@ _bool CRaycast::RayIntersectCheck(_float rayAxisDir, _float rayAxisStart,
 		if (tMin > tMax)
 			return false;
 	}
+
 
 	return true;
 }
