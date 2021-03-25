@@ -43,7 +43,7 @@ _uint CMonster::FixedUpdate(SHARED(CComponent) spThis)
 
 _uint CMonster::Update(SHARED(CComponent) spThis)
 {
-	//GetOwner()->Lerp(player->GetPosition(), 30.0f * deltaTime);
+	GetOwner()->Lerp(player->GetPosition(), 1.0f);
 	GetOwner()->LookAt(player->GetPosition());
 	return NO_EVENT;
 }

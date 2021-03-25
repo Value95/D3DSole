@@ -27,17 +27,35 @@ void CTransformComponent::Translate(vector3 translation)
 // 타겟까지 일정한 속도로 이동한다.
 void CTransformComponent::MoveTowards(vector3 targetPosition, _float speed)
 {
-
+	speed *= deltaTime;
+	vector3 a = targetPosition - m_position;
+	float magnitude = D3DXVec3Length(&a);
+	if (magnitude <= speed || magnitude == 0.0f)
+	{
+		m_position = targetPosition;
+		return;
+	}
+	m_position = m_position + a / magnitude * speed;
 }
 // 타겟까지 선형보간하여 이동한다.
 void CTransformComponent::Lerp(vector3 targetPosition, _float speed)
 {
+	/*
+	float lerp(float p1, float p2, float d1)
+	{
+		return (1-d1)*p1 + d1*p2;
+	}
+	*/
+
 	vector3 dir = targetPosition - m_position;
 	D3DXVec3Normalize(&dir, &dir);
-	
-	if (Engine::Distance(targetPosition, m_position) >= 0.01f)
+
+	float distance = Engine::Distance(targetPosition, m_position);
+
+	if (distance >= 0.01f)
 	{
-		m_position += dir * speed * deltaTime;
+		float a = MathfMin(speed * deltaTime, 1);
+		m_position += dir * a;
 	}
 	else
 	{
@@ -45,6 +63,7 @@ void CTransformComponent::Lerp(vector3 targetPosition, _float speed)
 	}
 
 }
+
 // 타겟을 바라보게 회전해준다.
 void CTransformComponent::LookAt(vector3 target, vector3 worldUp)
 {
@@ -53,7 +72,7 @@ void CTransformComponent::LookAt(vector3 target, vector3 worldUp)
 	_float angle, dot;
 
 	// Y의대한 회전
-	/*
+	//*
 	{
 		dir = m_position - target;
 
@@ -62,12 +81,20 @@ void CTransformComponent::LookAt(vector3 target, vector3 worldUp)
 		D3DXVec3Cross(&axis, &vector3Forward, &dir);
 		dot = D3DXVec3Dot(&vector3Forward, &dir);
 		angle = acos(dot);
-		angle = D3DXToDegree(angle);
 
-		m_rotation.y = angle;
+
+		if (dir.y <= 0)
+		{
+			angle = angle + (abs(angle - 3.14f) * 2);
+		}
+
+		angle = D3DXToDegree(angle);
+		m_rotation.x = angle;
 	}
+	//*/
 
 	// X의대한 회전
+	/*
 	{
 		dir = m_position - target;
 
@@ -75,37 +102,43 @@ void CTransformComponent::LookAt(vector3 target, vector3 worldUp)
 
 		D3DXVec3Cross(&axis, &vector3Up, &dir);
 		dot = D3DXVec3Dot(&vector3Up, &dir);
-		angle = asin(dot);
-		angle = D3DXToDegree(angle);
+		angle = acos(dot);
 
-		m_rotation.x = angle;
+
+		if (dir.x >= 0)
+		{
+			angle = angle + (abs(angle - 3.14f) * 2);
+		}
+
+		angle = D3DXToDegree(angle);
+		m_rotation.y = angle;
 	}
 	//*/
 
 	//*
-	dir = m_position - target;
+	dir = target - m_position;
+
 	D3DXVec3Normalize(&dir, &dir);
-	D3DXVec3Cross(&axis, &vector3Forward, &dir);
+	D3DXVec3Cross(&axis, &vector3Up, &dir);
 	D3DXVec3Normalize(&axis, &axis);
 
-	dot = D3DXVec3Dot(&vector3Forward, &dir);
+	dot = D3DXVec3Dot(&vector3Up, &dir);
 
 	angle = acos(dot);
-	
-	quaternion qu;
-	D3DXQuaternionRotationAxis(&qu, &dir, angle);
-	qu.y = D3DXToDegree(qu.y) * 2;
-	qu.x = D3DXToDegree(qu.x) * 2;
-	if (dot <= 0)
+	D3DXMatrixRotationAxis(&matrix, &axis, angle);
+
+	quaternion R; // 회전
+	D3DXMatrixDecompose(&D3DXVECTOR3(), &R, &D3DXVECTOR3(), &matrix);
+
+	if (dir.z >= 0)
 	{
-		qu.x = 90 + abs(qu.x - 90);
-	//	qu.y = 90 + abs(qu.y + 90);
+		m_rotation.y = 90 + abs(((D3DXToDegree(R.z) * 2) - 90));
+	}
+	else
+	{
+		m_rotation.y = (D3DXToDegree(R.z) * 2);
 	}
 
-	cout << qu.y << endl;
-
-	m_rotation.x = qu.y;
-	m_rotation.y = qu.x;
 	//*/
 }
 

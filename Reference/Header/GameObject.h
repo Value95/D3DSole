@@ -22,8 +22,6 @@ protected:
 	GETTOR_SETTOR(std::wstring, m_objectKey, L"", ObjectKey)
 	GETTOR_SETTOR(std::wstring, m_name, L"", Name)
 
-	//GETTOR_SETTOR(vector<SHARED(CGameObject)>, m_childObj, {}, ChildObject) // 자식 오브젝트
-
 protected:
 	explicit CGameObject(void);
 	explicit CGameObject(const CGameObject& other);

@@ -41,7 +41,7 @@ public:
 	void AddRotationY(_float y) { m_rotation.y += y; }
 	void AddRotationZ(_float z) { m_rotation.z += z; }
 private:
-	void				UpdateWorldmMatrix(void);
+	void UpdateWorldmMatrix(void);
 };
 END
 #endif
