@@ -41,6 +41,10 @@ public:
 	void AddRotationX(_float x) { m_rotation.x += x; }
 	void AddRotationY(_float y) { m_rotation.y += y; }
 	void AddRotationZ(_float z) { m_rotation.z += z; }
+
+	void SetScaleX(_float x) { m_scale.x = x; }
+	void SetScaleY(_float y) { m_scale.y = y; }
+	void SetScaleZ(_float z) { m_scale.z = z; }
 private:
 	void UpdateWorldmMatrix(void);
 };

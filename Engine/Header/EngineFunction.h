@@ -147,6 +147,14 @@ namespace Engine
 		return c;
 	}
 
+	inline vector3 AtDirectine(vector3 dir, vector3 rotation)
+	{
+		matrix4x4 rotate;
+
+		D3DXMatrixRotationYawPitchRoll(&rotate, D3DXToRadian(rotation.y), D3DXToRadian(rotation.x), D3DXToRadian(rotation.z));
+		D3DXVec3TransformCoord(&dir, &dir, &rotate);
+		return dir;
+	}
 }
 
 

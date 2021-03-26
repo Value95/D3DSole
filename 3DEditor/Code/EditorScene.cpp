@@ -31,6 +31,7 @@ void CEditorScene::Start(void)
 	m_main = dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd());
 	m_editorView = dynamic_cast<CMy3DEditorView*>(m_main->m_mainSplitter.GetPane(0, 0));
 	m_projectView = dynamic_cast<CProjectView*>(m_main->m_leftSplitter.GetPane(1, 0));
+	inspectorView = dynamic_cast<CInspectorView*>(m_main->m_rightSplitter.GetPane(0, 0));
 
 	m_pMainCamera = Engine::ADD_CLONE(L"Camera", L"Camera", false)->GetComponent<Engine::CCameraComponent>();
 }
@@ -50,51 +51,9 @@ _uint CEditorScene::Update(void)
 	if (event = __super::Update())
 		return event;
 
-	m_pMainCamera->CameraMove();
-	
-	if (Engine::IMKEY_PRESS(KEY_RBUTTON))
-	{
-		if (Engine::IMKEY_DOWN(KEY_RBUTTON))
-		{
-			POINT curPt;
-			GetCursorPos(&curPt);
-			m_pMainCamera->SetCenterPt(curPt);
-		}
-		m_pMainCamera->CameraRotation();
-	}
-
-	if (Engine::IMKEY_DOWN(KEY_Q))
-	{
-		CString cMessKey, cTextureKey;
-		m_projectView->m_messList.GetText(m_projectView->m_messList.GetCurSel(), cMessKey);
-		m_projectView->m_textureList.GetText(m_projectView->m_textureList.GetCurSel(), cTextureKey);
-
-		// 오브젝트 생성
-		std::wstring wMessKey, wTextureKey;
-
-		wMessKey = CStringW(cMessKey);
-		wTextureKey = CStringW(cTextureKey);
-
-		if (cMessKey == L"Default" || cTextureKey == L"Default")
-		{
-			return event;
-		}
-
-		SHARED(Engine::CGameObject) pObj = Engine::ADD_CLONE(L"Default", L"Default", false);
-		pObj->GetComponent<Engine::CMeshComponent>()->SetMeshKey(wMessKey);
-		pObj->GetComponent<Engine::CTextureComponent>()->SetTextureKey(wTextureKey);
-
-		vector3 outHit;
-		Engine::CGameObject* obj = Engine::CRaycast::RayCast(m_pMainCamera->GetOwner()->GetPosition(), vector3Forward, 100, L"Default", outHit);
-		if (obj != nullptr)
-		{
-			pObj->SetPosition(m_pMainCamera->GetOwner()->ReturnTranslate(outHit));
-		}
-		else
-		{
-			pObj->SetPosition(m_pMainCamera->GetOwner()->ReturnTranslate(vector3(0, 0, 5)));
-		}
-	}
+	Camera();
+	ObjectCreate();
+	ObjectPicking();
 
 	return event;
 }
@@ -146,5 +105,71 @@ void CEditorScene::InitPrototypes(void)
 	default->AddComponent<Engine::CMeshComponent>();
 	default->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(1, 1, 1), vector3Zero));
 	Engine::CObjectFactory::GetInstance()->AddPrototype(default);
+}
+
+void CEditorScene::Camera()
+{
+	m_pMainCamera->CameraMove();
+
+	if (Engine::IMKEY_PRESS(KEY_RBUTTON))
+	{
+		if (Engine::IMKEY_DOWN(KEY_RBUTTON))
+		{
+			POINT curPt;
+			GetCursorPos(&curPt);
+			m_pMainCamera->SetCenterPt(curPt);
+		}
+		m_pMainCamera->CameraRotation();
+	}
+}
+
+void CEditorScene::ObjectCreate()
+{
+	if (Engine::IMKEY_DOWN(KEY_Q))
+	{
+		CString cMessKey, cTextureKey;
+		m_projectView->m_messList.GetText(m_projectView->m_messList.GetCurSel(), cMessKey);
+		m_projectView->m_textureList.GetText(m_projectView->m_textureList.GetCurSel(), cTextureKey);
+
+		// 오브젝트 생성
+		std::wstring wMessKey, wTextureKey;
+
+		wMessKey = CStringW(cMessKey);
+		wTextureKey = CStringW(cTextureKey);
+
+		if (cMessKey == L"Default" || cTextureKey == L"Default")
+		{
+			return;
+		}
+
+		SHARED(Engine::CGameObject) pObj = Engine::ADD_CLONE(L"Default", L"Default", false);
+		pObj->GetComponent<Engine::CMeshComponent>()->SetMeshKey(wMessKey);
+		pObj->GetComponent<Engine::CTextureComponent>()->SetTextureKey(wTextureKey);
+
+		vector3 outHit;
+		Engine::CGameObject* obj = Engine::CRaycast::RayCast(m_pMainCamera->GetOwner()->GetPosition(), Engine::AtDirectine(vector3Forward, m_pMainCamera->GetOwner()->GetRotation()), 100, L"Default", outHit);
+		if (obj != nullptr)
+		{
+			pObj->SetPosition(m_pMainCamera->GetOwner()->ReturnTranslate(outHit));
+		}
+		else
+		{
+			pObj->SetPosition(m_pMainCamera->GetOwner()->ReturnTranslate(vector3(0, 0, 5)));
+		}
+	}
+
+}
+
+void CEditorScene::ObjectPicking()
+{
+	if (Engine::IMKEY_DOWN(KEY_RBUTTON))
+	{
+		Engine::CGameObject* obj = Engine::CRaycast::RayCast(m_pMainCamera->GetOwner()->GetPosition(), Engine::AtDirectine(vector3Forward, m_pMainCamera->GetOwner()->GetRotation()), 100, L"Default");
+		if (obj != nullptr)
+		{
+
+		}
+	}
+
 }
 

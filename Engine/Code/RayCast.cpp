@@ -67,6 +67,55 @@ CGameObject * CRaycast::RayCast(vector3 origin, vector3 direction, _float maxDis
 	return pGameObject;
 }
 
+CGameObject * CRaycast::RayCast(vector3 origin, vector3 direction, _float maxDistance, std::wstring layerKey)
+{
+	_float t = FLT_MAX;
+	CGameObject* pGameObject = nullptr;
+
+	CLayer* pLayer = GET_CUR_SCENE->GetLayers()[layerKey].get();
+
+	for (auto& object : pLayer->GetGameObjects())
+	{
+		if (object->GetPosition() == origin)
+			continue;
+
+		_float tMin = 0;
+		_float tMax = maxDistance;
+
+		// 36 ~ 57행 설명좀
+		vector3 minPos = vector3(-0.5f, -0.5f, -0.5f);
+		vector3 maxPos = vector3(0.5f, 0.5f, 0.5f);
+
+		D3DXVec3TransformCoord(&minPos, &minPos, &object->GetWorldMatrix());
+		D3DXVec3TransformCoord(&maxPos, &maxPos, &object->GetWorldMatrix());
+
+		for (int i = 0; i < 3; ++i)
+		{
+			if (minPos[i] > maxPos[i])
+			{
+				_float temp = minPos[i];
+				minPos[i] = maxPos[i];
+				maxPos[i] = temp;
+			}
+		}
+
+		if (!RayIntersectCheck(direction.x, origin.x, minPos.x, maxPos.x, tMin, tMax))
+			continue;
+		if (!RayIntersectCheck(direction.y, origin.y, minPos.y, maxPos.y, tMin, tMax))
+			continue;
+		if (!RayIntersectCheck(direction.z, origin.z, minPos.z, maxPos.z, tMin, tMax))
+			continue;
+
+		if (tMin < t)
+		{
+			t = tMin;
+			pGameObject = object.get();
+		}
+	}
+
+	return pGameObject;
+}
+
 _bool CRaycast::RayIntersectCheck(_float rayAxisDir, _float rayAxisStart,
 									   _float aabbAxisMin, _float aabbAxisMax, 
 									   _float& tMin, _float& tMax)

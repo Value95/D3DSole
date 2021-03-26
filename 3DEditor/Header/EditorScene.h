@@ -13,7 +13,8 @@ private:
 	CMainFrame * m_main;
 	CMy3DEditorView* m_editorView;
 	CProjectView* m_projectView;
-
+	CHierarchyView* hierarchyView;
+	CInspectorView* inspectorView;
 public:
 	explicit CEditorScene();
 	~CEditorScene();
@@ -34,6 +35,8 @@ public:
 	
 
 private:
-
+	void Camera();
+	void ObjectCreate();
+	void ObjectPicking();
 };
 
