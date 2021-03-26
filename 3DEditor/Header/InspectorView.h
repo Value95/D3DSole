@@ -1,4 +1,5 @@
 #pragma once
+#include "afxwin.h"
 
 
 
@@ -8,18 +9,18 @@ class CInspectorView : public CFormView
 {
 	DECLARE_DYNCREATE(CInspectorView)
 public:
-	bool m_enable;
-	std::wstring m_name;
+	Engine::CGameObject* m_gameObejct;
+	BOOL m_enable;
+	CString m_name;
 	float m_positionX;
 	float m_positionY;
 	float m_positionZ;
-	float m_rotatioX;
-	float m_rotatioY;
-	float m_rotatioZ;
-	bool m_scaleX;
+	float m_rotationX;
+	float m_rotationY;
+	float m_rotationZ;
+	float m_scaleX;
 	float m_scaleY;
 	float m_scaleZ;
-	Engine::CGameObject* m_gameObejct;
 protected:
 	CInspectorView();           // 동적 만들기에 사용되는 protected 생성자입니다.
 	virtual ~CInspectorView();
@@ -40,9 +41,11 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 public:
-	void SetDate(Engine::CGameObject* gameObject);
+	void SetData(Engine::CGameObject* gameObject);
 private:
-	void InputDate();
+	void InputData();
+public:
+
 };
 
 

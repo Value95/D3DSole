@@ -143,6 +143,7 @@ void CEditorScene::ObjectCreate()
 		}
 
 		SHARED(Engine::CGameObject) pObj = Engine::ADD_CLONE(L"Default", L"Default", false);
+		pObj->SetName(wMessKey);
 		pObj->GetComponent<Engine::CMeshComponent>()->SetMeshKey(wMessKey);
 		pObj->GetComponent<Engine::CTextureComponent>()->SetTextureKey(wTextureKey);
 
@@ -155,6 +156,7 @@ void CEditorScene::ObjectCreate()
 		else
 		{
 			pObj->SetPosition(m_pMainCamera->GetOwner()->ReturnTranslate(vector3(0, 0, 5)));
+			inspectorView->SetData(pObj.get());
 		}
 	}
 
