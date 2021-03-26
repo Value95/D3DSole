@@ -68,8 +68,10 @@ void CInspectorView::SetData(Engine::CGameObject* gameObject)
 	UpdateData(FALSE);
 }
 
+
 void CInspectorView::InputData()
 {
+	UpdateData(TRUE);
 	m_gameObejct->GetIsEnabled() = m_enable;
 	m_gameObejct->GetName() = m_name;
 	m_gameObejct->SetPositionX(m_positionX);
@@ -81,9 +83,11 @@ void CInspectorView::InputData()
 	m_gameObejct->SetScaleX(m_scaleX);
 	m_gameObejct->SetScaleY(m_scaleY);
 	m_gameObejct->SetScaleZ(m_scaleZ);
+	UpdateData(FALSE);
 }
 
 BEGIN_MESSAGE_MAP(CInspectorView, CFormView)
+	ON_BN_CLICKED(IDC_BUTTON1, &CInspectorView::InputData)
 END_MESSAGE_MAP()
 
 

@@ -32,6 +32,7 @@
     <ClInclude Include="..\Header\Engine.h" />
     <ClInclude Include="..\Header\EngineComponents.h" />
     <ClInclude Include="..\Header\EngineExtern.h" />
+    <ClInclude Include="..\Header\EngineMatrixFunction.h" />
     <ClInclude Include="..\Header\EngineTypedef.h" />
     <ClInclude Include="..\Header\FRC.h" />
     <ClInclude Include="..\Header\GameObject.h" />

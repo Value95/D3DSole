@@ -29,8 +29,9 @@ void CEditorScene::Start(void)
 	__super::Start();
 
 	m_main = dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd());
-	m_editorView = dynamic_cast<CMy3DEditorView*>(m_main->m_mainSplitter.GetPane(0, 0));
+	m_editorView = dynamic_cast<CMy3DEditorView*>(m_main->m_leftSplitter.GetPane(0, 0));
 	m_projectView = dynamic_cast<CProjectView*>(m_main->m_leftSplitter.GetPane(1, 0));
+	hierarchyView = dynamic_cast<CHierarchyView*>(m_main->m_mainSplitter.GetPane(0, 0));
 	inspectorView = dynamic_cast<CInspectorView*>(m_main->m_rightSplitter.GetPane(0, 0));
 
 	m_pMainCamera = Engine::ADD_CLONE(L"Camera", L"Camera", false)->GetComponent<Engine::CCameraComponent>();
@@ -156,20 +157,27 @@ void CEditorScene::ObjectCreate()
 		else
 		{
 			pObj->SetPosition(m_pMainCamera->GetOwner()->ReturnTranslate(vector3(0, 0, 5)));
-			inspectorView->SetData(pObj.get());
 		}
+		inspectorView->SetData(pObj.get());
 	}
 
 }
 
 void CEditorScene::ObjectPicking()
 {
-	if (Engine::IMKEY_DOWN(KEY_RBUTTON))
+	if (Engine::IMKEY_DOWN(KEY_LBUTTON))
 	{
-		Engine::CGameObject* obj = Engine::CRaycast::RayCast(m_pMainCamera->GetOwner()->GetPosition(), Engine::AtDirectine(vector3Forward, m_pMainCamera->GetOwner()->GetRotation()), 100, L"Default");
+		POINT point;
+		GetCursorPos(&point);
+		vector3		origin = vector3(point.x, point.y, m_pMainCamera->GetOwner()->GetPosition().z);
+
+		// 마우스좌표(뷰포트) -> (월드행렬)로변환
+
+		vector3 aa = m_pMainCamera->GetOwner()->GetPosition();
+		Engine::CGameObject* obj = Engine::CRaycast::RayCast(origin, Engine::AtDirectine(vector3Forward, m_pMainCamera->GetOwner()->GetRotation()), 100, L"Default");
 		if (obj != nullptr)
 		{
-
+			inspectorView->SetData(obj);
 		}
 	}
 

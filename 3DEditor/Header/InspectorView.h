@@ -43,7 +43,7 @@ protected:
 public:
 	void SetData(Engine::CGameObject* gameObject);
 private:
-	void InputData();
+	afx_msg void InputData();
 public:
 
 };

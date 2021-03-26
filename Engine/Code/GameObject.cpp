@@ -52,19 +52,29 @@ SHARED(CGameObject) CGameObject::MakeClone(void)
 
 void CGameObject::Awake(void)
 {
+	if (!m_isEnabled)
+		return;
+
 	m_isAwaked = true;
 }
 
 void CGameObject::Start(void)
 {
+	if (!m_isEnabled)
+		return;
+
 	m_isStarted = true;
 }
 
 _uint CGameObject::FixedUpdate(void)
 {
+	_uint event = NO_EVENT;
+
+	if (!m_isEnabled)
+		return event;
+
 	TransformUpdate();
 
-	_uint event = NO_EVENT;
 	for (auto& component : m_mComponents)
 	{
 		if (component.second->GetIsStarted() == false)
@@ -84,6 +94,10 @@ _uint CGameObject::Update(void)
 {
 	_uint event = NO_EVENT;
 
+	if (!m_isEnabled)
+		return event;
+
+
 	for (auto& component : m_mComponents)
 	{
 		if (m_mComponents.empty())
@@ -102,6 +116,10 @@ _uint CGameObject::Update(void)
 _uint CGameObject::LateUpdate(void)
 {
 	_uint event = NO_EVENT;
+
+	if (!m_isEnabled)
+		return event;
+
 
 	for (auto& component : m_mComponents)
 	{

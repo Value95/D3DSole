@@ -207,9 +207,6 @@
     <ClCompile Include="..\Code\ShaderManager.cpp">
       <Filter>00.Engine\01.Graphics\01.Shader\00.Manager</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\ShaderManager.cpp">
-      <Filter>00.Engine\01.Graphics\01.Shader\00.Manager</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\UIManager.cpp">
       <Filter>00.Engine\03.Graphics\01.UIManager</Filter>
     </ClCompile>
@@ -350,9 +347,6 @@
     <ClInclude Include="..\Header\ShaderManager.h">
       <Filter>00.Engine\01.Graphics\01.Shader\00.Manager</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\ShaderManager.h">
-      <Filter>00.Engine\01.Graphics\01.Shader\00.Manager</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\EngineExtern.h">
       <Filter>99.Include</Filter>
     </ClInclude>
@@ -397,6 +391,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\DebugRendeerManager.h">
       <Filter>00.Engine\03.Graphics\02.DebugRenderManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\EngineMatrixFunction.h">
+      <Filter>99.Include</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
