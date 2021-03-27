@@ -162,19 +162,44 @@ void CEditorScene::ObjectCreate()
 	}
 
 }
-
 void CEditorScene::ObjectPicking()
 {
 	if (Engine::IMKEY_DOWN(KEY_LBUTTON))
 	{
 		POINT point;
 		GetCursorPos(&point);
-		vector3		origin = vector3(point.x, point.y, m_pMainCamera->GetOwner()->GetPosition().z);
+		vector3		origin;
 
 		// 마우스좌표(뷰포트) -> (월드행렬)로변환
+		D3DVIEWPORT9		ViewPort;
+		ZeroMemory(&ViewPort, sizeof(D3DVIEWPORT9));
 
-		vector3 aa = m_pMainCamera->GetOwner()->GetPosition();
-		Engine::CGameObject* obj = Engine::CRaycast::RayCast(origin, Engine::AtDirectine(vector3Forward, m_pMainCamera->GetOwner()->GetRotation()), 100, L"Default");
+		Engine::GET_DEVICE->GetViewport(&ViewPort);
+
+		origin.x = point.x / (800 * 0.5f) - 1.f;
+		origin.y = point.y / (600 * -0.5f) + 1.f;
+		origin.z = 0.f;
+
+		// 투영 -> 뷰스페이스
+
+		matrix4x4 matProj;
+		Engine::GET_DEVICE->GetTransform(D3DTS_PROJECTION, &matProj);
+		D3DXMatrixInverse(&matProj, NULL, &matProj);
+		D3DXVec3TransformCoord(&origin, &origin, &matProj);
+
+		// 뷰스페이스 -> 월드
+
+		vector3	rayDir;
+
+		rayDir = origin;
+
+		matrix4x4		matView;
+		Engine::GET_DEVICE->GetTransform(D3DTS_VIEW, &matView);
+		D3DXMatrixInverse(&matView, NULL, &matView);
+
+		D3DXVec3TransformNormal(&rayDir, &rayDir, &matView);
+
+		Engine::CGameObject* obj = Engine::CRaycast::RayCast(origin, rayDir, 100, L"Default");
 		if (obj != nullptr)
 		{
 			inspectorView->SetData(obj);

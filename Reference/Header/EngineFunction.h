@@ -155,6 +155,7 @@ namespace Engine
 		D3DXVec3TransformCoord(&dir, &dir, &rotate);
 		return dir;
 	}
+
 }
 
 

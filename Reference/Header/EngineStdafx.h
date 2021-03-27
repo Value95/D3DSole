@@ -53,6 +53,7 @@
 #include "EngineDefine.h"
 #include "EngineEnum.h"
 #include "EngineFunction.h"
+#include "EngineMatrixFunction.h"
 #include "EngineExtern.h"
 #include "EngineMacro.h"
 #include "EngineStructure.h"

@@ -58,6 +58,7 @@
 
 
 //Engine
+#include "DeviceManager.h"
 #include "InputManager.h"
 #include "TextureStore.h"
 #include "Layer.h"

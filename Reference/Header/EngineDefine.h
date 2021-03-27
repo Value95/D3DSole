@@ -15,7 +15,6 @@
 #define NULL_PARAMETER	2
 #define OUT_OF_RANGE	3
 
-
 #define KEY_LEFT	1
 #define KEY_RIGHT	2
 #define KEY_UP		4
@@ -65,3 +64,4 @@
 #define EPSILON 0.0003f
 
 #endif // !MYDEFINE_H
+
