@@ -26,9 +26,23 @@ CHierarchyView::~CHierarchyView()
 void CHierarchyView::DoDataExchange(CDataExchange* pDX)
 {
 	CFormView::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_LIST1, m_objectListBox);
+}
+
+void CHierarchyView::SelectObjectClick()
+{
+	// 셀에 맞는 오브젝트 위치값을 가져오고 해당 위치값과 같은 오브젝트를찾는다.
+	SHARED(Engine::CGameObject) object = Engine::GET_CUR_SCENE->FindObjectPosition(m_objectPos[m_objectListBox.GetCurSel()]);
+
+	CInspectorView* inspectorView = dynamic_cast<CInspectorView*>(dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd())->m_rightSplitter.GetPane(0, 0));
+	inspectorView->SetData(object.get());
+
+	Engine::GET_MAIN_CAM->GetOwner()->SetPosition(object->GetPosition());
+	Engine::GET_MAIN_CAM->GetOwner()->SetPosition(Engine::GET_MAIN_CAM->GetOwner()->ReturnTranslate(vector3(0, 0, -8)));
 }
 
 BEGIN_MESSAGE_MAP(CHierarchyView, CFormView)
+	ON_LBN_SELCHANGE(IDC_LIST1, &CHierarchyView::SelectObjectClick)
 END_MESSAGE_MAP()
 
 
@@ -47,6 +61,7 @@ void CHierarchyView::Dump(CDumpContext& dc) const
 }
 #endif
 #endif //_DEBUG
+
 
 
 // CHierarchyView 메시지 처리기입니다.

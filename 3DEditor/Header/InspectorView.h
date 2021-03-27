@@ -46,6 +46,7 @@ private:
 	afx_msg void InputData();
 public:
 
+	afx_msg void DeleteObject();
 };
 
 

@@ -209,8 +209,8 @@ void CCameraComponent::MaitrxCalculate()
 	m_tAt += GetOwner()->GetPosition();
 
 	D3DXMatrixLookAtLH(&m_matView, &GetOwner()->GetPosition(), &m_tAt, &m_tUp);
-	D3DXMatrixPerspectiveFovLH(&m_matProj, D3DXToRadian(m_fov), 800 / 600, m_near, m_far);
-	D3DXMatrixOrthoLH(&m_matOrtho, 800, 600, 0, m_far);
+	D3DXMatrixPerspectiveFovLH(&m_matProj, D3DXToRadian(m_fov), 800.0f / 600.0f, m_near, m_far);
+	D3DXMatrixOrthoLH(&m_matOrtho, 800.0f, 600.0f, 0, m_far);
 }
 
 void CCameraComponent::FrustumUpdate()

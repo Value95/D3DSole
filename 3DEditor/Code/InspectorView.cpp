@@ -84,10 +84,33 @@ void CInspectorView::InputData()
 	m_gameObejct->SetScaleY(m_scaleY);
 	m_gameObejct->SetScaleZ(m_scaleZ);
 	UpdateData(FALSE);
+
+	CHierarchyView* hierarchyView = dynamic_cast<CHierarchyView*>(dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd())->m_mainSplitter.GetPane(0, 1));
+	int sel = hierarchyView->m_objectListBox.GetCurSel();
+	// 하이어락키 이름변경
+	hierarchyView->m_objectListBox.DeleteString(sel);
+	hierarchyView->m_objectListBox.InsertString(sel, m_name);
+	hierarchyView->m_objectListBox.SetCurSel(sel);
+	// 하이어락키가 가지고있는 오브젝트의 위치값 변경
+	hierarchyView->m_objectPos[sel] = m_gameObejct->GetPosition();
 }
+
+void CInspectorView::DeleteObject()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	m_gameObejct->OnDestroy();
+
+	CHierarchyView* hierarchyView = dynamic_cast<CHierarchyView*>(dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd())->m_mainSplitter.GetPane(0, 1));
+	hierarchyView->m_objectPos.erase(hierarchyView->m_objectPos.begin() + hierarchyView->m_objectListBox.GetCurSel());
+	hierarchyView->m_objectListBox.DeleteString(hierarchyView->m_objectListBox.GetCurSel());
+
+	//delete(&m_gameObejct);
+}
+
 
 BEGIN_MESSAGE_MAP(CInspectorView, CFormView)
 	ON_BN_CLICKED(IDC_BUTTON1, &CInspectorView::InputData)
+	ON_BN_CLICKED(IDC_BUTTON4, &CInspectorView::DeleteObject)
 END_MESSAGE_MAP()
 
 

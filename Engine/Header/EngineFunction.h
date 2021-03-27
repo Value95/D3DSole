@@ -156,6 +156,10 @@ namespace Engine
 		return dir;
 	}
 
+	inline float Dropdecimalpoint(float value, int dropValue)
+	{
+		return round(value * dropValue) / dropValue;
+	}
 }
 
 

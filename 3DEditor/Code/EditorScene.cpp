@@ -31,7 +31,7 @@ void CEditorScene::Start(void)
 	m_main = dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd());
 	m_editorView = dynamic_cast<CMy3DEditorView*>(m_main->m_leftSplitter.GetPane(0, 0));
 	m_projectView = dynamic_cast<CProjectView*>(m_main->m_leftSplitter.GetPane(1, 0));
-	hierarchyView = dynamic_cast<CHierarchyView*>(m_main->m_mainSplitter.GetPane(0, 0));
+	hierarchyView = dynamic_cast<CHierarchyView*>(m_main->m_mainSplitter.GetPane(0, 1));
 	inspectorView = dynamic_cast<CInspectorView*>(m_main->m_rightSplitter.GetPane(0, 0));
 
 	m_pMainCamera = Engine::ADD_CLONE(L"Camera", L"Camera", false)->GetComponent<Engine::CCameraComponent>();
@@ -159,6 +159,9 @@ void CEditorScene::ObjectCreate()
 			pObj->SetPosition(m_pMainCamera->GetOwner()->ReturnTranslate(vector3(0, 0, 5)));
 		}
 		inspectorView->SetData(pObj.get());
+
+		hierarchyView->m_objectListBox.AddString(pObj.get()->GetName().c_str());
+		hierarchyView->m_objectPos.emplace_back(pObj.get()->GetPosition());
 	}
 
 }
@@ -199,10 +202,20 @@ void CEditorScene::ObjectPicking()
 
 		D3DXVec3TransformNormal(&rayDir, &rayDir, &matView);
 
-		Engine::CGameObject* obj = Engine::CRaycast::RayCast(origin, rayDir, 100, L"Default");
+		Engine::CGameObject* obj = Engine::CRaycast::RayCast(origin, rayDir, 1000, L"Default");
 		if (obj != nullptr)
 		{
 			inspectorView->SetData(obj);
+
+			for (int i=0; i <= hierarchyView->m_objectPos.size()-1; i++)
+			{
+				if (Engine::Dropdecimalpoint(hierarchyView->m_objectPos[i].x, 1000) == Engine::Dropdecimalpoint(obj->GetPosition().x,1000) &&
+					Engine::Dropdecimalpoint(hierarchyView->m_objectPos[i].y, 1000) == Engine::Dropdecimalpoint(obj->GetPosition().y, 1000))
+				{
+					hierarchyView->m_objectListBox.SetCurSel(i);
+					return;
+				}
+			}
 		}
 	}
 

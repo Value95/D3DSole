@@ -118,6 +118,19 @@ SHARED(CGameObject) CScene::FindObjectWithKey(std::wstring objectKey)
 	return nullptr;
 }
 
+SHARED(CGameObject) CScene::FindObjectPosition(vector3 position)
+{
+	for (auto& layer : m_mLayers)
+	{
+		for (auto& gameObject : layer.second->GetGameObjects())
+		{
+			if (gameObject->GetPosition() == position)
+				return gameObject;
+		}
+	}
+	return nullptr;
+}
+
 _uint CScene::FindObjectsWithKey(std::wstring objectKey, std::vector<SHARED(CGameObject)>& gameObjects)
 {
 	for (auto& layer : m_mLayers)

@@ -1,4 +1,5 @@
 #pragma once
+#include "afxwin.h"
 
 
 
@@ -7,7 +8,9 @@
 class CHierarchyView : public CFormView
 {
 	DECLARE_DYNCREATE(CHierarchyView)
-
+public:
+	CListBox m_objectListBox;
+	std::vector<vector3> m_objectPos;
 protected:
 	CHierarchyView();           // 동적 만들기에 사용되는 protected 생성자입니다.
 	virtual ~CHierarchyView();
@@ -27,6 +30,8 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 지원입니다.
 
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void SelectObjectClick();
 };
 
 
