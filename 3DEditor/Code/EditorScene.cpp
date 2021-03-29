@@ -172,6 +172,9 @@ void CEditorScene::ObjectPicking()
 		POINT point;
 		GetCursorPos(&point);
 		vector3		origin;
+		
+		if (point.x >= 1056 || point.y >= 648)
+			return;
 
 		// 마우스좌표(뷰포트) -> (월드행렬)로변환
 		D3DVIEWPORT9		ViewPort;
@@ -179,8 +182,8 @@ void CEditorScene::ObjectPicking()
 
 		Engine::GET_DEVICE->GetViewport(&ViewPort);
 
-		origin.x = point.x / (800 * 0.5f) - 1.f;
-		origin.y = point.y / (600 * -0.5f) + 1.f;
+		origin.x = point.x / (1056 * 0.5f) - 1.f;
+		origin.y = point.y / (648 * -0.5f) + 1.f;
 		origin.z = 0.f;
 
 		// 투영 -> 뷰스페이스
@@ -192,17 +195,19 @@ void CEditorScene::ObjectPicking()
 
 		// 뷰스페이스 -> 월드
 
-		vector3	rayDir;
-
-		rayDir = origin;
+		vector3	rayDir, rayPos;
+		
+		rayPos = vector3(0.0f, 0.0f, 0.0f);
+		rayDir = origin - rayPos;
 
 		matrix4x4		matView;
 		Engine::GET_DEVICE->GetTransform(D3DTS_VIEW, &matView);
 		D3DXMatrixInverse(&matView, NULL, &matView);
 
+		D3DXVec3TransformCoord(&rayPos, &rayPos, &matView);
 		D3DXVec3TransformNormal(&rayDir, &rayDir, &matView);
 
-		Engine::CGameObject* obj = Engine::CRaycast::RayCast(origin, rayDir, 1000, L"Default");
+		Engine::CGameObject* obj = Engine::CRaycast::RayCast(rayPos, rayDir, 1000, L"Default");
 		if (obj != nullptr)
 		{
 			inspectorView->SetData(obj);

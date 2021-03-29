@@ -32,9 +32,8 @@ CGameObject * CRaycast::RayCast(vector3 origin, vector3 direction, _float maxDis
 		_float tMin = 0;
 		_float tMax = maxDistance;
 
-		// 36 ~ 57행 설명좀
-		vector3 minPos = vector3(-0.5f, -0.5f, -0.5f);
-		vector3 maxPos = vector3(0.5f, 0.5f, 0.5f);
+		vector3 minPos = (object->GetScale() * 0.5f) * -1;
+		vector3 maxPos = (object->GetScale() * 0.5f);
 
 		D3DXVec3TransformCoord(&minPos, &minPos, &object->GetWorldMatrix());
 		D3DXVec3TransformCoord(&maxPos, &maxPos, &object->GetWorldMatrix());
@@ -82,9 +81,8 @@ CGameObject * CRaycast::RayCast(vector3 origin, vector3 direction, _float maxDis
 		_float tMin = 0;
 		_float tMax = maxDistance;
 
-		// 36 ~ 57행 설명좀
-		vector3 minPos = vector3(-0.5f, -0.5f, -0.5f); // 이건 충돌판정을 하기위한 것인가?
-		vector3 maxPos = vector3(0.5f, 0.5f, 0.5f);
+		vector3 minPos = (object->GetScale() * 0.5f) * -1; 
+		vector3 maxPos = (object->GetScale() * 0.5f);
 
 		D3DXVec3TransformCoord(&minPos, &minPos, &object->GetWorldMatrix());
 		D3DXVec3TransformCoord(&maxPos, &maxPos, &object->GetWorldMatrix());
@@ -119,7 +117,7 @@ CGameObject * CRaycast::RayCast(vector3 origin, vector3 direction, _float maxDis
 _bool CRaycast::RayIntersectCheck(_float rayAxisDir, _float rayAxisStart,
 									   _float aabbAxisMin, _float aabbAxisMax, 
 									   _float& tMin, _float& tMax)
-{ // 여기 부분은 이해가 너무 안가요
+{ 
 	if (abs(rayAxisDir) < EPSILON)
 	{
 		//no hit if origin not within axis

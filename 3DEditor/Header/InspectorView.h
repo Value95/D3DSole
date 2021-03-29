@@ -21,6 +21,9 @@ public:
 	float m_scaleX;
 	float m_scaleY;
 	float m_scaleZ;
+
+	CComboBox m_layerComboBox;
+	CComboBox m_objectKeyComboBox;
 protected:
 	CInspectorView();           // 동적 만들기에 사용되는 protected 생성자입니다.
 	virtual ~CInspectorView();
@@ -45,8 +48,8 @@ public:
 private:
 	afx_msg void InputData();
 public:
-
 	afx_msg void DeleteObject();
+	virtual void OnInitialUpdate();
 };
 
 

@@ -27,11 +27,22 @@ CInspectorView::CInspectorView()
 	, m_scaleY(0)
 	, m_scaleZ(0)
 {
-
 }
 
 CInspectorView::~CInspectorView()
 {
+}
+
+void CInspectorView::OnInitialUpdate()
+{
+	CFormView::OnInitialUpdate();
+
+
+	m_layerComboBox.AddString(TEXT("Camera"));
+	m_layerComboBox.AddString(TEXT("Default"));
+
+	m_objectKeyComboBox.AddString(TEXT("Camera"));
+	m_objectKeyComboBox.AddString(TEXT("Default"));
 }
 
 void CInspectorView::DoDataExchange(CDataExchange* pDX)
@@ -48,6 +59,9 @@ void CInspectorView::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT9, m_scaleX);
 	DDX_Text(pDX, IDC_EDIT8, m_scaleY);
 	DDX_Text(pDX, IDC_EDIT10, m_scaleZ);
+	DDX_Control(pDX, IDC_COMBO1, m_layerComboBox);
+	DDX_Control(pDX, IDC_COMBO2, m_objectKeyComboBox);
+
 }
 
 void CInspectorView::SetData(Engine::CGameObject* gameObject)
@@ -65,12 +79,38 @@ void CInspectorView::SetData(Engine::CGameObject* gameObject)
 	m_scaleX = m_gameObejct->GetScale().x;
 	m_scaleY = m_gameObejct->GetScale().y;
 	m_scaleZ = m_gameObejct->GetScale().z;
+
+	for (int i = 0; i < m_layerComboBox.GetCount(); i++)
+	{
+		CString temp;
+		m_layerComboBox.GetLBText(i, temp);
+		if (temp == m_gameObejct->GetLayerKey().c_str())
+		{
+			m_layerComboBox.SetCurSel(i);
+		}
+	}
+	for (int i = 0; i < m_objectKeyComboBox.GetCount(); i++)
+	{
+		CString temp;
+		m_objectKeyComboBox.GetLBText(i, temp);
+		if (temp == m_gameObejct->GetObjectKey().c_str())
+		{
+			m_objectKeyComboBox.SetCurSel(i);
+		}
+	}
+
 	UpdateData(FALSE);
 }
 
 
 void CInspectorView::InputData()
 {
+	CHierarchyView* hierarchyView = dynamic_cast<CHierarchyView*>(dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd())->m_mainSplitter.GetPane(0, 1));
+	int sel = hierarchyView->m_objectListBox.GetCurSel();
+
+	if (sel == -1)
+		return;
+
 	UpdateData(TRUE);
 	m_gameObejct->GetIsEnabled() = m_enable;
 	m_gameObejct->GetName() = m_name;
@@ -83,10 +123,18 @@ void CInspectorView::InputData()
 	m_gameObejct->SetScaleX(m_scaleX);
 	m_gameObejct->SetScaleY(m_scaleY);
 	m_gameObejct->SetScaleZ(m_scaleZ);
+
+	CString temp;
+	m_objectKeyComboBox.GetLBText(m_objectKeyComboBox.GetCurSel(), temp);
+	std::wstring objectkey = CStringW(temp);
+	m_gameObejct->SetObjectKey(objectkey);
+
+	m_layerComboBox.GetLBText(m_layerComboBox.GetCurSel(), temp);
+	std::wstring layerKey = CStringW(temp);
+	m_gameObejct->SetLayerKey(layerKey);
+
 	UpdateData(FALSE);
 
-	CHierarchyView* hierarchyView = dynamic_cast<CHierarchyView*>(dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd())->m_mainSplitter.GetPane(0, 1));
-	int sel = hierarchyView->m_objectListBox.GetCurSel();
 	// 하이어락키 이름변경
 	hierarchyView->m_objectListBox.DeleteString(sel);
 	hierarchyView->m_objectListBox.InsertString(sel, m_name);
@@ -97,14 +145,18 @@ void CInspectorView::InputData()
 
 void CInspectorView::DeleteObject()
 {
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	m_gameObejct->OnDestroy();
-
 	CHierarchyView* hierarchyView = dynamic_cast<CHierarchyView*>(dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd())->m_mainSplitter.GetPane(0, 1));
+
+	if (hierarchyView->m_objectListBox.GetCurSel() == -1)
+		return;
+
+	m_gameObejct->OnDestroy();
+	//delete(&m_gameObejct);
+	// 오브젝트 삭제
+
 	hierarchyView->m_objectPos.erase(hierarchyView->m_objectPos.begin() + hierarchyView->m_objectListBox.GetCurSel());
 	hierarchyView->m_objectListBox.DeleteString(hierarchyView->m_objectListBox.GetCurSel());
 
-	//delete(&m_gameObejct);
 }
 
 

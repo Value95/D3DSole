@@ -40,6 +40,9 @@
     <Filter Include="01.EditorView\03.FeatureView">
       <UniqueIdentifier>{15958617-d8a6-4082-90a4-8c755f502b3f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04.Prefab">
+      <UniqueIdentifier>{6473a330-8a3d-4589-b2a1-45b28fc46bdf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -93,6 +96,9 @@
     <ClInclude Include="..\Header\3DEditorView.h">
       <Filter>01.EditorView</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\PrefabManager.h">
+      <Filter>04.Prefab</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="3DEditor.cpp">
@@ -130,6 +136,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\3DEditorView.cpp">
       <Filter>01.EditorView</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PrefabManager.cpp">
+      <Filter>04.Prefab</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

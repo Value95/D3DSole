@@ -31,6 +31,7 @@
     <ClInclude Include="..\Header\InspectorView.h" />
     <ClInclude Include="..\Header\MainEditor.h" />
     <ClInclude Include="..\Header\MainFrm.h" />
+    <ClInclude Include="..\Header\PrefabManager.h" />
     <ClInclude Include="..\Header\ProjectView.h" />
     <ClInclude Include="3DEditor.h" />
     <ClInclude Include="Resource.h" />
@@ -47,6 +48,7 @@
     <ClCompile Include="..\Code\InspectorView.cpp" />
     <ClCompile Include="..\Code\MainEditor.cpp" />
     <ClCompile Include="..\Code\MainFrm.cpp" />
+    <ClCompile Include="..\Code\PrefabManager.cpp" />
     <ClCompile Include="..\Code\ProjectView.cpp" />
     <ClCompile Include="3DEditor.cpp" />
     <ClCompile Include="stdafx.cpp">

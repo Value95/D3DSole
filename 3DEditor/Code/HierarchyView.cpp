@@ -32,6 +32,9 @@ void CHierarchyView::DoDataExchange(CDataExchange* pDX)
 void CHierarchyView::SelectObjectClick()
 {
 	// 셀에 맞는 오브젝트 위치값을 가져오고 해당 위치값과 같은 오브젝트를찾는다.
+	if (m_objectListBox.GetCurSel() == -1)
+		return;
+
 	SHARED(Engine::CGameObject) object = Engine::GET_CUR_SCENE->FindObjectPosition(m_objectPos[m_objectListBox.GetCurSel()]);
 
 	CInspectorView* inspectorView = dynamic_cast<CInspectorView*>(dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd())->m_rightSplitter.GetPane(0, 0));
