@@ -150,10 +150,8 @@ void CInspectorView::DeleteObject()
 	if (hierarchyView->m_objectListBox.GetCurSel() == -1)
 		return;
 
-	std::unordered_map<std::wstring, SHARED(Engine::CLayer)> layers = Engine::CSceneManager::GetInstance()->GetCurScene()->GetLayers();
 	SHARED(Engine::CGameObject) object = Engine::GET_CUR_SCENE->FindObjectPosition(m_gameObejct->GetPosition());
 	object->SetIsNeedToBeDeleted(true);
-	object.reset();
 
 	hierarchyView->m_objectPos.erase(hierarchyView->m_objectPos.begin() + hierarchyView->m_objectListBox.GetCurSel());
 	hierarchyView->m_objectListBox.DeleteString(hierarchyView->m_objectListBox.GetCurSel());

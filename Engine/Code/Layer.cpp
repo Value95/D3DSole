@@ -29,6 +29,7 @@ void CLayer::Awake(void)
 
 void CLayer::Start(void)
 {
+
 }
 
 _uint CLayer::FixedUpdate(void)
@@ -51,18 +52,12 @@ _uint CLayer::Update(void)
 {
 	_uint event = NO_EVENT;	
 
-	if (m_name == L"EventBlock")
-	{
-		int i = 0;
-	}
-	
-
 	for (auto& it = m_vGameObjects.begin(); it != m_vGameObjects.end();)
 	{
 
 		if ((*it)->GetIsNeedToBeDeleted())
 		{
-			it->reset();	
+			it->reset(); // 여기가 문제
 			it = m_vGameObjects.erase(it);
 		}
 		else
@@ -101,7 +96,7 @@ _uint CLayer::LateUpdate(void)
 
 void CLayer::OnDestroy(void)
 {
-	m_vGameObjects.clear();
+	m_vGameObjects.clear(); // 여기가 문제
 	m_vGameObjects.shrink_to_fit();
 }
 

@@ -146,7 +146,6 @@ void CDongilScene::InitLayers(void)
 {
 	AddLayer(L"Camera");
 	AddLayer(L"Player");
-	AddLayer(L"NormalBlock");
 	AddLayer(L"EventBlock");
 	AddLayer(L"Default");
 }

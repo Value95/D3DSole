@@ -97,6 +97,8 @@ CGameObject * CRaycast::RayCast(vector3 origin, vector3 direction, _float maxDis
 			}
 		}
 
+		// D3DXIntersectTri
+
 		if (!RayIntersectCheck(direction.x, origin.x, minPos.x, maxPos.x, tMin, tMax))
 			continue;
 		if (!RayIntersectCheck(direction.y, origin.y, minPos.y, maxPos.y, tMin, tMax))

@@ -34,7 +34,7 @@ void CEditorScene::Start(void)
 	hierarchyView = dynamic_cast<CHierarchyView*>(m_main->m_mainSplitter.GetPane(0, 1));
 	inspectorView = dynamic_cast<CInspectorView*>(m_main->m_rightSplitter.GetPane(0, 0));
 
-	m_pMainCamera = Engine::ADD_CLONE(L"Camera", L"Camera", false)->GetComponent<Engine::CCameraComponent>();
+	m_pMainCamera = Engine::ADD_CLONE(L"Camera", L"Camera", true)->GetComponent<Engine::CCameraComponent>();
 }
 
 _uint CEditorScene::FixedUpdate(void)
@@ -48,6 +48,8 @@ _uint CEditorScene::FixedUpdate(void)
 
 _uint CEditorScene::Update(void)
 {
+	std::unordered_map<std::wstring, SHARED(Engine::CLayer)> layer = Engine::CSceneManager::GetInstance()->GetCurScene()->GetLayers();
+
 	_uint event = NO_EVENT;
 	if (event = __super::Update())
 		return event;
@@ -56,6 +58,7 @@ _uint CEditorScene::Update(void)
 	ObjectCreate();
 	ObjectPicking();
 
+	
 	return event;
 }
 
@@ -92,19 +95,18 @@ void CEditorScene::InitLayers(void)
 
 void CEditorScene::InitPrototypes(void)
 {
-	SHARED(Engine::CGameObject) camera = Engine::CGameObject::Create(L"Camera", L"Camera", false);
+	SHARED(Engine::CGameObject) camera = Engine::CGameObject::Create(L"Camera", L"Camera", true);
 	camera->SetPosition(vector3(0, 0, -5));
 	camera->AddComponent<Engine::CCameraComponent>();
 	Engine::CObjectFactory::GetInstance()->AddPrototype(camera);
 
-	SHARED(Engine::CGameObject) default = Engine::CGameObject::Create(L"Default", L"Default", false);
+	SHARED(Engine::CGameObject) default = Engine::CGameObject::Create(L"Default", L"Default", true);
 	default->SetPosition(vector3(0, 0, 0));
 	default->SetScale(vector3One);
 	default->SetRotation(vector3Zero);
 	default->AddComponent<Engine::CGraphicsComponent>();
 	default->AddComponent<Engine::CTextureComponent>();
 	default->AddComponent<Engine::CMeshComponent>();
-	default->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(1, 1, 1), vector3Zero));
 	Engine::CObjectFactory::GetInstance()->AddPrototype(default);
 }
 
@@ -143,7 +145,7 @@ void CEditorScene::ObjectCreate()
 			return;
 		}
 
-		SHARED(Engine::CGameObject) pObj = Engine::ADD_CLONE(L"Default", L"Default", false);
+		SHARED(Engine::CGameObject) pObj = Engine::ADD_CLONE(L"Default", L"Default", true);
 		pObj->SetName(wMessKey);
 		pObj->GetComponent<Engine::CMeshComponent>()->SetMeshKey(wMessKey);
 		pObj->GetComponent<Engine::CTextureComponent>()->SetTextureKey(wTextureKey);

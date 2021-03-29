@@ -56,11 +56,11 @@ _uint CScene::Update(void)
 {
 	_uint event = 0;	
 
+	if (m_mLayers.empty())
+		return event;
+
 	for (auto& layer : m_mLayers)
 	{
-		if (m_mLayers.empty())
-			return event;
-
 		if (event = layer.second->Update())
 			return event;
 	}
