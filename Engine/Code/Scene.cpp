@@ -131,6 +131,20 @@ SHARED(CGameObject) CScene::FindObjectPosition(vector3 position)
 	return nullptr;
 }
 
+void CScene::AllDelete()
+{
+	for (auto& layer : m_mLayers)
+	{
+		for (auto& gameObject : layer.second->GetGameObjects())
+		{
+			if (gameObject->GetLayerKey() == L"Camera")
+				continue;
+
+			gameObject->SetIsNeedToBeDeleted(true);
+		}
+	}
+}
+
 _uint CScene::FindObjectsWithKey(std::wstring objectKey, std::vector<SHARED(CGameObject)>& gameObjects)
 {
 	for (auto& layer : m_mLayers)

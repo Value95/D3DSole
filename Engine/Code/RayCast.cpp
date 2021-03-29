@@ -89,7 +89,7 @@ CGameObject * CRaycast::RayCast(vector3 origin, vector3 direction, _float maxDis
 
 		for (int i = 0; i < 3; ++i)
 		{
-			if (minPos[i] > maxPos[i]) // 이건 왜하는거지? 
+			if (minPos[i] > maxPos[i])
 			{
 				_float temp = minPos[i];
 				minPos[i] = maxPos[i];

@@ -1,4 +1,4 @@
-#include "EngineStdafx.h"
+	#include "EngineStdafx.h"
 #include "Layer.h"
 #include "GameObject.h"
 #include "Scene.h"
@@ -62,7 +62,7 @@ _uint CLayer::Update(void)
 
 		if ((*it)->GetIsNeedToBeDeleted())
 		{
-			it->reset();			
+			it->reset();	
 			it = m_vGameObjects.erase(it);
 		}
 		else

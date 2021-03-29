@@ -152,7 +152,7 @@ void CEditorScene::ObjectCreate()
 		Engine::CGameObject* obj = Engine::CRaycast::RayCast(m_pMainCamera->GetOwner()->GetPosition(), Engine::AtDirectine(vector3Forward, m_pMainCamera->GetOwner()->GetRotation()), 100, L"Default", outHit);
 		if (obj != nullptr)
 		{
-			pObj->SetPosition(m_pMainCamera->GetOwner()->ReturnTranslate(outHit));
+			pObj->SetPosition(m_pMainCamera->GetOwner()->ReturnTranslate(vector3(0, 0, 5)));
 		}
 		else
 		{

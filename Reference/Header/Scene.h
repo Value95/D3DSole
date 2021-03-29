@@ -38,6 +38,7 @@ public:
 	SHARED(CGameObject) FindObjectByName(std::wstring name);
 	SHARED(CGameObject)	FindObjectWithKey(std::wstring objectKey);
 	SHARED(CGameObject)	FindObjectPosition(vector3 position);
+	void AllDelete();
 	_uint FindObjectsWithKey(std::wstring objectKey, std::vector<SHARED(CGameObject)>& gameObjects);
 
 protected:

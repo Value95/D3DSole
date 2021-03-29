@@ -72,9 +72,7 @@ void CFeatureView::Save()
 					continue;
 
 				WriteFile(hFile, &gameObject->GetName(), sizeof(std::wstring), &dwByte, nullptr);
-
 				WriteFile(hFile, &gameObject->GetLayerKey(), sizeof(std::wstring), &dwByte, nullptr);
-
 				WriteFile(hFile, &gameObject->GetObjectKey(), sizeof(std::wstring), &dwByte, nullptr);
 
 				WriteFile(hFile, &gameObject->GetIsEnabled(), sizeof(bool), &dwByte, nullptr); // 활성화/비활성화
@@ -86,8 +84,6 @@ void CFeatureView::Save()
 
 			}
 		}
-
-		
 		
 		CloseHandle(hFile);
 	}
@@ -124,7 +120,11 @@ void CFeatureView::Load()
 		CHierarchyView* hierarchyView = dynamic_cast<CHierarchyView*>(dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd())->m_mainSplitter.GetPane(0, 1));
 		hierarchyView->m_objectListBox.ResetContent();
 		hierarchyView->m_objectPos.clear();
-		while (true)
+
+		// 모든 오브젝트 날려야한다.
+		Engine::CSceneManager::GetInstance()->GetCurScene()->AllDelete();
+
+		/*while (true)
 		{
 			SHARED(Engine::CGameObject) obj = Engine::ADD_CLONE(L"Default", L"Default", false);
  
@@ -141,14 +141,15 @@ void CFeatureView::Load()
 
 			if (0 == dwByte)
 			{
-				obj->OnDestroy();
-				// 오브젝트 삭제
+				SHARED(Engine::CGameObject) object = Engine::GET_CUR_SCENE->FindObjectPosition(obj->GetPosition());
+				object->SetIsNeedToBeDeleted(true);
+				object.reset(); // 지워도 레이어에서 지워지지않음
 				break;
 			}
 			hierarchyView->m_objectListBox.AddString(obj.get()->GetName().c_str());
 			hierarchyView->m_objectPos.emplace_back(obj.get()->GetPosition());
-
-		}
+			
+		}*/
 		CloseHandle(hFile);
 	}
 }

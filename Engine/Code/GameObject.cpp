@@ -11,12 +11,10 @@ CGameObject::CGameObject(void)
 CGameObject::CGameObject(const CGameObject & other)
 	: m_isClone(true)
 {
-	OnDestroy();
 }
 
 CGameObject::~CGameObject(void)
 {
-	OnDestroy();
 }
 
 SHARED(CGameObject) CGameObject::Create(std::wstring layerKey, 
@@ -138,7 +136,7 @@ void CGameObject::OnDestroy(void)
 	for (auto& component : m_mComponents)
 		component.second->SetOwner(nullptr);
 
-	m_mComponents.clear();
+	//m_mComponents.clear();
 }
 
 void CGameObject::OnEnable(void)
