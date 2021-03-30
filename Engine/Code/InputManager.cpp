@@ -127,6 +127,8 @@ void CInputManager::KeyUpdate(void)
 		m_key |= KEY_Q;
 	if (GetAsyncKeyState('X') & 0x8000)
 		m_key |= KEY_X;
+	if (GetAsyncKeyState('E') & 0x8000)
+		m_key |= KEY_E;
 }
 
 void CInputManager::MouseUpdate(void)

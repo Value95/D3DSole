@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "3DEditor.h"
 #include "InspectorView.h"
+#include "EditorScene.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -145,7 +146,8 @@ void CInspectorView::InputData()
 
 void CInspectorView::DeleteObject()
 {
-	CHierarchyView* hierarchyView = dynamic_cast<CHierarchyView*>(dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd())->m_mainSplitter.GetPane(0, 1));
+	CMainFrame* mainView = dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd());
+	CHierarchyView* hierarchyView = dynamic_cast<CHierarchyView*>(mainView->m_mainSplitter.GetPane(0, 1));
 
 	if (hierarchyView->m_objectListBox.GetCurSel() == -1)
 		return;
@@ -153,6 +155,7 @@ void CInspectorView::DeleteObject()
 	SHARED(Engine::CGameObject) object = Engine::GET_CUR_SCENE->FindObjectPosition(m_gameObejct->GetPosition());
 	object->SetIsNeedToBeDeleted(true);
 
+	dynamic_cast<CEditorScene*>(Engine::GET_CUR_SCENE.get())->SetPickingObject(nullptr);
 	hierarchyView->m_objectPos.erase(hierarchyView->m_objectPos.begin() + hierarchyView->m_objectListBox.GetCurSel());
 	hierarchyView->m_objectListBox.DeleteString(hierarchyView->m_objectListBox.GetCurSel());
 

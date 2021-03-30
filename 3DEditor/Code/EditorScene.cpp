@@ -57,7 +57,7 @@ _uint CEditorScene::Update(void)
 	Camera();
 	ObjectCreate();
 	ObjectPicking();
-
+	ObjectMove();
 	
 	return event;
 }
@@ -112,7 +112,10 @@ void CEditorScene::InitPrototypes(void)
 
 void CEditorScene::Camera()
 {
-	m_pMainCamera->CameraMove();
+	if(!Engine::IMKEY_PRESS(KEY_LBUTTON))
+	{
+		m_pMainCamera->CameraMove();
+	}
 
 	if (Engine::IMKEY_PRESS(KEY_RBUTTON))
 	{
@@ -128,38 +131,61 @@ void CEditorScene::Camera()
 
 void CEditorScene::ObjectCreate()
 {
+	if (Engine::IMKEY_PRESS(KEY_LBUTTON))
+	{
+		return;
+	}
+
 	if (Engine::IMKEY_DOWN(KEY_Q))
 	{
+		_bool enable = true;;
 		CString cMessKey, cTextureKey;
+		std::wstring wMessKey, wTextureKey;
+		std::wstring name = L"GameObejct";
+		std::wstring layerKey = L"Default", objectKey = L"Default";
+		vector3 rotation = vector3Zero;
+		vector3 scale = vector3One;
+
+		PrefabData TprefabData;
+
 		m_projectView->m_messList.GetText(m_projectView->m_messList.GetCurSel(), cMessKey);
 		m_projectView->m_textureList.GetText(m_projectView->m_textureList.GetCurSel(), cTextureKey);
 
-		// 오브젝트 생성
-		std::wstring wMessKey, wTextureKey;
-
-		wMessKey = CStringW(cMessKey);
-		wTextureKey = CStringW(cTextureKey);
-
-		if (cMessKey == L"Default" || cTextureKey == L"Default")
+		if (cMessKey == L"Default" || cTextureKey == L"Default") // 만약 메쉬랑 텍스쳐가 설정되어있지 않다면
 		{
-			return;
+			int sel = m_projectView->m_prefabList.GetCurSel();
+			if (sel != -1) // 프리팹이 설정되어있다면 프리팹을
+			{
+				TprefabData = CPrefabManager::GetInstance()->GetPrefabData()[sel];
+				enable = TprefabData.enable;
+				name = TprefabData.name;
+				layerKey = TprefabData.layerKey;
+				objectKey = TprefabData.objectKey;
+				cMessKey = TprefabData.messKey.c_str();
+				cTextureKey = TprefabData.textureKey.c_str();
+				rotation = TprefabData.rotation;
+				scale = TprefabData.scale;
+			}
+			else // 아니면 그냥 리턴
+				return;
 		}
 
-		SHARED(Engine::CGameObject) pObj = Engine::ADD_CLONE(L"Default", L"Default", true);
-		pObj->SetName(wMessKey);
+		
+		wMessKey = CStringW(cMessKey);
+		wTextureKey = CStringW(cTextureKey);
+		// 오브젝트 생성--------------------------------------------------
+
+
+		SHARED(Engine::CGameObject) pObj = Engine::ADD_CLONE(layerKey, objectKey, true);
+		pObj->SetIsEnabled(enable);
+		pObj->SetName(name);
 		pObj->GetComponent<Engine::CMeshComponent>()->SetMeshKey(wMessKey);
 		pObj->GetComponent<Engine::CTextureComponent>()->SetTextureKey(wTextureKey);
 
-		vector3 outHit;
-		Engine::CGameObject* obj = Engine::CRaycast::RayCast(m_pMainCamera->GetOwner()->GetPosition(), Engine::AtDirectine(vector3Forward, m_pMainCamera->GetOwner()->GetRotation()), 100, L"Default", outHit);
-		if (obj != nullptr)
-		{
-			pObj->SetPosition(m_pMainCamera->GetOwner()->ReturnTranslate(vector3(0, 0, 5)));
-		}
-		else
-		{
-			pObj->SetPosition(m_pMainCamera->GetOwner()->ReturnTranslate(vector3(0, 0, 5)));
-		}
+		pObj->SetPosition(m_pMainCamera->GetOwner()->ReturnTranslate(vector3(0, 0, 5)));
+		pObj->SetRotation(rotation);
+		pObj->SetScale(scale);
+
 		inspectorView->SetData(pObj.get());
 
 		hierarchyView->m_objectListBox.AddString(pObj.get()->GetName().c_str());
@@ -167,6 +193,7 @@ void CEditorScene::ObjectCreate()
 	}
 
 }
+
 void CEditorScene::ObjectPicking()
 {
 	if (Engine::IMKEY_DOWN(KEY_LBUTTON))
@@ -219,12 +246,62 @@ void CEditorScene::ObjectPicking()
 				if (Engine::Dropdecimalpoint(hierarchyView->m_objectPos[i].x, 1000) == Engine::Dropdecimalpoint(obj->GetPosition().x,1000) &&
 					Engine::Dropdecimalpoint(hierarchyView->m_objectPos[i].y, 1000) == Engine::Dropdecimalpoint(obj->GetPosition().y, 1000))
 				{
-					hierarchyView->m_objectListBox.SetCurSel(i);
+					m_pickingObject = obj;
+					m_pickNumber = i;
+					hierarchyView->m_objectListBox.SetCurSel(m_pickNumber);
 					return;
 				}
 			}
 		}
 	}
 
+}
+
+void CEditorScene::ObjectMove()
+{
+	if (m_pickingObject == nullptr)
+		return;
+
+	if (Engine::IMKEY_PRESS(KEY_LBUTTON))
+	{
+		// 오브젝트의 X,Y,Z의 맞는 화살표 표시해주기
+
+		_float speed = 10.f;
+		if (Engine::IMKEY_PRESS(KEY_SHIFT))
+		{
+			speed = 200;
+		}
+
+		if (Engine::IMKEY_PRESS(KEY_W))
+		{
+			m_pickingObject->Translate(vector3Forward * deltaTime * speed);
+		}
+
+		if (Engine::IMKEY_PRESS(KEY_S))
+		{
+			m_pickingObject->Translate(vector3Back * deltaTime * speed);
+		}
+
+		if (Engine::IMKEY_PRESS(KEY_A))
+		{
+			m_pickingObject->Translate(vector3Left * deltaTime * speed);
+		}
+		if (Engine::IMKEY_PRESS(KEY_D))
+		{
+			m_pickingObject->Translate(vector3Right * deltaTime * speed);
+		}
+		if (Engine::IMKEY_PRESS(KEY_Q))
+		{
+			m_pickingObject->Translate(vector3Up * deltaTime * speed);
+		}
+		if (Engine::IMKEY_PRESS(KEY_E))
+		{
+			m_pickingObject->Translate(vector3Down * deltaTime * speed);
+		}
+	}
+	else
+	{
+		hierarchyView->m_objectPos[m_pickNumber] = m_pickingObject->GetPosition();
+	}
 }
 

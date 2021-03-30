@@ -43,6 +43,7 @@
 #define KEY_Q		33554432
 #define KEY_X		67108864
 #define KEY_LBUTTON	134217728
+#define KEY_E	    268435456
 
 #define _CRTDBG_MAP_ALLOC
 #ifdef _DEBUG

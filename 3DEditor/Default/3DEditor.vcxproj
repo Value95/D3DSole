@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="..\Header\3DEditorDoc.h" />
     <ClInclude Include="..\Header\3DEditorView.h" />
+    <ClInclude Include="..\Header\ColliderManager.h" />
     <ClInclude Include="..\Header\EditorDefine.h" />
     <ClInclude Include="..\Header\EditorExtern.h" />
     <ClInclude Include="..\Header\EditorScene.h" />
@@ -41,6 +42,7 @@
   <ItemGroup>
     <ClCompile Include="..\Code\3DEditorDoc.cpp" />
     <ClCompile Include="..\Code\3DEditorView.cpp" />
+    <ClCompile Include="..\Code\ColliderManager.cpp" />
     <ClCompile Include="..\Code\EditorExtern.cpp" />
     <ClCompile Include="..\Code\EditorScene.cpp" />
     <ClCompile Include="..\Code\FeatureView.cpp" />

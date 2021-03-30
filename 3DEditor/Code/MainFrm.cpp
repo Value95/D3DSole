@@ -90,22 +90,17 @@ void CMainFrame::Dump(CDumpContext& dc) const
 
 BOOL CMainFrame::OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext)
 {
-	//CRect rect;
-	//CPoint pos;
-
-	//GetClientRect(&rect);
-	//pos.x = GetSystemMetrics(SM_CXSCREEN) / 2.0f - rect.Width() / 2.0f;
-	//pos.y = GetSystemMetrics(SM_CYSCREEN) / 2.0f - rect.Height() / 2.0f;;
-
-	//SetWindowPos(NULL, pos.x, pos.y, 0, 0, SWP_NOSIZE);
 
 	/*
-
-	0, 0 | 0, 1 | 0, 2
-	1, 0 | 1, 1 | 1, 2
-
-	*/
-
+	//  -------------------------
+	//  |  left | main  | right |
+	//	|	0,0	|		|		|
+	//	|		|		|	0,0 |
+	//	|-------|	0,1	|--------
+	//	|	1,0	|		|	1,0 |
+	//	|		|		|		|
+	//  -------------------------
+	 */
 	
 	_uint winCX = WINDOWCX;
 	_uint winCY = WINDOWCY;

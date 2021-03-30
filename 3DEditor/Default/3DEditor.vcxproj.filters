@@ -40,7 +40,16 @@
     <Filter Include="01.EditorView\03.FeatureView">
       <UniqueIdentifier>{15958617-d8a6-4082-90a4-8c755f502b3f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04.Prefab">
+    <Filter Include="03.Scene\00.Editor">
+      <UniqueIdentifier>{d8f98a6b-096c-4fd0-9380-155d6477912e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Scene\01.">
+      <UniqueIdentifier>{8df546a7-9f28-4e40-9bff-4e265ec05db0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.ColliderManager">
+      <UniqueIdentifier>{3ff8639d-6ee4-4f74-8dd2-1e1a68b2549a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.PrefabManager">
       <UniqueIdentifier>{6473a330-8a3d-4589-b2a1-45b28fc46bdf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -75,9 +84,6 @@
     <ClInclude Include="..\Header\MainEditor.h">
       <Filter>97.MainEditor</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\EditorScene.h">
-      <Filter>03.Scene</Filter>
-    </ClInclude>
     <ClInclude Include="targetver.h">
       <Filter>99.Default\00.ETC</Filter>
     </ClInclude>
@@ -97,7 +103,13 @@
       <Filter>01.EditorView</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\PrefabManager.h">
-      <Filter>04.Prefab</Filter>
+      <Filter>04.PrefabManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\EditorScene.h">
+      <Filter>03.Scene\00.Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ColliderManager.h">
+      <Filter>05.ColliderManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -115,9 +127,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\MainEditor.cpp">
       <Filter>97.MainEditor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\EditorScene.cpp">
-      <Filter>03.Scene</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ProjectView.cpp">
       <Filter>01.EditorView\00.ProjectView</Filter>
@@ -138,7 +147,13 @@
       <Filter>01.EditorView</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\PrefabManager.cpp">
-      <Filter>04.Prefab</Filter>
+      <Filter>04.PrefabManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\EditorScene.cpp">
+      <Filter>03.Scene\00.Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ColliderManager.cpp">
+      <Filter>05.ColliderManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

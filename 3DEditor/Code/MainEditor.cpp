@@ -1,11 +1,5 @@
 #include "stdafx.h"
 #include "MainEditor.h"
-#include "GraphicsManager.h"
-#include "SceneManager.h"
-#include "InputManager.h"
-#include "ColliderManager.h"
-#include "ObjectFactory.h"
-#include "GameObject.h"
 #include "EditorScene.h"
 
 CMainEditor::CMainEditor()
@@ -105,6 +99,9 @@ void CMainEditor::OnDestroy(void)
 	Engine::CSceneManager::GetInstance()->DestroyInstance();
 	Engine::CObjectFactory::GetInstance()->DestroyInstance();
 	Engine::CColliderManager::GetInstance()->DestroyInstance();
+	Engine::CDataStore::GetInstance()->DestroyInstance();
+	Engine::CMeshStore::GetInstance()->DestroyInstance();
+	Engine::CTextureStore::GetInstance()->DestroyInstance();
 }
 
 void CMainEditor::OnEnable(void)

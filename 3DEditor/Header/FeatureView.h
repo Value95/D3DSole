@@ -31,6 +31,7 @@ public:
 	afx_msg void PrefabCreate();
 	afx_msg void Save();
 	afx_msg void Load();
+	afx_msg void PrefabDelete();
 };
 
 

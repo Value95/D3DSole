@@ -5,10 +5,11 @@ class CEditorScene final : public Engine::CScene
 {
 	SMART_DELETER_REGISTER
 private:
-	_bool m_isPickingMode = false;
-	_bool m_AddFistCubeToListBox = true;
-	class Engine::CGameObject* m_PreSelectedObject = nullptr;
-	class Engine::CGameObject* m_CurSelectedObject = nullptr;
+	Engine::CGameObject* m_PreSelectedObject = nullptr;
+	Engine::CGameObject* m_CurSelectedObject = nullptr;
+
+	Engine::CGameObject* m_pickingObject = nullptr;
+	_int m_pickNumber = -1;
 
 	CMainFrame * m_main;
 	CMy3DEditorView* m_editorView;
@@ -33,10 +34,12 @@ public:
 	virtual void InitLayers(void) override;
 	virtual void InitPrototypes(void) override;
 	
-
+	void SetPickingObject(Engine::CGameObject* value) { m_pickingObject = value; }
+	Engine::CGameObject* GetPickingObject() { return m_pickingObject; }
 private:
 	void Camera();
 	void ObjectCreate();
 	void ObjectPicking();
+	void ObjectMove();
 };
 

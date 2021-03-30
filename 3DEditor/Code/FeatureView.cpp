@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "3DEditor.h"
 #include "FeatureView.h"
+#include "EditorScene.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -27,9 +28,29 @@ void CFeatureView::DoDataExchange(CDataExchange* pDX)
 
 void CFeatureView::PrefabCreate()
 {
-	// 하이어락키에 셋팅된 게임오브젝트의 속성값을 프리팹한테 넘겨준다.
-	// 프리팹에 이름을 프로젝트뷰에 m_prefabList에 등록해준다.
-	// 프리팹 삭제도 만들어야된다.
+	Engine::CGameObject* Tobject;
+	Tobject = dynamic_cast<CEditorScene*>(Engine::GET_CUR_SCENE.get())->GetPickingObject();
+
+	if (Tobject == nullptr)
+		return;
+
+	CPrefabManager::GetInstance()->DataInit(Tobject->GetIsEnabled(), Tobject->GetName(), Tobject->GetLayerKey(), Tobject->GetObjectKey(), Tobject->GetComponent<Engine::CMeshComponent>()->GetMeshKey(),
+		Tobject->GetComponent<Engine::CTextureComponent>()->GetTextureKey(), Tobject->GetRotation(), Tobject->GetScale());
+
+	CProjectView* hierarchyView = dynamic_cast<CProjectView*>(dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd())->m_leftSplitter.GetPane(1, 0));
+	hierarchyView->m_prefabList.AddString(Tobject->GetName().c_str());
+}
+
+void CFeatureView::PrefabDelete()
+{
+	CProjectView* hierarchyView = dynamic_cast<CProjectView*>(dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd())->m_leftSplitter.GetPane(1, 0));
+	int sel = hierarchyView->m_prefabList.GetCurSel();
+
+	if (sel == -1)
+		return;
+
+	hierarchyView->m_prefabList.DeleteString(sel);
+	CPrefabManager::GetInstance()->DataDelete(sel);
 }
 
 
@@ -67,17 +88,16 @@ void CFeatureView::Save()
 				if (gameObject->GetLayerKey() == L"Camera")
 					continue;
 
-				WriteFile(hFile, &gameObject->GetName(), sizeof(std::wstring), &dwByte, nullptr); // 이름
+				/*WriteFile(hFile, &gameObject->GetName(), sizeof(std::wstring), &dwByte, nullptr); // 이름
 				WriteFile(hFile, &gameObject->GetLayerKey(), sizeof(std::wstring), &dwByte, nullptr); // 레이어
 				WriteFile(hFile, &gameObject->GetObjectKey(), sizeof(std::wstring), &dwByte, nullptr); // 오브젝트
 				WriteFile(hFile, &gameObject->GetComponent<Engine::CTextureComponent>()->GetTextureKey(), sizeof(std::wstring), &dwByte, nullptr); // 텍스쳐
-				WriteFile(hFile, &gameObject->GetComponent<Engine::CMeshComponent>()->GetMeshKey(), sizeof(std::wstring), &dwByte, nullptr); // 메쉬
+				WriteFile(hFile, &gameObject->GetComponent<Engine::CMeshComponent>()->GetMeshKey(), sizeof(std::wstring), &dwByte, nullptr); // 메쉬*/
 
 				WriteFile(hFile, &gameObject->GetIsEnabled(), sizeof(bool), &dwByte, nullptr); // 활성화/비활성화
 				WriteFile(hFile, &gameObject->GetPosition(), sizeof(vector3), &dwByte, nullptr); // 위치
 				WriteFile(hFile, &gameObject->GetRotation(), sizeof(vector3), &dwByte, nullptr); // 회전
 				WriteFile(hFile, &gameObject->GetScale(), sizeof(vector3), &dwByte, nullptr); // 크기
-
 			}
 		}
 		
@@ -85,7 +105,6 @@ void CFeatureView::Save()
 	}
 	
 }
-
 
 void CFeatureView::Load()
 {
@@ -125,25 +144,20 @@ void CFeatureView::Load()
 		{
 			SHARED(Engine::CGameObject) obj = Engine::ADD_CLONE(L"Default", L"Default", true);
 
-			ReadFile(hFile, &stringValue, sizeof(std::wstring), &dwByte, nullptr);
-			if(dwByte != 0)
-				obj->SetName(stringValue);
+			/*ReadFile(hFile, &stringValue, sizeof(std::wstring), &dwByte, nullptr);
+			obj->SetName(stringValue);
 
 			ReadFile(hFile, &stringValue, sizeof(std::wstring), &dwByte, nullptr);
-			if (dwByte != 0)
-				obj->SetLayerKey(stringValue);
+			obj->SetLayerKey(stringValue);
 
 			ReadFile(hFile, &stringValue, sizeof(std::wstring), &dwByte, nullptr);
-			if (dwByte != 0)
-				obj->SetObjectKey(stringValue);
+			obj->SetObjectKey(stringValue);
 
 			ReadFile(hFile, &stringValue, sizeof(std::wstring), &dwByte, nullptr);
-			if (dwByte != 0)
-				obj->GetComponent<Engine::CTextureComponent>()->SetTextureKey(stringValue);
+			obj->GetComponent<Engine::CTextureComponent>()->SetTextureKey(stringValue);
 
 			ReadFile(hFile, &stringValue, sizeof(std::wstring), &dwByte, nullptr);
-			if (dwByte != 0)
-				obj->GetComponent<Engine::CMeshComponent>()->SetMeshKey(stringValue);
+			obj->GetComponent<Engine::CMeshComponent>()->SetMeshKey(stringValue);*/
 
 			ReadFile(hFile, &obj->GetIsEnabled(), sizeof(bool), &dwByte, nullptr);
 			ReadFile(hFile, &obj->GetPosition(), sizeof(vector3), &dwByte, nullptr);
@@ -164,11 +178,11 @@ void CFeatureView::Load()
 	}
 }
 
-
 BEGIN_MESSAGE_MAP(CFeatureView, CFormView)
 	ON_BN_CLICKED(IDC_BUTTON6, &CFeatureView::PrefabCreate)
 	ON_BN_CLICKED(IDC_BUTTON1, &CFeatureView::Save)
 	ON_BN_CLICKED(IDC_BUTTON2, &CFeatureView::Load)
+	ON_BN_CLICKED(IDC_BUTTON11, &CFeatureView::PrefabDelete)
 END_MESSAGE_MAP()
 
 

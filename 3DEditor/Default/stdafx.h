@@ -66,6 +66,13 @@
 #include "GameObject.h"
 #include "ObjectFactory.h"
 #include "Raycast.h"
+#include "GraphicsManager.h"
+#include "ColliderManager.h"
+#include "PrefabManager.h"
+
+#include "DataStore.h"
+#include"MeshStore.h"
+#include "TextureStore.h"
 
 using namespace std;
 
