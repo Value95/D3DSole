@@ -321,7 +321,7 @@ void CEditorScene::ObjectMove()
 
 void CEditorScene::ColliderSesting(int value, Engine::CGameObject * object)
 {
-	if (value == -1)
+	if (value == -1 || CColliderManager::GetInstance()->GetColliderData().size() <= value)
 		return;
 
 	if (CColliderManager::GetInstance()->GetColliderData()[value]->colliderType == L"BOX")
