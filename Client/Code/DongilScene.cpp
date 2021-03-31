@@ -52,7 +52,7 @@ void CDongilScene::Start(void)
 		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
 		pObj->SetPosition(vector3(0, 0, 4));
 		pObj->SetScale(vector3(0.5f, 0.5f, 0.5f));
-		pObj->AddComponent<Engine::CBoxComponent>();
+		pObj->AddComponent<Engine::CSphereComponent>();
 	}
 
 	/*{

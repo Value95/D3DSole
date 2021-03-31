@@ -70,6 +70,8 @@ _uint CBoxComponent::PreRender(void)
 	GET_DEVICE->SetTransform(D3DTS_VIEW, &GET_CUR_SCENE->GetMainCamera()->GetViewMatrix());
 	GET_DEVICE->SetTransform(D3DTS_PROJECTION, &GET_CUR_SCENE->GetMainCamera()->GetProjMatrix());
 
+	GET_DEVICE->SetTexture(0, nullptr);
+
 	return _uint();
 }
 

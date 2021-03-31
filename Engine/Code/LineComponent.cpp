@@ -77,30 +77,16 @@ _uint CLineComponent::PreRender(void)
 	if (GetOwner() == nullptr)
 		MSG_BOX(__FILE__, L"Owner is nullptr");
 
-
-	GET_DEVICE->SetStreamSource(0, m_meshDate->vertexBuffer, 0, m_meshDate->vertexSize);
-	GET_DEVICE->SetFVF(m_meshDate->FVF);
-	GET_DEVICE->SetIndices(m_meshDate->indexBuffer);
-
-	if (m_pTexData != nullptr)
-		GET_DEVICE->SetTexture(0, m_pTexData->pTexture);
-	else
-		GET_DEVICE->SetTexture(0, nullptr);
-
 	//ÁÂÇ¥¼ÂÆÃ
-	matrix4x4 identityMatrix;
-	D3DXMatrixIdentity(&identityMatrix);
 	GET_DEVICE->SetTransform(D3DTS_WORLD, &GetOwner()->GetWorldMatrix());
-	GET_DEVICE->SetTransform(D3DTS_VIEW, &identityMatrix);
-	GET_DEVICE->SetTransform(D3DTS_PROJECTION, &GET_CUR_SCENE->GetMainCamera()->GetOrthoMatrix());
+	GET_DEVICE->SetTransform(D3DTS_VIEW, &GET_CUR_SCENE->GetMainCamera()->GetViewMatrix());
+	GET_DEVICE->SetTransform(D3DTS_PROJECTION, &GET_CUR_SCENE->GetMainCamera()->GetProjMatrix());
 
 	return _uint();
 }
 
 _uint CLineComponent::Render(void)
 {
-
-	GET_DEVICE->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, m_meshDate->vertexCount, 0, m_meshDate->faceCount);
 	return _uint();
 }
 

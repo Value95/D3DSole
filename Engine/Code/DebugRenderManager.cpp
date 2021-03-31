@@ -36,6 +36,7 @@ _uint CDebugRendeerManager::PreRender(void)
 {
 	// UI를 렌더할 준비
 	GET_DEVICE->BeginScene();
+
 	return NO_EVENT;
 }
 
