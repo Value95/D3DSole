@@ -7,7 +7,7 @@ void CPrefabManager::OnDestroy()
 {
 }
 
-void CPrefabManager::DataInit(bool enable, std::wstring name, std::wstring layerKey, std::wstring objectKey, std::wstring messKey, std::wstring textureKey, vector3 rotation, vector3 scale)
+void CPrefabManager::DataInit(bool enable, std::wstring name, std::wstring layerKey, std::wstring objectKey, std::wstring messKey, std::wstring textureKey, vector3 rotation, vector3 scale, ColliderData* collider)
 {
 	PrefabData TprefabData;
 	TprefabData.enable = enable;
@@ -18,6 +18,7 @@ void CPrefabManager::DataInit(bool enable, std::wstring name, std::wstring layer
 	TprefabData.textureKey = textureKey;
 	TprefabData.rotation = rotation;
 	TprefabData.scale = scale;
+	TprefabData.collider = collider;
 
 	m_prefabData.emplace_back(TprefabData);
 }

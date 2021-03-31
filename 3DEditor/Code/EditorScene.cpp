@@ -70,7 +70,7 @@ _uint CEditorScene::Update(void)
 	ObjectCreate();
 	ObjectPicking();
 	ObjectMove();
-	
+
 	ColliderSesting(m_pickNumber, m_pickingObject);
 
 	return event;
@@ -125,7 +125,7 @@ void CEditorScene::InitPrototypes(void)
 
 void CEditorScene::Camera()
 {
-	if(!Engine::IMKEY_PRESS(KEY_LBUTTON))
+	if (!Engine::IMKEY_PRESS(KEY_LBUTTON))
 	{
 		m_pMainCamera->CameraMove();
 	}
@@ -159,6 +159,7 @@ void CEditorScene::ObjectCreate()
 		vector3 rotation = vector3Zero;
 		vector3 scale = vector3One;
 
+		ColliderData* Tcollider = new ColliderData();
 		PrefabData TprefabData;
 
 		m_projectView->m_messList.GetText(m_projectView->m_messList.GetCurSel(), cMessKey);
@@ -178,12 +179,17 @@ void CEditorScene::ObjectCreate()
 				cTextureKey = TprefabData.textureKey.c_str();
 				rotation = TprefabData.rotation;
 				scale = TprefabData.scale;
+
+				Tcollider->colliderType = TprefabData.collider->colliderType;
+				Tcollider->offset = TprefabData.collider->offset;
+				Tcollider->boxsize = TprefabData.collider->boxsize;
+				Tcollider->radius = TprefabData.collider->radius;
 			}
 			else // 아니면 그냥 리턴
 				return;
 		}
 
-		
+
 		wMessKey = CStringW(cMessKey);
 		wTextureKey = CStringW(cTextureKey);
 		// 오브젝트 생성--------------------------------------------------
@@ -199,7 +205,7 @@ void CEditorScene::ObjectCreate()
 		pObj->SetRotation(rotation);
 		pObj->SetScale(scale);
 
-		CColliderManager::GetInstance()->SetColliderData(new ColliderData());
+		CColliderManager::GetInstance()->SetColliderData(Tcollider);
 
 		hierarchyView->m_objectListBox.AddString(pObj.get()->GetName().c_str());
 		hierarchyView->m_objectPos.emplace_back(pObj.get()->GetPosition());
@@ -216,7 +222,7 @@ void CEditorScene::ObjectPicking()
 		POINT point;
 		GetCursorPos(&point);
 		vector3		origin;
-		
+
 		if (point.x >= 1056 || point.y >= 648)
 			return;
 
@@ -240,7 +246,7 @@ void CEditorScene::ObjectPicking()
 		// 뷰스페이스 -> 월드
 
 		vector3	rayDir, rayPos;
-		
+
 		rayPos = vector3(0.0f, 0.0f, 0.0f);
 		rayDir = origin - rayPos;
 
@@ -254,9 +260,9 @@ void CEditorScene::ObjectPicking()
 		Engine::CGameObject* obj = Engine::CRaycast::RayCast(rayPos, rayDir, 1000, L"Default");
 		if (obj != nullptr)
 		{
-			for (int i=0; i <= hierarchyView->m_objectPos.size()-1; i++)
+			for (int i = 0; i <= hierarchyView->m_objectPos.size() - 1; i++)
 			{
-				if (Engine::Dropdecimalpoint(hierarchyView->m_objectPos[i].x, 1000) == Engine::Dropdecimalpoint(obj->GetPosition().x,1000) &&
+				if (Engine::Dropdecimalpoint(hierarchyView->m_objectPos[i].x, 1000) == Engine::Dropdecimalpoint(obj->GetPosition().x, 1000) &&
 					Engine::Dropdecimalpoint(hierarchyView->m_objectPos[i].y, 1000) == Engine::Dropdecimalpoint(obj->GetPosition().y, 1000))
 				{
 					m_pickingObject = obj;
@@ -321,7 +327,7 @@ void CEditorScene::ObjectMove()
 
 void CEditorScene::ColliderSesting(int value, Engine::CGameObject * object)
 {
-	if (value == -1 || CColliderManager::GetInstance()->GetColliderData().size() <= value)
+	if (value == -1)
 		return;
 
 	if (CColliderManager::GetInstance()->GetColliderData()[value]->colliderType == L"BOX")

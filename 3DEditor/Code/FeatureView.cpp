@@ -34,13 +34,16 @@ void CFeatureView::DoDataExchange(CDataExchange* pDX)
 void CFeatureView::PrefabCreate() // 橇府普 积己
 {
 	Engine::CGameObject* Tobject;
+	ColliderData* Tcollider;
+
 	Tobject = dynamic_cast<CEditorScene*>(Engine::GET_CUR_SCENE.get())->GetPickingObject();
+	Tcollider = CColliderManager::GetInstance()->GetColliderData()[dynamic_cast<CEditorScene*>(Engine::GET_CUR_SCENE.get())->m_pickNumber];
 
 	if (Tobject == nullptr)
 		return;
 
 	CPrefabManager::GetInstance()->DataInit(Tobject->GetIsEnabled(), Tobject->GetName(), Tobject->GetLayerKey(), Tobject->GetObjectKey(), Tobject->GetComponent<Engine::CMeshComponent>()->GetMeshKey(),
-		Tobject->GetComponent<Engine::CTextureComponent>()->GetTextureKey(), Tobject->GetRotation(), Tobject->GetScale());
+		Tobject->GetComponent<Engine::CTextureComponent>()->GetTextureKey(), Tobject->GetRotation(), Tobject->GetScale(), Tcollider);
 
 	hierarchyView->m_prefabList.AddString(Tobject->GetName().c_str());
 }
@@ -80,7 +83,7 @@ void CFeatureView::Save()
 
 			return;
 		}
-		
+
 		std::unordered_map<std::wstring, SHARED(Engine::CLayer)> layers = Engine::CSceneManager::GetInstance()->GetCurScene()->GetLayers();
 		DWORD dwByte = 0;
 
@@ -103,10 +106,10 @@ void CFeatureView::Save()
 				WriteFile(hFile, &gameObject->GetScale(), sizeof(vector3), &dwByte, nullptr); // 农扁
 			}
 		}
-		
+
 		CloseHandle(hFile);
 	}
-	
+
 }
 
 void CFeatureView::Load()

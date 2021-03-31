@@ -8,18 +8,6 @@ typedef struct tagCubeMap
 	BYTE byOption;
 }CUBEMAP;
 
-typedef struct tagPrefab
-{
-	_bool enable;
-	std::wstring name;
-	std::wstring layerKey;
-	std::wstring objectKey;
-	std::wstring messKey;
-	std::wstring textureKey;
-	vector3 rotation;
-	vector3 scale;
-}PrefabData;
-
 typedef struct tagCollider
 {
 	tagCollider()
@@ -35,5 +23,18 @@ typedef struct tagCollider
 	vector3 boxsize;
 	_float radius;
 }ColliderData;
+
+typedef struct tagPrefab
+{
+	_bool enable;
+	std::wstring name;
+	std::wstring layerKey;
+	std::wstring objectKey;
+	std::wstring messKey;
+	std::wstring textureKey;
+	vector3 rotation;
+	vector3 scale;
+	tagCollider* collider;
+}PrefabData;
 
 #endif

@@ -39,7 +39,8 @@ public:
 		std::wstring messKey,
 		std::wstring textureKey,
 		vector3 rotation,
-		vector3 scale
+		vector3 scale,
+		ColliderData* collider
 	);
 
 	void DataDelete(int value);
