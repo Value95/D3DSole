@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "EditorScene.h"
-
+#include "ColliderManager.h"
 
 CEditorScene::CEditorScene()
 {
@@ -35,6 +35,18 @@ void CEditorScene::Start(void)
 	inspectorView = dynamic_cast<CInspectorView*>(m_main->m_rightSplitter.GetPane(0, 0));
 
 	m_pMainCamera = Engine::ADD_CLONE(L"Camera", L"Camera", true)->GetComponent<Engine::CCameraComponent>();
+
+	{
+		m_box = Engine::CObjectFactory::GetInstance()->AddClone(L"Collider", L"Collider", true);
+		m_box->SetScale(vector3Zero);
+		m_box->AddComponent<Engine::CBoxComponent>();
+	}
+
+	{
+		m_sphere = Engine::CObjectFactory::GetInstance()->AddClone(L"Collider", L"Collider", true);
+		m_sphere->SetScale(vector3Zero);
+		m_sphere->AddComponent<Engine::CSphereComponent>();
+	}
 }
 
 _uint CEditorScene::FixedUpdate(void)
@@ -59,6 +71,8 @@ _uint CEditorScene::Update(void)
 	ObjectPicking();
 	ObjectMove();
 	
+	ColliderSesting(m_pickNumber, m_pickingObject);
+
 	return event;
 }
 
@@ -75,7 +89,6 @@ _uint CEditorScene::LateUpdate(void)
 void CEditorScene::OnDestroy(void)
 {
 	__super::OnDestroy();
-
 }
 
 void CEditorScene::OnEnable(void)
@@ -90,24 +103,24 @@ void CEditorScene::InitLayers(void)
 {
 	AddLayer(L"Camera");
 	AddLayer(L"Default");
-
+	AddLayer(L"Collider");
 }
 
 void CEditorScene::InitPrototypes(void)
 {
 	SHARED(Engine::CGameObject) camera = Engine::CGameObject::Create(L"Camera", L"Camera", true);
-	camera->SetPosition(vector3(0, 0, -5));
 	camera->AddComponent<Engine::CCameraComponent>();
 	Engine::CObjectFactory::GetInstance()->AddPrototype(camera);
 
 	SHARED(Engine::CGameObject) default = Engine::CGameObject::Create(L"Default", L"Default", true);
-	default->SetPosition(vector3(0, 0, 0));
-	default->SetScale(vector3One);
-	default->SetRotation(vector3Zero);
 	default->AddComponent<Engine::CGraphicsComponent>();
 	default->AddComponent<Engine::CTextureComponent>();
 	default->AddComponent<Engine::CMeshComponent>();
 	Engine::CObjectFactory::GetInstance()->AddPrototype(default);
+
+	SHARED(Engine::CGameObject) collider = Engine::CGameObject::Create(L"Collider", L"Collider", true);
+	Engine::CObjectFactory::GetInstance()->AddPrototype(collider);
+
 }
 
 void CEditorScene::Camera()
@@ -186,10 +199,12 @@ void CEditorScene::ObjectCreate()
 		pObj->SetRotation(rotation);
 		pObj->SetScale(scale);
 
-		inspectorView->SetData(pObj.get());
+		CColliderManager::GetInstance()->SetColliderData(new ColliderData());
 
 		hierarchyView->m_objectListBox.AddString(pObj.get()->GetName().c_str());
 		hierarchyView->m_objectPos.emplace_back(pObj.get()->GetPosition());
+
+		inspectorView->SetData(pObj.get());
 	}
 
 }
@@ -239,8 +254,6 @@ void CEditorScene::ObjectPicking()
 		Engine::CGameObject* obj = Engine::CRaycast::RayCast(rayPos, rayDir, 1000, L"Default");
 		if (obj != nullptr)
 		{
-			inspectorView->SetData(obj);
-
 			for (int i=0; i <= hierarchyView->m_objectPos.size()-1; i++)
 			{
 				if (Engine::Dropdecimalpoint(hierarchyView->m_objectPos[i].x, 1000) == Engine::Dropdecimalpoint(obj->GetPosition().x,1000) &&
@@ -249,12 +262,13 @@ void CEditorScene::ObjectPicking()
 					m_pickingObject = obj;
 					m_pickNumber = i;
 					hierarchyView->m_objectListBox.SetCurSel(m_pickNumber);
-					return;
+					break;
 				}
 			}
+
+			inspectorView->SetData(obj);
 		}
 	}
-
 }
 
 void CEditorScene::ObjectMove()
@@ -305,3 +319,20 @@ void CEditorScene::ObjectMove()
 	}
 }
 
+void CEditorScene::ColliderSesting(int value, Engine::CGameObject * object)
+{
+	if (value == -1)
+		return;
+
+	if (CColliderManager::GetInstance()->GetColliderData()[value]->colliderType == L"BOX")
+	{
+		m_box->SetPosition(object->GetPosition() + CColliderManager::GetInstance()->GetColliderData()[value]->offset);
+		m_box->SetScale(CColliderManager::GetInstance()->GetColliderData()[value]->boxsize);
+	}
+	else if (CColliderManager::GetInstance()->GetColliderData()[value]->colliderType == L"SPHERE")
+	{
+		m_sphere->SetPosition(object->GetPosition());
+		vector3 scale = vector3(CColliderManager::GetInstance()->GetColliderData()[value]->radius, CColliderManager::GetInstance()->GetColliderData()[value]->radius, CColliderManager::GetInstance()->GetColliderData()[value]->radius);
+		m_sphere->SetScale(scale);
+	}
+}

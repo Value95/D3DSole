@@ -8,14 +8,20 @@ private:
 	Engine::CGameObject* m_PreSelectedObject = nullptr;
 	Engine::CGameObject* m_CurSelectedObject = nullptr;
 
-	Engine::CGameObject* m_pickingObject = nullptr;
-	_int m_pickNumber = -1;
+
 
 	CMainFrame * m_main;
 	CMy3DEditorView* m_editorView;
 	CProjectView* m_projectView;
 	CHierarchyView* hierarchyView;
 	CInspectorView* inspectorView;
+
+public:
+	Engine::CGameObject* m_pickingObject = nullptr;
+	_int m_pickNumber = -1;
+
+	SHARED(Engine::CGameObject) m_box;
+	SHARED(Engine::CGameObject) m_sphere;
 public:
 	explicit CEditorScene();
 	~CEditorScene();
@@ -36,6 +42,7 @@ public:
 	
 	void SetPickingObject(Engine::CGameObject* value) { m_pickingObject = value; }
 	Engine::CGameObject* GetPickingObject() { return m_pickingObject; }
+	void ColliderSesting(int value, Engine::CGameObject* object);
 private:
 	void Camera();
 	void ObjectCreate();

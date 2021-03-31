@@ -5,6 +5,7 @@
 #include "3DEditor.h"
 #include "InspectorView.h"
 #include "EditorScene.h"
+#include "ColliderManager.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -27,6 +28,13 @@ CInspectorView::CInspectorView()
 	, m_scaleX(0)
 	, m_scaleY(0)
 	, m_scaleZ(0)
+	, m_offsetX(0)
+	, m_offsetY(0)
+	, m_offsetZ(0)
+	, m_boxSizeX(0)
+	, m_boxSizeY(0)
+	, m_boxSizeZ(0)
+	, m_radius(0)
 {
 }
 
@@ -38,12 +46,18 @@ void CInspectorView::OnInitialUpdate()
 {
 	CFormView::OnInitialUpdate();
 
+	m_main = dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd());
+	hierarchyView = dynamic_cast<CHierarchyView*>(m_main->m_mainSplitter.GetPane(0, 1));
 
 	m_layerComboBox.AddString(TEXT("Camera"));
 	m_layerComboBox.AddString(TEXT("Default"));
 
 	m_objectKeyComboBox.AddString(TEXT("Camera"));
 	m_objectKeyComboBox.AddString(TEXT("Default"));
+
+	m_colliderTypeComboBox.AddString(TEXT("Default"));
+	m_colliderTypeComboBox.AddString(TEXT("BOX"));
+	m_colliderTypeComboBox.AddString(TEXT("SPHERE"));
 }
 
 void CInspectorView::DoDataExchange(CDataExchange* pDX)
@@ -62,13 +76,21 @@ void CInspectorView::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT10, m_scaleZ);
 	DDX_Control(pDX, IDC_COMBO1, m_layerComboBox);
 	DDX_Control(pDX, IDC_COMBO2, m_objectKeyComboBox);
-
+	DDX_Text(pDX, IDC_EDIT12, m_offsetX);
+	DDX_Text(pDX, IDC_EDIT11, m_offsetY);
+	DDX_Text(pDX, IDC_EDIT13, m_offsetZ);
+	DDX_Text(pDX, IDC_EDIT15, m_boxSizeX);
+	DDX_Text(pDX, IDC_EDIT14, m_boxSizeY);
+	DDX_Text(pDX, IDC_EDIT16, m_boxSizeZ);
+	DDX_Text(pDX, IDC_EDIT17, m_radius);
+	DDX_Control(pDX, IDC_COMBO3, m_colliderTypeComboBox);
 }
 
-void CInspectorView::SetData(Engine::CGameObject* gameObject)
+void CInspectorView::SetData(Engine::CGameObject* gameObject) // 현재 선택한 오브젝트의 정보를 인스팩터에 표시해주는 함수
 {
 	UpdateData(TRUE);
 	m_gameObejct = gameObject;
+
 	m_enable = m_gameObejct->GetIsEnabled();
 	m_name = m_gameObejct->GetName().c_str();
 	m_positionX = m_gameObejct->GetPosition().x;
@@ -81,9 +103,9 @@ void CInspectorView::SetData(Engine::CGameObject* gameObject)
 	m_scaleY = m_gameObejct->GetScale().y;
 	m_scaleZ = m_gameObejct->GetScale().z;
 
+	CString temp;
 	for (int i = 0; i < m_layerComboBox.GetCount(); i++)
 	{
-		CString temp;
 		m_layerComboBox.GetLBText(i, temp);
 		if (temp == m_gameObejct->GetLayerKey().c_str())
 		{
@@ -92,7 +114,6 @@ void CInspectorView::SetData(Engine::CGameObject* gameObject)
 	}
 	for (int i = 0; i < m_objectKeyComboBox.GetCount(); i++)
 	{
-		CString temp;
 		m_objectKeyComboBox.GetLBText(i, temp);
 		if (temp == m_gameObejct->GetObjectKey().c_str())
 		{
@@ -100,13 +121,38 @@ void CInspectorView::SetData(Engine::CGameObject* gameObject)
 		}
 	}
 
+	// 콜라이더 데이터 띄우기
+	int sel = hierarchyView->m_objectListBox.GetCurSel();
+	if (sel == -1)
+	{
+		UpdateData(FALSE);
+		return;
+	}
+
+	ColliderData* TData = CColliderManager::GetInstance()->GetColliderData()[sel];
+
+	for (int i = 0; i < m_colliderTypeComboBox.GetCount(); i++)
+	{
+		m_colliderTypeComboBox.GetLBText(i, temp);
+		if (TData->colliderType.c_str() == temp)
+		{
+			m_colliderTypeComboBox.SetCurSel(i);
+		}
+	}
+
+	m_offsetX = TData->offset.x;
+	m_offsetY = TData->offset.y;
+	m_offsetZ = TData->offset.z;
+	m_boxSizeX = TData->boxsize.x;
+	m_boxSizeY = TData->boxsize.y;
+	m_boxSizeZ = TData->boxsize.z;
+	m_radius = TData->radius;
+
 	UpdateData(FALSE);
 }
 
-
-void CInspectorView::InputData()
+void CInspectorView::InputData() // 선택된 오브젝트한테 트랜스폼 정보 인풋
 {
-	CHierarchyView* hierarchyView = dynamic_cast<CHierarchyView*>(dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd())->m_mainSplitter.GetPane(0, 1));
 	int sel = hierarchyView->m_objectListBox.GetCurSel();
 
 	if (sel == -1)
@@ -137,34 +183,59 @@ void CInspectorView::InputData()
 	UpdateData(FALSE);
 
 	// 하이어락키 이름변경
-	hierarchyView->m_objectListBox.DeleteString(sel);
-	hierarchyView->m_objectListBox.InsertString(sel, m_name);
-	hierarchyView->m_objectListBox.SetCurSel(sel);
+	hierarchyView->m_objectListBox.DeleteString(sel); // 현재 이름 삭제
+	hierarchyView->m_objectListBox.InsertString(sel, m_name); // 지운셀에 새로운 이름 추가
+	hierarchyView->m_objectListBox.SetCurSel(sel); // 새로운 이름이 추가된셀로 다시 셀번호 설정
+
 	// 하이어락키가 가지고있는 오브젝트의 위치값 변경
 	hierarchyView->m_objectPos[sel] = m_gameObejct->GetPosition();
 }
 
-void CInspectorView::DeleteObject()
+void CInspectorView::InputColliderData()  // 선택된 오브젝트한테 콜라이더 정보 인풋
 {
-	CMainFrame* mainView = dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd());
-	CHierarchyView* hierarchyView = dynamic_cast<CHierarchyView*>(mainView->m_mainSplitter.GetPane(0, 1));
+	int sel = hierarchyView->m_objectListBox.GetCurSel();
+	if (sel == -1)
+		return;
 
-	if (hierarchyView->m_objectListBox.GetCurSel() == -1)
+	UpdateData(TRUE);
+	
+	CColliderManager::GetInstance()->GetColliderData()[sel]->offset.x = m_offsetX;
+	CColliderManager::GetInstance()->GetColliderData()[sel]->offset.y = m_offsetY;
+	CColliderManager::GetInstance()->GetColliderData()[sel]->offset.z = m_offsetZ;
+	CColliderManager::GetInstance()->GetColliderData()[sel]->boxsize.x = m_boxSizeX;
+	CColliderManager::GetInstance()->GetColliderData()[sel]->boxsize.y = m_boxSizeY;
+	CColliderManager::GetInstance()->GetColliderData()[sel]->boxsize.z = m_boxSizeZ;
+	CColliderManager::GetInstance()->GetColliderData()[sel]->radius = m_radius;
+
+	CString temp;
+	m_colliderTypeComboBox.GetLBText(m_colliderTypeComboBox.GetCurSel(), temp);
+	CColliderManager::GetInstance()->GetColliderData()[sel]->colliderType = CStringW(temp);
+
+	UpdateData(FALSE);
+
+}
+
+void CInspectorView::DeleteObject() // 선택된 오브젝트 삭제
+{
+	int sel = hierarchyView->m_objectListBox.GetCurSel();
+	if (sel == -1)
 		return;
 
 	SHARED(Engine::CGameObject) object = Engine::GET_CUR_SCENE->FindObjectPosition(m_gameObejct->GetPosition());
 	object->SetIsNeedToBeDeleted(true);
 
 	dynamic_cast<CEditorScene*>(Engine::GET_CUR_SCENE.get())->SetPickingObject(nullptr);
-	hierarchyView->m_objectPos.erase(hierarchyView->m_objectPos.begin() + hierarchyView->m_objectListBox.GetCurSel());
-	hierarchyView->m_objectListBox.DeleteString(hierarchyView->m_objectListBox.GetCurSel());
+	hierarchyView->m_objectPos.erase(hierarchyView->m_objectPos.begin() + sel);
+	hierarchyView->m_objectListBox.DeleteString(sel);
+
+	CColliderManager::GetInstance()->DataDelete(sel);
 
 }
-
 
 BEGIN_MESSAGE_MAP(CInspectorView, CFormView)
 	ON_BN_CLICKED(IDC_BUTTON1, &CInspectorView::InputData)
 	ON_BN_CLICKED(IDC_BUTTON4, &CInspectorView::DeleteObject)
+	ON_BN_CLICKED(IDC_BUTTON15, &CInspectorView::InputColliderData)
 END_MESSAGE_MAP()
 
 

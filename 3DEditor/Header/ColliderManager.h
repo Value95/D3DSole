@@ -24,11 +24,14 @@ public:
 	}
 
 private:
-	std::vector<PrefabData> m_prefabData;
+	std::vector<ColliderData*> m_colliderData;
 
 private:
 	void OnDestroy();
 public:
+	std::vector<ColliderData*> GetColliderData() { return m_colliderData; }
+	void SetColliderData(ColliderData* value) { m_colliderData.emplace_back(value); }
 
+	void DataDelete(int value);
 };
 

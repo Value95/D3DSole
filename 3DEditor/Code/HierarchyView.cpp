@@ -4,7 +4,7 @@
 #include "stdafx.h"
 #include "3DEditor.h"
 #include "HierarchyView.h"
-
+#include "EditorScene.h"
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -29,19 +29,22 @@ void CHierarchyView::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_LIST1, m_objectListBox);
 }
 
-void CHierarchyView::SelectObjectClick()
+void CHierarchyView::SelectObjectClick() // 셀에 맞는 오브젝트 위치값을 가져오고 해당 위치값과 같은 오브젝트를찾는다.
 {
-	// 셀에 맞는 오브젝트 위치값을 가져오고 해당 위치값과 같은 오브젝트를찾는다.
-	if (m_objectListBox.GetCurSel() == -1)
+	int sel = m_objectListBox.GetCurSel();
+	if (sel == -1)
 		return;
 
-	SHARED(Engine::CGameObject) object = Engine::GET_CUR_SCENE->FindObjectPosition(m_objectPos[m_objectListBox.GetCurSel()]);
+	SHARED(Engine::CGameObject) object = Engine::GET_CUR_SCENE->FindObjectPosition(m_objectPos[sel]);
 
 	CInspectorView* inspectorView = dynamic_cast<CInspectorView*>(dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd())->m_rightSplitter.GetPane(0, 0));
 	inspectorView->SetData(object.get());
 
 	Engine::GET_MAIN_CAM->GetOwner()->SetPosition(object->GetPosition());
 	Engine::GET_MAIN_CAM->GetOwner()->SetPosition(Engine::GET_MAIN_CAM->GetOwner()->ReturnTranslate(vector3(0, 0, -8)));
+
+	dynamic_cast<CEditorScene*>(Engine::GET_CUR_SCENE.get())->m_pickingObject = object.get();
+	dynamic_cast<CEditorScene*>(Engine::GET_CUR_SCENE.get())->m_pickNumber = sel;
 }
 
 BEGIN_MESSAGE_MAP(CHierarchyView, CFormView)

@@ -22,6 +22,14 @@ typedef struct tagPrefab
 
 typedef struct tagCollider
 {
+	tagCollider()
+	{
+		colliderType = L"Default";
+		offset = vector3Zero;
+		boxsize = vector3One;
+		radius = 1.0f;
+	}
+
 	std::wstring colliderType;
 	vector3 offset;
 	vector3 boxsize;

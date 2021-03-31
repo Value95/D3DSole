@@ -7,7 +7,8 @@
 class CFeatureView : public CFormView
 {
 	DECLARE_DYNCREATE(CFeatureView)
-
+private:
+	CProjectView* hierarchyView;
 protected:
 	CFeatureView();           // 동적 만들기에 사용되는 protected 생성자입니다.
 	virtual ~CFeatureView();
@@ -32,6 +33,7 @@ public:
 	afx_msg void Save();
 	afx_msg void Load();
 	afx_msg void PrefabDelete();
+	virtual void OnInitialUpdate();
 };
 
 

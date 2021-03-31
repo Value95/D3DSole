@@ -31,13 +31,21 @@
 #define IDC_COMBO2                      1019
 #define IDC_BUTTON4                     1020
 #define IDC_BUTTON5                     1021
+#define IDC_EDIT11                      1021
 #define IDC_BUTTON6                     1022
+#define IDC_COMBO3                      1022
 #define IDC_BUTTON7                     1023
+#define IDC_EDIT12                      1023
 #define IDC_BUTTON8                     1024
+#define IDC_EDIT13                      1024
 #define IDC_BUTTON9                     1025
+#define IDC_EDIT14                      1025
 #define IDC_BUTTON10                    1026
+#define IDC_EDIT15                      1026
 #define IDC_BUTTON11                    1027
+#define IDC_EDIT16                      1027
 #define IDC_BUTTON12                    1028
+#define IDC_EDIT17                      1028
 #define IDC_BUTTON13                    1029
 #define IDC_BUTTON14                    1030
 #define IDC_BUTTON15                    1031
@@ -73,7 +81,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        315
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1022
+#define _APS_NEXT_CONTROL_VALUE         1023
 #define _APS_NEXT_SYMED_VALUE           314
 #endif
 #endif

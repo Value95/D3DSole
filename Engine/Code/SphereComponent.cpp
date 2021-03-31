@@ -74,7 +74,7 @@ _uint CSphereComponent::PreRender(void)
 
 _uint CSphereComponent::Render(void)
 {
-	D3DXCreateSphere(GET_DEVICE, 0.5f, 10, 10, &m_mesh, NULL); // D3D 함수
+	D3DXCreateSphere(GET_DEVICE, GetOwner()->GetScale().x, GetOwner()->GetScale().y, GetOwner()->GetScale().z, &m_mesh, NULL); // D3D 함수
 
 	m_mesh->DrawSubset(0);
 

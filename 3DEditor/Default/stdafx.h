@@ -69,6 +69,7 @@
 #include "GraphicsManager.h"
 #include "ColliderManager.h"
 #include "PrefabManager.h"
+#include "DebugRendeerManager.h"
 
 #include "DataStore.h"
 #include"MeshStore.h"

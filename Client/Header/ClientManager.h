@@ -8,8 +8,8 @@
 #include "GraphicsManager.h"
 #include "SceneManager.h"
 #include "InputManager.h"
-#include "ColliderManager.h"
 #include "DebugRendeerManager.h"
+#include "ColliderManager.h"
 
 #include "WndApp.h"
 #include "FRC.h"

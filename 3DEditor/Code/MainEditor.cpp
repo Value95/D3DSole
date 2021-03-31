@@ -72,7 +72,8 @@ _uint CMainEditor::PreRender(void)
 {
 	_uint event = NO_EVENT;
 	if (event = Engine::CGraphicsManager::GetInstance()->PreRender())	return event;
-	
+	if (event = Engine::CDebugRendeerManager::GetInstance()->PreRender())	return event;
+
 
 	return event;
 }
@@ -81,6 +82,8 @@ _uint CMainEditor::Render(void)
 {
 	_uint event = NO_EVENT;
 	if (event = Engine::CGraphicsManager::GetInstance()->Render())	return event;
+	if (event = Engine::CDebugRendeerManager::GetInstance()->Render())	return event;
+
 	return event;
 }
 
@@ -88,6 +91,7 @@ _uint CMainEditor::PostRender(void)
 {
 	_uint event = NO_EVENT;
 	if (event = Engine::CGraphicsManager::GetInstance()->PostRender())	return event;
+	if (event = Engine::CDebugRendeerManager::GetInstance()->PostRender())	return event;
 
 	return event;
 }
@@ -98,10 +102,10 @@ void CMainEditor::OnDestroy(void)
 	Engine::CInputManager::GetInstance()->DestroyInstance();
 	Engine::CSceneManager::GetInstance()->DestroyInstance();
 	Engine::CObjectFactory::GetInstance()->DestroyInstance();
-	Engine::CColliderManager::GetInstance()->DestroyInstance();
 	Engine::CDataStore::GetInstance()->DestroyInstance();
 	Engine::CMeshStore::GetInstance()->DestroyInstance();
 	Engine::CTextureStore::GetInstance()->DestroyInstance();
+	Engine::CDebugRendeerManager::DestroyInstance();
 }
 
 void CMainEditor::OnEnable(void)

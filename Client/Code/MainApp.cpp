@@ -126,6 +126,7 @@ void CMainApp::OnDestroy(void)
 	Engine::CObjectFactory::GetInstance()->DestroyInstance();
 	Engine::CColliderManager::GetInstance()->DestroyInstance();
 	Engine::CSoundManager::GetInstance()->DestroyInstance();
+	Engine::CDebugRendeerManager::DestroyInstance();
 }
 
 void CMainApp::OnEnable(void)

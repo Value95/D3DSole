@@ -22,8 +22,20 @@ public:
 	float m_scaleY;
 	float m_scaleZ;
 
+	float m_offsetX;
+	float m_offsetY;
+	float m_offsetZ;
+	float m_boxSizeX;
+	float m_boxSizeY;
+	float m_boxSizeZ;
+	float m_radius;
+
 	CComboBox m_layerComboBox;
 	CComboBox m_objectKeyComboBox;
+	CComboBox m_colliderTypeComboBox;
+
+	CMainFrame* m_main;
+	CHierarchyView* hierarchyView;
 protected:
 	CInspectorView();           // 동적 만들기에 사용되는 protected 생성자입니다.
 	virtual ~CInspectorView();
@@ -50,6 +62,7 @@ private:
 public:
 	afx_msg void DeleteObject();
 	virtual void OnInitialUpdate();
+	afx_msg void InputColliderData();
 };
 
 

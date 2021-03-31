@@ -7,8 +7,6 @@
 #define new DEBUG_NEW
 #endif
 
-// CFeatureView
-
 IMPLEMENT_DYNCREATE(CFeatureView, CFormView)
 
 CFeatureView::CFeatureView()
@@ -21,12 +19,19 @@ CFeatureView::~CFeatureView()
 {
 }
 
+void CFeatureView::OnInitialUpdate()
+{
+	CFormView::OnInitialUpdate();
+
+	hierarchyView = dynamic_cast<CProjectView*>(dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd())->m_leftSplitter.GetPane(1, 0));
+}
+
 void CFeatureView::DoDataExchange(CDataExchange* pDX)
 {
 	CFormView::DoDataExchange(pDX);
 }
 
-void CFeatureView::PrefabCreate()
+void CFeatureView::PrefabCreate() // 橇府普 积己
 {
 	Engine::CGameObject* Tobject;
 	Tobject = dynamic_cast<CEditorScene*>(Engine::GET_CUR_SCENE.get())->GetPickingObject();
@@ -37,13 +42,11 @@ void CFeatureView::PrefabCreate()
 	CPrefabManager::GetInstance()->DataInit(Tobject->GetIsEnabled(), Tobject->GetName(), Tobject->GetLayerKey(), Tobject->GetObjectKey(), Tobject->GetComponent<Engine::CMeshComponent>()->GetMeshKey(),
 		Tobject->GetComponent<Engine::CTextureComponent>()->GetTextureKey(), Tobject->GetRotation(), Tobject->GetScale());
 
-	CProjectView* hierarchyView = dynamic_cast<CProjectView*>(dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd())->m_leftSplitter.GetPane(1, 0));
 	hierarchyView->m_prefabList.AddString(Tobject->GetName().c_str());
 }
 
-void CFeatureView::PrefabDelete()
+void CFeatureView::PrefabDelete() // 橇府普 昏力
 {
-	CProjectView* hierarchyView = dynamic_cast<CProjectView*>(dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd())->m_leftSplitter.GetPane(1, 0));
 	int sel = hierarchyView->m_prefabList.GetCurSel();
 
 	if (sel == -1)
