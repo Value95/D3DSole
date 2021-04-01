@@ -68,20 +68,13 @@ _uint CMainEditor::LateUpdate(void)
 	return event;
 }
 
-_uint CMainEditor::PreRender(void)
-{
-	_uint event = NO_EVENT;
-	if (event = Engine::CGraphicsManager::GetInstance()->PreRender())	return event;
-	if (event = Engine::CDebugRendeerManager::GetInstance()->PreRender())	return event;
-
-
-	return event;
-}
-
 _uint CMainEditor::Render(void)
 {
 	_uint event = NO_EVENT;
+	if (event = Engine::CGraphicsManager::GetInstance()->PreRender())	return event;
 	if (event = Engine::CGraphicsManager::GetInstance()->Render())	return event;
+
+	if (event = Engine::CDebugRendeerManager::GetInstance()->PreRender())	return event;
 	if (event = Engine::CDebugRendeerManager::GetInstance()->Render())	return event;
 
 	return event;

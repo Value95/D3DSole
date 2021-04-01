@@ -51,11 +51,9 @@ _uint CMainApp::FixedUpdate(void)
 {
 	_uint event = NO_EVENT;
 
-	Engine::TIME_MEASURE_START;
 	if (event = Engine::CGraphicsManager::GetInstance()->FixedUpdate())	return event;
 	if (event = Engine::CInputManager::GetInstance()->FixedUpdate())	return event;
 	if (event = Engine::CSceneManager::GetInstance()->FixedUpdate())	return event;
-	_float time = Engine::GET_ELAPSED_TIME;
 
 	return event;
 }
@@ -64,57 +62,46 @@ _uint CMainApp::Update(void)
 {
 	_uint event = NO_EVENT;
 
-	Engine::TIME_MEASURE_START;
 	if (event = Engine::CGraphicsManager::GetInstance()->Update())	return event;
 	if (event = Engine::CInputManager::GetInstance()->Update())		return event;
 	if (event = Engine::CSceneManager::GetInstance()->Update())		return event;
-	_float time = Engine::GET_ELAPSED_TIME;
 	return event;
 }
 
 _uint CMainApp::LateUpdate(void)
 {
 	_uint event = NO_EVENT;
-	Engine::TIME_MEASURE_START;
 	if (event = Engine::CGraphicsManager::GetInstance()->LateUpdate())	return event;
 	if (event = Engine::CInputManager::GetInstance()->LateUpdate())		return event;
 	if (event = Engine::CSceneManager::GetInstance()->LateUpdate())		return event;
 	if (event = Engine::CColliderManager::GetInstance()->LateUpdate())	return event;
-	_float time = Engine::GET_ELAPSED_TIME;
 	return event;
 }
 
-_uint CMainApp::PreRender(void)
-{
-	_uint event = NO_EVENT;
-	Engine::TIME_MEASURE_START;
-	if (event = Engine::CGraphicsManager::GetInstance()->PreRender())	return event;
-	if (event = Engine::CDebugRendeerManager::GetInstance()->PreRender())	return event;
-	if (event = Engine::CUIManager::GetInstance()->PreRender())	return event;
-	_float time = Engine::GET_ELAPSED_TIME;
 
-	return event;
-}
 
 _uint CMainApp::Render(void)
 {
 	_uint event = NO_EVENT;
-	Engine::TIME_MEASURE_START;
+	
+	if (event = Engine::CGraphicsManager::GetInstance()->PreRender())	return event;
 	if (event = Engine::CGraphicsManager::GetInstance()->Render())	return event;
+
+	if (event = Engine::CDebugRendeerManager::GetInstance()->PreRender())	return event;
 	if (event = Engine::CDebugRendeerManager::GetInstance()->Render())	return event;
+
+	if (event = Engine::CUIManager::GetInstance()->PreRender())	return event;
 	if (event = Engine::CUIManager::GetInstance()->Render())		return event;
-	_float time = Engine::GET_ELAPSED_TIME;
+
 	return event;
 }
 
 _uint CMainApp::PostRender(void)
 {
 	_uint event = NO_EVENT;
-	Engine::TIME_MEASURE_START;
 	if (event = Engine::CGraphicsManager::GetInstance()->PostRender())	return event;
 	if (event = Engine::CDebugRendeerManager::GetInstance()->PostRender())	return event;
 	if (event = Engine::CUIManager::GetInstance()->PostRender())		return event;
-	_float time = Engine::GET_ELAPSED_TIME;
 	return event;
 }
 

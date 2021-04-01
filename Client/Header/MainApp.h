@@ -20,7 +20,6 @@ public:
 	_uint	Update(void);
 	_uint	LateUpdate(void);
 
-	_uint	PreRender(void);
 	_uint	Render(void);
 	_uint	PostRender(void);
 

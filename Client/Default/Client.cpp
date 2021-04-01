@@ -68,7 +68,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 			pMainApp->Update();
 			pMainApp->LateUpdate();
 
-			pMainApp->PreRender();
 			pMainApp->Render();
 			pMainApp->PostRender();
 		}

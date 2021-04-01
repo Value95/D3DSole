@@ -43,14 +43,14 @@
     <Filter Include="03.Scene\00.Editor">
       <UniqueIdentifier>{d8f98a6b-096c-4fd0-9380-155d6477912e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03.Scene\01.">
-      <UniqueIdentifier>{8df546a7-9f28-4e40-9bff-4e265ec05db0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="05.ColliderManager">
       <UniqueIdentifier>{3ff8639d-6ee4-4f74-8dd2-1e1a68b2549a}</UniqueIdentifier>
     </Filter>
     <Filter Include="04.PrefabManager">
       <UniqueIdentifier>{6473a330-8a3d-4589-b2a1-45b28fc46bdf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.NavMeshManager">
+      <UniqueIdentifier>{8df546a7-9f28-4e40-9bff-4e265ec05db0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -111,6 +111,9 @@
     <ClInclude Include="..\Header\ColliderManager.h">
       <Filter>05.ColliderManager</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\NavMeshManager.h">
+      <Filter>06.NavMeshManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="3DEditor.cpp">
@@ -154,6 +157,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\ColliderManager.cpp">
       <Filter>05.ColliderManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\NavMeshManager.cpp">
+      <Filter>06.NavMeshManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

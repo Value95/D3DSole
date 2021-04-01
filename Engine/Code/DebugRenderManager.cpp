@@ -37,6 +37,8 @@ _uint CDebugRendeerManager::PreRender(void)
 	// UI를 렌더할 준비
 	GET_DEVICE->BeginScene();
 
+	GET_DEVICE->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+
 	return NO_EVENT;
 }
 
@@ -44,7 +46,7 @@ _uint CDebugRendeerManager::Render(void)
 {
 	_uint event = NO_EVENT;
 
-	event = BoxRender();
+	event = BoxRender();                  
 	event = SphereRender();
 	event = LineRedner();
 	event = TriangleRendeer();

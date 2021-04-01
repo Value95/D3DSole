@@ -15,7 +15,7 @@ typedef struct tagCollider
 		colliderType = L"Default";
 		offset = vector3Zero;
 		boxsize = vector3One;
-		radius = 1.0f;
+		radius = 0.5f;
 	}
 
 	std::wstring colliderType;
@@ -36,5 +36,10 @@ typedef struct tagPrefab
 	vector3 scale;
 	tagCollider* collider;
 }PrefabData;
+
+typedef struct tagTriangle
+{
+	vector3 point[3];
+}Triangle;
 
 #endif

@@ -77,7 +77,6 @@ void CMy3DEditorView::OnDraw(CDC* /*pDC*/)
 		m_pMainEditor->Update();
 		m_pMainEditor->LateUpdate();
 
-		m_pMainEditor->PreRender();
 		m_pMainEditor->Render();
 		m_pMainEditor->PostRender();
 	}
@@ -188,14 +187,6 @@ void CMy3DEditorView::OnTimer(UINT_PTR nIDEvent)
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
 
 	InvalidateRect(nullptr, FALSE);
-
-	m_pMainEditor->FixedUpdate();
-	m_pMainEditor->Update();
-	m_pMainEditor->LateUpdate();
-
-	m_pMainEditor->PreRender();
-	m_pMainEditor->Render();
-	m_pMainEditor->PostRender();
 
 	CView::OnTimer(nIDEvent);
 }

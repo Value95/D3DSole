@@ -67,6 +67,8 @@ _uint CEditorScene::Update(void)
 		return event;
 
 	Camera();
+
+	// 네브매쉬모드가되면 생성방법 픽킹방법이바뀐다.
 	ObjectCreate();
 	ObjectPicking();
 	ObjectMove();

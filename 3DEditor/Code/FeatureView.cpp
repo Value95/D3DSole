@@ -59,7 +59,6 @@ void CFeatureView::PrefabDelete() // 프리팹 삭제
 	CPrefabManager::GetInstance()->DataDelete(sel);
 }
 
-
 void CFeatureView::Save()
 {
 	CFileDialog Dlg(FALSE,// 저장(FALSE)할 것인지 불러(TRUE)올 것인지

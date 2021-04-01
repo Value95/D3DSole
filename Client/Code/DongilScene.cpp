@@ -50,11 +50,18 @@ void CDongilScene::Start(void)
 
 	{
 		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
-		pObj->SetPosition(vector3(0, 0, 4));
+		pObj->SetPosition(vector3(0, 0, 0));
 		pObj->SetScale(vector3(0.5f, 0.5f, 0.5f));
-		pObj->AddComponent<Engine::CSphereComponent>();
+		pObj->AddComponent<Engine::CLineComponent>()->EndLinePosition(vector3(5,0,5));
 	}
 
+	{
+		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
+		pObj->SetPosition(vector3(0, 0, 4));
+		pObj->SetScale(vector3(0.5f, 0.5f, 0.5f));
+		pObj->AddComponent<Engine::CBoxComponent>();
+	}
+	
 	/*{
 		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
 		pObj->SetPosition(vector3(0, 0, 7));
@@ -115,7 +122,7 @@ _uint CDongilScene::Update(void)
 	if (event = __super::Update())
 		return event;
 	m_pMainCamera->CameraMove();
-
+	m_pMainCamera->CameraRotation();
 	return event;
 }
 

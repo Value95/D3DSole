@@ -2,12 +2,8 @@
 #include "LineComponent.h"
 #include "DeviceManager.h"
 #include "GameObject.h"
-#include "TextureStore.h"
-#include "DataStore.h"
-#include "UIManager.h"
-#include "MeshStore.h"
-
 #include "SceneManager.h"
+#include "DebugRendeerManager.h"
 
 USING(Engine)
 CLineComponent::CLineComponent()  
@@ -27,9 +23,6 @@ SHARED(CComponent) CLineComponent::MakeClone(CGameObject* pObject)
 
 	pClone->SetIsAwaked(m_isAwaked);
 
-	pClone->SetTextureKey(m_textureKey);
-	pClone->SetTexData(m_pTexData);
-
 	return pClone;
 }
 
@@ -42,16 +35,8 @@ void CLineComponent::Awake(void)
 void CLineComponent::Start(SHARED(CComponent) spThis)
 {
 	__super::Start(spThis);
-	//현재 오브젝트가 Static Scene의 오브젝트냐?
-	_bool		isStatic = m_pOwner->GetIsStatic();
-
-	std::wstring layerKey = m_pOwner->GetLayerKey();
-	std::wstring objectKey = m_pOwner->GetObjectKey();
-
-	if ((m_pTexData = CTextureStore::GetInstance()->GetTextureData(m_textureKey)) == nullptr)
-		m_pTexData = CTextureStore::GetInstance()->GetTextureData(L"None");
-
-	m_meshDate = CMeshStore::GetInstance()->GetMeshData(L"Cube");
+	
+	m_linePos[0] = GetOwner()->GetPosition();
 
 	DateInit();
 }
@@ -68,6 +53,8 @@ _uint CLineComponent::Update(SHARED(CComponent) spThis)
 
 _uint CLineComponent::LateUpdate(SHARED(CComponent) spThis)
 {
+	CDebugRendeerManager::GetInstance()->AddToLineRenderList(dynamic_pointer_cast<CLineComponent>(spThis));
+
 	return NO_EVENT;
 }
 
@@ -87,6 +74,15 @@ _uint CLineComponent::PreRender(void)
 
 _uint CLineComponent::Render(void)
 {
+	ID3DXLine* line;
+	D3DXCreateLine(GET_DEVICE, &line);		
+	line->SetWidth(1);
+	line->SetAntialias(true);
+	line->Begin();
+	line->DrawTransform(m_linePos, 2, &(GetOwner()->GetWorldMatrix() * GET_CUR_SCENE->GetMainCamera()->GetViewMatrix() * GET_CUR_SCENE->GetMainCamera()->GetProjMatrix()), D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f));
+	line->End();
+	line->Release();	
+
 	return _uint();
 }
 
@@ -105,6 +101,11 @@ void CLineComponent::OnEnable(void)
 
 void CLineComponent::OnDisable(void)
 {
+}
+
+void CLineComponent::EndLinePosition(vector3 endLine)
+{
+	m_linePos[1] = endLine;
 }
 
 void CLineComponent::DateInit()
