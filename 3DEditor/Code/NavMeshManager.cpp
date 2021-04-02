@@ -27,7 +27,7 @@ void CNavMeshManager::ObjectCreate()
 
 
 		// 오브젝트 생성--------------------------------------------------
-		SHARED(Engine::CGameObject) pObj = Engine::ADD_CLONE(L"Collider", L"Collider", true);
+		SHARED(Engine::CGameObject) pObj = Engine::ADD_CLONE(L"NavMesh", L"NavMesh", true);
 		pObj->AddComponent<Engine::CSphereComponent>();
 		pObj->SetIsEnabled(enable);
 		pObj->SetName(name);
@@ -84,7 +84,7 @@ Engine::CGameObject* CNavMeshManager::ObjectPicking()
 		D3DXVec3TransformCoord(&rayPos, &rayPos, &matView);
 		D3DXVec3TransformNormal(&rayDir, &rayDir, &matView);
 
-		Engine::CGameObject* obj = Engine::CRaycast::RayCast(rayPos, rayDir, 1000, L"Collider");
+		Engine::CGameObject* obj = Engine::CRaycast::RayCast(rayPos, rayDir, 1000, L"NavMesh");
 		if (obj != nullptr)
 		{
 			CInspectorView* inspectorView = dynamic_cast<CInspectorView*>(dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd())->m_rightSplitter.GetPane(0, 0));

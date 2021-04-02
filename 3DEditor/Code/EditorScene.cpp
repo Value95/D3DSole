@@ -118,6 +118,7 @@ void CEditorScene::InitLayers(void)
 	AddLayer(L"Camera");
 	AddLayer(L"Default");
 	AddLayer(L"Collider");
+	AddLayer(L"NavMesh");
 }
 
 void CEditorScene::InitPrototypes(void)
@@ -135,6 +136,8 @@ void CEditorScene::InitPrototypes(void)
 	SHARED(Engine::CGameObject) collider = Engine::CGameObject::Create(L"Collider", L"Collider", true);
 	Engine::CObjectFactory::GetInstance()->AddPrototype(collider);
 
+	SHARED(Engine::CGameObject) collider = Engine::CGameObject::Create(L"NavMesh", L"NavMesh", true);
+	Engine::CObjectFactory::GetInstance()->AddPrototype(collider);
 }
 
 void CEditorScene::Camera()
@@ -293,7 +296,7 @@ void CEditorScene::ObjectPicking(std::wstring layerKey)
 
 void CEditorScene::ObjectMove()
 {
-	if (m_pickingObject == nullptr)
+	if (m_pickingObject == nullptr || m_pickNumber == -1)
 		return;
 
 	if (Engine::IMKEY_PRESS(KEY_LBUTTON))
