@@ -56,6 +56,9 @@
 #include "FeatureView.h"
 #include "3DEditorView.h"
 
+// Manager
+#include "ColliderManager.h"
+#include "NavMeshManager.h"
 
 //Engine
 #include "DeviceManager.h"
@@ -67,7 +70,6 @@
 #include "ObjectFactory.h"
 #include "Raycast.h"
 #include "GraphicsManager.h"
-#include "ColliderManager.h"
 #include "PrefabManager.h"
 #include "DebugRendeerManager.h"
 

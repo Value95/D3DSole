@@ -121,6 +121,12 @@ void CInspectorView::SetData(Engine::CGameObject* gameObject) // 현재 선택한 오�
 		}
 	}
 
+	if (m_main->m_mode == CMainFrame::Mode::NavMesh)
+	{
+		UpdateData(FALSE);
+		return;
+	}
+
 	// 콜라이더 데이터 띄우기
 	int sel = hierarchyView->m_objectListBox.GetCurSel();
 	if (sel == -1)
@@ -155,7 +161,7 @@ void CInspectorView::InputData() // 선택된 오브젝트한테 트랜스폼 정보 인풋
 {
 	int sel = hierarchyView->m_objectListBox.GetCurSel();
 
-	if (sel == -1)
+	if (sel == -1 && m_main->m_mode != CMainFrame::Mode::NavMesh)
 		return;
 
 	UpdateData(TRUE);
@@ -170,6 +176,12 @@ void CInspectorView::InputData() // 선택된 오브젝트한테 트랜스폼 정보 인풋
 	m_gameObejct->SetScaleX(m_scaleX);
 	m_gameObejct->SetScaleY(m_scaleY);
 	m_gameObejct->SetScaleZ(m_scaleZ);
+
+	if (m_main->m_mode == CMainFrame::Mode::NavMesh)
+	{
+		UpdateData(FALSE);
+		return;
+	}
 
 	CString temp;
 	m_objectKeyComboBox.GetLBText(m_objectKeyComboBox.GetCurSel(), temp);
@@ -218,11 +230,16 @@ void CInspectorView::InputColliderData()  // 선택된 오브젝트한테 콜라이더 정보 �
 void CInspectorView::DeleteObject() // 선택된 오브젝트 삭제
 {
 	int sel = hierarchyView->m_objectListBox.GetCurSel();
-	if (sel == -1)
+	if (sel == -1 && m_main->m_mode != CMainFrame::Mode::NavMesh)
 		return;
 
 	SHARED(Engine::CGameObject) object = Engine::GET_CUR_SCENE->FindObjectPosition(m_gameObejct->GetPosition());
 	object->SetIsNeedToBeDeleted(true);
+
+	if (m_main->m_mode == CMainFrame::Mode::NavMesh)
+	{
+		return;
+	}
 
 	dynamic_cast<CEditorScene*>(Engine::GET_CUR_SCENE.get())->SetPickingObject(nullptr);
 	hierarchyView->m_objectPos.erase(hierarchyView->m_objectPos.begin() + sel);

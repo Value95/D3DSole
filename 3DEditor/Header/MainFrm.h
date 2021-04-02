@@ -11,12 +11,14 @@ protected: // serialization에서만 만들어집니다.
 	CMainFrame();
 	DECLARE_DYNCREATE(CMainFrame)
 
+	enum Mode {Normal, NavMesh};
 // 특성입니다.
 public:
 	CSplitterWnd m_mainSplitter;
 	CSplitterWnd m_leftSplitter; // mainView, project
 	CSplitterWnd m_rightSplitter; // Inspector, buttons
 
+	Mode m_mode = Mode::Normal;
 // 작업입니다.
 public:
 

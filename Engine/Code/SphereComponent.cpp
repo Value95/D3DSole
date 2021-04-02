@@ -31,14 +31,13 @@ SHARED(CComponent) CSphereComponent::MakeClone(CGameObject* pObject)
 void CSphereComponent::Awake(void)
 {
 	__super::Awake();
-	radus = 1;
+	radus = 0.5f;
 }
 
 
 void CSphereComponent::Start(SHARED(CComponent) spThis)
 {
 	__super::Start(spThis);
-	DateInit();
 }
 
 _uint CSphereComponent::FixedUpdate(SHARED(CComponent) spThis)
@@ -97,10 +96,4 @@ void CSphereComponent::OnEnable(void)
 
 void CSphereComponent::OnDisable(void)
 {
-}
-
-void CSphereComponent::DateInit()
-{
-	// FVF를 지정하여 보관할 데이터의 형식을 지정하고 사용자 정점을 보관할 메모리할당
-	GET_DEVICE->CreateVertexBuffer(4 * sizeof(_CustomVertex), 0, customFVF, D3DPOOL_MANAGED, &m_meshDate.vertexBuffer, NULL);
 }

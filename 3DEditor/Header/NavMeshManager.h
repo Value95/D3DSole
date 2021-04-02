@@ -33,5 +33,7 @@ private:
 public:
 	// 삼각형을 그려줄 함수
 	void TriangleRender();
+	void ObjectCreate();
+	Engine::CGameObject* ObjectPicking();
 };
 

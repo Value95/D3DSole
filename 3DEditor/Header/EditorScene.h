@@ -46,7 +46,7 @@ public:
 private:
 	void Camera();
 	void ObjectCreate();
-	void ObjectPicking();
+	void ObjectPicking(std::wstring layerKey);
 	void ObjectMove();
 };
 

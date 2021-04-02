@@ -32,7 +32,6 @@ public:
 	void OnDisable(void) override;
 
 private:
-	void DateInit();
 
 };
 END

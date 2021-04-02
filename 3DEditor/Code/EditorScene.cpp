@@ -69,8 +69,20 @@ _uint CEditorScene::Update(void)
 	Camera();
 
 	// 네브매쉬모드가되면 생성방법 픽킹방법이바뀐다.
-	ObjectCreate();
-	ObjectPicking();
+	if (m_main->m_mode == CMainFrame::Mode::Normal)
+	{
+		ObjectCreate();
+		ObjectPicking(L"Default");
+	}
+	else if (m_main->m_mode == CMainFrame::Mode::NavMesh)
+	{
+		CNavMeshManager::GetInstance()->ObjectCreate();
+		
+		Engine::CGameObject* T = CNavMeshManager::GetInstance()->ObjectPicking();
+		if (T != nullptr)
+			m_pickingObject = T;
+	}
+
 	ObjectMove();
 
 	ColliderSesting(m_pickNumber, m_pickingObject);
@@ -217,7 +229,7 @@ void CEditorScene::ObjectCreate()
 
 }
 
-void CEditorScene::ObjectPicking()
+void CEditorScene::ObjectPicking(std::wstring layerKey)
 {
 	if (Engine::IMKEY_DOWN(KEY_LBUTTON))
 	{
@@ -259,7 +271,7 @@ void CEditorScene::ObjectPicking()
 		D3DXVec3TransformCoord(&rayPos, &rayPos, &matView);
 		D3DXVec3TransformNormal(&rayDir, &rayDir, &matView);
 
-		Engine::CGameObject* obj = Engine::CRaycast::RayCast(rayPos, rayDir, 1000, L"Default");
+		Engine::CGameObject* obj = Engine::CRaycast::RayCast(rayPos, rayDir, 1000, layerKey);
 		if (obj != nullptr)
 		{
 			for (int i = 0; i <= hierarchyView->m_objectPos.size() - 1; i++)
@@ -321,7 +333,7 @@ void CEditorScene::ObjectMove()
 			m_pickingObject->Translate(vector3Down * deltaTime * speed);
 		}
 	}
-	else
+	else if(m_main->m_mode != CMainFrame::Mode::NavMesh)
 	{
 		hierarchyView->m_objectPos[m_pickNumber] = m_pickingObject->GetPosition();
 	}

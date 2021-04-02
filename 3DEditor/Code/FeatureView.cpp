@@ -23,7 +23,8 @@ void CFeatureView::OnInitialUpdate()
 {
 	CFormView::OnInitialUpdate();
 
-	hierarchyView = dynamic_cast<CProjectView*>(dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd())->m_leftSplitter.GetPane(1, 0));
+	m_main = dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd());
+	hierarchyView = dynamic_cast<CProjectView*>(m_main->m_leftSplitter.GetPane(1, 0));
 }
 
 void CFeatureView::DoDataExchange(CDataExchange* pDX)
@@ -31,8 +32,24 @@ void CFeatureView::DoDataExchange(CDataExchange* pDX)
 	CFormView::DoDataExchange(pDX);
 }
 
+void CFeatureView::NavMeshMode()
+{
+	if (m_main->m_mode == CMainFrame::Mode::NavMesh)
+	{
+		m_main->m_mode = CMainFrame::Mode::Normal;
+	}
+	else
+	{
+		m_main->m_mode = CMainFrame::Mode::NavMesh;
+	}
+
+}
+
 void CFeatureView::PrefabCreate() // 橇府普 积己
 {
+	if (m_main->m_mode == CMainFrame::Mode::NavMesh)
+		return;
+
 	Engine::CGameObject* Tobject;
 	ColliderData* Tcollider;
 
@@ -50,6 +67,9 @@ void CFeatureView::PrefabCreate() // 橇府普 积己
 
 void CFeatureView::PrefabDelete() // 橇府普 昏力
 {
+	if (m_main->m_mode == CMainFrame::Mode::NavMesh)
+		return;
+
 	int sel = hierarchyView->m_prefabList.GetCurSel();
 
 	if (sel == -1)
@@ -188,6 +208,7 @@ BEGIN_MESSAGE_MAP(CFeatureView, CFormView)
 	ON_BN_CLICKED(IDC_BUTTON1, &CFeatureView::Save)
 	ON_BN_CLICKED(IDC_BUTTON2, &CFeatureView::Load)
 	ON_BN_CLICKED(IDC_BUTTON11, &CFeatureView::PrefabDelete)
+	ON_BN_CLICKED(IDC_BUTTON3, &CFeatureView::NavMeshMode)
 END_MESSAGE_MAP()
 
 
