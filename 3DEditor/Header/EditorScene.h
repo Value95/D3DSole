@@ -48,5 +48,6 @@ private:
 	void ObjectCreate();
 	void ObjectPicking(std::wstring layerKey);
 	void ObjectMove();
+	void ObjectMoveToView();
 };
 

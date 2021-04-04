@@ -81,7 +81,6 @@ _uint CTriangleComponent::PreRender(void)
 
 _uint CTriangleComponent::Render(void)
 {
-
 	GET_DEVICE->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, m_meshDate.vertexCount, 0, m_meshDate.faceCount);
 
 	return _uint();
@@ -110,46 +109,39 @@ void CTriangleComponent::DateInit()
 	m_meshDate.FVF = customFVF;
 	m_meshDate.vertexSize = sizeof(_CustomVertex);
 	m_meshDate.vertexNumInFace = 3;
+	m_meshDate.vertexCount = 3;
 	// FVF를 지정하여 보관할 데이터의 형식을 지정하고 사용자 정점을 보관할 메모리할당
-	GET_DEVICE->CreateVertexBuffer(4 * sizeof(_CustomVertex), 0, m_meshDate.FVF, D3DPOOL_MANAGED, &m_meshDate.vertexBuffer, NULL);
+	GET_DEVICE->CreateVertexBuffer(m_meshDate.vertexCount * sizeof(_CustomVertex), 0, m_meshDate.FVF, D3DPOOL_MANAGED, &m_meshDate.vertexBuffer, NULL);
 
 	_CustomVertex* pVertices = nullptr;
 
 	m_meshDate.vertexBuffer->Lock(0, 0, (void**)&pVertices, 0);
-	m_meshDate.vertexCount = 4;
 
-	pVertices[0].position = vector3(-0.5f, 0.5f, 0);
+	pVertices[0].position = m_position[0];
 	pVertices[0].uv = vector2(0, 0);
 
-	pVertices[1].position = vector3(0.5f, 0.5f, 0);
+	pVertices[1].position = m_position[1];
 	pVertices[1].uv = vector2(1, 0);
 
-	pVertices[2].position = vector3(0.5f, -0.5f, 0);
+	pVertices[2].position = m_position[2];
 	pVertices[2].uv = vector2(1, 1);
-
-	pVertices[3].position = vector3(-0.5f, -0.5f, 0);
-	pVertices[3].uv = vector2(0, 1);
 
 	pVertices[0].normal = vector3Back;
 	pVertices[1].normal = vector3Back;
 	pVertices[2].normal = vector3Back;
-	pVertices[3].normal = vector3Back;
 
 	m_meshDate.vertexBuffer->Unlock();
 
-	GET_DEVICE->CreateIndexBuffer(6 * sizeof(WORD), 0, D3DFMT_INDEX16, D3DPOOL_DEFAULT, &m_meshDate.indexBuffer, NULL);
+	GET_DEVICE->CreateIndexBuffer(3 * sizeof(WORD), 0, D3DFMT_INDEX16, D3DPOOL_DEFAULT, &m_meshDate.indexBuffer, NULL);
 	m_meshDate.indexSize = sizeof(WORD);
 	WORD* pIndices = nullptr;
 
 	m_meshDate.indexBuffer->Lock(0, 0, (void**)&pIndices, 0);
-	m_meshDate.faceCount = 2;
+	m_meshDate.faceCount = 1;
 
 	pIndices[0] = 0;
 	pIndices[1] = 1;
 	pIndices[2] = 2;
-	pIndices[3] = 0;
-	pIndices[4] = 2;
-	pIndices[5] = 3;
 
 	m_meshDate.indexBuffer->Unlock();
 

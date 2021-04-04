@@ -1,6 +1,8 @@
 #ifndef EDITORSTRUCT_H
 #define EDITORSTRUCT_H
 
+#include "EngineStructure.h"
+
 typedef struct tagCubeMap
 {
 	vector3 vPos;
@@ -36,10 +38,4 @@ typedef struct tagPrefab
 	vector3 scale;
 	tagCollider* collider;
 }PrefabData;
-
-typedef struct tagTriangle
-{
-	vector3 point[3];
-}Triangle;
-
 #endif

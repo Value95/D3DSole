@@ -6,7 +6,7 @@ class ENGINE_DLL CTriangleComponent final : public CComponent
 {
 private:
 	_MeshData m_meshDate; // 버텍스 ,인덱스 버퍼를저장하기 위한 변수
-
+	vector3 m_position[3];
 public:
 	explicit CTriangleComponent(void);
 	virtual	~CTriangleComponent(void);

@@ -34,6 +34,8 @@ void CFeatureView::DoDataExchange(CDataExchange* pDX)
 
 void CFeatureView::NavMeshMode()
 {
+	dynamic_cast<CEditorScene*>(Engine::GET_CUR_SCENE.get())->SetPickingObject(nullptr);
+
 	if (m_main->m_mode == CMainFrame::Mode::NavMesh)
 	{
 		m_main->m_mode = CMainFrame::Mode::Normal;
@@ -81,6 +83,8 @@ void CFeatureView::PrefabDelete() // 프리팹 삭제
 
 void CFeatureView::Save()
 {
+	// 모든 오브젝트, 프리팹, 네브매쉬
+
 	CFileDialog Dlg(FALSE,// 저장(FALSE)할 것인지 불러(TRUE)올 것인지
 		L"dat",
 		L"*.dat",

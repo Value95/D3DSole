@@ -70,6 +70,12 @@ namespace Engine
 		vector3 vRot;
 		vector3 vScale;
 	}UNITINFO;
+
+	typedef struct tagTriangle
+	{
+		vector3* point[3];
+	}Triangle;
 }
+
 #endif // !ENGINESTRUCTURE_H
 

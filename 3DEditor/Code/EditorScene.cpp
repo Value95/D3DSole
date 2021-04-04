@@ -73,6 +73,7 @@ _uint CEditorScene::Update(void)
 	{
 		ObjectCreate();
 		ObjectPicking(L"Default");
+		ColliderSesting(m_pickNumber, m_pickingObject);
 	}
 	else if (m_main->m_mode == CMainFrame::Mode::NavMesh)
 	{
@@ -84,8 +85,7 @@ _uint CEditorScene::Update(void)
 	}
 
 	ObjectMove();
-
-	ColliderSesting(m_pickNumber, m_pickingObject);
+	ObjectMoveToView();
 
 	return event;
 }
@@ -136,8 +136,9 @@ void CEditorScene::InitPrototypes(void)
 	SHARED(Engine::CGameObject) collider = Engine::CGameObject::Create(L"Collider", L"Collider", true);
 	Engine::CObjectFactory::GetInstance()->AddPrototype(collider);
 
-	SHARED(Engine::CGameObject) collider = Engine::CGameObject::Create(L"NavMesh", L"NavMesh", true);
-	Engine::CObjectFactory::GetInstance()->AddPrototype(collider);
+	SHARED(Engine::CGameObject) navMesh = Engine::CGameObject::Create(L"NavMesh", L"NavMesh", true);
+	navMesh->AddComponent<Engine::CSphereComponent>();
+	Engine::CObjectFactory::GetInstance()->AddPrototype(navMesh);
 }
 
 void CEditorScene::Camera()
@@ -205,7 +206,6 @@ void CEditorScene::ObjectCreate()
 			else // 아니면 그냥 리턴
 				return;
 		}
-
 
 		wMessKey = CStringW(cMessKey);
 		wTextureKey = CStringW(cTextureKey);
@@ -296,13 +296,11 @@ void CEditorScene::ObjectPicking(std::wstring layerKey)
 
 void CEditorScene::ObjectMove()
 {
-	if (m_pickingObject == nullptr || m_pickNumber == -1)
+	if (m_pickingObject == nullptr || (m_pickNumber == -1 && m_main->m_mode != CMainFrame::Mode::NavMesh))
 		return;
 
 	if (Engine::IMKEY_PRESS(KEY_LBUTTON))
 	{
-		// 오브젝트의 X,Y,Z의 맞는 화살표 표시해주기
-
 		_float speed = 10.f;
 		if (Engine::IMKEY_PRESS(KEY_SHIFT))
 		{
@@ -336,15 +334,30 @@ void CEditorScene::ObjectMove()
 			m_pickingObject->Translate(vector3Down * deltaTime * speed);
 		}
 	}
-	else if(m_main->m_mode != CMainFrame::Mode::NavMesh)
+
+	if(m_main->m_mode != CMainFrame::Mode::NavMesh)
 	{
 		hierarchyView->m_objectPos[m_pickNumber] = m_pickingObject->GetPosition();
 	}
 }
 
+void CEditorScene::ObjectMoveToView()
+{
+	if (m_pickingObject == nullptr || m_pickNumber == -1)
+		return;
+
+	if (Engine::IMKEY_PRESS(KEY_CTRL))
+	{
+		if (Engine::IMKEY_DOWN(KEY_F))
+		{
+			m_pickingObject->SetPosition(Engine::GET_MAIN_CAM->GetOwner()->GetPosition());
+		}
+	}
+}
+
 void CEditorScene::ColliderSesting(int value, Engine::CGameObject * object)
 {
-	if (value == -1)
+	if (value == -1 || object == nullptr || CColliderManager::GetInstance()->GetColliderData().size() <= value)
 		return;
 
 	if (CColliderManager::GetInstance()->GetColliderData()[value]->colliderType == L"BOX")

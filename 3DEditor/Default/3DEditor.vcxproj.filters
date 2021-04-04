@@ -49,8 +49,8 @@
     <Filter Include="04.PrefabManager">
       <UniqueIdentifier>{6473a330-8a3d-4589-b2a1-45b28fc46bdf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="06.NavMeshManager">
-      <UniqueIdentifier>{8df546a7-9f28-4e40-9bff-4e265ec05db0}</UniqueIdentifier>
+    <Filter Include="06NavMeshManager">
+      <UniqueIdentifier>{a4caa955-40ca-4c62-917c-0299b6ec0857}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -112,7 +112,7 @@
       <Filter>05.ColliderManager</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\NavMeshManager.h">
-      <Filter>06.NavMeshManager</Filter>
+      <Filter>06NavMeshManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -159,7 +159,7 @@
       <Filter>05.ColliderManager</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\NavMeshManager.cpp">
-      <Filter>06.NavMeshManager</Filter>
+      <Filter>06NavMeshManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -236,12 +236,15 @@ void CInspectorView::DeleteObject() // 선택된 오브젝트 삭제
 	SHARED(Engine::CGameObject) object = Engine::GET_CUR_SCENE->FindObjectPosition(m_gameObejct->GetPosition());
 	object->SetIsNeedToBeDeleted(true);
 
+	dynamic_cast<CEditorScene*>(Engine::GET_CUR_SCENE.get())->SetPickingObject(nullptr);
+
 	if (m_main->m_mode == CMainFrame::Mode::NavMesh)
 	{
+		CNavMeshManager::GetInstance()->ObjectDelete(object);
 		return;
 	}
 
-	dynamic_cast<CEditorScene*>(Engine::GET_CUR_SCENE.get())->SetPickingObject(nullptr);
+	
 	hierarchyView->m_objectPos.erase(hierarchyView->m_objectPos.begin() + sel);
 	hierarchyView->m_objectListBox.DeleteString(sel);
 

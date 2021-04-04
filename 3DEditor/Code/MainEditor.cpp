@@ -74,6 +74,9 @@ _uint CMainEditor::Render(void)
 	if (event = Engine::CGraphicsManager::GetInstance()->PreRender())	return event;
 	if (event = Engine::CGraphicsManager::GetInstance()->Render())	return event;
 
+	if (event = CNavMeshManager::GetInstance()->PreRender()) return event;
+	if (event = CNavMeshManager::GetInstance()->Render()) return event;
+
 	if (event = Engine::CDebugRendeerManager::GetInstance()->PreRender())	return event;
 	if (event = Engine::CDebugRendeerManager::GetInstance()->Render())	return event;
 
@@ -84,6 +87,7 @@ _uint CMainEditor::PostRender(void)
 {
 	_uint event = NO_EVENT;
 	if (event = Engine::CGraphicsManager::GetInstance()->PostRender())	return event;
+	if (event = CNavMeshManager::GetInstance()->PostRender()) return event;
 	if (event = Engine::CDebugRendeerManager::GetInstance()->PostRender())	return event;
 
 	return event;
@@ -99,6 +103,7 @@ void CMainEditor::OnDestroy(void)
 	Engine::CMeshStore::GetInstance()->DestroyInstance();
 	Engine::CTextureStore::GetInstance()->DestroyInstance();
 	Engine::CDebugRendeerManager::DestroyInstance();
+	CNavMeshManager::DestroyInstance();
 }
 
 void CMainEditor::OnEnable(void)

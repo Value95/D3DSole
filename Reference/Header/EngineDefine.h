@@ -44,6 +44,8 @@
 #define KEY_X		67108864
 #define KEY_LBUTTON	134217728
 #define KEY_E	    268435456
+#define KEY_CTRL	536870912
+#define KEY_F		1073741824
 
 #define _CRTDBG_MAP_ALLOC
 #ifdef _DEBUG
