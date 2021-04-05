@@ -120,7 +120,7 @@ void CNavMeshManager::ObjectCreate()
 			for (auto& iter = m_object.begin(); iter != m_object.end(); iter++)
 			{
 				vector3 targetPosition = iter->get()->GetPosition();
-				if (Engine::Distance(hitPoint, targetPosition) <= 6)
+				if (Engine::Distance(hitPoint, targetPosition) <= 2)
 				{
 					pObj = *iter;
 					break;
@@ -157,7 +157,7 @@ void CNavMeshManager::ObjectCreate()
 
 		if (m_createCount == 3)
 		{
-			//TriangleClockWise(m_triangle[m_triangleCount]);
+			TriangleClockWise(m_triangle[m_triangleCount]);
 
 			m_createCount = 0;
 			m_triangleCount++;
@@ -186,7 +186,6 @@ void CNavMeshManager::ObjectDelete(SHARED(Engine::CGameObject) obj)
 
 void CNavMeshManager::TriangleDelete(SHARED(Engine::CGameObject) obj)
 {
-	m_triangleCount--;
 	bool init = false;
 	for (auto& iter = m_triangle.begin(); iter != m_triangle.end(); )
 	{
@@ -195,6 +194,7 @@ void CNavMeshManager::TriangleDelete(SHARED(Engine::CGameObject) obj)
 			if (iter->point[i] == &obj->GetPosition())
 			{
 				iter = m_triangle.erase(iter);
+				m_triangleCount--;
 				init = true;
 				break;
 			}
