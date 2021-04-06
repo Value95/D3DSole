@@ -9,7 +9,8 @@ class CFeatureView : public CFormView
 	DECLARE_DYNCREATE(CFeatureView)
 private:
 	CMainFrame* m_main;
-	CProjectView* hierarchyView;
+	CProjectView* m_projectView;
+	CHierarchyView* m_hierarchyView;
 protected:
 	CFeatureView();           // 동적 만들기에 사용되는 protected 생성자입니다.
 	virtual ~CFeatureView();

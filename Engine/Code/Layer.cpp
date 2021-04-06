@@ -57,8 +57,9 @@ _uint CLayer::Update(void)
 
 		if ((*it)->GetIsNeedToBeDeleted())
 		{
-			it->reset(); // 여기가 문제
+			it->reset();
 			it = m_vGameObjects.erase(it);
+			GET_CUR_SCENE->AddObjectCount(-1);
 		}
 		else
 		{

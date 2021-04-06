@@ -132,19 +132,10 @@ void CNavMeshManager::ObjectCreate()
 		{
 			hitPoint = Engine::GET_MAIN_CAM->GetOwner()->GetPosition();
 
-			_bool enable = true;;
-			std::wstring name = L"NavMesh";
-			vector3 rotation = vector3Zero;
-			vector3 scale = vector3One;
-
 			pObj = Engine::ADD_CLONE(L"NavMesh", L"NavMesh", true);
-			pObj->SetIsEnabled(enable);
-			pObj->SetName(name);
+			pObj->SetName(L"NavMesh");
 
 			pObj->SetPosition(hitPoint);
-
-			pObj->SetRotation(rotation);
-			pObj->SetScale(scale);
 
 			m_object.emplace_back(pObj);
 
@@ -260,14 +251,9 @@ Engine::CGameObject* CNavMeshManager::ObjectPicking()
 
 void CNavMeshManager::TriangleClockWise(Engine::Triangle& triangle)
 {
-	vector3* onePoint = new vector3(-99999, 0, 0);
-	vector3* twoPoint = new vector3(-99999, 0, 0);
-	vector3* therePoint = new vector3(-99999, 0, 0);
-
-	vector3* deletePoint[3];
-	deletePoint[0] = onePoint;
-	deletePoint[1] = twoPoint;
-	deletePoint[2] = therePoint;
+	vector3* onePoint = triangle.point[0];
+	vector3* twoPoint = triangle.point[1];
+	vector3* therePoint = triangle.point[2];
 
 	for (int i = 0; i < 3; i++)
 	{
@@ -298,9 +284,5 @@ void CNavMeshManager::TriangleClockWise(Engine::Triangle& triangle)
 	triangle.point[0] = onePoint;
 	triangle.point[1] = twoPoint;
 	triangle.point[2] = therePoint;
-	
-	delete(deletePoint[0]);
-	delete(deletePoint[1]);
-	delete(deletePoint[2]);
 }
 

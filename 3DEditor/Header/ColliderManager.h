@@ -29,9 +29,10 @@ private:
 private:
 	void OnDestroy();
 public:
+	void DataDelete(int value);
+
 	std::vector<ColliderData*> GetColliderData() { return m_colliderData; }
 	void SetColliderData(ColliderData* value) { m_colliderData.emplace_back(value); }
 
-	void DataDelete(int value);
 };
 

@@ -86,6 +86,7 @@ _uint CEditorScene::Update(void)
 
 	ObjectMove();
 	ObjectMoveToView();
+	InspactorSesting(m_pickNumber, m_pickingObject);
 
 	return event;
 }
@@ -371,4 +372,13 @@ void CEditorScene::ColliderSesting(int value, Engine::CGameObject * object)
 		vector3 scale = vector3(CColliderManager::GetInstance()->GetColliderData()[value]->radius, CColliderManager::GetInstance()->GetColliderData()[value]->radius, CColliderManager::GetInstance()->GetColliderData()[value]->radius);
 		m_sphere->SetScale(scale);
 	}
+}
+
+void CEditorScene::InspactorSesting(int value, Engine::CGameObject * object)
+{
+	if (value == -1 || object == nullptr || CColliderManager::GetInstance()->GetColliderData().size() <= value)
+		return;
+
+	inspectorView->SetData(object);
+
 }

@@ -43,6 +43,7 @@ public:
 	void SetPickingObject(Engine::CGameObject* value) { m_pickingObject = value; }
 	Engine::CGameObject* GetPickingObject() { return m_pickingObject; }
 	void ColliderSesting(int value, Engine::CGameObject* object);
+	void InspactorSesting(int value, Engine::CGameObject* object);
 private:
 	void Camera();
 	void ObjectCreate();

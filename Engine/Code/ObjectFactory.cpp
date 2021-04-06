@@ -83,7 +83,7 @@ SHARED(CGameObject) CObjectFactory::AddClone(const std::wstring & layerKey,
 		return nullptr;
 	}
 	GET_CUR_SCENE->GetLayers()[layerKey]->GetGameObjects().push_back(pClone);
-	
+	GET_CUR_SCENE->AddObjectCount(1);
 	return pClone;
 }
 

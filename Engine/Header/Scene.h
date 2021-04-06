@@ -14,9 +14,10 @@ protected:
 
 	GETTOR(std::wstring, m_name, L"", Name)
 	GETTOR(_bool, m_isAwaked, false, IsAwaked)
-	GETTOR(bool, m_isStarted, false, IsStarted)
-	GETTOR_SETTOR(bool, m_enable, true, Enable)
-	GETTOR_SETTOR(bool, m_SceneEvent, false, SceneEvent)
+	GETTOR(_bool, m_isStarted, false, IsStarted)
+	GETTOR_SETTOR(_bool, m_enable, true, Enable)
+	GETTOR_SETTOR(_bool, m_SceneEvent, false, SceneEvent)
+	GETTOR(_int, m_objectCount, 0, ObjectCount)
 
 protected:
 	explicit CScene(void);
@@ -41,6 +42,7 @@ public:
 	void AllDelete();
 	_uint FindObjectsWithKey(std::wstring objectKey, std::vector<SHARED(CGameObject)>& gameObjects);
 
+	void AddObjectCount(_int value) { m_objectCount += value; }
 protected:
 	virtual void InitLayers(void) PURE;
 	virtual void InitPrototypes(void) PURE;

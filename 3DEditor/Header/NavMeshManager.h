@@ -46,5 +46,16 @@ public:
 	void TriangleDelete(SHARED(Engine::CGameObject) obj);
 	Engine::CGameObject* ObjectPicking();
 	void TriangleClockWise(Engine::Triangle& triangle);
+
+public:
+	std::vector<SHARED(Engine::CGameObject)> GetGameObject() { return m_object; }
+	void SetGameObject(SHARED(Engine::CGameObject) object) { m_object.emplace_back(object); }
+
+	std::vector<Engine::Triangle> GetTriangle() { return m_triangle; }
+	void SetTriangle(Engine::Triangle triangle) { m_triangle.emplace_back(triangle); }
+
+	_int* GetCreateCount() { return &m_createCount; }
+
+	_int* GetTriangleCount() { return &m_triangleCount; }
 };
 
