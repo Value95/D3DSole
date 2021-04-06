@@ -5,6 +5,12 @@ CColliderManager* CColliderManager::m_instance = nullptr;
 
 void CColliderManager::OnDestroy()
 {
+	for (auto& iter : m_colliderData)
+	{
+		delete(iter);
+	}
+
+	m_colliderData.clear();
 }
 
 void CColliderManager::DataDelete(int value)

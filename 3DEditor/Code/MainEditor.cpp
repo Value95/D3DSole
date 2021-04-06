@@ -104,6 +104,7 @@ void CMainEditor::OnDestroy(void)
 	Engine::CTextureStore::GetInstance()->DestroyInstance();
 	Engine::CDebugRendeerManager::DestroyInstance();
 	CNavMeshManager::DestroyInstance();
+	CColliderManager::GetInstance()->DestroyInstance();
 }
 
 void CMainEditor::OnEnable(void)

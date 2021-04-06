@@ -5,6 +5,7 @@ CNavMeshManager* CNavMeshManager::m_instance = nullptr;
 
 void CNavMeshManager::OnDestroy()
 {
+
 }
 
 _uint CNavMeshManager::PreRender(void)
@@ -263,6 +264,11 @@ void CNavMeshManager::TriangleClockWise(Engine::Triangle& triangle)
 	vector3* twoPoint = new vector3(-99999, 0, 0);
 	vector3* therePoint = new vector3(-99999, 0, 0);
 
+	vector3* deletePoint[3];
+	deletePoint[0] = onePoint;
+	deletePoint[1] = twoPoint;
+	deletePoint[2] = therePoint;
+
 	for (int i = 0; i < 3; i++)
 	{
 		if (onePoint->x <= triangle.point[i]->x)
@@ -293,5 +299,8 @@ void CNavMeshManager::TriangleClockWise(Engine::Triangle& triangle)
 	triangle.point[1] = twoPoint;
 	triangle.point[2] = therePoint;
 	
+	delete(deletePoint[0]);
+	delete(deletePoint[1]);
+	delete(deletePoint[2]);
 }
 

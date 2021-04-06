@@ -47,7 +47,8 @@ void CFeatureView::NavMeshMode()
 
 }
 
-void CFeatureView::PrefabCreate() // 프리팹 생성
+// 프리팹 생성
+void CFeatureView::PrefabCreate()
 {
 	if (m_main->m_mode == CMainFrame::Mode::NavMesh)
 		return;
@@ -67,7 +68,8 @@ void CFeatureView::PrefabCreate() // 프리팹 생성
 	hierarchyView->m_prefabList.AddString(Tobject->GetName().c_str());
 }
 
-void CFeatureView::PrefabDelete() // 프리팹 삭제
+// 프리팹 삭제
+void CFeatureView::PrefabDelete() 
 {
 	if (m_main->m_mode == CMainFrame::Mode::NavMesh)
 		return;
@@ -85,6 +87,21 @@ void CFeatureView::Save()
 {
 	// 모든 오브젝트, 프리팹, 네브매쉬
 
+	// 오브젝트
+	/*
+	이름, 레이어, 오브젝트키, 활성화/비활성화, 위치, 회전, 크기, 콜라이더 타입
+	*/
+
+	// 프리팹
+	/*
+	이름, 레이어, 오브젝트키, 활성화/비활성화, 콜라이더 타입
+	*/
+
+	// 네브매쉬
+	/*
+	오브젝트 위치, 트라이앵글 위치값들
+	*/
+	
 	CFileDialog Dlg(FALSE,// 저장(FALSE)할 것인지 불러(TRUE)올 것인지
 		L"dat",
 		L"*.dat",

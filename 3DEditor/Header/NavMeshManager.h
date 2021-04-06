@@ -27,7 +27,6 @@ public:
 
 private:
 	Engine::_MeshData m_meshDate; // 버텍스 ,인덱스 버퍼를저장하기 위한 변수
-
 	std::vector<SHARED(Engine::CGameObject)> m_object; // 오브젝트를 저장할변수
 	std::vector<Engine::Triangle> m_triangle; // 삼각형을 저장할변수
 
