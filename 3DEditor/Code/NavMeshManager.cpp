@@ -251,9 +251,14 @@ Engine::CGameObject* CNavMeshManager::ObjectPicking()
 
 void CNavMeshManager::TriangleClockWise(Engine::Triangle& triangle)
 {
-	vector3* onePoint = triangle.point[0];
-	vector3* twoPoint = triangle.point[1];
-	vector3* therePoint = triangle.point[2];
+	vector3* onePoint = new vector3(-99999,0,0);
+	vector3* twoPoint = new vector3(-99999, 0, 0);
+	vector3* therePoint = new vector3(-99999, 0, 0);
+
+	vector3* deletePoint[3];
+	deletePoint[0] = onePoint;
+	deletePoint[1] = twoPoint;
+	deletePoint[2] = therePoint;
 
 	for (int i = 0; i < 3; i++)
 	{
@@ -284,5 +289,11 @@ void CNavMeshManager::TriangleClockWise(Engine::Triangle& triangle)
 	triangle.point[0] = onePoint;
 	triangle.point[1] = twoPoint;
 	triangle.point[2] = therePoint;
+
+
 }
 
+void CNavMeshManager::DeleteTriangle()
+{
+	m_triangle.clear();
+}

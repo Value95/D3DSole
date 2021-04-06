@@ -103,16 +103,20 @@ void CFeatureView::Save()
 		if (INVALID_HANDLE_VALUE == hFile)
 			return;
 
+		std::unordered_map<std::wstring, SHARED(Engine::CLayer)> layers = Engine::CSceneManager::GetInstance()->GetCurScene()->GetLayers();
+
 		DWORD dwByte = 0;
-		_int objectCount = Engine::GET_CUR_SCENE->GetObjectCount() - 3;
+		_int objectCount = Engine::GET_CUR_SCENE->GetObjectCount() - layers[L"NavMesh"].get()->GetGameObjects().size() - 3;
 
 		// 오브젝트
 		WriteFile(hFile, &objectCount, sizeof(_int), &dwByte, nullptr);
 
-		std::unordered_map<std::wstring, SHARED(Engine::CLayer)> layers = Engine::CSceneManager::GetInstance()->GetCurScene()->GetLayers();
 
 		for (auto& layer : layers)
 		{
+			if(layer.first == L"NavMesh" || layer.first == L"Collider")
+				continue;
+
 			for (auto& gameObject : layer.second->GetGameObjects())
 			{
 				if (gameObject->GetLayerKey() == L"Camera")
@@ -125,18 +129,21 @@ void CFeatureView::Save()
 			}
 		}
 
+		_int colliderCount = CColliderManager::GetInstance()->GetColliderData().size();
+		WriteFile(hFile, &colliderCount, sizeof(_int), &dwByte, nullptr); // 크기
+
 		// 모든 충돌체의 정보
 		for (auto& collider : CColliderManager::GetInstance()->GetColliderData())
 		{
 			WriteFile(hFile, &collider->offset, sizeof(vector3), &dwByte, nullptr); // 위치
 			WriteFile(hFile, &collider->boxsize, sizeof(vector3), &dwByte, nullptr); // 크기
 			WriteFile(hFile, &collider->radius, sizeof(_float), &dwByte, nullptr); // 반지름
-
 		}
 
 		// 네브매쉬
-			WriteFile(hFile, CNavMeshManager::GetInstance()->GetCreateCount(), sizeof(_int), &dwByte, nullptr);
-			WriteFile(hFile, CNavMeshManager::GetInstance()->GetTriangleCount(), sizeof(_int), &dwByte, nullptr);
+		_int size = CNavMeshManager::GetInstance()->GetGameObject().size();
+		WriteFile(hFile, &size, sizeof(_int), &dwByte, nullptr);
+		WriteFile(hFile, CNavMeshManager::GetInstance()->GetTriangleCount(), sizeof(_int), &dwByte, nullptr);
 
 		for (auto& gameObject : CNavMeshManager::GetInstance()->GetGameObject()) // 네브매쉬
 		{
@@ -197,12 +204,9 @@ void CFeatureView::Load()
 		m_box->SetScale(vector3Zero);
 		m_box->AddComponent<Engine::CBoxComponent>();
 
-
-
 		m_sphere = Engine::CObjectFactory::GetInstance()->AddClone(L"Collider", L"Collider", true);
 		m_sphere->SetScale(vector3Zero);
 		m_sphere->AddComponent<Engine::CSphereComponent>();
-
 
 		// 오브젝트
 		_int objectCount = 0;
@@ -211,7 +215,7 @@ void CFeatureView::Load()
 		for (int i = 0; i < objectCount; i++)
 		{
 			SHARED(Engine::CGameObject) obj = Engine::ADD_CLONE(L"Default", L"Default", true);
-
+			obj->SetName(L"GameObject");
 			ReadFile(hFile, &obj->GetIsEnabled(), sizeof(bool), &dwByte, nullptr);
 			ReadFile(hFile, &obj->GetPosition(), sizeof(vector3), &dwByte, nullptr);
 			ReadFile(hFile, &obj->GetRotation(), sizeof(vector3), &dwByte, nullptr);
@@ -222,7 +226,10 @@ void CFeatureView::Load()
 		}
 
 		// 충돌체정보
-		for (int i = 0; i < objectCount; i++)
+		_int colliderCount = 0;
+		ReadFile(hFile, &colliderCount, sizeof(_int), &dwByte, nullptr);
+
+		for (int i = 0; i < colliderCount; i++)
 		{
 			ColliderData* colliderData = new ColliderData();
 			colliderData->colliderType = L"Default";
@@ -233,12 +240,11 @@ void CFeatureView::Load()
 			CColliderManager::GetInstance()->SetColliderData(colliderData);
 		}
 
-
 		// 네브매쉬 오브젝트
 		_int m_createCount = 0;
 		_int m_triangleCount = 0;
-		WriteFile(hFile, &m_createCount, sizeof(_int), &dwByte, nullptr);
-		WriteFile(hFile, &m_triangleCount, sizeof(_int), &dwByte, nullptr);
+		ReadFile(hFile, &m_createCount, sizeof(_int), &dwByte, nullptr);
+		ReadFile(hFile, &m_triangleCount, sizeof(_int), &dwByte, nullptr);
 
 		vector3 pos;
 		for (int i = 0; i < m_createCount; i++)
@@ -246,25 +252,30 @@ void CFeatureView::Load()
 			SHARED(Engine::CGameObject) navMeshObj = Engine::ADD_CLONE(L"NavMesh", L"NavMesh", true);
 			navMeshObj->SetName(L"NavMesh");
 
-			WriteFile(hFile, &pos, sizeof(vector3), &dwByte, nullptr);
+			ReadFile(hFile, &pos, sizeof(vector3), &dwByte, nullptr);
 
 			navMeshObj->SetPosition(pos);
 			CNavMeshManager::GetInstance()->SetGameObject(navMeshObj);
 		}
 
+		CNavMeshManager::GetInstance()->DeleteTriangle();
+
 		vector3 trianglePoint[3];
 		Engine::Triangle triangle;
+		CNavMeshManager::GetInstance()->SetTriangleCount(m_triangleCount);
 		for (int i = 0; i < m_triangleCount; i++) // 네브매쉬 트라이앵글
 		{
 			for (int i = 0; i < 3; i++)
 			{
-				WriteFile(hFile, &trianglePoint[i], sizeof(vector3), &dwByte, nullptr);
-				SHARED(Engine::CGameObject)  navMeshObj = Engine::GET_CUR_SCENE->FindObjectPosition(trianglePoint[0]);
+				ReadFile(hFile, &trianglePoint[i], sizeof(vector3), &dwByte, nullptr);
+				SHARED(Engine::CGameObject)  navMeshObj = Engine::GET_CUR_SCENE->FindObjectPosition(trianglePoint[i]);
 				triangle.point[i] = &navMeshObj->GetPosition();
 			}
 			CNavMeshManager::GetInstance()->SetTriangle(triangle);
+			
 		}
 
+		CNavMeshManager::GetInstance()->SetTriangle(Engine::Triangle());
 		CloseHandle(hFile);
 	}
 }
