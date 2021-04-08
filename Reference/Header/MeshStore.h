@@ -8,7 +8,7 @@ class ENGINE_DLL CMeshStore final : public CResourceStore
 {
 	DECLARE_SINGLETON(CMeshStore)
 private:
-	typedef std::unordered_map<std::wstring, SHARED(_MeshData)>	_MeshDataMap;
+	typedef std::unordered_map<std::wstring, SHARED(MeshComData)>	_MeshDataMap;
 	GETTOR(_MeshDataMap, m_mCurSceneMeshData, {}, CurSceneMessData)
 	GETTOR(_MeshDataMap, m_mStaticMeshData, {}, StaticMeshData)
 
@@ -19,7 +19,7 @@ public:
 		  
 	void ClearCurResource(void) override;
 		  
-	SHARED(_MeshData)GetMeshData(std::wstring meshKey);
+	SHARED(MeshComData)GetMeshData(std::wstring meshKey);
 	void InitMeshForScene(std::wstring curScene);
 private:
 	void InitResource(std::wstring sourcePath) override;

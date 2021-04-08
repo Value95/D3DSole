@@ -7,7 +7,7 @@ class ENGINE_DLL CMeshComponent final : public CComponent
 {
 protected:
 	GETTOR_SETTOR(std::wstring,		m_meshKey,		L"",		MeshKey)
-	GETTOR_SETTOR(SHARED(_MeshData),	m_pMeshData,	nullptr,	MeshData)
+	GETTOR_SETTOR(SHARED(MeshComData),	m_pMeshData,	nullptr,	MeshData)
 public:
 	explicit CMeshComponent(void);
 	~CMeshComponent(void);

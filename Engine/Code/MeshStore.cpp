@@ -32,7 +32,7 @@ void CMeshStore::ClearCurResource(void)
 	m_mCurSceneMeshData.clear();
 }
 
-SHARED(_MeshData) CMeshStore::GetMeshData(std::wstring meshKey)
+SHARED(MeshComData) CMeshStore::GetMeshData(std::wstring meshKey)
 {
 	auto iter_find_static = m_mStaticMeshData.find(meshKey);
 	if (iter_find_static != m_mStaticMeshData.end())
@@ -57,144 +57,34 @@ void CMeshStore::InitResource(std::wstring sourcePath)
 
 void CMeshStore::ParsingMesh(std::wstring filePath, std::wstring fileName)
 {
-	SHARED(_MeshData)		newMesh(new _MeshData);
+	SHARED(MeshComData) TmeshComData(new MeshComData);
 
-	std::ifstream           fin;
-	std::string             str;
-	std::string::size_type  sz;
+	_wcharT	fullPath[MAX_PATH] = L"";// 경로가 저장된다.
 
-	std::vector<vector3>	vPosition;
-	std::vector<vector3>	vNormal;
-	std::vector<vector2>	vTexture;
-	std::vector<_Face>		vFace;
+	lstrcpy(fullPath, filePath.c_str());
+	lstrcat(fullPath, L"//");
+	lstrcat(fullPath, fileName.c_str());
 
-	vector3                 position;;
-	vector3                 normal;
-	vector2                 uv;
-	_Face					face;
+	
+	D3DXLoadMeshFromX(fullPath, D3DXMESH_MANAGED, GET_DEVICE, &TmeshComData->adjacency, &TmeshComData->materials, nullptr, &TmeshComData->materialsCount, &TmeshComData->mesh);
 
-	std::wstring fullFilePath = filePath + L"\\" + fileName;
-
-	// Open the model file.
-	fin.open(fullFilePath);
-	if (fin.is_open())
+	// D3DXMATERIAL
+	for (_ulong i = 0; i < TmeshComData->materialsCount; ++i)
 	{
-		while (!fin.eof())
-		{
-			std::getline(fin, str);
-			if (str.size() > 2)
-			{
-				if (str[0] == 'v')
-				{
-					if (str[1] == ' ')
-					{
-						str = str.substr(2, str.size());
-						position.x = std::stof(str, &sz); str = str.substr(sz + 1, str.size());
-						position.y = std::stof(str, &sz); str = str.substr(sz + 1, str.size());
-						position.z = std::stof(str, &sz);
-						vPosition.emplace_back(position);
-					}
-					else if (str[1] == 'n')
-					{
-						str = str.substr(2, str.size());
-						normal.x = std::stof(str, &sz); str = str.substr(sz + 1, str.size());
-						normal.y = std::stof(str, &sz); str = str.substr(sz + 1, str.size());
-						normal.z = std::stof(str, &sz);
-						vNormal.emplace_back(normal);
-					}
-					else if (str[1] == 't')
-					{
-						str = str.substr(2, str.size());
-						uv.x = std::stof(str, &sz); str = str.substr(sz + 1, str.size());
-						uv.y = std::stof(str, &sz); str = str.substr(sz + 1, str.size());
-						vTexture.emplace_back(uv);
-					}
-				}
-				else if ((str[0] == 'f') && (str[1] == ' ')) //인덱스
-				{
-					int numOfSlash = 0;
-					str = str.substr(2, str.size()); // 문자열의 2번부터 사이즈만큼
+		D3DXMATERIAL*	pMaterials = (D3DXMATERIAL*)TmeshComData->materials->GetBufferPointer();
 
+		lstrcpy(fullPath, filePath.c_str());
+		lstrcat(fullPath, L"//");
 
-					for (_uint i = 0; i < str.size(); ++i) // /을만날때까지 값을게속증가시킨다.
-					{
-						if (str.at(i) == '/')
-						{
-							++numOfSlash;
-						}
-					}
+		_wcharT	textureName[MAX_PATH] = L"";
 
-					newMesh->vertexNumInFace = numOfSlash / 2; //왜 2를나눌까?
+		MultiByteToWideChar(CP_ACP, 0, pMaterials[i].pTextureFilename, strlen(pMaterials[i].pTextureFilename), textureName, MAX_PATH);
 
-					for (_uint i = 0; i < newMesh->vertexNumInFace; ++i) // 값들 대입
-					{	
-						face.vertexIndex[i] = std::stoi(str, &sz) - 1; // 인덱스
-						str = str.substr(sz + 1, str.size());
-						face.uvIndex[i] = std::stoi(str, &sz) - 1; // 텍스쳐같은데 애매하네
-						str = str.substr(sz + 1, str.size());
-						face.normIndex[i] = std::stoi(str, &sz) - 1; // 노말값도 애매하네
-						if (str.size() > sz)
-							str = str.substr(sz + 1, str.size());
-					}
+		lstrcat(fullPath, textureName);
 
-					vFace.emplace_back(face);
-				}
-			}
-		}
-		
-		newMesh->vertexSize = sizeof(_CustomVertex);
-		newMesh->vertexCount = vPosition.size();
-		newMesh->faceCount = vFace.size();
-		newMesh->FVF = customFVF;
-
-		newMesh->indexSize = sizeof(WORD);
-		newMesh->indexFormat = D3DFMT_INDEX16;
-
-		HRESULT result;
-
-		result = GET_DEVICE->CreateVertexBuffer(
-			newMesh->faceCount * 3 * newMesh->vertexSize,
-			0,
-			newMesh->FVF,
-			D3DPOOL_MANAGED,
-			&newMesh->vertexBuffer,
-			nullptr);
-
-		result = GET_DEVICE->CreateIndexBuffer(
-			newMesh->faceCount * newMesh->vertexNumInFace * newMesh->indexSize,
-			0,
-			newMesh->indexFormat,
-			D3DPOOL_MANAGED,
-			&newMesh->indexBuffer,
-			nullptr);
-
-
-		_CustomVertex* pVertices = nullptr;
-
-		newMesh->vertexBuffer->Lock(0, 0, (void**)&pVertices, 0);
-		for (_uint i = 0; i < newMesh->faceCount; ++i)
-		{
-			for (_uint j = 0; j < 3; ++j)
-			{
-				pVertices[i * 3 + j].position = vPosition[vFace[i].vertexIndex[j]];
-				pVertices[i * 3 + j].uv = vTexture[vFace[i].uvIndex[j]];
-				pVertices[i * 3 + j].normal = vNormal[vFace[i].normIndex[j]];
-			}
-		}
-		newMesh->vertexBuffer->Unlock();
-
-		WORD* pIndices = nullptr;
-		newMesh->indexBuffer->Lock(0, 0, (void**)&pIndices, 0);
-		for (_uint i = 0; i < newMesh->faceCount * newMesh->vertexNumInFace; ++i)
-			pIndices[i] = i ;
-		newMesh->indexBuffer->Unlock();
-
-		newMesh->name = RemoveExtension(fileName);
-		if (m_isStatic)
-			m_mStaticMeshData[newMesh->name] = newMesh;
-		else
-			m_mCurSceneMeshData[newMesh->name] = newMesh;
-
-		newMesh.reset();
+		TmeshComData->AddTexture(GET_DEVICE, fullPath);
 	}
+
+	m_mStaticMeshData[fileName] = TmeshComData;
+	
 }

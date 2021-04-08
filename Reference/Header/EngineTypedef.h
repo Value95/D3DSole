@@ -6,10 +6,13 @@ namespace Engine
 	typedef bool _bool;
 
 	typedef char _byte;
+	typedef	wchar_t	 _wcharT;
 	typedef unsigned char _ubyte;
 
 	typedef int _int;
 	typedef unsigned int _uint;
+
+	typedef	unsigned long _ulong;
 
 	typedef float _float;
 

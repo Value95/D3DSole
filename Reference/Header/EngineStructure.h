@@ -34,6 +34,35 @@ namespace Engine
 		D3DXIMAGE_INFO imageInfo;
 	}TEXTURE_DATA;
 
+	typedef struct _MeshComData
+	{
+		_MeshComData()
+		{
+			name = L"";
+			adjacency = nullptr;
+			materials = nullptr;
+			materialsCount = 0;
+			mesh = nullptr;
+		}
+
+		void AddTexture(LPDIRECT3DDEVICE9 device, const _wcharT * textureFilePath)
+		{
+			LPDIRECT3DTEXTURE9*	Ttexture = nullptr;
+			D3DXCreateTextureFromFile(device, textureFilePath, Ttexture);
+			texture.emplace_back(Ttexture);
+		}
+
+		std::wstring name;
+		LPD3DXBUFFER adjacency = nullptr;
+		LPD3DXBUFFER materials = nullptr;
+		_ulong materialsCount = 0;
+		LPD3DXMESH mesh = nullptr;
+
+		std::vector<LPDIRECT3DTEXTURE9*> texture;
+		D3DXIMAGE_INFO imageInfo;
+	}MeshComData;
+
+
 	typedef struct _BOOL3
 	{
 		_BOOL3(bool x, bool y, bool z)
