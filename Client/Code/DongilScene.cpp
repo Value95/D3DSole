@@ -48,7 +48,7 @@ void CDongilScene::Start(void)
 		pObj->AddComponent<CPlayer>();
 	}*/
 
-	{
+	/*{
 		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
 		pObj->SetPosition(vector3(0, 0, 0));
 		pObj->SetScale(vector3(0.5f, 0.5f, 0.5f));
@@ -60,16 +60,15 @@ void CDongilScene::Start(void)
 		pObj->SetPosition(vector3(0, 0, 4));
 		pObj->SetScale(vector3(0.5f, 0.5f, 0.5f));
 		pObj->AddComponent<Engine::CBoxComponent>();
-	}
+	}*/
 	
-	/*{
+	{
 		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
 		pObj->SetPosition(vector3(0, 0, 7));
 		pObj->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(1, 1, 1), vector3Zero));
-		pObj->AddComponent<Engine::CMeshComponent>()->SetMeshKey(L"Cube");
-		pObj->AddComponent<Engine::CTextureComponent>()->SetTextureKey(L"Blue");
+		pObj->AddComponent<Engine::CMeshComponent>()->SetMeshKey(L"sylva.X");
 		pObj->AddComponent<Engine::CGraphicsComponent>();
-	}*/
+	}
 
 	/*
 	{

@@ -160,6 +160,11 @@ namespace Engine
 	{
 		return round(value * dropValue) / dropValue;
 	}
+
+	inline std::string GetExt(std::string pathName)
+	{
+		return pathName.substr(pathName.find_last_of(".") + 1);
+	}
 }
 
 

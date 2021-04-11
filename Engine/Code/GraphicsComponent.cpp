@@ -34,8 +34,7 @@ void CGraphicsComponent::Awake(void)
 void CGraphicsComponent::Start(SHARED(CComponent) spThis)
 {
 	__super::Start(spThis);
-	m_pMesh = m_pOwner->GetComponent<CMeshComponent>();
-	m_pTexture = m_pOwner->GetComponent<CTextureComponent>();
+	m_mesh = m_pOwner->GetComponent<CMeshComponent>();
 }
 
 _uint CGraphicsComponent::FixedUpdate(SHARED(CComponent) spThis)
@@ -57,17 +56,8 @@ _uint CGraphicsComponent::LateUpdate(SHARED(CComponent) spThis)
 
 _uint CGraphicsComponent::PreRender(void)
 {
-	if (m_pMesh == nullptr)
+	if (m_mesh == nullptr)
 		MSG_BOX(__FILE__, L"m_pMesh is nullptr");
-
-	GET_DEVICE->SetStreamSource(0, m_pMesh->GetMeshData()->vertexBuffer, 0, m_pMesh->GetMeshData()->vertexSize);
-	GET_DEVICE->SetFVF(m_pMesh->GetMeshData()->FVF);
-	GET_DEVICE->SetIndices(m_pMesh->GetMeshData()->indexBuffer);
-
-	if (m_pTexture != nullptr)
-		GET_DEVICE->SetTexture(0, m_pTexture->GetTexData()->pTexture);
-	else
-		GET_DEVICE->SetTexture(0, nullptr);
 
 	GET_DEVICE->SetTransform(D3DTS_WORLD, &GetOwner()->GetWorldMatrix());
 	GET_DEVICE->SetTransform(D3DTS_VIEW, &GET_CUR_SCENE->GetMainCamera()->GetViewMatrix());
@@ -78,14 +68,11 @@ _uint CGraphicsComponent::PreRender(void)
 
 _uint CGraphicsComponent::Render(void)
 {
-	GET_DEVICE->DrawIndexedPrimitive(
-		D3DPT_TRIANGLELIST,
-		0,
-		0,
-		GetMesh()->GetMeshData()->vertexCount,
-		0,
-		GetMesh()->GetMeshData()->faceCount
-	);
+	for (_ulong i = 0; i < m_mesh->GetMeshData()->materialsCount; i++)
+	{
+		GET_DEVICE->SetTexture(0, m_mesh->GetMeshData()->texture[i]);
+		m_mesh->GetMeshData()->mesh->DrawSubset(i);
+	}
 
 	return _uint();
 }

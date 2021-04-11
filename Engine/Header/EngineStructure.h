@@ -48,9 +48,10 @@ namespace Engine
 
 		void AddTexture(LPDIRECT3DDEVICE9 device, const _wcharT * textureFilePath)
 		{
-			LPDIRECT3DTEXTURE9*	Ttexture = nullptr;
-			D3DXCreateTextureFromFile(device, textureFilePath, Ttexture);
-			texture.emplace_back(Ttexture);
+			/*IDirect3DBaseTexture9*	Ttexture = nullptr;
+			if (FAILED(D3DXCreateTextureFromFile(device, textureFilePath, (LPDIRECT3DTEXTURE9*)&Ttexture)))
+				return;
+			texture.emplace_back(Ttexture);*/
 		}
 
 		std::wstring name;
@@ -59,7 +60,7 @@ namespace Engine
 		_ulong materialsCount = 0;
 		LPD3DXMESH mesh = nullptr;
 
-		std::vector<LPDIRECT3DTEXTURE9*> texture;
+		std::vector<IDirect3DBaseTexture9*> texture;
 		D3DXIMAGE_INFO imageInfo;
 	}MeshComData;
 

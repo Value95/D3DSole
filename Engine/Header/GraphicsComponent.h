@@ -3,13 +3,10 @@
 
 BEGIN(Engine)
 class CMeshComponent;
-class CTextureComponent;
 class ENGINE_DLL CGraphicsComponent final : public CComponent
 {
 protected:
-
-	GETTOR(SHARED(CMeshComponent),m_pMesh,nullptr,Mesh)
-	GETTOR(SHARED(CTextureComponent),m_pTexture,nullptr,Texture)
+	GETTOR(SHARED(CMeshComponent),m_mesh,nullptr,Mesh)
 
 	GETTOR_SETTOR(ERenderID,m_renderID,		ERenderID::Base,	RenderID)
 

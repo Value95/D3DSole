@@ -148,9 +148,9 @@ c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\hierarchyview.cpp(9)
 c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\featureview.cpp(7): warning C4005: 'new': 매크로 재정의
   c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\enginedefine.h(52): note: 'new'의 이전 정의를 참조하십시오.
   EditorScene.cpp
-c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\editorscene.cpp(281): warning C4018: '<=': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\editorscene.cpp(361): warning C4018: '<=': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\editorscene.cpp(379): warning C4018: '<=': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\editorscene.cpp(275): warning C4018: '<=': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\editorscene.cpp(360): warning C4018: '<=': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\editorscene.cpp(378): warning C4018: '<=': signed 또는 unsigned가 일치하지 않습니다.
   EditorExtern.cpp
   ColliderManager.cpp
   3DEditorView.cpp

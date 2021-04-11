@@ -86,7 +86,6 @@ _uint CEditorScene::Update(void)
 
 	ObjectMove();
 	ObjectMoveToView();
-	InspactorSesting(m_pickNumber, m_pickingObject);
 
 	return event;
 }
@@ -130,7 +129,6 @@ void CEditorScene::InitPrototypes(void)
 
 	SHARED(Engine::CGameObject) default = Engine::CGameObject::Create(L"Default", L"Default", true);
 	default->AddComponent<Engine::CGraphicsComponent>();
-	default->AddComponent<Engine::CTextureComponent>();
 	default->AddComponent<Engine::CMeshComponent>();
 	Engine::CObjectFactory::GetInstance()->AddPrototype(default);
 
@@ -171,8 +169,8 @@ void CEditorScene::ObjectCreate()
 	if (Engine::IMKEY_DOWN(KEY_Q))
 	{
 		_bool enable = true;;
-		CString cMessKey, cTextureKey;
-		std::wstring wMessKey, wTextureKey;
+		CString cMessKey;
+		std::wstring wMessKey;
 		std::wstring name = L"GameObejct";
 		std::wstring layerKey = L"Default", objectKey = L"Default";
 		vector3 rotation = vector3Zero;
@@ -182,9 +180,8 @@ void CEditorScene::ObjectCreate()
 		PrefabData TprefabData;
 
 		m_projectView->m_messList.GetText(m_projectView->m_messList.GetCurSel(), cMessKey);
-		m_projectView->m_textureList.GetText(m_projectView->m_textureList.GetCurSel(), cTextureKey);
 
-		if (cMessKey == L"Default" || cTextureKey == L"Default") // 만약 메쉬랑 텍스쳐가 설정되어있지 않다면
+		if (cMessKey == L"Default") // 만약 메쉬랑 텍스쳐가 설정되어있지 않다면
 		{
 			int sel = m_projectView->m_prefabList.GetCurSel();
 			if (sel != -1) // 프리팹이 설정되어있다면 프리팹을
@@ -195,7 +192,6 @@ void CEditorScene::ObjectCreate()
 				layerKey = TprefabData.layerKey;
 				objectKey = TprefabData.objectKey;
 				cMessKey = TprefabData.messKey.c_str();
-				cTextureKey = TprefabData.textureKey.c_str();
 				rotation = TprefabData.rotation;
 				scale = TprefabData.scale;
 
@@ -209,7 +205,6 @@ void CEditorScene::ObjectCreate()
 		}
 
 		wMessKey = CStringW(cMessKey);
-		wTextureKey = CStringW(cTextureKey);
 		// 오브젝트 생성--------------------------------------------------
 
 
@@ -217,7 +212,6 @@ void CEditorScene::ObjectCreate()
 		pObj->SetIsEnabled(enable);
 		pObj->SetName(name);
 		pObj->GetComponent<Engine::CMeshComponent>()->SetMeshKey(wMessKey);
-		pObj->GetComponent<Engine::CTextureComponent>()->SetTextureKey(wTextureKey);
 
 		pObj->SetPosition(m_pMainCamera->GetOwner()->ReturnTranslate(vector3(0, 0, 5)));
 		pObj->SetRotation(rotation);
@@ -311,28 +305,33 @@ void CEditorScene::ObjectMove()
 		if (Engine::IMKEY_PRESS(KEY_W))
 		{
 			m_pickingObject->Translate(vector3Forward * deltaTime * speed);
+			InspactorSesting(m_pickNumber, m_pickingObject);
 		}
-
 		if (Engine::IMKEY_PRESS(KEY_S))
 		{
 			m_pickingObject->Translate(vector3Back * deltaTime * speed);
+			InspactorSesting(m_pickNumber, m_pickingObject);
 		}
 
 		if (Engine::IMKEY_PRESS(KEY_A))
 		{
 			m_pickingObject->Translate(vector3Left * deltaTime * speed);
+			InspactorSesting(m_pickNumber, m_pickingObject);
 		}
 		if (Engine::IMKEY_PRESS(KEY_D))
 		{
 			m_pickingObject->Translate(vector3Right * deltaTime * speed);
+			InspactorSesting(m_pickNumber, m_pickingObject);
 		}
 		if (Engine::IMKEY_PRESS(KEY_Q))
 		{
 			m_pickingObject->Translate(vector3Up * deltaTime * speed);
+			InspactorSesting(m_pickNumber, m_pickingObject);
 		}
 		if (Engine::IMKEY_PRESS(KEY_E))
 		{
 			m_pickingObject->Translate(vector3Down * deltaTime * speed);
+			InspactorSesting(m_pickNumber, m_pickingObject);
 		}
 	}
 

@@ -43,6 +43,17 @@ public:
 		ColliderData* collider
 	);
 
+	void DataInit(
+		bool enable,
+		std::wstring name,
+		std::wstring layerKey,
+		std::wstring objectKey,
+		std::wstring messKey,
+		vector3 rotation,
+		vector3 scale,
+		ColliderData* collider
+	);
+
 	void DataDelete(int value);
 };
 

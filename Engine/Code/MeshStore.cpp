@@ -57,7 +57,13 @@ void CMeshStore::InitResource(std::wstring sourcePath)
 
 void CMeshStore::ParsingMesh(std::wstring filePath, std::wstring fileName)
 {
+	string temp;
+	temp = temp.assign(fileName.begin(), fileName.end());
+	if (GetExt(temp) != "X")
+		return;
+
 	SHARED(MeshComData) TmeshComData(new MeshComData);
+	TmeshComData->name = fileName;
 
 	_wcharT	fullPath[MAX_PATH] = L"";// 경로가 저장된다.
 
@@ -82,7 +88,12 @@ void CMeshStore::ParsingMesh(std::wstring filePath, std::wstring fileName)
 
 		lstrcat(fullPath, textureName);
 
-		TmeshComData->AddTexture(GET_DEVICE, fullPath);
+		IDirect3DBaseTexture9*	Ttexture = nullptr;
+		if (FAILED(D3DXCreateTextureFromFile(GET_DEVICE, fullPath, (LPDIRECT3DTEXTURE9*)&Ttexture)))
+			return;
+		TmeshComData->texture.emplace_back(Ttexture);
+
+		//TmeshComData->AddTexture(GET_DEVICE, fullPath);
 	}
 
 	m_mStaticMeshData[fileName] = TmeshComData;

@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Header\AnimComponent.h" />
     <ClInclude Include="..\Header\BoxCollider.h" />
     <ClInclude Include="..\Header\BoxComponent.h" />
     <ClInclude Include="..\Header\CameraComponent.h" />
@@ -44,6 +45,7 @@
     <ClInclude Include="..\Header\EngineMacro.h" />
     <ClInclude Include="..\Header\EngineStructure.h" />
     <ClInclude Include="..\Header\EngineStdafx.h" />
+    <ClInclude Include="..\Header\HierarchyLoader.h" />
     <ClInclude Include="..\Header\InputManager.h" />
     <ClInclude Include="..\Header\Layer.h" />
     <ClInclude Include="..\Header\LineComponent.h" />
@@ -67,6 +69,7 @@
     <ClInclude Include="..\Header\WndApp.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\AnimComponent.cpp" />
     <ClCompile Include="..\Code\BoxCollider.cpp" />
     <ClCompile Include="..\Code\BoxComponent.cpp" />
     <ClCompile Include="..\Code\CameraComponent.cpp" />
@@ -83,6 +86,7 @@
     <ClCompile Include="..\Code\GraphicsComponent.cpp" />
     <ClCompile Include="..\Code\GraphicsManager.cpp" />
     <ClCompile Include="..\Code\EngineStdafx.cpp" />
+    <ClCompile Include="..\Code\HierarchyLoader.cpp" />
     <ClCompile Include="..\Code\InputManager.cpp" />
     <ClCompile Include="..\Code\Layer.cpp" />
     <ClCompile Include="..\Code\LineComponent.cpp" />

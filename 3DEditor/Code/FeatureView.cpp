@@ -63,7 +63,7 @@ void CFeatureView::PrefabCreate()
 		return;
 
 	CPrefabManager::GetInstance()->DataInit(Tobject->GetIsEnabled(), Tobject->GetName(), Tobject->GetLayerKey(), Tobject->GetObjectKey(), Tobject->GetComponent<Engine::CMeshComponent>()->GetMeshKey(),
-		Tobject->GetComponent<Engine::CTextureComponent>()->GetTextureKey(), Tobject->GetRotation(), Tobject->GetScale(), Tcollider);
+		Tobject->GetRotation(), Tobject->GetScale(), Tcollider);
 
 	m_projectView->m_prefabList.AddString(Tobject->GetName().c_str());
 }
