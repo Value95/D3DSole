@@ -30,6 +30,19 @@ namespace Engine
 		}
 	}
 
+	template <typename T>
+	DWORD SafeRelease(T& pointer)
+	{
+		DWORD	dwRefCnt = 0;
+		/*if (NULL != pointer)
+		{
+			dwRefCnt = pointer->OnDestroy();
+			if (dwRefCnt == 0)
+				pointer = NULL;
+		}*/
+		return dwRefCnt;
+	}
+
 	//ClassName 따오는 함수
 	template <typename T>
 	std::wstring GetCurClassName(void)

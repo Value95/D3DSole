@@ -16,6 +16,8 @@ namespace Engine
 
 	typedef float _float;
 
+	typedef double _double;
+
 	typedef D3DXVECTOR2 vector2;
 	typedef D3DXVECTOR3 vector3;
 	typedef D3DXVECTOR4 vector4;

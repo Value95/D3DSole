@@ -157,6 +157,10 @@ CObjectFactory::GetInstance()->AddClone(layerKey, objectKey, isStatic)
 #define REWRITE_TEXT(key, text) CFontManager::GetInstance()->RewriteText(key, text)
 #define DELETE_TEXT(key) CFontManager::GetInstance()->DeleteText(key)
 
+#define NULL_CHECK_RETURN( _ptr, _return)	\
+	{if( _ptr == 0){__asm { int 3 };return _return;}}
+
+
 //ObjectFactory Macro
 //#define ADD_CLONE_2_ARGS(layerKey, objectKey)			CObjectFactory::GetInstance()->AddClone(layerKey, objectKey, false)
 //#define Add_CLONE_3_ARGS(layerKey, objectKey, isStatic) CObjectFactory::GetInstance()->AddClone(layerKey, objectKey, isStatic)

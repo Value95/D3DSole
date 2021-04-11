@@ -97,17 +97,11 @@
     <Filter Include="00.Engine\03.Graphics">
       <UniqueIdentifier>{f83f6e63-d8dc-4dd2-9eb0-c0b734aeae84}</UniqueIdentifier>
     </Filter>
-    <Filter Include="00.Engine\03.Graphics\01.UIManager">
-      <UniqueIdentifier>{e9957ad9-55c5-462c-986c-0e833ede79de}</UniqueIdentifier>
-    </Filter>
     <Filter Include="00.Engine\03.Graphics\00.GraphicsManager">
       <UniqueIdentifier>{a817bcad-cf26-4e3b-9b0c-0a55f18aa60c}</UniqueIdentifier>
     </Filter>
     <Filter Include="00.Engine\11. RayCast">
       <UniqueIdentifier>{c975301e-a298-4896-b4b8-af58c10cdeae}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="00.Engine\03.Graphics\02.DebugRenderManager">
-      <UniqueIdentifier>{6334dde6-be5d-4697-8939-81840632a3d3}</UniqueIdentifier>
     </Filter>
     <Filter Include="02.Components\01.GraphicsComponent\00.Graphics">
       <UniqueIdentifier>{c7544102-b19f-4071-a53b-19277d72433c}</UniqueIdentifier>
@@ -133,10 +127,19 @@
     <Filter Include="02.Components\01.GraphicsComponent\06.Triangle">
       <UniqueIdentifier>{cdd59e1b-f409-4420-bb7b-790f71e4d0ee}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.Components\04.AnimComponent">
+    <Filter Include="00.Engine\03.Graphics\01.AnimMeshRednerManager">
+      <UniqueIdentifier>{7526bad0-cd28-47ff-9877-efb4206af195}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00.Engine\03.Graphics\02.UIManager">
+      <UniqueIdentifier>{e9957ad9-55c5-462c-986c-0e833ede79de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00.Engine\03.Graphics\03.DebugRenderManager">
+      <UniqueIdentifier>{6334dde6-be5d-4697-8939-81840632a3d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.AnimCtrl">
       <UniqueIdentifier>{ae72169b-9ceb-4c33-87e5-4f939cf1d642}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.Components\04.AnimComponent\00.HierarchyLoader">
+    <Filter Include="03.AnimCtrl\00.HierarchyLoader">
       <UniqueIdentifier>{5a37d130-4492-409e-abed-3366db3a0f21}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -211,7 +214,7 @@
       <Filter>00.Engine\01.Graphics\00.Manager</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UIManager.cpp">
-      <Filter>00.Engine\03.Graphics\01.UIManager</Filter>
+      <Filter>00.Engine\03.Graphics\02.UIManager</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UIComponent.cpp">
       <Filter>02.Components\01.GraphicsComponent\02.UI</Filter>
@@ -250,16 +253,22 @@
       <Filter>00.Engine\11. RayCast</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\DebugRenderManager.cpp">
-      <Filter>00.Engine\03.Graphics\02.DebugRenderManager</Filter>
+      <Filter>00.Engine\03.Graphics\03.DebugRenderManager</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\GraphicsComponent.cpp">
       <Filter>02.Components\01.GraphicsComponent\00.Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\AnimComponent.cpp">
-      <Filter>02.Components\04.AnimComponent</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\HierarchyLoader.cpp">
-      <Filter>02.Components\04.AnimComponent\00.HierarchyLoader</Filter>
+      <Filter>03.AnimCtrl\00.HierarchyLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\AnimMeshRenderComponent.cpp">
+      <Filter>02.Components\01.GraphicsComponent\00.Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\AniCtrl.cpp">
+      <Filter>03.AnimCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\AnimMeshRenderManager.cpp">
+      <Filter>00.Engine\03.Graphics\01.AnimMeshRednerManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -357,7 +366,7 @@
       <Filter>99.Include</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\UIManager.h">
-      <Filter>00.Engine\03.Graphics\01.UIManager</Filter>
+      <Filter>00.Engine\03.Graphics\02.UIManager</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\UIComponent.h">
       <Filter>02.Components\01.GraphicsComponent\02.UI</Filter>
@@ -396,7 +405,7 @@
       <Filter>00.Engine\11. RayCast</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\DebugRendeerManager.h">
-      <Filter>00.Engine\03.Graphics\02.DebugRenderManager</Filter>
+      <Filter>00.Engine\03.Graphics\03.DebugRenderManager</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\EngineMatrixFunction.h">
       <Filter>99.Include</Filter>
@@ -404,11 +413,17 @@
     <ClInclude Include="..\Header\GraphicsComponent.h">
       <Filter>02.Components\01.GraphicsComponent\00.Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\AnimComponent.h">
-      <Filter>02.Components\04.AnimComponent</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\HierarchyLoader.h">
-      <Filter>02.Components\04.AnimComponent\00.HierarchyLoader</Filter>
+      <Filter>03.AnimCtrl\00.HierarchyLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\AnimMeshRenderComponent.h">
+      <Filter>02.Components\01.GraphicsComponent\00.Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\AniCtrl.h">
+      <Filter>03.AnimCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\AnimMeshRenderManager.h">
+      <Filter>00.Engine\03.Graphics\01.AnimMeshRednerManager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

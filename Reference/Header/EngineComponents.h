@@ -15,6 +15,7 @@
 #include "LineComponent.h"
 #include "SphereComponent.h"
 #include "TriangleComponent.h"
+#include "AnimMeshRenderComponent.h"
 //--------------------------------------------------
 
 // Physics------------------------------------------

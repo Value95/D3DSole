@@ -1,7 +1,6 @@
 #ifndef CLIENTMANAGER_H
 #define CLIENTMANAGER_H
 
-#include "ShaderManager.h"
 #include "DeviceManager.h"
 #include "UIManager.h"
 #include "SoundManager.h"
@@ -10,6 +9,7 @@
 #include "InputManager.h"
 #include "DebugRendeerManager.h"
 #include "ColliderManager.h"
+#include "AnimMeshRenderManager.h"
 
 #include "WndApp.h"
 #include "FRC.h"

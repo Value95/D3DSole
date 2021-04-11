@@ -36,6 +36,9 @@ SHARED(CGameObject) CGameObject::MakeClone(void)
 	SHARED(CGameObject) pGameObject(Create(m_layerKey, m_objectKey, m_isStatic));
 	pGameObject->SetIsClone(true);
 	pGameObject->SetName(m_name);
+	pGameObject->SetPosition(m_position);
+	pGameObject->SetRotation(m_rotation);
+	pGameObject->SetScale(m_scale);
 	pGameObject->Awake();
 
 	for (auto& component : m_mComponents)

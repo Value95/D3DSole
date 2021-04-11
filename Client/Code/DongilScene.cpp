@@ -70,6 +70,11 @@ void CDongilScene::Start(void)
 		pObj->AddComponent<Engine::CGraphicsComponent>();
 	}
 
+	{
+		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Player", L"Player", true);
+		pObj->SetPosition(vector3(0, 0, 0));
+	}
+
 	/*
 	{
 		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);

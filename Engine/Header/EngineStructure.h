@@ -64,6 +64,33 @@ namespace Engine
 		D3DXIMAGE_INFO imageInfo;
 	}MeshComData;
 
+	typedef struct tagD3DXFrame_Derived : public D3DXFRAME
+	{
+		D3DXMATRIX		CombinedTransformationMatrix;
+	}D3DXFRAME_DERIVED;
+
+	typedef struct tagD3DXMeshContainer_Derived : public D3DXMESHCONTAINER
+	{
+		class CTexture*		pMeshTexture;
+
+		unsigned int		iNumBones;	// 메쉬가 지닌 모든 뼈의 개수를 보관
+
+		LPDIRECT3DTEXTURE9*		ppTexture;
+
+		// 최초 로드 시점의 상태를 가지고 있는 메쉬 객체(불변)
+		LPD3DXMESH		pOriginalMesh;
+
+		// 애니메이션 정보를 포함한 최초의 행렬 상태 
+		D3DXMATRIX*		pOffsetMatrices;
+
+		// 뼈 구조체가 갖고 있는 CombinedTransformationMatrix의 주소값들을 보관하는 포인터
+		D3DXMATRIX**	ppCombinedTransformationMatrices;
+
+		// 최종적으로 출력을 위한 행렬의 상태
+		D3DXMATRIX*		pRenderingMatrices;
+
+	}D3DXMESHCONTAINER_DERIVED;
+
 	typedef struct _BOOL3
 	{
 		_BOOL3(bool x, bool y, bool z)

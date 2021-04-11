@@ -19,7 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Header\AnimComponent.h" />
+    <ClInclude Include="..\Header\AniCtrl.h" />
+    <ClInclude Include="..\Header\AnimMeshRenderComponent.h" />
+    <ClInclude Include="..\Header\AnimMeshRenderManager.h" />
     <ClInclude Include="..\Header\BoxCollider.h" />
     <ClInclude Include="..\Header\BoxComponent.h" />
     <ClInclude Include="..\Header\CameraComponent.h" />
@@ -69,7 +71,9 @@
     <ClInclude Include="..\Header\WndApp.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Code\AnimComponent.cpp" />
+    <ClCompile Include="..\Code\AniCtrl.cpp" />
+    <ClCompile Include="..\Code\AnimMeshRenderComponent.cpp" />
+    <ClCompile Include="..\Code\AnimMeshRenderManager.cpp" />
     <ClCompile Include="..\Code\BoxCollider.cpp" />
     <ClCompile Include="..\Code\BoxComponent.cpp" />
     <ClCompile Include="..\Code\CameraComponent.cpp" />

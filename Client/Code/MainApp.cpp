@@ -25,6 +25,7 @@ void CMainApp::Awake(void)
 
 	Engine::CObjectFactory::GetInstance()->Awake();
 	Engine::CGraphicsManager::GetInstance()->Awake();
+	Engine::CAnimMeshRenderManager::GetInstance()->Awake();
 	Engine::CInputManager::GetInstance()->Awake();
 	Engine::CSceneManager::GetInstance()->Awake();
 	Engine::CUIManager::GetInstance()->Awake();
@@ -39,6 +40,7 @@ void CMainApp::Start(void)
 
 	Engine::CObjectFactory::GetInstance()->Start();
 	Engine::CGraphicsManager::GetInstance()->Start();
+	Engine::CAnimMeshRenderManager::GetInstance()->Start();
 	Engine::CInputManager::GetInstance()->Start();
 	Engine::CSceneManager::GetInstance()->Start();
 	Engine::CSceneManager::GetInstance()->SceneChange(CDongilScene::Create());
@@ -52,6 +54,7 @@ _uint CMainApp::FixedUpdate(void)
 	_uint event = NO_EVENT;
 
 	if (event = Engine::CGraphicsManager::GetInstance()->FixedUpdate())	return event;
+	if (event = Engine::CAnimMeshRenderManager::GetInstance()->FixedUpdate())	return event;
 	if (event = Engine::CInputManager::GetInstance()->FixedUpdate())	return event;
 	if (event = Engine::CSceneManager::GetInstance()->FixedUpdate())	return event;
 
@@ -63,6 +66,7 @@ _uint CMainApp::Update(void)
 	_uint event = NO_EVENT;
 
 	if (event = Engine::CGraphicsManager::GetInstance()->Update())	return event;
+	if (event = Engine::CAnimMeshRenderManager::GetInstance()->Update())	return event;
 	if (event = Engine::CInputManager::GetInstance()->Update())		return event;
 	if (event = Engine::CSceneManager::GetInstance()->Update())		return event;
 	return event;
@@ -72,6 +76,7 @@ _uint CMainApp::LateUpdate(void)
 {
 	_uint event = NO_EVENT;
 	if (event = Engine::CGraphicsManager::GetInstance()->LateUpdate())	return event;
+	if (event = Engine::CAnimMeshRenderManager::GetInstance()->LateUpdate())	return event;
 	if (event = Engine::CInputManager::GetInstance()->LateUpdate())		return event;
 	if (event = Engine::CSceneManager::GetInstance()->LateUpdate())		return event;
 	if (event = Engine::CColliderManager::GetInstance()->LateUpdate())	return event;
@@ -87,6 +92,9 @@ _uint CMainApp::Render(void)
 	if (event = Engine::CGraphicsManager::GetInstance()->PreRender())	return event;
 	if (event = Engine::CGraphicsManager::GetInstance()->Render())	return event;
 
+	if (event = Engine::CAnimMeshRenderManager::GetInstance()->PreRender())	return event;
+	if (event = Engine::CAnimMeshRenderManager::GetInstance()->Render())	return event;
+
 	if (event = Engine::CDebugRendeerManager::GetInstance()->PreRender())	return event;
 	if (event = Engine::CDebugRendeerManager::GetInstance()->Render())	return event;
 
@@ -100,6 +108,7 @@ _uint CMainApp::PostRender(void)
 {
 	_uint event = NO_EVENT;
 	if (event = Engine::CGraphicsManager::GetInstance()->PostRender())	return event;
+	if (event = Engine::CAnimMeshRenderManager::GetInstance()->PostRender())	return event;
 	if (event = Engine::CDebugRendeerManager::GetInstance()->PostRender())	return event;
 	if (event = Engine::CUIManager::GetInstance()->PostRender())		return event;
 	return event;
@@ -108,6 +117,7 @@ _uint CMainApp::PostRender(void)
 void CMainApp::OnDestroy(void)
 {
 	Engine::CGraphicsManager::GetInstance()->DestroyInstance();
+	Engine::CAnimMeshRenderManager::GetInstance()->DestroyInstance();
 	Engine::CInputManager::GetInstance()->DestroyInstance();
 	Engine::CSceneManager::GetInstance()->DestroyInstance();
 	Engine::CObjectFactory::GetInstance()->DestroyInstance();
@@ -140,4 +150,11 @@ void CMainApp::InitStaticPrototype(void)
 	pCamera->SetRotation(vector3Zero);
 	pCamera->AddComponent<Engine::CCameraComponent>();
 	Engine::CObjectFactory::GetInstance()->AddPrototype(pCamera);
+
+	SHARED(Engine::CGameObject) player = Engine::CGameObject::Create(L"Player", L"Player", true);
+	player->SetPosition(vector3(0, 0, 0));
+	player->SetScale(vector3(0.01f, 0.01f, 0.01f));
+	player->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(1, 1, 1), vector3Zero));
+	player->AddComponent<Engine::CAnimMeshRenderComponent>()->MeshInput(L"../../Resource/Mesh/Static/Player/", L"Player.X");
+	Engine::CObjectFactory::GetInstance()->AddPrototype(player);
 }

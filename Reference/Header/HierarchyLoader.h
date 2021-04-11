@@ -6,9 +6,11 @@ BEGIN(Engine)
 class ENGINE_DLL CHierarchyLoader : public ID3DXAllocateHierarchy
 {
 private:
+	const _wcharT*		m_filePath;
 
 private:
 	explicit CHierarchyLoader();
+	explicit CHierarchyLoader(const _wcharT* pPath);
 	virtual  ~CHierarchyLoader();
 
 public:
@@ -27,11 +29,12 @@ public:
 	
 	STDMETHOD(DestroyMeshContainer)(THIS_ LPD3DXMESHCONTAINER pMeshContainerToFree);
 
+	static CHierarchyLoader* Create(const _wcharT* filePath);
 private:
-
+	HRESULT Start(const _wcharT* filePath);
+	void Allocate_Name(char** ppSour, const char* pDest);
+	void OnDestroy();
 };
-
-
 END
 #endif // HierarchyLoader_h__
 
