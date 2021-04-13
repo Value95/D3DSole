@@ -15,8 +15,8 @@ protected:
 	GETTOR_SETTOR(_bool, m_isStatic, false, IsStatic)
 	GETTOR_SETTOR(_bool, m_isAwaked, false, IsAwaked)
 	GETTOR_SETTOR(_bool, m_isStarted, false, IsStarted)
-	GETTOR_SETTOR(_bool, m_isEnabled, true, IsEnabled)
 	GETTOR_SETTOR(_bool, m_isNeedToBeDeleted, false, IsNeedToBeDeleted)
+	GETTOR(_bool, m_isEnabled, true, IsEnabled);
 
 	GETTOR_SETTOR(std::wstring, m_layerKey, L"", LayerKey)
 	GETTOR_SETTOR(std::wstring, m_objectKey, L"", ObjectKey)
@@ -44,6 +44,15 @@ public:
 	void OnEnable(void);
 	void OnDisable(void);
 
+	void SetIsEnabled(_bool value) 
+	{
+		m_isEnabled = value;
+
+		if (value)
+			OnEnable();
+		else
+			OnDisable();
+	}
 public:
 	//오브젝트에서 컴포넌트 가져오는 함수
 	template <typename ComponentType>

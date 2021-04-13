@@ -35,11 +35,17 @@ void CPlayer::Start(SHARED(CComponent) spThis)
 
 _uint CPlayer::FixedUpdate(SHARED(CComponent) spThis)
 {
+	__super::FixedUpdate(spThis);
+
 	return NO_EVENT;
 }
 
 _uint CPlayer::Update(SHARED(CComponent) spThis)
 {
+	__super::Update(spThis);
+
+	SetIsEnabled(false);
+
 	if (Engine::CInputManager::GetInstance()->KeyPress(KEY_W))
 	{
 		GetOwner()->Translate(vector3Forward * deltaTime * 50);
@@ -76,6 +82,8 @@ _uint CPlayer::Update(SHARED(CComponent) spThis)
 
 _uint CPlayer::LateUpdate(SHARED(CComponent) spThis)
 {
+	__super::LateUpdate(spThis);
+
 	return NO_EVENT;
 }
 
@@ -85,8 +93,14 @@ void CPlayer::OnDestroy(void)
 
 void CPlayer::OnEnable(void)
 {
+	__super::OnEnable();
+
+	std::cout << "Player OnEnable" << endl;
 }
 
 void CPlayer::OnDisable(void)
 {
+	__super::OnDisable();
+
+	std::cout << "Player OnDisable" << endl;
 }

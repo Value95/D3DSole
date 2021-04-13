@@ -32,6 +32,7 @@
     <ClInclude Include="..\Header\DataStore.h" />
     <ClInclude Include="..\Header\DebugRendeerManager.h" />
     <ClInclude Include="..\Header\DeviceManager.h" />
+    <ClInclude Include="..\Header\DirectionalLightComponent.h" />
     <ClInclude Include="..\Header\Engine.h" />
     <ClInclude Include="..\Header\EngineComponents.h" />
     <ClInclude Include="..\Header\EngineExtern.h" />
@@ -84,6 +85,7 @@
     <ClCompile Include="..\Code\DataStore.cpp" />
     <ClCompile Include="..\Code\DebugRenderManager.cpp" />
     <ClCompile Include="..\Code\DeviceManager.cpp" />
+    <ClCompile Include="..\Code\DirectionalLightComponent.cpp" />
     <ClCompile Include="..\Code\Engine.cpp" />
     <ClCompile Include="..\Code\FRC.cpp" />
     <ClCompile Include="..\Code\GameObject.cpp" />

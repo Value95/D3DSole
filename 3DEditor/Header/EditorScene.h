@@ -50,5 +50,7 @@ private:
 	void ObjectPicking(std::wstring layerKey);
 	void ObjectMove();
 	void ObjectMoveToView();
+
+	void NormalObject(CString cMessKey, CString cTextureKey);
 };
 

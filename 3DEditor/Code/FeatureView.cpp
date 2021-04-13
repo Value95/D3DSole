@@ -47,6 +47,36 @@ void CFeatureView::NavMeshMode()
 
 }
 
+void CFeatureView::SaveWstring(HANDLE* file, DWORD* dwByte, std::wstring str)
+{
+	CString text = str.c_str();
+	DWORD dwStringSize = sizeof(wchar_t) * (text.GetLength() + 1);
+	WriteFile(*file, &dwStringSize, sizeof(DWORD), dwByte, nullptr); // 이름
+	WriteFile(*file, text.GetString(), dwStringSize, dwByte, nullptr);
+
+}
+
+void CFeatureView::ReSetProject()
+{
+	m_hierarchyView = dynamic_cast<CHierarchyView*>(dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd())->m_mainSplitter.GetPane(0, 1));
+	m_hierarchyView->m_objectListBox.ResetContent();
+	m_hierarchyView->m_objectPos.clear();
+
+	Engine::CSceneManager::GetInstance()->GetCurScene()->AllDelete();
+	dynamic_cast<CEditorScene*>(Engine::GET_CUR_SCENE.get())->SetPickingObject(nullptr);
+
+	SHARED(Engine::CGameObject) m_box;
+	SHARED(Engine::CGameObject) m_sphere;
+
+	m_box = Engine::CObjectFactory::GetInstance()->AddClone(L"Collider", L"Collider", true);
+	m_box->SetScale(vector3Zero);
+	m_box->AddComponent<Engine::CBoxComponent>();
+
+	m_sphere = Engine::CObjectFactory::GetInstance()->AddClone(L"Collider", L"Collider", true);
+	m_sphere->SetScale(vector3Zero);
+	m_sphere->AddComponent<Engine::CSphereComponent>();
+}
+
 // 프리팹 생성
 void CFeatureView::PrefabCreate()
 {
@@ -106,21 +136,27 @@ void CFeatureView::Save()
 		std::unordered_map<std::wstring, SHARED(Engine::CLayer)> layers = Engine::CSceneManager::GetInstance()->GetCurScene()->GetLayers();
 
 		DWORD dwByte = 0;
+		DWORD dwStringSize = 0;
+		CString text;
 		_int objectCount = Engine::GET_CUR_SCENE->GetObjectCount() - layers[L"NavMesh"].get()->GetGameObjects().size() - 3;
 
 		// 오브젝트
 		WriteFile(hFile, &objectCount, sizeof(_int), &dwByte, nullptr);
 
-
 		for (auto& layer : layers)
 		{
-			if(layer.first == L"NavMesh" || layer.first == L"Collider")
+			if(layer.first != L"Default" )
 				continue;
 
 			for (auto& gameObject : layer.second->GetGameObjects())
 			{
-				if (gameObject->GetLayerKey() == L"Camera")
-					continue;
+				SaveWstring(&hFile, &dwByte, gameObject->GetName()); // 이름
+
+				SaveWstring(&hFile, &dwByte, gameObject->GetLayerKey()); // 레이어 키
+
+				SaveWstring(&hFile, &dwByte, gameObject->GetObjectKey()); // 오브젝트 키
+
+				SaveWstring(&hFile, &dwByte, gameObject->GetComponent<Engine::CMeshComponent>()->GetMeshKey()); // 메쉬
 
 				WriteFile(hFile, &gameObject->GetIsEnabled(), sizeof(bool), &dwByte, nullptr); // 활성화/비활성화
 				WriteFile(hFile, &gameObject->GetPosition(), sizeof(vector3), &dwByte, nullptr); // 위치
@@ -135,6 +171,12 @@ void CFeatureView::Save()
 		// 모든 충돌체의 정보
 		for (auto& collider : CColliderManager::GetInstance()->GetColliderData())
 		{
+			// 콜라이더 타입
+			text = collider->colliderType.c_str();
+			dwStringSize = sizeof(wchar_t) * (text.GetLength() + 1);
+			WriteFile(hFile, &dwStringSize, sizeof(DWORD), &dwByte, nullptr);
+			WriteFile(hFile, text.GetString(), dwStringSize, &dwByte, nullptr);
+
 			WriteFile(hFile, &collider->offset, sizeof(vector3), &dwByte, nullptr); // 위치
 			WriteFile(hFile, &collider->boxsize, sizeof(vector3), &dwByte, nullptr); // 크기
 			WriteFile(hFile, &collider->radius, sizeof(_float), &dwByte, nullptr); // 반지름
@@ -188,34 +230,37 @@ void CFeatureView::Load()
 			return;
 		}
 		DWORD dwByte = 0;
-		std::wstring stringValue;
+		DWORD dwStringSize = 0;
 
-		m_hierarchyView = dynamic_cast<CHierarchyView*>(dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd())->m_mainSplitter.GetPane(0, 1));
-		m_hierarchyView->m_objectListBox.ResetContent();
-		m_hierarchyView->m_objectPos.clear();
+		ReSetProject();
 
-		Engine::CSceneManager::GetInstance()->GetCurScene()->AllDelete();
-		dynamic_cast<CEditorScene*>(Engine::GET_CUR_SCENE.get())->SetPickingObject(nullptr);
+		// 오브젝트------------------------------------------------------------------------------------
 
-		SHARED(Engine::CGameObject) m_box;
-		SHARED(Engine::CGameObject) m_sphere;
-
-		m_box = Engine::CObjectFactory::GetInstance()->AddClone(L"Collider", L"Collider", true);
-		m_box->SetScale(vector3Zero);
-		m_box->AddComponent<Engine::CBoxComponent>();
-
-		m_sphere = Engine::CObjectFactory::GetInstance()->AddClone(L"Collider", L"Collider", true);
-		m_sphere->SetScale(vector3Zero);
-		m_sphere->AddComponent<Engine::CSphereComponent>();
-
-		// 오브젝트
 		_int objectCount = 0;
 		ReadFile(hFile, &objectCount, sizeof(_int), &dwByte, nullptr);
 
 		for (int i = 0; i < objectCount; i++)
 		{
-			SHARED(Engine::CGameObject) obj = Engine::ADD_CLONE(L"Default", L"Default", true);
-			obj->SetName(L"GameObject");
+			ReadFile(hFile, &dwStringSize, sizeof(DWORD), &dwByte, nullptr); // 이름
+			TCHAR* strName = new TCHAR[dwStringSize];
+			ReadFile(hFile, strName, dwStringSize, &dwByte, nullptr);
+
+			ReadFile(hFile, &dwStringSize, sizeof(DWORD), &dwByte, nullptr); // 레이어
+			TCHAR* layerKey = new TCHAR[dwStringSize];
+			ReadFile(hFile, layerKey, dwStringSize, &dwByte, nullptr);
+
+			ReadFile(hFile, &dwStringSize, sizeof(DWORD), &dwByte, nullptr); // 오브젝트
+			TCHAR* objectKey = new TCHAR[dwStringSize];
+			ReadFile(hFile, objectKey, dwStringSize, &dwByte, nullptr);
+
+			SHARED(Engine::CGameObject) obj = Engine::ADD_CLONE(layerKey, objectKey, true);
+			obj->SetName(strName);
+
+			ReadFile(hFile, &dwStringSize, sizeof(DWORD), &dwByte, nullptr);
+			TCHAR* meshKey = new TCHAR[dwStringSize];
+			ReadFile(hFile, meshKey, dwStringSize, &dwByte, nullptr);
+			obj->GetComponent<Engine::CMeshComponent>()->SetMeshKey(meshKey);
+
 			ReadFile(hFile, &obj->GetIsEnabled(), sizeof(bool), &dwByte, nullptr);
 			ReadFile(hFile, &obj->GetPosition(), sizeof(vector3), &dwByte, nullptr);
 			ReadFile(hFile, &obj->GetRotation(), sizeof(vector3), &dwByte, nullptr);
@@ -225,22 +270,29 @@ void CFeatureView::Load()
 			m_hierarchyView->m_objectPos.emplace_back(obj.get()->GetPosition());
 		}
 
-		// 충돌체정보
+		//-----------------------------------------------------------------------------
+		// 충돌체정보-------------------------------------------------------------------
+
 		_int colliderCount = 0;
 		ReadFile(hFile, &colliderCount, sizeof(_int), &dwByte, nullptr);
 
 		for (int i = 0; i < colliderCount; i++)
 		{
 			ColliderData* colliderData = new ColliderData();
-			colliderData->colliderType = L"Default";
+
+			ReadFile(hFile, &dwStringSize, sizeof(DWORD), &dwByte, nullptr); // 이름
+			TCHAR* colliderType = new TCHAR[dwStringSize];
+			ReadFile(hFile, colliderType, dwStringSize, &dwByte, nullptr);
+
+			colliderData->colliderType = colliderType;
 			ReadFile(hFile, &colliderData->offset, sizeof(vector3), &dwByte, nullptr);
 			ReadFile(hFile, &colliderData->boxsize, sizeof(vector3), &dwByte, nullptr);
 			ReadFile(hFile, &colliderData->radius, sizeof(_float), &dwByte, nullptr);
 
 			CColliderManager::GetInstance()->SetColliderData(colliderData);
 		}
-
-		// 네브매쉬 오브젝트
+		//-------------------------------------------------------------------------------
+		// 네브매쉬 오브젝트--------------------------------------------------------------
 		_int m_createCount = 0;
 		_int m_triangleCount = 0;
 		ReadFile(hFile, &m_createCount, sizeof(_int), &dwByte, nullptr);
@@ -304,46 +356,3 @@ void CFeatureView::Dump(CDumpContext& dc) const
 }
 #endif
 #endif //_DEBUG
-
-
-/*
-		WriteFile(hFile, &gameObject->GetName(), sizeof(std::wstring), &dwByte, nullptr); // 이름
-		WriteFile(hFile, &gameObject->GetLayerKey(), sizeof(std::wstring), &dwByte, nullptr); // 레이어
-		WriteFile(hFile, &gameObject->GetObjectKey(), sizeof(std::wstring), &dwByte, nullptr); // 오브젝트
-		WriteFile(hFile, &gameObject->GetComponent<Engine::CTextureComponent>()->GetTextureKey(), sizeof(std::wstring), &dwByte, nullptr); // 텍스쳐
-		WriteFile(hFile, &gameObject->GetComponent<Engine::CMeshComponent>()->GetMeshKey(), sizeof(std::wstring), &dwByte, nullptr); // 메쉬
-*/
-
-/*
-		ReadFile(hFile, &stringValue, sizeof(std::wstring), &dwByte, nullptr);
-		obj->SetName(stringValue);
-
-		ReadFile(hFile, &stringValue, sizeof(std::wstring), &dwByte, nullptr);
-		obj->SetLayerKey(stringValue);
-
-		ReadFile(hFile, &stringValue, sizeof(std::wstring), &dwByte, nullptr);
-		obj->SetObjectKey(stringValue);
-
-		ReadFile(hFile, &stringValue, sizeof(std::wstring), &dwByte, nullptr);
-		obj->GetComponent<Engine::CTextureComponent>()->SetTextureKey(stringValue);
-
-		ReadFile(hFile, &stringValue, sizeof(std::wstring), &dwByte, nullptr);
-		obj->GetComponent<Engine::CMeshComponent>()->SetMeshKey(stringValue);
-*/
-
-// 모든 오브젝트, 충돌체, 프리팹, 네브매쉬
-
-// 오브젝트
-/*
-이름, 레이어, 오브젝트키, 활성화/비활성화, 위치, 회전, 크기, 콜라이더 타입
-*/
-
-// 프리팹
-/*
-이름, 레이어, 오브젝트키, 활성화/비활성화, 콜라이더 타입
-*/
-
-// 네브매쉬
-/*
-오브젝트 위치, 트라이앵글 위치값들
-*/

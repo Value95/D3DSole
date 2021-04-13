@@ -122,6 +122,7 @@ c:\program files (x86)\microsoft directx sdk (june 2010)\include\dwrite.h(4993):
   c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50975): note: 'DWRITE_E_ALREADYREGISTERED'의 이전 정의를 참조하십시오.
 c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\enginedefine.h(8): warning C4005: 'EDITOR_MODE': 매크로 재정의
   c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\enginedefine.h(8): note: 명령줄 인수: 'EDITOR_MODE'의 이전 정의를 참조하십시오.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\default\stdafx.h(75): warning C4067: 전처리기 지시문 다음에 예기치 않은 토큰이 있습니다. 줄 바꿈 문자가 필요합니다.
   3DEditor.cpp
 c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\default\3deditor.cpp(15): warning C4005: 'new': 매크로 재정의
   c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\enginedefine.h(52): note: 'new'의 이전 정의를 참조하십시오.
@@ -140,7 +141,7 @@ c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\mainfrm.cpp(112): wa
   InspectorView.cpp
 c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\inspectorview.cpp(11): warning C4005: 'new': 매크로 재정의
   c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\enginedefine.h(52): note: 'new'의 이전 정의를 참조하십시오.
-c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\inspectorview.cpp(168): warning C4800: 'BOOL': 'true' 또는 'false'로 bool 값을 강제하고 있습니다(성능 경고).
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\inspectorview.cpp(171): warning C4800: 'BOOL': 'true' 또는 'false'로 bool 값을 강제하고 있습니다(성능 경고).
   HierarchyView.cpp
 c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\hierarchyview.cpp(9): warning C4005: 'new': 매크로 재정의
   c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\enginedefine.h(52): note: 'new'의 이전 정의를 참조하십시오.
@@ -148,9 +149,9 @@ c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\hierarchyview.cpp(9)
 c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\featureview.cpp(7): warning C4005: 'new': 매크로 재정의
   c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\enginedefine.h(52): note: 'new'의 이전 정의를 참조하십시오.
   EditorScene.cpp
-c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\editorscene.cpp(275): warning C4018: '<=': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\editorscene.cpp(360): warning C4018: '<=': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\editorscene.cpp(378): warning C4018: '<=': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\editorscene.cpp(241): warning C4018: '<=': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\editorscene.cpp(386): warning C4018: '<=': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\editorscene.cpp(404): warning C4018: '<=': signed 또는 unsigned가 일치하지 않습니다.
   EditorExtern.cpp
   ColliderManager.cpp
   3DEditorView.cpp

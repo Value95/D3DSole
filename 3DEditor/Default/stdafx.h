@@ -72,6 +72,7 @@
 #include "GraphicsManager.h"
 #include "PrefabManager.h"
 #include "DebugRendeerManager.h"
+#include "UIManager.h";
 
 #include "DataStore.h"
 #include"MeshStore.h"

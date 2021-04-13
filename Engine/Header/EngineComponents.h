@@ -18,6 +18,10 @@
 #include "AnimMeshRenderComponent.h"
 //--------------------------------------------------
 
+//Light--------------------------------------------
+#include "DirectionalLightComponent.h"
+//--------------------------------------------------
+
 // Physics------------------------------------------
 #include "RigidBodyComponent.h"
 #include "ColliderComponent.h"

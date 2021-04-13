@@ -14,6 +14,7 @@
 #define SCENE_CHANGE	1
 #define NULL_PARAMETER	2
 #define OUT_OF_RANGE	3
+#define DISABLED 		4
 
 #define KEY_LEFT	1
 #define KEY_RIGHT	2

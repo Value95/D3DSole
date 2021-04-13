@@ -38,7 +38,7 @@ _uint CLayer::FixedUpdate(void)
 
 	for (auto& pGameObject : m_vGameObjects)
 	{
-		if (pGameObject->GetIsStarted() == false)
+		if (pGameObject->GetIsStarted() == false || pGameObject->GetIsEnabled() == false)
 			continue;
 
 		if (event = pGameObject->FixedUpdate())
@@ -63,7 +63,7 @@ _uint CLayer::Update(void)
 		}
 		else
 		{
-			if (m_vGameObjects.empty())
+			if (m_vGameObjects.empty() || (*it)->GetIsEnabled() == false)
 				return event;
 
 			else if ((*it)->GetIsStarted() == false)
@@ -85,7 +85,7 @@ _uint CLayer::LateUpdate(void)
 
 	for (auto& pGameObject : m_vGameObjects)
 	{
-		if (pGameObject->GetIsStarted() == false)
+		if (pGameObject->GetIsStarted() == false || pGameObject->GetIsEnabled() == false)
 			continue;
 
 		if (event = pGameObject->LateUpdate())

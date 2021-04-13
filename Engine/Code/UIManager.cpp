@@ -66,13 +66,14 @@ _uint CUIManager::Render(void)
 		m_vRenderList[i].clear();
 	}
 
+	GET_DEVICE->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE); // 알파모드 헤제
+
 	return event;
 }
 
 _uint CUIManager::PostRender(void)
 {
 	GET_DEVICE->EndScene();
-	GET_DEVICE->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE); // 알파모드 헤제
 	GET_DEVICE->Present(NULL, NULL, NULL, NULL);
 
 	return NO_EVENT;

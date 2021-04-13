@@ -127,10 +127,10 @@ void CEditorScene::InitPrototypes(void)
 	camera->AddComponent<Engine::CCameraComponent>();
 	Engine::CObjectFactory::GetInstance()->AddPrototype(camera);
 
-	SHARED(Engine::CGameObject) default = Engine::CGameObject::Create(L"Default", L"Default", true);
-	default->AddComponent<Engine::CGraphicsComponent>();
-	default->AddComponent<Engine::CMeshComponent>();
-	Engine::CObjectFactory::GetInstance()->AddPrototype(default);
+	SHARED(Engine::CGameObject) mess = Engine::CGameObject::Create(L"Default", L"Mess", true);
+	mess->AddComponent<Engine::CGraphicsComponent>();
+	mess->AddComponent<Engine::CMeshComponent>();
+	Engine::CObjectFactory::GetInstance()->AddPrototype(mess);
 
 	SHARED(Engine::CGameObject) collider = Engine::CGameObject::Create(L"Collider", L"Collider", true);
 	Engine::CObjectFactory::GetInstance()->AddPrototype(collider);
@@ -169,60 +169,26 @@ void CEditorScene::ObjectCreate()
 	if (Engine::IMKEY_DOWN(KEY_Q))
 	{
 		_bool enable = true;;
-		CString cMessKey;
-		std::wstring wMessKey;
+		CString cMessKey, cTextureKey;
+		std::wstring wMessKey, wTextureKey;
+
 		std::wstring name = L"GameObejct";
-		std::wstring layerKey = L"Default", objectKey = L"Default";
+		std::wstring layerKey = L"Default", objectKey = L"Mess";
 		vector3 rotation = vector3Zero;
 		vector3 scale = vector3One;
 
 		ColliderData* Tcollider = new ColliderData();
 		PrefabData TprefabData;
 
-		m_projectView->m_messList.GetText(m_projectView->m_messList.GetCurSel(), cMessKey);
+		_int messlistSel = m_projectView->m_messList.GetCurSel();
+		_int textureSel = m_projectView->m_textureList.GetCurSel();
 
-		if (cMessKey == L"Default") // 만약 메쉬랑 텍스쳐가 설정되어있지 않다면
-		{
-			int sel = m_projectView->m_prefabList.GetCurSel();
-			if (sel != -1) // 프리팹이 설정되어있다면 프리팹을
-			{
-				TprefabData = CPrefabManager::GetInstance()->GetPrefabData()[sel];
-				enable = TprefabData.enable;
-				name = TprefabData.name;
-				layerKey = TprefabData.layerKey;
-				objectKey = TprefabData.objectKey;
-				cMessKey = TprefabData.messKey.c_str();
-				rotation = TprefabData.rotation;
-				scale = TprefabData.scale;
+		if(messlistSel != -1)
+			m_projectView->m_messList.GetText(messlistSel, cMessKey);
+		if(textureSel != -1)
+			m_projectView->m_textureList.GetText(textureSel, cTextureKey);
 
-				Tcollider->colliderType = TprefabData.collider->colliderType;
-				Tcollider->offset = TprefabData.collider->offset;
-				Tcollider->boxsize = TprefabData.collider->boxsize;
-				Tcollider->radius = TprefabData.collider->radius;
-			}
-			else // 아니면 그냥 리턴
-				return;
-		}
-
-		wMessKey = CStringW(cMessKey);
-		// 오브젝트 생성--------------------------------------------------
-
-
-		SHARED(Engine::CGameObject) pObj = Engine::ADD_CLONE(layerKey, objectKey, true);
-		pObj->SetIsEnabled(enable);
-		pObj->SetName(name);
-		pObj->GetComponent<Engine::CMeshComponent>()->SetMeshKey(wMessKey);
-
-		pObj->SetPosition(m_pMainCamera->GetOwner()->ReturnTranslate(vector3(0, 0, 5)));
-		pObj->SetRotation(rotation);
-		pObj->SetScale(scale);
-
-		CColliderManager::GetInstance()->SetColliderData(Tcollider);
-
-		hierarchyView->m_objectListBox.AddString(pObj.get()->GetName().c_str());
-		hierarchyView->m_objectPos.emplace_back(pObj.get()->GetPosition());
-
-		inspectorView->SetData(pObj.get());
+		NormalObject(cMessKey, cTextureKey);
 	}
 
 }
@@ -304,33 +270,33 @@ void CEditorScene::ObjectMove()
 
 		if (Engine::IMKEY_PRESS(KEY_W))
 		{
-			m_pickingObject->Translate(vector3Forward * deltaTime * speed);
+			m_pickingObject->CameraDirTranslate(vector3Forward * deltaTime * speed);
 			InspactorSesting(m_pickNumber, m_pickingObject);
 		}
 		if (Engine::IMKEY_PRESS(KEY_S))
 		{
-			m_pickingObject->Translate(vector3Back * deltaTime * speed);
+			m_pickingObject->CameraDirTranslate(vector3Back * deltaTime * speed);
 			InspactorSesting(m_pickNumber, m_pickingObject);
 		}
 
 		if (Engine::IMKEY_PRESS(KEY_A))
 		{
-			m_pickingObject->Translate(vector3Left * deltaTime * speed);
+			m_pickingObject->CameraDirTranslate(vector3Left * deltaTime * speed);
 			InspactorSesting(m_pickNumber, m_pickingObject);
 		}
 		if (Engine::IMKEY_PRESS(KEY_D))
 		{
-			m_pickingObject->Translate(vector3Right * deltaTime * speed);
+			m_pickingObject->CameraDirTranslate(vector3Right * deltaTime * speed);
 			InspactorSesting(m_pickNumber, m_pickingObject);
 		}
 		if (Engine::IMKEY_PRESS(KEY_Q))
 		{
-			m_pickingObject->Translate(vector3Up * deltaTime * speed);
+			m_pickingObject->CameraDirTranslate(vector3Up * deltaTime * speed);
 			InspactorSesting(m_pickNumber, m_pickingObject);
 		}
 		if (Engine::IMKEY_PRESS(KEY_E))
 		{
-			m_pickingObject->Translate(vector3Down * deltaTime * speed);
+			m_pickingObject->CameraDirTranslate(vector3Down * deltaTime * speed);
 			InspactorSesting(m_pickNumber, m_pickingObject);
 		}
 	}
@@ -353,6 +319,66 @@ void CEditorScene::ObjectMoveToView()
 			m_pickingObject->SetPosition(Engine::GET_MAIN_CAM->GetOwner()->GetPosition());
 		}
 	}
+}
+
+void CEditorScene::NormalObject(CString cMessKey, CString cTextureKey)
+{
+	_bool enable = true;;
+	std::wstring wMessKey, wTextureKey;
+
+	std::wstring name = L"GameObejct";
+	std::wstring layerKey = L"Default", objectKey = L"Mess";
+	vector3 rotation = vector3Zero;
+	vector3 scale = vector3One;
+
+	ColliderData* Tcollider = new ColliderData();
+	PrefabData TprefabData;
+
+	if (cMessKey == L"Default") // 만약 메쉬랑 텍스쳐가 설정되어있지 않다면
+	{
+		int sel = m_projectView->m_prefabList.GetCurSel();
+		if (sel != -1) // 프리팹이 설정되어있다면 프리팹을
+		{
+			TprefabData = CPrefabManager::GetInstance()->GetPrefabData()[sel];
+			enable = TprefabData.enable;
+			name = TprefabData.name;
+			layerKey = TprefabData.layerKey;
+			objectKey = TprefabData.objectKey;
+			cMessKey = TprefabData.messKey.c_str();
+			rotation = TprefabData.rotation;
+			scale = TprefabData.scale;
+
+			Tcollider->colliderType = TprefabData.collider->colliderType;
+			Tcollider->offset = TprefabData.collider->offset;
+			Tcollider->boxsize = TprefabData.collider->boxsize;
+			Tcollider->radius = TprefabData.collider->radius;
+		}
+		else // 아니면 그냥 리턴
+		{
+			return;
+		}
+	}
+
+	wMessKey = CStringW(cMessKey);
+
+	// 오브젝트 생성--------------------------------------------------
+	SHARED(Engine::CGameObject) pObj = Engine::ADD_CLONE(L"Default", L"Mess", true);
+	pObj->SetLayerKey(layerKey);
+	pObj->SetObjectKey(objectKey);
+	pObj->SetIsEnabled(enable);
+	pObj->SetName(name);
+	pObj->GetComponent<Engine::CMeshComponent>()->SetMeshKey(wMessKey);
+
+	pObj->SetPosition(m_pMainCamera->GetOwner()->ReturnTranslate(vector3(0, 0, 5)));
+	pObj->SetRotation(rotation);
+	pObj->SetScale(scale);
+
+	CColliderManager::GetInstance()->SetColliderData(Tcollider);
+
+	hierarchyView->m_objectListBox.AddString(pObj.get()->GetName().c_str());
+	hierarchyView->m_objectPos.emplace_back(pObj.get()->GetPosition());
+
+	inspectorView->SetData(pObj.get());
 }
 
 void CEditorScene::ColliderSesting(int value, Engine::CGameObject * object)

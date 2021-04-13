@@ -2,6 +2,7 @@
 #include "TransformComponent.h"
 #include "GameObject.h"
 #include "DataStore.h"
+#include "SceneManager.h"
 
 USING(Engine)
 CTransformComponent::CTransformComponent(void)  
@@ -21,6 +22,13 @@ void CTransformComponent::Translate(vector3 translation)
 {	
 	matrix4x4 rotate;
 	D3DXMatrixRotationYawPitchRoll(&rotate, D3DXToRadian(m_rotation.y), D3DXToRadian(m_rotation.x), D3DXToRadian(m_rotation.z));
+	D3DXVec3TransformCoord(&translation, &translation, &rotate);
+	m_position += translation * deltaTime;
+}
+void CTransformComponent::CameraDirTranslate(vector3 translation)
+{
+	matrix4x4 rotate;
+	D3DXMatrixRotationYawPitchRoll(&rotate, D3DXToRadian(GET_MAIN_CAM->GetOwner()->GetRotation().y), D3DXToRadian(GET_MAIN_CAM->GetOwner()->GetRotation().x), D3DXToRadian(GET_MAIN_CAM->GetOwner()->GetRotation().z));
 	D3DXVec3TransformCoord(&translation, &translation, &rotate);
 	m_position += translation * deltaTime;
 }

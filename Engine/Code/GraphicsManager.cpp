@@ -24,6 +24,11 @@ _uint CGraphicsManager::FixedUpdate(void)
 
 _uint CGraphicsManager::Update(void)
 {
+	GET_DEVICE->Clear(0, nullptr,
+		D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
+		D3DCOLOR_ARGB(255, 128, 128, 128),
+		1.f, 0);
+
 	return NO_EVENT;
 }
 
@@ -45,16 +50,13 @@ _uint CGraphicsManager::LateUpdate(void)
 
 _uint CGraphicsManager::PreRender(void)
 {
-	GET_DEVICE->Clear(0, nullptr,
-		D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
-		D3DCOLOR_ARGB(255, 128, 128, 128),
-		1.f, 0);
+
 
 	GET_DEVICE->BeginScene();
 
 	GET_DEVICE->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	GET_DEVICE->SetRenderState(D3DRS_LIGHTING, FALSE);
+	GET_DEVICE->SetRenderState(D3DRS_LIGHTING, TRUE);
 	return NO_EVENT;
 }
 

@@ -6,6 +6,9 @@ BEGIN(Engine)
 class CCollider;
 class ENGINE_DLL CColliderComponent final : public CComponent
 {
+protected:
+	GETTOR_SETTOR(std::vector<CCollider*>, m_vColliders,{}, Colliders)
+
 public:
 	explicit CColliderComponent(void);
 	~CColliderComponent(void);
@@ -26,8 +29,6 @@ public:
 
 	CColliderComponent* AddCollider(CCollider* collider);
 
-protected:
-	GETTOR_SETTOR(std::vector<CCollider*>, m_vColliders,{}, Colliders)
 };
 END
 

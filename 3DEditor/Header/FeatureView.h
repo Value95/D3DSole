@@ -37,6 +37,10 @@ public:
 	afx_msg void PrefabDelete();
 	virtual void OnInitialUpdate();
 	afx_msg void NavMeshMode();
+
+private:
+	void SaveWstring(HANDLE* file, DWORD* dwByte, std::wstring str);
+	void ReSetProject();
 };
 
 

@@ -36,6 +36,7 @@ _uint CDebugRendeerManager::PreRender(void)
 {
 	// UI를 렌더할 준비
 	GET_DEVICE->BeginScene();
+	GET_DEVICE->SetRenderState(D3DRS_LIGHTING, TRUE);
 
 	GET_DEVICE->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
@@ -87,6 +88,8 @@ _uint CDebugRendeerManager::BoxRender()
 		pGC.reset();
 	}
 	m_boxRenderList.clear();
+
+	return event;
 }
 
 _uint CDebugRendeerManager::SphereRender()
@@ -104,6 +107,8 @@ _uint CDebugRendeerManager::SphereRender()
 		pGC.reset();
 	}
 	m_sphereRenderList.clear();
+
+	return event;
 }
 
 _uint CDebugRendeerManager::LineRedner()
@@ -121,6 +126,8 @@ _uint CDebugRendeerManager::LineRedner()
 		pGC.reset();
 	}
 	m_lineRenderList.clear();
+
+	return event;
 }
 
 _uint CDebugRendeerManager::TriangleRendeer()
@@ -138,6 +145,8 @@ _uint CDebugRendeerManager::TriangleRendeer()
 		pGC.reset();
 	}
 	m_triangleRenderList.clear();
+
+	return event;
 }
 
 _uint CDebugRendeerManager::AddToBoxRenderList(SHARED(CBoxComponent) pGC)

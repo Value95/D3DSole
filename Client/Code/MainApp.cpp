@@ -95,11 +95,11 @@ _uint CMainApp::Render(void)
 	if (event = Engine::CAnimMeshRenderManager::GetInstance()->PreRender())	return event;
 	if (event = Engine::CAnimMeshRenderManager::GetInstance()->Render())	return event;
 
-	if (event = Engine::CDebugRendeerManager::GetInstance()->PreRender())	return event;
-	if (event = Engine::CDebugRendeerManager::GetInstance()->Render())	return event;
-
 	if (event = Engine::CUIManager::GetInstance()->PreRender())	return event;
 	if (event = Engine::CUIManager::GetInstance()->Render())		return event;
+
+	if (event = Engine::CDebugRendeerManager::GetInstance()->PreRender())	return event;
+	if (event = Engine::CDebugRendeerManager::GetInstance()->Render())	return event;
 
 	return event;
 }
@@ -109,8 +109,8 @@ _uint CMainApp::PostRender(void)
 	_uint event = NO_EVENT;
 	if (event = Engine::CGraphicsManager::GetInstance()->PostRender())	return event;
 	if (event = Engine::CAnimMeshRenderManager::GetInstance()->PostRender())	return event;
-	if (event = Engine::CDebugRendeerManager::GetInstance()->PostRender())	return event;
 	if (event = Engine::CUIManager::GetInstance()->PostRender())		return event;
+	if (event = Engine::CDebugRendeerManager::GetInstance()->PostRender())	return event;
 	return event;
 }
 
@@ -124,6 +124,7 @@ void CMainApp::OnDestroy(void)
 	Engine::CColliderManager::GetInstance()->DestroyInstance();
 	Engine::CSoundManager::GetInstance()->DestroyInstance();
 	Engine::CDebugRendeerManager::DestroyInstance();
+	Engine::CUIManager::GetInstance()->DestroyInstance();
 }
 
 void CMainApp::OnEnable(void)

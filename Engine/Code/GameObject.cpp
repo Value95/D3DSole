@@ -78,7 +78,7 @@ _uint CGameObject::FixedUpdate(void)
 
 	for (auto& component : m_mComponents)
 	{
-		if (component.second->GetIsStarted() == false)
+		if (component.second->GetIsStarted() == false || component.second->GetIsEnabled() == false)
 			continue;
 
 		if (component.second->GetIsStarted() && component.second->GetIsAwaked())
@@ -101,7 +101,7 @@ _uint CGameObject::Update(void)
 
 	for (auto& component : m_mComponents)
 	{
-		if (m_mComponents.empty())
+		if (m_mComponents.empty() || component.second->GetIsEnabled() == false)
 			continue;
 
 		if (component.second->GetIsStarted() == false)
@@ -124,7 +124,7 @@ _uint CGameObject::LateUpdate(void)
 
 	for (auto& component : m_mComponents)
 	{
-		if (component.second->GetIsStarted() == false)
+		if (component.second->GetIsStarted() == false || component.second->GetIsEnabled() == false)
 			continue;
 
 		if (event = component.second->LateUpdate(component.second))
@@ -144,9 +144,17 @@ void CGameObject::OnDestroy(void)
 
 void CGameObject::OnEnable(void)
 {
+	if (!m_isAwaked)
+		return;
+
+	std::cout << "OnEnable" << endl;
 }
 
 
 void CGameObject::OnDisable(void)
 {
+	if (!m_isAwaked)
+		return;
+
+	std::cout << "OnDisable" << endl;
 }

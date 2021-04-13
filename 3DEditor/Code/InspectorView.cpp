@@ -54,6 +54,9 @@ void CInspectorView::OnInitialUpdate()
 
 	m_objectKeyComboBox.AddString(TEXT("Camera"));
 	m_objectKeyComboBox.AddString(TEXT("Default"));
+	m_objectKeyComboBox.AddString(TEXT("Mess"));
+	m_objectKeyComboBox.AddString(TEXT("UI"));
+	m_objectKeyComboBox.AddString(TEXT("NavMesh"));
 
 	m_colliderTypeComboBox.AddString(TEXT("Default"));
 	m_colliderTypeComboBox.AddString(TEXT("BOX"));
