@@ -73,6 +73,7 @@ _uint CEditorScene::Update(void)
 	{
 		ObjectCreate();
 		ObjectPicking(L"Default");
+		ObjectPicking(L"Light");
 		ColliderSesting(m_pickNumber, m_pickingObject);
 	}
 	else if (m_main->m_mode == CMainFrame::Mode::NavMesh)
@@ -119,6 +120,8 @@ void CEditorScene::InitLayers(void)
 	AddLayer(L"Default");
 	AddLayer(L"Collider");
 	AddLayer(L"NavMesh");
+	AddLayer(L"Light");
+	AddLayer(L"UI");
 }
 
 void CEditorScene::InitPrototypes(void)
@@ -138,6 +141,14 @@ void CEditorScene::InitPrototypes(void)
 	SHARED(Engine::CGameObject) navMesh = Engine::CGameObject::Create(L"NavMesh", L"NavMesh", true);
 	navMesh->AddComponent<Engine::CSphereComponent>();
 	Engine::CObjectFactory::GetInstance()->AddPrototype(navMesh);
+
+	SHARED(Engine::CGameObject) directionalLight = Engine::CGameObject::Create(L"Light", L"DirectionalLight", true);
+	directionalLight->AddComponent<Engine::CDirectionalLightComponent>();
+	Engine::CObjectFactory::GetInstance()->AddPrototype(directionalLight);
+
+	SHARED(Engine::CGameObject) ui = Engine::CGameObject::Create(L"UI", L"Default", true);
+	ui->AddComponent<Engine::CUIComponent>();
+	Engine::CObjectFactory::GetInstance()->AddPrototype(ui);
 }
 
 void CEditorScene::Camera()
@@ -166,19 +177,14 @@ void CEditorScene::ObjectCreate()
 		return;
 	}
 
+	if (Engine::IMKEY_DOWN(KEY_E))
+	{
+		DirectionalLightObject(L"DirectionalLight");
+	}
+
 	if (Engine::IMKEY_DOWN(KEY_Q))
 	{
-		_bool enable = true;;
 		CString cMessKey, cTextureKey;
-		std::wstring wMessKey, wTextureKey;
-
-		std::wstring name = L"GameObejct";
-		std::wstring layerKey = L"Default", objectKey = L"Mess";
-		vector3 rotation = vector3Zero;
-		vector3 scale = vector3One;
-
-		ColliderData* Tcollider = new ColliderData();
-		PrefabData TprefabData;
 
 		_int messlistSel = m_projectView->m_messList.GetCurSel();
 		_int textureSel = m_projectView->m_textureList.GetCurSel();
@@ -188,7 +194,8 @@ void CEditorScene::ObjectCreate()
 		if(textureSel != -1)
 			m_projectView->m_textureList.GetText(textureSel, cTextureKey);
 
-		NormalObject(cMessKey, cTextureKey);
+		NormalObject(cMessKey);
+		UIObject(cTextureKey);
 	}
 
 }
@@ -321,10 +328,13 @@ void CEditorScene::ObjectMoveToView()
 	}
 }
 
-void CEditorScene::NormalObject(CString cMessKey, CString cTextureKey)
+void CEditorScene::NormalObject(CString messKey)
 {
+	if (messKey == L"")
+		return;
+
 	_bool enable = true;;
-	std::wstring wMessKey, wTextureKey;
+	std::wstring wMessKey;
 
 	std::wstring name = L"GameObejct";
 	std::wstring layerKey = L"Default", objectKey = L"Mess";
@@ -334,7 +344,7 @@ void CEditorScene::NormalObject(CString cMessKey, CString cTextureKey)
 	ColliderData* Tcollider = new ColliderData();
 	PrefabData TprefabData;
 
-	if (cMessKey == L"Default") // 만약 메쉬랑 텍스쳐가 설정되어있지 않다면
+	if (messKey == L"Default") // 만약 메쉬랑 텍스쳐가 설정되어있지 않다면
 	{
 		int sel = m_projectView->m_prefabList.GetCurSel();
 		if (sel != -1) // 프리팹이 설정되어있다면 프리팹을
@@ -344,7 +354,7 @@ void CEditorScene::NormalObject(CString cMessKey, CString cTextureKey)
 			name = TprefabData.name;
 			layerKey = TprefabData.layerKey;
 			objectKey = TprefabData.objectKey;
-			cMessKey = TprefabData.messKey.c_str();
+			messKey = TprefabData.messKey.c_str();
 			rotation = TprefabData.rotation;
 			scale = TprefabData.scale;
 
@@ -354,12 +364,10 @@ void CEditorScene::NormalObject(CString cMessKey, CString cTextureKey)
 			Tcollider->radius = TprefabData.collider->radius;
 		}
 		else // 아니면 그냥 리턴
-		{
 			return;
-		}
 	}
 
-	wMessKey = CStringW(cMessKey);
+	wMessKey = CStringW(messKey);
 
 	// 오브젝트 생성--------------------------------------------------
 	SHARED(Engine::CGameObject) pObj = Engine::ADD_CLONE(L"Default", L"Mess", true);
@@ -372,6 +380,56 @@ void CEditorScene::NormalObject(CString cMessKey, CString cTextureKey)
 	pObj->SetPosition(m_pMainCamera->GetOwner()->ReturnTranslate(vector3(0, 0, 5)));
 	pObj->SetRotation(rotation);
 	pObj->SetScale(scale);
+
+	CColliderManager::GetInstance()->SetColliderData(Tcollider);
+
+	hierarchyView->m_objectListBox.AddString(pObj.get()->GetName().c_str());
+	hierarchyView->m_objectPos.emplace_back(pObj.get()->GetPosition());
+
+	inspectorView->SetData(pObj.get());
+}
+
+void CEditorScene::DirectionalLightObject(CString objectKey)
+{
+	std::wstring wObjectKey;
+
+	std::wstring name = L"Light";
+
+	ColliderData* Tcollider = new ColliderData();
+	
+	wObjectKey = CStringW(objectKey);
+
+	// 오브젝트 생성--------------------------------------------------
+	SHARED(Engine::CGameObject) pObj = Engine::ADD_CLONE(L"Light", wObjectKey, true);
+	pObj->SetName(name);
+
+	pObj->SetPosition(m_pMainCamera->GetOwner()->ReturnTranslate(vector3(0, 0, 5)));
+	CColliderManager::GetInstance()->SetColliderData(Tcollider);
+
+	hierarchyView->m_objectListBox.AddString(pObj.get()->GetName().c_str());
+	hierarchyView->m_objectPos.emplace_back(pObj.get()->GetPosition());
+
+	inspectorView->SetData(pObj.get());
+}
+
+void CEditorScene::UIObject(CString textureKey)
+{
+	if (textureKey == L"Default" || textureKey == L"")
+		return;
+
+	std::wstring wTextureKey;
+
+	std::wstring name = L"UI";
+
+	ColliderData* Tcollider = new ColliderData();
+
+	wTextureKey = CStringW(textureKey);
+
+	// 오브젝트 생성--------------------------------------------------
+	SHARED(Engine::CGameObject) pObj = Engine::ADD_CLONE(L"UI", L"Default", true);
+	pObj->SetName(name);
+	pObj->SetPosition(vector3Zero);
+	pObj->GetComponent<Engine::CUIComponent>()->SetTextureKey(wTextureKey);
 
 	CColliderManager::GetInstance()->SetColliderData(Tcollider);
 

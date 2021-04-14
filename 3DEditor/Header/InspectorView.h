@@ -59,6 +59,9 @@ public:
 	void SetData(Engine::CGameObject* gameObject);
 private:
 	afx_msg void InputData();
+	void LayerAddString();
+	void ObjectAddString();
+	void ColliderAddString();
 public:
 	afx_msg void DeleteObject();
 	virtual void OnInitialUpdate();

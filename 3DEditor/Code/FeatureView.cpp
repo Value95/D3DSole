@@ -83,11 +83,16 @@ void CFeatureView::PrefabCreate()
 	if (m_main->m_mode == CMainFrame::Mode::NavMesh)
 		return;
 
+	int sel = dynamic_cast<CEditorScene*>(Engine::GET_CUR_SCENE.get())->m_pickNumber;
+	if (sel == -1)
+		return;
+
+
 	Engine::CGameObject* Tobject;
 	ColliderData* Tcollider;
 
 	Tobject = dynamic_cast<CEditorScene*>(Engine::GET_CUR_SCENE.get())->GetPickingObject();
-	Tcollider = CColliderManager::GetInstance()->GetColliderData()[dynamic_cast<CEditorScene*>(Engine::GET_CUR_SCENE.get())->m_pickNumber];
+	Tcollider = CColliderManager::GetInstance()->GetColliderData()[sel];
 
 	if (Tobject == nullptr)
 		return;
@@ -145,7 +150,7 @@ void CFeatureView::Save()
 
 		for (auto& layer : layers)
 		{
-			if(layer.first != L"Default" )
+			if(layer.first != L"Default")
 				continue;
 
 			for (auto& gameObject : layer.second->GetGameObjects())

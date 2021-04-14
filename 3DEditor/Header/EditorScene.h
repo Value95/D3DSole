@@ -51,6 +51,7 @@ private:
 	void ObjectMove();
 	void ObjectMoveToView();
 
-	void NormalObject(CString cMessKey, CString cTextureKey);
+	void NormalObject(CString messKey);
+	void DirectionalLightObject(CString objectKey);
+	void UIObject(CString textureKey);
 };
-

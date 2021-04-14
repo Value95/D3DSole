@@ -49,12 +49,8 @@ void CComponent::OnDestroy(void)
 
 void CComponent::OnEnable(void)
 {
-	if (!m_isAwaked)
-		return;
 }
 
 void CComponent::OnDisable(void)
 {
-	if (!m_isAwaked)
-		return;
 }

@@ -65,16 +65,17 @@ void CDongilScene::Start(void)
 	{
 		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
 		pObj->SetPosition(vector3(0, 0, 7));
+		pObj->AddComponent<CPlayer>();
 		pObj->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(1, 1, 1), vector3Zero));
 		pObj->AddComponent<Engine::CMeshComponent>()->SetMeshKey(L"sylva.X");
 		pObj->AddComponent<Engine::CGraphicsComponent>();
 	}
 
-	{
+	/*{
 		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Player", L"Player", true);
 		pObj->AddComponent<CPlayer>();
 		pObj->SetPosition(vector3(0, 0, 0));
-	}
+	}*/
 
 	/*
 	{

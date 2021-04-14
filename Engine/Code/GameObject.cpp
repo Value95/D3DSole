@@ -139,15 +139,13 @@ void CGameObject::OnDestroy(void)
 	for (auto& component : m_mComponents)
 		component.second->SetOwner(nullptr);
 
-	//m_mComponents.clear();
+	m_mComponents.clear();
 }
 
 void CGameObject::OnEnable(void)
 {
 	if (!m_isAwaked)
 		return;
-
-	std::cout << "OnEnable" << endl;
 }
 
 
@@ -155,6 +153,4 @@ void CGameObject::OnDisable(void)
 {
 	if (!m_isAwaked)
 		return;
-
-	std::cout << "OnDisable" << endl;
 }

@@ -49,18 +49,9 @@ void CInspectorView::OnInitialUpdate()
 	m_main = dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd());
 	hierarchyView = dynamic_cast<CHierarchyView*>(m_main->m_mainSplitter.GetPane(0, 1));
 
-	m_layerComboBox.AddString(TEXT("Camera"));
-	m_layerComboBox.AddString(TEXT("Default"));
-
-	m_objectKeyComboBox.AddString(TEXT("Camera"));
-	m_objectKeyComboBox.AddString(TEXT("Default"));
-	m_objectKeyComboBox.AddString(TEXT("Mess"));
-	m_objectKeyComboBox.AddString(TEXT("UI"));
-	m_objectKeyComboBox.AddString(TEXT("NavMesh"));
-
-	m_colliderTypeComboBox.AddString(TEXT("Default"));
-	m_colliderTypeComboBox.AddString(TEXT("BOX"));
-	m_colliderTypeComboBox.AddString(TEXT("SPHERE"));
+	LayerAddString();
+	ObjectAddString();
+	ColliderAddString();
 }
 
 void CInspectorView::DoDataExchange(CDataExchange* pDX)
@@ -204,6 +195,33 @@ void CInspectorView::InputData() // 선택된 오브젝트한테 트랜스폼 정보 인풋
 
 	// 하이어락키가 가지고있는 오브젝트의 위치값 변경
 	hierarchyView->m_objectPos[sel] = m_gameObejct->GetPosition();
+}
+
+void CInspectorView::LayerAddString()
+{
+	m_layerComboBox.AddString(TEXT("Camera"));
+	m_layerComboBox.AddString(TEXT("Default"));
+	m_layerComboBox.AddString(TEXT("Collider"));
+	m_layerComboBox.AddString(TEXT("NavMesh"));
+	m_layerComboBox.AddString(TEXT("Light"));
+	m_layerComboBox.AddString(TEXT("UI"));
+}
+
+void CInspectorView::ObjectAddString()
+{
+	m_objectKeyComboBox.AddString(TEXT("Camera"));
+	m_objectKeyComboBox.AddString(TEXT("Default"));
+	m_objectKeyComboBox.AddString(TEXT("Mess"));
+	m_objectKeyComboBox.AddString(TEXT("UI"));
+	m_objectKeyComboBox.AddString(TEXT("NavMesh"));
+	m_objectKeyComboBox.AddString(TEXT("DirectionalLight"));
+}
+
+void CInspectorView::ColliderAddString()
+{
+	m_colliderTypeComboBox.AddString(TEXT("Default"));
+	m_colliderTypeComboBox.AddString(TEXT("BOX"));
+	m_colliderTypeComboBox.AddString(TEXT("SPHERE"));
 }
 
 void CInspectorView::InputColliderData()  // 선택된 오브젝트한테 콜라이더 정보 인풋
