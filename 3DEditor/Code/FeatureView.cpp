@@ -56,6 +56,19 @@ void CFeatureView::SaveWstring(HANDLE* file, DWORD* dwByte, std::wstring str)
 
 }
 
+std::wstring CFeatureView::LoadWstring(HANDLE * file, DWORD * dwByte)
+{
+	DWORD dwStringSize = 0;
+
+	ReadFile(*file, &dwStringSize, sizeof(DWORD), dwByte, nullptr); // 이름
+	TCHAR* strName = new TCHAR[dwStringSize];
+	ReadFile(*file, strName, dwStringSize, dwByte, nullptr);
+	wstring returnstring = strName;
+	delete[](strName);
+	strName = nullptr;
+	return returnstring;
+}
+
 void CFeatureView::ReSetProject()
 {
 	m_hierarchyView = dynamic_cast<CHierarchyView*>(dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd())->m_mainSplitter.GetPane(0, 1));
@@ -150,7 +163,7 @@ void CFeatureView::Save()
 
 		for (auto& layer : layers)
 		{
-			if(layer.first != L"Default")
+			if(layer.first == L"NavMesh" || layer.first == L"Collider" || layer.first == L"Camera")
 				continue;
 
 			for (auto& gameObject : layer.second->GetGameObjects())
@@ -161,7 +174,10 @@ void CFeatureView::Save()
 
 				SaveWstring(&hFile, &dwByte, gameObject->GetObjectKey()); // 오브젝트 키
 
-				SaveWstring(&hFile, &dwByte, gameObject->GetComponent<Engine::CMeshComponent>()->GetMeshKey()); // 메쉬
+				if(gameObject->GetComponent<Engine::CUIComponent>())
+					SaveWstring(&hFile, &dwByte, gameObject->GetComponent<Engine::CUIComponent>()->GetTextureKey()); // UI 텍스쳐
+				if(gameObject->GetComponent<Engine::CMeshComponent>())
+					SaveWstring(&hFile, &dwByte, gameObject->GetComponent<Engine::CMeshComponent>()->GetMeshKey()); // 메쉬
 
 				WriteFile(hFile, &gameObject->GetIsEnabled(), sizeof(bool), &dwByte, nullptr); // 활성화/비활성화
 				WriteFile(hFile, &gameObject->GetPosition(), sizeof(vector3), &dwByte, nullptr); // 위치
@@ -246,25 +262,23 @@ void CFeatureView::Load()
 
 		for (int i = 0; i < objectCount; i++)
 		{
-			ReadFile(hFile, &dwStringSize, sizeof(DWORD), &dwByte, nullptr); // 이름
-			TCHAR* strName = new TCHAR[dwStringSize];
-			ReadFile(hFile, strName, dwStringSize, &dwByte, nullptr);
+			std::wstring strName = LoadWstring(&hFile, &dwByte); // 이름
 
-			ReadFile(hFile, &dwStringSize, sizeof(DWORD), &dwByte, nullptr); // 레이어
-			TCHAR* layerKey = new TCHAR[dwStringSize];
-			ReadFile(hFile, layerKey, dwStringSize, &dwByte, nullptr);
+			std::wstring layerKey = LoadWstring(&hFile, &dwByte); // 레이어
 
-			ReadFile(hFile, &dwStringSize, sizeof(DWORD), &dwByte, nullptr); // 오브젝트
-			TCHAR* objectKey = new TCHAR[dwStringSize];
-			ReadFile(hFile, objectKey, dwStringSize, &dwByte, nullptr);
+			std::wstring objectKey = LoadWstring(&hFile, &dwByte); // 오브젝트
 
 			SHARED(Engine::CGameObject) obj = Engine::ADD_CLONE(layerKey, objectKey, true);
 			obj->SetName(strName);
 
-			ReadFile(hFile, &dwStringSize, sizeof(DWORD), &dwByte, nullptr);
-			TCHAR* meshKey = new TCHAR[dwStringSize];
-			ReadFile(hFile, meshKey, dwStringSize, &dwByte, nullptr);
-			obj->GetComponent<Engine::CMeshComponent>()->SetMeshKey(meshKey);
+			if (obj->GetComponent<Engine::CUIComponent>())
+			{
+				obj->GetComponent<Engine::CUIComponent>()->SetTextureKey(LoadWstring(&hFile, &dwByte));
+			}
+			else if(obj->GetComponent<Engine::CMeshComponent>())
+			{
+				obj->GetComponent<Engine::CMeshComponent>()->SetMeshKey(LoadWstring(&hFile, &dwByte));
+			}
 
 			ReadFile(hFile, &obj->GetIsEnabled(), sizeof(bool), &dwByte, nullptr);
 			ReadFile(hFile, &obj->GetPosition(), sizeof(vector3), &dwByte, nullptr);

@@ -199,21 +199,16 @@ void CInspectorView::InputData() // 선택된 오브젝트한테 트랜스폼 정보 인풋
 
 void CInspectorView::LayerAddString()
 {
-	m_layerComboBox.AddString(TEXT("Camera"));
 	m_layerComboBox.AddString(TEXT("Default"));
-	m_layerComboBox.AddString(TEXT("Collider"));
-	m_layerComboBox.AddString(TEXT("NavMesh"));
 	m_layerComboBox.AddString(TEXT("Light"));
 	m_layerComboBox.AddString(TEXT("UI"));
 }
 
 void CInspectorView::ObjectAddString()
 {
-	m_objectKeyComboBox.AddString(TEXT("Camera"));
 	m_objectKeyComboBox.AddString(TEXT("Default"));
 	m_objectKeyComboBox.AddString(TEXT("Mess"));
 	m_objectKeyComboBox.AddString(TEXT("UI"));
-	m_objectKeyComboBox.AddString(TEXT("NavMesh"));
 	m_objectKeyComboBox.AddString(TEXT("DirectionalLight"));
 }
 

@@ -73,7 +73,6 @@ _uint CEditorScene::Update(void)
 	{
 		ObjectCreate();
 		ObjectPicking(L"Default");
-		ObjectPicking(L"Light");
 		ColliderSesting(m_pickNumber, m_pickingObject);
 	}
 	else if (m_main->m_mode == CMainFrame::Mode::NavMesh)
@@ -118,10 +117,10 @@ void CEditorScene::InitLayers(void)
 {
 	AddLayer(L"Camera");
 	AddLayer(L"Default");
-	AddLayer(L"Collider");
-	AddLayer(L"NavMesh");
-	AddLayer(L"Light");
 	AddLayer(L"UI");
+	AddLayer(L"Light");
+	AddLayer(L"NavMesh");
+	AddLayer(L"Collider");
 }
 
 void CEditorScene::InitPrototypes(void)
@@ -194,8 +193,10 @@ void CEditorScene::ObjectCreate()
 		if(textureSel != -1)
 			m_projectView->m_textureList.GetText(textureSel, cTextureKey);
 
-		NormalObject(cMessKey);
-		UIObject(cTextureKey);
+		if(cMessKey != L"Default")
+			NormalObject(cMessKey);
+		else
+			UIObject(cTextureKey);
 	}
 
 }

@@ -122,6 +122,9 @@ SHARED(CGameObject) CScene::FindObjectPosition(vector3 position)
 {
 	for (auto& layer : m_mLayers)
 	{
+		if (layer.first == L"Camera")
+			continue;
+
 		for (auto& gameObject : layer.second->GetGameObjects())
 		{
 			if (gameObject->GetPosition() == position)
