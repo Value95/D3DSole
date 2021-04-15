@@ -47,6 +47,20 @@ void CFeatureView::NavMeshMode()
 
 }
 
+void CFeatureView::UIMode()
+{
+	dynamic_cast<CEditorScene*>(Engine::GET_CUR_SCENE.get())->SetPickingObject(nullptr);
+
+	if (m_main->m_mode == CMainFrame::Mode::UI)
+	{
+		m_main->m_mode = CMainFrame::Mode::Normal;
+	}
+	else
+	{
+		m_main->m_mode = CMainFrame::Mode::UI;
+	}
+}
+
 void CFeatureView::SaveWstring(HANDLE* file, DWORD* dwByte, std::wstring str)
 {
 	CString text = str.c_str();
@@ -357,6 +371,7 @@ BEGIN_MESSAGE_MAP(CFeatureView, CFormView)
 	ON_BN_CLICKED(IDC_BUTTON2, &CFeatureView::Load)
 	ON_BN_CLICKED(IDC_BUTTON11, &CFeatureView::PrefabDelete)
 	ON_BN_CLICKED(IDC_BUTTON3, &CFeatureView::NavMeshMode)
+	ON_BN_CLICKED(IDC_BUTTON8, &CFeatureView::UIMode)
 END_MESSAGE_MAP()
 
 

@@ -8,8 +8,6 @@ private:
 	Engine::CGameObject* m_PreSelectedObject = nullptr;
 	Engine::CGameObject* m_CurSelectedObject = nullptr;
 
-
-
 	CMainFrame * m_main;
 	CMy3DEditorView* m_editorView;
 	CProjectView* m_projectView;

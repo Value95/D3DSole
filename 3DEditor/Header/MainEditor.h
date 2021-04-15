@@ -2,6 +2,10 @@
 class CMainEditor final
 {
 	SMART_DELETER_REGISTER;
+
+private:
+	CMainFrame* m_main;
+
 protected:
 	explicit						CMainEditor(void);
 	~CMainEditor(void);

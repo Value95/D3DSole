@@ -2,6 +2,7 @@
 #include "MainEditor.h"
 #include "EditorScene.h"
 
+
 CMainEditor::CMainEditor()
 {
 }
@@ -21,6 +22,8 @@ SHARED(CMainEditor) CMainEditor::Create(void)
 
 void CMainEditor::Awake(void)
 {
+	m_main = dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd());
+
 	Engine::CObjectFactory::GetInstance()->Awake();
 	Engine::CGraphicsManager::GetInstance()->Awake();
 	Engine::CUIManager::GetInstance()->Awake();
@@ -78,9 +81,12 @@ _uint CMainEditor::Render(void)
 
 	if (event = CNavMeshManager::GetInstance()->PreRender()) return event;
 	if (event = CNavMeshManager::GetInstance()->Render()) return event;
-
-	if (event = Engine::CUIManager::GetInstance()->PreRender())	return event;
-	if (event = Engine::CUIManager::GetInstance()->Render())		return event;
+	
+	if (m_main->m_mode == CMainFrame::Mode::UI)
+	{
+		if (event = Engine::CUIManager::GetInstance()->PreRender())	return event;
+		if (event = Engine::CUIManager::GetInstance()->Render())		return event;
+	}
 
 	if (event = Engine::CDebugRendeerManager::GetInstance()->PreRender())	return event;
 	if (event = Engine::CDebugRendeerManager::GetInstance()->Render())	return event;
@@ -94,7 +100,10 @@ _uint CMainEditor::PostRender(void)
 	_uint event = NO_EVENT;
 	if (event = Engine::CGraphicsManager::GetInstance()->PostRender())	return event;
 	if (event = CNavMeshManager::GetInstance()->PostRender()) return event;
-	if (event = Engine::CUIManager::GetInstance()->PostRender()) return event;
+
+	if (m_main->m_mode == CMainFrame::Mode::UI)
+		if (event = Engine::CUIManager::GetInstance()->PostRender()) return event;
+
 	if (event = Engine::CDebugRendeerManager::GetInstance()->PostRender())	return event;
 
 	return event;

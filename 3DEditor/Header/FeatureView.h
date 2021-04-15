@@ -42,6 +42,8 @@ private:
 	void SaveWstring(HANDLE* file, DWORD* dwByte, std::wstring str);
 	std::wstring LoadWstring(HANDLE* file, DWORD* dwByte);
 	void ReSetProject();
+public:
+	afx_msg void UIMode();
 };
 
 
