@@ -166,6 +166,8 @@ void CMainApp::InitStaticPrototype(void)
 	player->SetPosition(vector3(0, 0, 0));
 	player->SetScale(vector3(0.01f, 0.01f, 0.01f));
 	player->AddComponent<Engine::CRigidBodyComponent>();
+	player->GetComponent<Engine::CRigidBodyComponent>()->SetBounciness(0.8f);
+	player->GetComponent<Engine::CRigidBodyComponent>()->SetMass(80);
 	player->AddComponent<CPlayer>();
 	player->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(1, 1, 1), vector3Zero));
 	player->AddComponent<Engine::CAnimMeshRenderComponent>()->MeshInput(L"../../Resource/Mesh/Static/Boss/CrystalSpider/", L"CrystalSpider.X");

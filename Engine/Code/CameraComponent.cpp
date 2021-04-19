@@ -184,13 +184,13 @@ void CCameraComponent::CameraRotation()
 
 	if (curPt.x < m_centerPt.x) // mouse left look
 	{
-		_float angleX = CFRC::GetInstance()->GetDeltaTime() * (abs(curPt.x - m_centerPt.x) * m_mouseSensitivity);
+		_float angleX = deltaTime * (abs(curPt.x - m_centerPt.x) * m_mouseSensitivity);
 		GetOwner()->AddRotationY(-1 * angleX);
 	}
 
 	if (curPt.x > m_centerPt.x) // mouse right look
 	{
-		_float angleX = CFRC::GetInstance()->GetDeltaTime() * (abs(curPt.x - m_centerPt.x) * m_mouseSensitivity);
+		_float angleX = deltaTime * (abs(curPt.x - m_centerPt.x) * m_mouseSensitivity);
 		GetOwner()->AddRotationY(angleX);
 	}	
 

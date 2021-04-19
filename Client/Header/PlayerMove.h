@@ -6,9 +6,9 @@ class CPlayerMove :
 {
 private:
 	CPlayer* m_player;
-	_float m_rotationSpeed;
 	_float m_rotation;
 
+	_float m_speed;
 	_float cameraY;
 public:
 	CPlayerMove(CPlayer* player);
@@ -26,5 +26,6 @@ public:
 private:
 	void Move();
 	void Attack();
+	void Jump();
 };
 

@@ -28,6 +28,7 @@ void CDongilScene::Start(void)
 {
 	__super::Start();
 	LoadObject(L"File1");
+
 	{
 		m_pMainCamera = Engine::ADD_CLONE(L"Camera", L"Camera", true)->GetComponent<Engine::CCameraComponent>();
 		m_pMainCamera->GetOwner()->SetCamera(true);
@@ -36,14 +37,14 @@ void CDongilScene::Start(void)
 
 	{
 		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Player", L"Player", true);
-		pObj->SetPosition(vector3(0, 0, 0));
+		pObj->SetPosition(vector3(0,0,0));
 
 		m_pMainCamera->GetOwner()->SetTarget(pObj.get());
 	}
 
 	SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
-	pObj->SetPosition(vector3(0, -10, 0));
-	pObj->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(100, 1, 100), vector3Zero));
+	pObj->SetPosition(vector3(0, -5, 0));
+	pObj->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(300, 1, 300), vector3Zero));
 
 	/*{
 		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);

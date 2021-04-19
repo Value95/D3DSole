@@ -19,6 +19,22 @@ void CTransformComponent::TransformUpdate()
 	UpdateWorldmMatrix();
 }
 
+vector3 CTransformComponent::ReturnTranslate(vector3 translation)
+{
+	matrix4x4 rotate;
+	D3DXMatrixRotationYawPitchRoll(&rotate, D3DXToRadian(m_rotation.y), D3DXToRadian(m_rotation.x), D3DXToRadian(m_rotation.z));
+	D3DXVec3TransformCoord(&translation, &translation, &rotate);
+
+	return m_position + translation;
+}
+
+void CTransformComponent::OutTranslate(vector3 & translation)
+{
+	matrix4x4 rotate;
+	D3DXMatrixRotationYawPitchRoll(&rotate, D3DXToRadian(m_rotation.y), D3DXToRadian(m_rotation.x), D3DXToRadian(m_rotation.z));
+	D3DXVec3TransformCoord(&translation, &translation, &rotate);
+}
+
 // 자신의 회전축을 기준으로 이동한다.
 void CTransformComponent::Translate(vector3 translation)
 {	
@@ -36,14 +52,6 @@ void CTransformComponent::CameraDirTranslate(vector3 translation)
 	m_position += translation * deltaTime;
 }
 
-vector3 CTransformComponent::ReturnTranslate(vector3 translation)
-{
-	matrix4x4 rotate;
-	
-	D3DXMatrixRotationYawPitchRoll(&rotate, D3DXToRadian(m_rotation.y), D3DXToRadian(m_rotation.x), D3DXToRadian(m_rotation.z));
-	D3DXVec3TransformCoord(&translation, &translation, &rotate);
-	return m_position + translation;
-}
 // 타겟까지 일정한 속도로 이동한다.
 void CTransformComponent::MoveTowards(vector3 targetPosition, _float speed)
 {

@@ -30,7 +30,8 @@ _uint CPlayerIdle::Update()
 	if (Engine::CInputManager::GetInstance()->KeyPress(KEY_W) ||
 		Engine::CInputManager::GetInstance()->KeyPress(KEY_A) ||
 		Engine::CInputManager::GetInstance()->KeyPress(KEY_S) ||
-		Engine::CInputManager::GetInstance()->KeyPress(KEY_D))
+		Engine::CInputManager::GetInstance()->KeyPress(KEY_D) ||
+		Engine::CInputManager::GetInstance()->KeyPress(KEY_SPACE))
 	{
 		m_player->ChangeFSM(CPlayer::STATE::MOVE);
 	}

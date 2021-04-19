@@ -2,7 +2,7 @@
 #define PLAYER_H
 
 class FSM;
-class CPlayerState;
+class CPlayerInfo;
 class CPlayer final : public Engine::CComponent
 {
 public:	enum STATE {IDLE, MOVE, ATTACK, DEATH, STATEEND};
@@ -10,7 +10,11 @@ public:	enum STATE {IDLE, MOVE, ATTACK, DEATH, STATEEND};
 private:
 	FSM* m_playerFSM[STATE::STATEEND];
 	GETTOR(STATE, m_playerState, STATE::IDLE, PlayerState);
-	CPlayerState* state;
+	GETTOR_SETTOR(CPlayerInfo*, m_playerInfo, {}, PlayerInfo);
+	GETTOR_SETTOR(_bool, m_moveLook, false , MoveLook);
+
+	GETTOR_SETTOR(POINT, m_centerPt, {}, CenterPt);
+
 public:
 	explicit CPlayer(void);
 	virtual	 ~CPlayer(void);
@@ -33,7 +37,7 @@ public:
 	void ChangeFSM(STATE state);
 private:
 	void FSMCreate();
-
+	void Sight();
 };
 
 #endif // !TEXTURECOMPONENT_H

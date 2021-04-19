@@ -138,7 +138,7 @@
     <ClInclude Include="..\Header\PlayerIdle.h">
       <Filter>02.Components\00.Player\00.PlayerFMS\00.Idle</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\PlayerState.h">
+    <ClInclude Include="..\Header\PlayerInfo.h">
       <Filter>02.Components\00.Player\01.PlayerState</Filter>
     </ClInclude>
   </ItemGroup>
@@ -190,9 +190,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\PlayerIdle.cpp">
       <Filter>02.Components\00.Player\00.PlayerFMS\00.Idle</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\PlayerState.cpp">
-      <Filter>02.Components\00.Player\01.PlayerState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

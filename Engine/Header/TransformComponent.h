@@ -20,10 +20,10 @@ public:
 protected:
 	void TransformUpdate();
 public:
-		 
+	vector3 ReturnTranslate(vector3 translation);
+	void OutTranslate(vector3& translation);
 	void Translate(vector3 translation);
 	void CameraDirTranslate(vector3 translation);
-	vector3 ReturnTranslate(vector3 translation);
 	void MoveTowards(vector3 targetPosition, _float speed);
 	void Lerp(vector3 targetPosition, _float speed);
 	void LookAt(vector3 target, vector3 worldUp = vector3Forward);
