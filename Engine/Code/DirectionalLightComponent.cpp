@@ -49,7 +49,7 @@ _uint CDirectionalLightComponent::LateUpdate(SHARED(CComponent) spSelf)
 	ZeroMemory(&mtrl, sizeof(D3DMATERIAL9));
 	mtrl.Diffuse.r = mtrl.Ambient.r = 1.0f;
 	mtrl.Diffuse.g = mtrl.Ambient.g = 1.0f;
-	mtrl.Diffuse.b = mtrl.Ambient.b = 0.0f;
+	mtrl.Diffuse.b = mtrl.Ambient.b = 1.0f;
 	mtrl.Diffuse.a = mtrl.Ambient.a = 1.0f;
 	GET_DEVICE->SetMaterial(&mtrl);
 

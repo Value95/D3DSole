@@ -132,6 +132,22 @@ namespace Engine
 	{
 		vector3* point[3];
 	}Triangle;
+
+	typedef struct tagCollider
+	{
+		tagCollider()
+		{
+			colliderType = L"Default";
+			offset = vector3Zero;
+			boxsize = vector3One;
+			radius = 0.5f;
+		}
+
+		std::wstring colliderType;
+		vector3 offset;
+		vector3 boxsize;
+		_float radius;
+	}ColliderData;
 }
 
 #endif // !ENGINESTRUCTURE_H

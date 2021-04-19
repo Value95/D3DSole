@@ -12,6 +12,7 @@
 #include <memory.h>
 #include <tchar.h>
 #include <iostream>
+#include <atlstr.h>
 
 //For Containers
 #include <vector>

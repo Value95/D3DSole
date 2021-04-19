@@ -11,8 +11,8 @@ private:
 	_uint m_iNewTrack;
 	_float m_fAccTime;
 	_uint m_iOldAniIdx;
-	_double	m_dPeriod;
-
+	GETTOR(_double,	m_dPeriod, 0, Period);
+	GETTOR_SETTOR(_float, m_speed, 1, Speed);
 private:
 	explicit CAniCtrl(LPD3DXANIMATIONCONTROLLER pAniCtrl);
 	explicit CAniCtrl(const CAniCtrl& rhs);
@@ -23,7 +23,6 @@ public:
 	void		Set_AnimationSet(const _uint& iIndex);
 	void		Play_Animation(const _double& fTimeDelta);
 	_bool		Is_AnimationSetEnd(void);
-	
 public:
 	static CAniCtrl* Create(LPD3DXANIMATIONCONTROLLER pAniCtrl);
 	static CAniCtrl* Create(const CAniCtrl& rhs);

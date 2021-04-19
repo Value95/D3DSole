@@ -1,10 +1,16 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+class FSM;
+class CPlayerState;
 class CPlayer final : public Engine::CComponent
 {
+public:	enum STATE {IDLE, MOVE, ATTACK, DEATH, STATEEND};
+
 private:
-	
+	FSM* m_playerFSM[STATE::STATEEND];
+	GETTOR(STATE, m_playerState, STATE::IDLE, PlayerState);
+	CPlayerState* state;
 public:
 	explicit CPlayer(void);
 	virtual	 ~CPlayer(void);
@@ -24,8 +30,9 @@ public:
 	void OnEnable(void) override;
 	void OnDisable(void) override;
 
+	void ChangeFSM(STATE state);
 private:
-
+	void FSMCreate();
 
 };
 

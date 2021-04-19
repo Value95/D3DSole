@@ -31,8 +31,8 @@ void CEditorScene::Start(void)
 	m_main = dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd());
 	m_editorView = dynamic_cast<CMy3DEditorView*>(m_main->m_leftSplitter.GetPane(0, 0));
 	m_projectView = dynamic_cast<CProjectView*>(m_main->m_leftSplitter.GetPane(1, 0));
-	hierarchyView = dynamic_cast<CHierarchyView*>(m_main->m_mainSplitter.GetPane(0, 1));
-	inspectorView = dynamic_cast<CInspectorView*>(m_main->m_rightSplitter.GetPane(0, 0));
+	m_hierarchyView = dynamic_cast<CHierarchyView*>(m_main->m_mainSplitter.GetPane(0, 1));
+	m_inspectorView = dynamic_cast<CInspectorView*>(m_main->m_rightSplitter.GetPane(0, 0));
 
 	m_pMainCamera = Engine::ADD_CLONE(L"Camera", L"Camera", true)->GetComponent<Engine::CCameraComponent>();
 
@@ -83,9 +83,22 @@ _uint CEditorScene::Update(void)
 		if (T != nullptr)
 			m_pickingObject = T;
 	}
+	if (m_main->m_mode == CMainFrame::Mode::UI)
+	{
+		ObjectCreate();
+	}
 
 	ObjectMove();
 	ObjectMoveToView();
+
+	if (Engine::IMKEY_DOWN(KEY_DEL))
+	{
+		m_inspectorView->DeleteObject();
+	}
+	if (Engine::IMKEY_DOWN(KEY_RETURN))
+	{
+		m_inspectorView->InputData();
+	}
 
 	return event;
 }
@@ -183,20 +196,25 @@ void CEditorScene::ObjectCreate()
 
 	if (Engine::IMKEY_DOWN(KEY_Q))
 	{
-		CString cMessKey, cTextureKey;
+		CString cMessKey, cTextureKey, cPrefabKey;
 
 		_int messlistSel = m_projectView->m_messList.GetCurSel();
 		_int textureSel = m_projectView->m_textureList.GetCurSel();
+		_int prefabSel = m_projectView->m_prefabList.GetCurSel();
 
 		if(messlistSel != -1)
 			m_projectView->m_messList.GetText(messlistSel, cMessKey);
 		if(textureSel != -1)
 			m_projectView->m_textureList.GetText(textureSel, cTextureKey);
+		if (prefabSel != -1)
+			m_projectView->m_prefabList.GetText(prefabSel, cPrefabKey);
 
-		if(cMessKey != L"Default")
+		if (cMessKey != L"Default")
 			NormalObject(cMessKey);
-		else
+		else if (cTextureKey != L"Default")
 			UIObject(cTextureKey);
+		else if (cPrefabKey != L"")
+			PrefabObject();
 	}
 
 }
@@ -246,19 +264,19 @@ void CEditorScene::ObjectPicking(std::wstring layerKey)
 		Engine::CGameObject* obj = Engine::CRaycast::RayCast(rayPos, rayDir, 1000, layerKey);
 		if (obj != nullptr)
 		{
-			for (int i = 0; i <= hierarchyView->m_objectPos.size() - 1; i++)
+			for (int i = 0; i <= m_hierarchyView->m_objectPos.size() - 1; i++)
 			{
-				if (Engine::Dropdecimalpoint(hierarchyView->m_objectPos[i].x, 1000) == Engine::Dropdecimalpoint(obj->GetPosition().x, 1000) &&
-					Engine::Dropdecimalpoint(hierarchyView->m_objectPos[i].y, 1000) == Engine::Dropdecimalpoint(obj->GetPosition().y, 1000))
+				if (Engine::Dropdecimalpoint(m_hierarchyView->m_objectPos[i].x, 1000) == Engine::Dropdecimalpoint(obj->GetPosition().x, 1000) &&
+					Engine::Dropdecimalpoint(m_hierarchyView->m_objectPos[i].y, 1000) == Engine::Dropdecimalpoint(obj->GetPosition().y, 1000))
 				{
 					m_pickingObject = obj;
 					m_pickNumber = i;
-					hierarchyView->m_objectListBox.SetCurSel(m_pickNumber);
+					m_hierarchyView->m_objectListBox.SetCurSel(m_pickNumber);
 					break;
 				}
 			}
 
-			inspectorView->SetData(obj);
+			m_inspectorView->SetData(obj);
 		}
 	}
 }
@@ -311,7 +329,7 @@ void CEditorScene::ObjectMove()
 
 	if(m_main->m_mode != CMainFrame::Mode::NavMesh)
 	{
-		hierarchyView->m_objectPos[m_pickNumber] = m_pickingObject->GetPosition();
+		m_hierarchyView->m_objectPos[m_pickNumber] = m_pickingObject->GetPosition();
 	}
 }
 
@@ -334,9 +352,29 @@ void CEditorScene::NormalObject(CString messKey)
 	if (messKey == L"")
 		return;
 
+	std::wstring wMessKey;
+	wMessKey = CStringW(messKey);
+
+	SHARED(Engine::CGameObject) pObj = Engine::ADD_CLONE(L"Default", L"Mess", true);
+	pObj->SetIsEnabled(true);
+	pObj->SetName(L"GameObejct");
+	pObj->GetComponent<Engine::CMeshComponent>()->SetMeshKey(wMessKey);
+
+	pObj->SetPosition(m_pMainCamera->GetOwner()->ReturnTranslate(vector3(0, 0, 5)));
+
+	CColliderManager::GetInstance()->SetColliderData(new ColliderData());
+
+	m_hierarchyView->m_objectListBox.AddString(pObj.get()->GetName().c_str());
+	m_hierarchyView->m_objectPos.emplace_back(pObj.get()->GetPosition());
+
+	m_inspectorView->SetData(pObj.get());
+}
+
+void CEditorScene::PrefabObject()
+{
 	_bool enable = true;;
 	std::wstring wMessKey;
-
+	CString messKey;
 	std::wstring name = L"GameObejct";
 	std::wstring layerKey = L"Default", objectKey = L"Mess";
 	vector3 rotation = vector3Zero;
@@ -345,27 +383,26 @@ void CEditorScene::NormalObject(CString messKey)
 	ColliderData* Tcollider = new ColliderData();
 	PrefabData TprefabData;
 
-	if (messKey == L"Default") // 만약 메쉬랑 텍스쳐가 설정되어있지 않다면
+	int sel = m_projectView->m_prefabList.GetCurSel();
+	if (sel != -1) // 프리팹이 설정되어있다면 프리팹을
 	{
-		int sel = m_projectView->m_prefabList.GetCurSel();
-		if (sel != -1) // 프리팹이 설정되어있다면 프리팹을
-		{
-			TprefabData = CPrefabManager::GetInstance()->GetPrefabData()[sel];
-			enable = TprefabData.enable;
-			name = TprefabData.name;
-			layerKey = TprefabData.layerKey;
-			objectKey = TprefabData.objectKey;
-			messKey = TprefabData.messKey.c_str();
-			rotation = TprefabData.rotation;
-			scale = TprefabData.scale;
+		TprefabData = CPrefabManager::GetInstance()->GetPrefabData()[sel];
+		enable = TprefabData.enable;
+		name = TprefabData.name;
+		layerKey = TprefabData.layerKey;
+		objectKey = TprefabData.objectKey;
+		messKey = TprefabData.messKey.c_str();
+		rotation = TprefabData.rotation;
+		scale = TprefabData.scale;
 
-			Tcollider->colliderType = TprefabData.collider->colliderType;
-			Tcollider->offset = TprefabData.collider->offset;
-			Tcollider->boxsize = TprefabData.collider->boxsize;
-			Tcollider->radius = TprefabData.collider->radius;
-		}
-		else // 아니면 그냥 리턴
-			return;
+		Tcollider->colliderType = TprefabData.collider->colliderType;
+		Tcollider->offset = TprefabData.collider->offset;
+		Tcollider->boxsize = TprefabData.collider->boxsize;
+		Tcollider->radius = TprefabData.collider->radius;
+	}
+	else
+	{
+		return;
 	}
 
 	wMessKey = CStringW(messKey);
@@ -384,10 +421,10 @@ void CEditorScene::NormalObject(CString messKey)
 
 	CColliderManager::GetInstance()->SetColliderData(Tcollider);
 
-	hierarchyView->m_objectListBox.AddString(pObj.get()->GetName().c_str());
-	hierarchyView->m_objectPos.emplace_back(pObj.get()->GetPosition());
+	m_hierarchyView->m_objectListBox.AddString(pObj.get()->GetName().c_str());
+	m_hierarchyView->m_objectPos.emplace_back(pObj.get()->GetPosition());
 
-	inspectorView->SetData(pObj.get());
+	m_inspectorView->SetData(pObj.get());
 }
 
 void CEditorScene::DirectionalLightObject(CString objectKey)
@@ -407,10 +444,10 @@ void CEditorScene::DirectionalLightObject(CString objectKey)
 	pObj->SetPosition(m_pMainCamera->GetOwner()->ReturnTranslate(vector3(0, 0, 5)));
 	CColliderManager::GetInstance()->SetColliderData(Tcollider);
 
-	hierarchyView->m_objectListBox.AddString(pObj.get()->GetName().c_str());
-	hierarchyView->m_objectPos.emplace_back(pObj.get()->GetPosition());
+	m_hierarchyView->m_objectListBox.AddString(pObj.get()->GetName().c_str());
+	m_hierarchyView->m_objectPos.emplace_back(pObj.get()->GetPosition());
 
-	inspectorView->SetData(pObj.get());
+	m_inspectorView->SetData(pObj.get());
 }
 
 void CEditorScene::UIObject(CString textureKey)
@@ -434,10 +471,10 @@ void CEditorScene::UIObject(CString textureKey)
 
 	CColliderManager::GetInstance()->SetColliderData(Tcollider);
 
-	hierarchyView->m_objectListBox.AddString(pObj.get()->GetName().c_str());
-	hierarchyView->m_objectPos.emplace_back(pObj.get()->GetPosition());
+	m_hierarchyView->m_objectListBox.AddString(pObj.get()->GetName().c_str());
+	m_hierarchyView->m_objectPos.emplace_back(pObj.get()->GetPosition());
 
-	inspectorView->SetData(pObj.get());
+	m_inspectorView->SetData(pObj.get());
 }
 
 void CEditorScene::ColliderSesting(int value, Engine::CGameObject * object)
@@ -463,6 +500,6 @@ void CEditorScene::InspactorSesting(int value, Engine::CGameObject * object)
 	if (value == -1 || object == nullptr || CColliderManager::GetInstance()->GetColliderData().size() <= value)
 		return;
 
-	inspectorView->SetData(object);
+	m_inspectorView->SetData(object);
 
 }

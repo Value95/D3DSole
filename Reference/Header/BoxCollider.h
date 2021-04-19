@@ -14,7 +14,7 @@ private:
 	explicit						CBoxCollider		(void);
 								   ~CBoxCollider		(void);
 public:
-	static			CBoxCollider*	Create				(vector3 boxSize, vector3 position = vector3Zero);
+	static			CBoxCollider*	Create				(vector3 boxSize, vector3 offset = vector3Zero);
 					void			Awake				(void) override;
 					void			OnDestroy			(void)override;
 															  

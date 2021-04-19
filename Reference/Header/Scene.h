@@ -41,12 +41,16 @@ public:
 	SHARED(CGameObject)	FindObjectPosition(vector3 position);
 	void AllDelete();
 	_uint FindObjectsWithKey(std::wstring objectKey, std::vector<SHARED(CGameObject)>& gameObjects);
+	void LoadObject(std::wstring path);
 
 	void AddObjectCount(_int value) { m_objectCount += value; }
 protected:
 	virtual void InitLayers(void) PURE;
 	virtual void InitPrototypes(void) PURE;
 	void AddLayer(std::wstring layerName);
+
+private:
+	std::wstring LoadWstring(HANDLE* file, DWORD* dwByte);
 };
 END
 

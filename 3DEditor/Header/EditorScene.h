@@ -11,8 +11,8 @@ private:
 	CMainFrame * m_main;
 	CMy3DEditorView* m_editorView;
 	CProjectView* m_projectView;
-	CHierarchyView* hierarchyView;
-	CInspectorView* inspectorView;
+	CHierarchyView* m_hierarchyView;
+	CInspectorView* m_inspectorView;
 
 public:
 	Engine::CGameObject* m_pickingObject = nullptr;
@@ -50,6 +50,7 @@ private:
 	void ObjectMoveToView();
 
 	void NormalObject(CString messKey);
+	void PrefabObject();
 	void DirectionalLightObject(CString objectKey);
 	void UIObject(CString textureKey);
 };

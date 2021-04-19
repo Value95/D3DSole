@@ -39,9 +39,6 @@ void CAnimMeshRenderComponent::Awake(void)
 void CAnimMeshRenderComponent::Start(SHARED(CComponent) spThis)
 {
 	__super::Start(spThis);
-
-	Set_AnimationSet(0);
-
 }
 
 _uint CAnimMeshRenderComponent::FixedUpdate(SHARED(CComponent) spThis)

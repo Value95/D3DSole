@@ -8,9 +8,11 @@ protected:
 	GETTOR(matrix4x4, m_worldMat, {}, WorldMatrix)
 	GETTOR_SETTOR(vector3, m_position, vector3(0, 0, 0), Position)
 	GETTOR_SETTOR(vector3, m_rotation, vector3(0, 0, 0), Rotation)
-	GETTOR_SETTOR(quaternion, m_quaternion, vector4(0, 0, 0, 0), Quaternion)
 	GETTOR_SETTOR(vector3, m_scale, vector3(1, 1, 1), Scale)
 
+	GETTOR_SETTOR(CGameObject*, m_target, nullptr, Target)
+	GETTOR_SETTOR(_float, m_cameraY, 0, CameraY)
+	GETTOR_SETTOR(_bool, m_camera, false, Camera)
 public:
 	explicit	CTransformComponent(void);
 	~CTransformComponent(void);
@@ -46,6 +48,8 @@ public:
 	void SetScaleX(_float x) { m_scale.x = x; }
 	void SetScaleY(_float y) { m_scale.y = y; }
 	void SetScaleZ(_float z) { m_scale.z = z; }
+
+	void AddCameraY(_float y) { m_cameraY += y; }
 private:
 	void UpdateWorldmMatrix(void);
 };

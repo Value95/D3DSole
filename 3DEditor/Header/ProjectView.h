@@ -34,6 +34,7 @@ public:
 	afx_msg void MessListClick();
 	afx_msg void TextureListClick();
 	afx_msg void PrefabListClick();
+	virtual void OnInitialUpdate();
 };
 
 

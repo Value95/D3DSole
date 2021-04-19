@@ -18,11 +18,17 @@ IMPLEMENT_DYNCREATE(CProjectView, CFormView)
 CProjectView::CProjectView()
 	: CFormView(IDD_PROJECTVIEW)
 {
-
 }
 
 CProjectView::~CProjectView()
 {
+}
+
+void CProjectView::OnInitialUpdate()
+{
+	CFormView::OnInitialUpdate();
+
+	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
 }
 
 void CProjectView::DoDataExchange(CDataExchange* pDX)
@@ -34,6 +40,7 @@ void CProjectView::DoDataExchange(CDataExchange* pDX)
 
 	m_messList.ResetContent();
 	m_messList.AddString(L"Default");
+	m_messList.SetCurSel(0);
 	for (auto& value : Engine::CMeshStore::GetInstance()->GetStaticMeshData())
 	{
 		TCHAR szFileName[MAX_PATH] = L"";
@@ -44,6 +51,7 @@ void CProjectView::DoDataExchange(CDataExchange* pDX)
 
 	m_textureList.ResetContent();
 	m_textureList.AddString(L"Default");
+	m_textureList.SetCurSel(0);
 	for (auto& value : Engine::CTextureStore::GetInstance()->GetStaticTextureData())
 	{
 		if ((&value)->second->name == L"Error")

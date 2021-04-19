@@ -62,7 +62,7 @@ public:
 	void OnDisable(void) override;
 
 	void CameraMove(void);
-	void CameraRotation(void);
+	void CameraRotation();
 	_bool IsInFrustum(vector3 & position);
 private:
 	void MaitrxCalculate(void);

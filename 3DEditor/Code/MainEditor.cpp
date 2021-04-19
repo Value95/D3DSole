@@ -79,8 +79,11 @@ _uint CMainEditor::Render(void)
 	if (event = Engine::CGraphicsManager::GetInstance()->PreRender())	return event;
 	if (event = Engine::CGraphicsManager::GetInstance()->Render())	return event;
 
-	if (event = CNavMeshManager::GetInstance()->PreRender()) return event;
-	if (event = CNavMeshManager::GetInstance()->Render()) return event;
+	if (m_main->m_mode == CMainFrame::Mode::NavMesh)
+	{
+		if (event = CNavMeshManager::GetInstance()->PreRender()) return event;
+		if (event = CNavMeshManager::GetInstance()->Render()) return event;
+	}
 	
 	if (m_main->m_mode == CMainFrame::Mode::UI)
 	{
@@ -99,7 +102,9 @@ _uint CMainEditor::PostRender(void)
 {
 	_uint event = NO_EVENT;
 	if (event = Engine::CGraphicsManager::GetInstance()->PostRender())	return event;
-	if (event = CNavMeshManager::GetInstance()->PostRender()) return event;
+
+	if (m_main->m_mode == CMainFrame::Mode::NavMesh)
+		if (event = CNavMeshManager::GetInstance()->PostRender()) return event;
 
 	if (m_main->m_mode == CMainFrame::Mode::UI)
 		if (event = Engine::CUIManager::GetInstance()->PostRender()) return event;

@@ -7,6 +7,7 @@
 USING(Engine)
 CTransformComponent::CTransformComponent(void)  
 {
+
 }
 
 CTransformComponent::~CTransformComponent(void)
@@ -17,6 +18,7 @@ void CTransformComponent::TransformUpdate()
 {
 	UpdateWorldmMatrix();
 }
+
 // 자신의 회전축을 기준으로 이동한다.
 void CTransformComponent::Translate(vector3 translation)
 {	
@@ -25,6 +27,7 @@ void CTransformComponent::Translate(vector3 translation)
 	D3DXVec3TransformCoord(&translation, &translation, &rotate);
 	m_position += translation * deltaTime;
 }
+
 void CTransformComponent::CameraDirTranslate(vector3 translation)
 {
 	matrix4x4 rotate;
@@ -32,6 +35,7 @@ void CTransformComponent::CameraDirTranslate(vector3 translation)
 	D3DXVec3TransformCoord(&translation, &translation, &rotate);
 	m_position += translation * deltaTime;
 }
+
 vector3 CTransformComponent::ReturnTranslate(vector3 translation)
 {
 	matrix4x4 rotate;
@@ -53,16 +57,10 @@ void CTransformComponent::MoveTowards(vector3 targetPosition, _float speed)
 	}
 	m_position = m_position + a / magnitude * speed;
 }
+
 // 타겟까지 선형보간하여 이동한다.
 void CTransformComponent::Lerp(vector3 targetPosition, _float speed)
 {
-	/*
-	float lerp(float p1, float p2, float d1)
-	{
-		return (1-d1)*p1 + d1*p2;
-	}
-	*/
-
 	vector3 dir = targetPosition - m_position;
 	D3DXVec3Normalize(&dir, &dir);
 
@@ -87,51 +85,6 @@ void CTransformComponent::LookAt(vector3 target, vector3 worldUp)
 	vector3 axis, dir;
 	_float angle, dot;
 
-	// Y의대한 회전
-	//*
-	{
-		dir = m_position - target;
-
-		D3DXVec3Normalize(&dir, &dir);
-
-		D3DXVec3Cross(&axis, &vector3Forward, &dir);
-		dot = D3DXVec3Dot(&vector3Forward, &dir);
-		angle = acos(dot);
-
-
-		if (dir.y <= 0)
-		{
-			angle = angle + (abs(angle - 3.14f) * 2);
-		}
-
-		angle = D3DXToDegree(angle);
-		m_rotation.x = angle;
-	}
-	//*/
-
-	// X의대한 회전
-	/*
-	{
-		dir = m_position - target;
-
-		D3DXVec3Normalize(&dir, &dir);
-
-		D3DXVec3Cross(&axis, &vector3Up, &dir);
-		dot = D3DXVec3Dot(&vector3Up, &dir);
-		angle = acos(dot);
-
-
-		if (dir.x >= 0)
-		{
-			angle = angle + (abs(angle - 3.14f) * 2);
-		}
-
-		angle = D3DXToDegree(angle);
-		m_rotation.y = angle;
-	}
-	//*/
-
-	//*
 	dir = target - m_position;
 
 	D3DXVec3Normalize(&dir, &dir);
@@ -148,31 +101,59 @@ void CTransformComponent::LookAt(vector3 target, vector3 worldUp)
 
 	if (dir.z >= 0)
 	{
-		m_rotation.y = 90 + abs(((D3DXToDegree(R.z) * 2) - 90));
+		m_rotation.y = 90 + abs(((D3DXToDegree(R.z) * 2) - 90)) - 180;
 	}
 	else
 	{
-		m_rotation.y = (D3DXToDegree(R.z) * 2);
+		m_rotation.y = (D3DXToDegree(R.z) * 2) - 180;
 	}
-
-	//*/
 }
 
 void CTransformComponent::UpdateWorldmMatrix(void)
 {
-	matrix4x4 rotateX, rotateY, rotateZ, scale, translation;
+	if (!m_camera)
+	{
+		matrix4x4 scale, rotateX, rotateY, rotateZ, translation;
 
-	D3DXMatrixRotationZ(&rotateZ, D3DXToRadian(m_rotation.z));
-    D3DXMatrixRotationY(&rotateY, D3DXToRadian(m_rotation.y));
-    D3DXMatrixRotationX(&rotateX, D3DXToRadian(m_rotation.x));
-    
-    D3DXMatrixScaling(&scale, m_scale.x, 
-                               m_scale.y,
-                               m_scale.z);
-    
-    D3DXMatrixTranslation(&translation, m_position.x, 
-                                          m_position.y,
-                                          m_position.z);
+		D3DXMatrixScaling(&scale, m_scale.x,
+			m_scale.y,
+			m_scale.z);
 
-	m_worldMat = scale * rotateX * rotateY * rotateZ * translation;
+		D3DXMatrixRotationZ(&rotateZ, D3DXToRadian(m_rotation.z));
+		D3DXMatrixRotationY(&rotateY, D3DXToRadian(m_rotation.y));
+		D3DXMatrixRotationX(&rotateX, D3DXToRadian(m_rotation.x));
+
+		D3DXMatrixTranslation(&translation, m_position.x,
+			m_position.y,
+			m_position.z);
+
+		m_worldMat = scale * rotateX * rotateY * rotateZ * translation;
+	}
+	else if (m_camera)
+	{
+		matrix4x4 scale, rotateX, rotateY, rotateZ, translation;
+		matrix4x4 preantRotateY, preantTranslation;
+
+		D3DXMatrixScaling(&scale, m_scale.x,
+			m_scale.y,
+			m_scale.z);
+
+		D3DXMatrixRotationZ(&rotateZ, D3DXToRadian(m_rotation.z)); // 이건 무조건 플레이어를 바라보게
+		D3DXMatrixRotationY(&rotateY, D3DXToRadian(m_rotation.y));
+		D3DXMatrixRotationX(&rotateX, D3DXToRadian(m_rotation.x));
+
+		D3DXMatrixTranslation(&translation, 0, 4, -10);
+
+		D3DXMatrixRotationY(&preantRotateY, D3DXToRadian(m_cameraY));
+
+		D3DXMatrixTranslation(&preantTranslation, m_target->GetPosition().x,
+			m_target->GetPosition().y,
+			m_target->GetPosition().z);
+
+		m_worldMat = scale * rotateX * rotateY * rotateZ * translation * preantRotateY * preantTranslation;
+
+		m_position.x = m_worldMat._41;
+		m_position.y = m_worldMat._42;
+		m_position.z = m_worldMat._43;
+	}
 }

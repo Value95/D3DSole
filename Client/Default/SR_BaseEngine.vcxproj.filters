@@ -25,6 +25,42 @@
     <Filter Include="02.Components\01.Monster">
       <UniqueIdentifier>{29ea7817-9ebc-447b-b5ee-8709e2bc3a79}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Scene\00.Title">
+      <UniqueIdentifier>{129ba52e-d62a-4eee-b7e1-0c7e4f2c94dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Scene\01.Lodding">
+      <UniqueIdentifier>{020ae361-efbe-4023-bb42-00cad35e9cfd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Scene\02.MainRoom">
+      <UniqueIdentifier>{212ab50c-f826-4ed9-84a5-738c9432155e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Scene\03.AgentSanwaMoneyRoom">
+      <UniqueIdentifier>{d1a1d389-0d55-4416-9bd3-8f8b0b863a20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Scene\04.CrystalSpiderRoom">
+      <UniqueIdentifier>{68faa2e9-143d-4ef1-a2a7-6906462cf13d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.FSM">
+      <UniqueIdentifier>{ac6f717e-0e7d-4d8d-a516-187494f7f7af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Components\00.Player\00.PlayerFMS">
+      <UniqueIdentifier>{c0784923-4d1f-4371-ad6c-c3760f480a3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Components\00.Player\00.PlayerFMS\00.Idle">
+      <UniqueIdentifier>{aa8e242d-4c47-4a23-8ac3-b83562fe10f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Components\00.Player\00.PlayerFMS\01.Move">
+      <UniqueIdentifier>{eea4bb26-66c7-4988-8e82-2b1a6669d23c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Components\00.Player\00.PlayerFMS\02.Attack">
+      <UniqueIdentifier>{6884381c-3949-41eb-932f-992a8b263f73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Components\00.Player\00.PlayerFMS\03.Death">
+      <UniqueIdentifier>{e2420da2-581f-48b0-bb3b-7c134f7cd1ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Components\00.Player\01.PlayerState">
+      <UniqueIdentifier>{946d2dd0-cf96-44be-a247-bdb1725346fa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -72,6 +108,39 @@
     <ClInclude Include="..\Header\Monster.h">
       <Filter>02.Components\01.Monster</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\TitleScene.h">
+      <Filter>01.Scene\00.Title</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\LoddingScene.h">
+      <Filter>01.Scene\01.Lodding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MainRoomScene.h">
+      <Filter>01.Scene\02.MainRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\AgentSanwaMoneyRoomScene.h">
+      <Filter>01.Scene\03.AgentSanwaMoneyRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CrystalSpiderRoomScene.h">
+      <Filter>01.Scene\04.CrystalSpiderRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\FSM.h">
+      <Filter>03.FSM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PlayerMove.h">
+      <Filter>02.Components\00.Player\00.PlayerFMS\01.Move</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PlayerAttack.h">
+      <Filter>02.Components\00.Player\00.PlayerFMS\02.Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PlayerDeath.h">
+      <Filter>02.Components\00.Player\00.PlayerFMS\03.Death</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PlayerIdle.h">
+      <Filter>02.Components\00.Player\00.PlayerFMS\00.Idle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PlayerState.h">
+      <Filter>02.Components\00.Player\01.PlayerState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -91,6 +160,39 @@
     </ClCompile>
     <ClCompile Include="..\Code\Monster.cpp">
       <Filter>02.Components\01.Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TitleScene.cpp">
+      <Filter>01.Scene\00.Title</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\LoddingScene.cpp">
+      <Filter>01.Scene\01.Lodding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MainRoomScene.cpp">
+      <Filter>01.Scene\02.MainRoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CrystalSpiderRoomScene.cpp">
+      <Filter>01.Scene\04.CrystalSpiderRoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\AgentSanwaMoneyRoomScene.cpp">
+      <Filter>01.Scene\03.AgentSanwaMoneyRoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\FSM.cpp">
+      <Filter>03.FSM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerMove.cpp">
+      <Filter>02.Components\00.Player\00.PlayerFMS\01.Move</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerAttack.cpp">
+      <Filter>02.Components\00.Player\00.PlayerFMS\02.Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerDeath.cpp">
+      <Filter>02.Components\00.Player\00.PlayerFMS\03.Death</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerIdle.cpp">
+      <Filter>02.Components\00.Player\00.PlayerFMS\00.Idle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerState.cpp">
+      <Filter>02.Components\00.Player\01.PlayerState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

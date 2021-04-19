@@ -87,9 +87,9 @@ void CAniCtrl::Play_Animation(const _double & fTimeDelta)
 {
 	// 첫 번째 인자 : 실제 애니메이션을 구동하는 함수,
 	// 두 번째 인자 : 객체가 지닌 사운드나 이펙트에 대한 처리를 담당하는 인자값, 느려서 사용을 안함.
-	m_pAniCtrl->AdvanceTime(fTimeDelta, NULL);	
+	m_pAniCtrl->AdvanceTime(fTimeDelta * m_speed, NULL);
 
-	m_fAccTime += fTimeDelta;
+	m_fAccTime += fTimeDelta * m_speed;
 }
 
 _bool CAniCtrl::Is_AnimationSetEnd(void)
@@ -104,6 +104,8 @@ _bool CAniCtrl::Is_AnimationSetEnd(void)
 
 	return false;
 }
+
+
 
 CAniCtrl* CAniCtrl::Create(LPD3DXANIMATIONCONTROLLER pAniCtrl)
 {

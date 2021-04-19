@@ -1,5 +1,12 @@
 #include "stdafx.h"
 #include "Player.h"
+#include "PlayerState.h"
+
+#include "FSM.h"
+#include "PlayerIdle.h"
+#include "PlayerMove.h"
+#include "PlayerAttack.h"
+#include "PlayerDeath.h"
 
 CPlayer::CPlayer()
 {
@@ -18,65 +25,51 @@ SHARED(Engine::CComponent) CPlayer::MakeClone(Engine::CGameObject* pObject)
 
 	pClone->SetIsAwaked(m_isAwaked);
 
-
 	return pClone;
 }
 
 void CPlayer::Awake(void)
 {
 	__super::Awake();
+	state = new CPlayerState();
 }
 
 
 void CPlayer::Start(SHARED(CComponent) spThis)
 {
 	__super::Start(spThis);
+	FSMCreate();
 }
 
 _uint CPlayer::FixedUpdate(SHARED(CComponent) spThis)
 {
-
+	m_playerFSM[m_playerState]->FixedUpdate();
 	return NO_EVENT;
 }
 
 _uint CPlayer::Update(SHARED(CComponent) spThis)
 {
-	if (Engine::CInputManager::GetInstance()->KeyPress(KEY_W))
+
+	if (Engine::CInputManager::GetInstance()->KeyPress(KEY_Q))
 	{
-		GetOwner()->Translate(vector3Forward * deltaTime * 50);
+		Engine::GET_MAIN_CAM->GetOwner()->AddRotationY(5);
+		Engine::GET_MAIN_CAM->GetOwner()->SetCameraY(Engine::GET_MAIN_CAM->GetOwner()->GetCameraY() + 5);
 	}
-	if (Engine::CInputManager::GetInstance()->KeyPress(KEY_S))
+	if (Engine::CInputManager::GetInstance()->KeyPress(KEY_E))
 	{
-		GetOwner()->Translate(vector3Back * deltaTime * 50);
-	}
-	if (Engine::CInputManager::GetInstance()->KeyPress(KEY_A))
-	{
-		GetOwner()->Translate(vector3Left * deltaTime * 50);
-	}
-	else if (Engine::CInputManager::GetInstance()->KeyPress(KEY_D))
-	{
-		GetOwner()->Translate(vector3Right * deltaTime * 50);
+		Engine::GET_MAIN_CAM->GetOwner()->AddRotationY(-5);
+		Engine::GET_MAIN_CAM->GetOwner()->SetCameraY(Engine::GET_MAIN_CAM->GetOwner()->GetCameraY() - 5);
 	}
 
-	if (Engine::CInputManager::GetInstance()->KeyPress(KEY_1))
-	{
-		GetOwner()->AddRotationX(5 * deltaTime * 50);
-	}
 
-	if (Engine::CInputManager::GetInstance()->KeyPress(KEY_2))
-	{
-		GetOwner()->AddRotationY(5 * deltaTime * 50);
-	}
+	m_playerFSM[m_playerState]->Update();
 
-	if (Engine::CInputManager::GetInstance()->KeyPress(KEY_3))
-	{
-		GetOwner()->AddRotationZ(5 * deltaTime * 50);
-	}
 	return NO_EVENT;
 }
 
 _uint CPlayer::LateUpdate(SHARED(CComponent) spThis)
 {
+	m_playerFSM[m_playerState]->LateUpdate();
 
 	return NO_EVENT;
 }
@@ -87,10 +80,25 @@ void CPlayer::OnDestroy(void)
 
 void CPlayer::OnEnable(void)
 {
-	std::cout << "Player OnEnable" << endl;
 }
 
 void CPlayer::OnDisable(void)
 {
-	std::cout << "Player OnDisable" << endl;
+}
+
+void CPlayer::ChangeFSM(STATE state)
+{
+	m_playerFSM[m_playerState]->End();
+	m_playerState = state;
+	m_playerFSM[m_playerState]->Start();
+}
+
+void CPlayer::FSMCreate()
+{
+	m_playerFSM[STATE::IDLE] = new CPlayerIdle(this);
+	m_playerFSM[STATE::IDLE]->Start();
+
+	m_playerFSM[STATE::MOVE] = new CPlayerMove(this);
+	m_playerFSM[STATE::ATTACK] = new CPlayerAttack(this);
+	m_playerFSM[STATE::DEATH] = new CPlayerDeath(this);
 }

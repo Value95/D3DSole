@@ -133,6 +133,8 @@ void CInputManager::KeyUpdate(void)
 		m_key |= KEY_CTRL;
 	if (GetAsyncKeyState('F') & 0x8000)
 		m_key |= KEY_F;
+	if (GetAsyncKeyState(VK_DELETE) & 0x8000)
+		m_key |= KEY_DEL;
 }
 
 void CInputManager::MouseUpdate(void)

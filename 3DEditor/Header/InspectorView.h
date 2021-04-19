@@ -35,7 +35,7 @@ public:
 	CComboBox m_colliderTypeComboBox;
 
 	CMainFrame* m_main;
-	CHierarchyView* hierarchyView;
+	CHierarchyView* m_hierarchyView;
 protected:
 	CInspectorView();           // 동적 만들기에 사용되는 protected 생성자입니다.
 	virtual ~CInspectorView();
@@ -57,8 +57,8 @@ protected:
 
 public:
 	void SetData(Engine::CGameObject* gameObject);
-private:
 	afx_msg void InputData();
+private:
 	void LayerAddString();
 	void ObjectAddString();
 	void ColliderAddString();

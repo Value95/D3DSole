@@ -96,12 +96,14 @@ void CFeatureView::ReSetProject()
 	SHARED(Engine::CGameObject) m_sphere;
 
 	m_box = Engine::CObjectFactory::GetInstance()->AddClone(L"Collider", L"Collider", true);
-	m_box->SetScale(vector3Zero);
+	m_box->SetScale(vector3One);
 	m_box->AddComponent<Engine::CBoxComponent>();
+	dynamic_cast<CEditorScene*>(Engine::GET_CUR_SCENE.get())->m_box = m_box;
 
 	m_sphere = Engine::CObjectFactory::GetInstance()->AddClone(L"Collider", L"Collider", true);
 	m_sphere->SetScale(vector3Zero);
 	m_sphere->AddComponent<Engine::CSphereComponent>();
+	dynamic_cast<CEditorScene*>(Engine::GET_CUR_SCENE.get())->m_sphere = m_sphere;
 }
 
 // 프리팹 생성
@@ -171,7 +173,7 @@ void CFeatureView::Save()
 		DWORD dwStringSize = 0;
 		CString text;
 		_int objectCount = Engine::GET_CUR_SCENE->GetObjectCount() - layers[L"NavMesh"].get()->GetGameObjects().size() - 3;
-
+		_int colliderCount = 0;
 		// 오브젝트
 		WriteFile(hFile, &objectCount, sizeof(_int), &dwByte, nullptr);
 
@@ -197,24 +199,18 @@ void CFeatureView::Save()
 				WriteFile(hFile, &gameObject->GetPosition(), sizeof(vector3), &dwByte, nullptr); // 위치
 				WriteFile(hFile, &gameObject->GetRotation(), sizeof(vector3), &dwByte, nullptr); // 회전
 				WriteFile(hFile, &gameObject->GetScale(), sizeof(vector3), &dwByte, nullptr); // 크기
+
+				ColliderData* collider = CColliderManager::GetInstance()->GetColliderData()[colliderCount];
+				colliderCount += 1;
+				text = collider->colliderType.c_str();
+				dwStringSize = sizeof(wchar_t) * (text.GetLength() + 1);
+				WriteFile(hFile, &dwStringSize, sizeof(DWORD), &dwByte, nullptr);
+				WriteFile(hFile, text.GetString(), dwStringSize, &dwByte, nullptr);
+
+				WriteFile(hFile, &collider->offset, sizeof(vector3), &dwByte, nullptr); // 위치
+				WriteFile(hFile, &collider->boxsize, sizeof(vector3), &dwByte, nullptr); // 크기
+				WriteFile(hFile, &collider->radius, sizeof(_float), &dwByte, nullptr); // 반지름
 			}
-		}
-
-		_int colliderCount = CColliderManager::GetInstance()->GetColliderData().size();
-		WriteFile(hFile, &colliderCount, sizeof(_int), &dwByte, nullptr); // 크기
-
-		// 모든 충돌체의 정보
-		for (auto& collider : CColliderManager::GetInstance()->GetColliderData())
-		{
-			// 콜라이더 타입
-			text = collider->colliderType.c_str();
-			dwStringSize = sizeof(wchar_t) * (text.GetLength() + 1);
-			WriteFile(hFile, &dwStringSize, sizeof(DWORD), &dwByte, nullptr);
-			WriteFile(hFile, text.GetString(), dwStringSize, &dwByte, nullptr);
-
-			WriteFile(hFile, &collider->offset, sizeof(vector3), &dwByte, nullptr); // 위치
-			WriteFile(hFile, &collider->boxsize, sizeof(vector3), &dwByte, nullptr); // 크기
-			WriteFile(hFile, &collider->radius, sizeof(_float), &dwByte, nullptr); // 반지름
 		}
 
 		// 네브매쉬
@@ -256,8 +252,6 @@ void CFeatureView::Load()
 
 	if (Dlg.DoModal())
 	{
-		std::unordered_map<std::wstring, SHARED(Engine::CLayer)> layer = Engine::CSceneManager::GetInstance()->GetCurScene()->GetLayers();
-
 		CString wstrFilePath = Dlg.GetPathName();
 		HANDLE hFile = CreateFile(wstrFilePath.GetString(), GENERIC_READ, 0, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 		if (INVALID_HANDLE_VALUE == hFile)
@@ -301,16 +295,7 @@ void CFeatureView::Load()
 
 			m_hierarchyView->m_objectListBox.AddString(obj.get()->GetName().c_str());
 			m_hierarchyView->m_objectPos.emplace_back(obj.get()->GetPosition());
-		}
 
-		//-----------------------------------------------------------------------------
-		// 충돌체정보-------------------------------------------------------------------
-
-		_int colliderCount = 0;
-		ReadFile(hFile, &colliderCount, sizeof(_int), &dwByte, nullptr);
-
-		for (int i = 0; i < colliderCount; i++)
-		{
 			ColliderData* colliderData = new ColliderData();
 
 			ReadFile(hFile, &dwStringSize, sizeof(DWORD), &dwByte, nullptr); // 이름
@@ -324,6 +309,7 @@ void CFeatureView::Load()
 
 			CColliderManager::GetInstance()->SetColliderData(colliderData);
 		}
+
 		//-------------------------------------------------------------------------------
 		// 네브매쉬 오브젝트--------------------------------------------------------------
 		_int m_createCount = 0;

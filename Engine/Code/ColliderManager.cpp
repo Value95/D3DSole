@@ -69,6 +69,9 @@ bool CColliderManager::OnColliderEnter(SHARED(CColliderComponent) collider, std:
 
 		for (auto& allCollider : m_vecCollider) // 전체 콜라이더 정보
 		{
+			if (allCollider == collider)
+				continue;
+
 			m_gameObject2 = allCollider->GetOwner();
 
 			for (auto collider : allCollider->GetColliders()) // 전체콜라이더 정보에 들어있는 충돌체들

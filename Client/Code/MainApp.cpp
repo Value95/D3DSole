@@ -143,19 +143,46 @@ void CMainApp::ClientSetting()
 
 void CMainApp::InitStaticPrototype(void)
 {
-	SHARED(Engine::CGameObject) pDefault = Engine::CGameObject::Create(L"Default", L"Default", true);
-	Engine::CObjectFactory::GetInstance()->AddPrototype(pDefault);
-
 	SHARED(Engine::CGameObject) pCamera = Engine::CGameObject::Create(L"Camera", L"Camera", true);
-	pCamera->SetPosition(vector3(0,0,0));
+	pCamera->SetPosition(vector3(0, 0, 0));
 	pCamera->SetRotation(vector3Zero);
 	pCamera->AddComponent<Engine::CCameraComponent>();
 	Engine::CObjectFactory::GetInstance()->AddPrototype(pCamera);
 
+
+	SHARED(Engine::CGameObject) pDefault = Engine::CGameObject::Create(L"Default", L"Default", true);
+	Engine::CObjectFactory::GetInstance()->AddPrototype(pDefault);
+
+	SHARED(Engine::CGameObject) mess = Engine::CGameObject::Create(L"Default", L"Mess", true);
+	mess->AddComponent<Engine::CGraphicsComponent>();
+	mess->AddComponent<Engine::CMeshComponent>();
+	Engine::CObjectFactory::GetInstance()->AddPrototype(mess);
+
+	SHARED(Engine::CGameObject) directionalLight = Engine::CGameObject::Create(L"Light", L"DirectionalLight", true);
+	directionalLight->AddComponent<Engine::CDirectionalLightComponent>();
+	Engine::CObjectFactory::GetInstance()->AddPrototype(directionalLight);
+
 	SHARED(Engine::CGameObject) player = Engine::CGameObject::Create(L"Player", L"Player", true);
 	player->SetPosition(vector3(0, 0, 0));
 	player->SetScale(vector3(0.01f, 0.01f, 0.01f));
+	player->AddComponent<Engine::CRigidBodyComponent>();
+	player->AddComponent<CPlayer>();
 	player->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(1, 1, 1), vector3Zero));
-	player->AddComponent<Engine::CAnimMeshRenderComponent>()->MeshInput(L"../../Resource/Mesh/Static/Player/", L"Player.X");
+	player->AddComponent<Engine::CAnimMeshRenderComponent>()->MeshInput(L"../../Resource/Mesh/Static/Boss/CrystalSpider/", L"CrystalSpider.X");
 	Engine::CObjectFactory::GetInstance()->AddPrototype(player);
+
+	SHARED(Engine::CGameObject) ui = Engine::CGameObject::Create(L"UI", L"Default", true);
+	ui->AddComponent<Engine::CUIComponent>();
+	Engine::CObjectFactory::GetInstance()->AddPrototype(ui);
+
+	SHARED(Engine::CGameObject) collider = Engine::CGameObject::Create(L"Collider", L"Collider", true);
+	Engine::CObjectFactory::GetInstance()->AddPrototype(collider);
+
+	SHARED(Engine::CGameObject) navMesh = Engine::CGameObject::Create(L"NavMesh", L"NavMesh", true);
+	navMesh->AddComponent<Engine::CSphereComponent>();
+	Engine::CObjectFactory::GetInstance()->AddPrototype(navMesh);
+
+
+
+
 }

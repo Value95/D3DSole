@@ -47,7 +47,7 @@ void CInspectorView::OnInitialUpdate()
 	CFormView::OnInitialUpdate();
 
 	m_main = dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd());
-	hierarchyView = dynamic_cast<CHierarchyView*>(m_main->m_mainSplitter.GetPane(0, 1));
+	m_hierarchyView = dynamic_cast<CHierarchyView*>(m_main->m_mainSplitter.GetPane(0, 1));
 
 	LayerAddString();
 	ObjectAddString();
@@ -122,7 +122,7 @@ void CInspectorView::SetData(Engine::CGameObject* gameObject) // ÇöÀç ¼±ÅÃÇÑ ¿Àº
 	}
 
 	// ÄÝ¶óÀÌ´õ µ¥ÀÌÅÍ ¶ç¿ì±â
-	int sel = hierarchyView->m_objectListBox.GetCurSel();
+	int sel = m_hierarchyView->m_objectListBox.GetCurSel();
 	if (sel == -1)
 	{
 		UpdateData(FALSE);
@@ -153,7 +153,10 @@ void CInspectorView::SetData(Engine::CGameObject* gameObject) // ÇöÀç ¼±ÅÃÇÑ ¿Àº
 
 void CInspectorView::InputData() // ¼±ÅÃµÈ ¿ÀºêÁ§Æ®ÇÑÅ× Æ®·£½ºÆû Á¤º¸ ÀÎÇ²
 {
-	int sel = hierarchyView->m_objectListBox.GetCurSel();
+	if (m_gameObejct == nullptr)
+		return;
+
+	int sel = m_hierarchyView->m_objectListBox.GetCurSel();
 
 	if (sel == -1 && m_main->m_mode != CMainFrame::Mode::NavMesh)
 		return;
@@ -189,12 +192,12 @@ void CInspectorView::InputData() // ¼±ÅÃµÈ ¿ÀºêÁ§Æ®ÇÑÅ× Æ®·£½ºÆû Á¤º¸ ÀÎÇ²
 	UpdateData(FALSE);
 
 	// ÇÏÀÌ¾î¶ôÅ° ÀÌ¸§º¯°æ
-	hierarchyView->m_objectListBox.DeleteString(sel); // ÇöÀç ÀÌ¸§ »èÁ¦
-	hierarchyView->m_objectListBox.InsertString(sel, m_name); // Áö¿î¼¿¿¡ »õ·Î¿î ÀÌ¸§ Ãß°¡
-	hierarchyView->m_objectListBox.SetCurSel(sel); // »õ·Î¿î ÀÌ¸§ÀÌ Ãß°¡µÈ¼¿·Î ´Ù½Ã ¼¿¹øÈ£ ¼³Á¤
+	m_hierarchyView->m_objectListBox.DeleteString(sel); // ÇöÀç ÀÌ¸§ »èÁ¦
+	m_hierarchyView->m_objectListBox.InsertString(sel, m_name); // Áö¿î¼¿¿¡ »õ·Î¿î ÀÌ¸§ Ãß°¡
+	m_hierarchyView->m_objectListBox.SetCurSel(sel); // »õ·Î¿î ÀÌ¸§ÀÌ Ãß°¡µÈ¼¿·Î ´Ù½Ã ¼¿¹øÈ£ ¼³Á¤
 
 	// ÇÏÀÌ¾î¶ôÅ°°¡ °¡Áö°íÀÖ´Â ¿ÀºêÁ§Æ®ÀÇ À§Ä¡°ª º¯°æ
-	hierarchyView->m_objectPos[sel] = m_gameObejct->GetPosition();
+	m_hierarchyView->m_objectPos[sel] = m_gameObejct->GetPosition();
 }
 
 void CInspectorView::LayerAddString()
@@ -221,7 +224,7 @@ void CInspectorView::ColliderAddString()
 
 void CInspectorView::InputColliderData()  // ¼±ÅÃµÈ ¿ÀºêÁ§Æ®ÇÑÅ× ÄÝ¶óÀÌ´õ Á¤º¸ ÀÎÇ²
 {
-	int sel = hierarchyView->m_objectListBox.GetCurSel();
+	int sel = m_hierarchyView->m_objectListBox.GetCurSel();
 	if (sel == -1)
 		return;
 
@@ -245,13 +248,17 @@ void CInspectorView::InputColliderData()  // ¼±ÅÃµÈ ¿ÀºêÁ§Æ®ÇÑÅ× ÄÝ¶óÀÌ´õ Á¤º¸ À
 
 void CInspectorView::DeleteObject() // ¼±ÅÃµÈ ¿ÀºêÁ§Æ® »èÁ¦
 {
-	int sel = hierarchyView->m_objectListBox.GetCurSel();
+	if (m_gameObejct == nullptr)
+		return;
+
+	int sel = m_hierarchyView->m_objectListBox.GetCurSel();
 	if (sel == -1 && m_main->m_mode != CMainFrame::Mode::NavMesh)
 		return;
 
 	SHARED(Engine::CGameObject) object = Engine::GET_CUR_SCENE->FindObjectPosition(m_gameObejct->GetPosition());
 	object->SetIsNeedToBeDeleted(true);
 
+	m_gameObejct = nullptr;
 	dynamic_cast<CEditorScene*>(Engine::GET_CUR_SCENE.get())->SetPickingObject(nullptr);
 
 	if (m_main->m_mode == CMainFrame::Mode::NavMesh)
@@ -261,8 +268,8 @@ void CInspectorView::DeleteObject() // ¼±ÅÃµÈ ¿ÀºêÁ§Æ® »èÁ¦
 	}
 
 	
-	hierarchyView->m_objectPos.erase(hierarchyView->m_objectPos.begin() + sel);
-	hierarchyView->m_objectListBox.DeleteString(sel);
+	m_hierarchyView->m_objectPos.erase(m_hierarchyView->m_objectPos.begin() + sel);
+	m_hierarchyView->m_objectListBox.DeleteString(sel);
 
 	CColliderManager::GetInstance()->DataDelete(sel);
 
