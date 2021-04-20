@@ -7,17 +7,17 @@ BEGIN(Engine)
 class ENGINE_DLL CSphereCollider final : public CCollider
 {
 protected:
-	GETTOR_SETTOR(_float,		m_radius,			0.f,		Radius)
+	GETTOR_SETTOR(_float, m_radius, 0.f, Radius)
 private:
-	explicit						CSphereCollider		(void);
-								   ~CSphereCollider		(void);
+	explicit CSphereCollider (void);
+	~CSphereCollider (void);
 public:
-	static			CSphereCollider*	Create				(_float radius);
-					void				Awake				(void) override;
-					void				OnDestroy			(void) override;
-																   
-					void				OnEnable			(void) override;
-					void				OnDisable			(void) override;
+	static CSphereCollider*	Create (_float radius, _bool active = true);
+	void Awake (void) override;
+	void OnDestroy (void) override;
+		 			   
+	void OnEnable (void) override;
+	void OnDisable (void) override;
 };
 END
 

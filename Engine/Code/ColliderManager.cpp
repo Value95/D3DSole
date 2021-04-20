@@ -56,67 +56,67 @@ void CColliderManager::ColliderInput(SHARED(CColliderComponent) colliderComponen
 	m_vecCollider.emplace_back(colliderComponent);
 }
 
-bool CColliderManager::OnColliderEnter(SHARED(CColliderComponent) collider, std::vector<CGameObject*>& returnCollider)
+bool CColliderManager::OnColliderEnter(CCollider* collision, CGameObject* thisObject, std::vector<CGameObject*>& returnCollision)
 {
-	if (collider == nullptr)
+
+	if (collision == nullptr || !collision->GetActive())
 		return false;
 
-	m_gameObject1 = collider->GetOwner();
+	m_gameObject1 = thisObject;
 
-	for (auto curCollider : collider->GetColliders()) // 현제 나의 충돌체 정보
+
+	_int collisionType = collision->GetColliderType();
+
+	for (auto& allCollider : m_vecCollider) // 전체 콜라이더 정보
 	{
-		_int curColliderType = curCollider->GetColliderType();
+		if (allCollider == m_gameObject1->GetComponent<CColliderComponent>())
+			continue;
 
-		for (auto& allCollider : m_vecCollider) // 전체 콜라이더 정보
+		m_gameObject2 = allCollider->GetOwner();
+
+		for (auto curCollision : allCollider->GetColliders()) // 전체콜라이더 정보에 들어있는 충돌체들
 		{
-			if (allCollider == collider)
+			if (!curCollision->GetActive())
 				continue;
 
-			m_gameObject2 = allCollider->GetOwner();
+			_int curCollisionType = curCollision->GetColliderType();
 
-			for (auto collider : allCollider->GetColliders()) // 전체콜라이더 정보에 들어있는 충돌체들
+			switch (collisionType)
 			{
-				if (curCollider == collider)
-					continue;
-
-				_int colliderType = collider->GetColliderType();
-
-				switch (curColliderType)
+			case (_int)EColliderType::Box:
+			{
+				switch (curCollisionType)
+				{
+				case (_int)EColliderType::Box: // 박스 or 박스
+					BoxAndBox(returnCollision, static_cast<CBoxCollider*>(collision), static_cast<CBoxCollider*>(curCollision));
+					break;
+				case (_int)EColliderType::Sphere: // 박스 or 구
+					BoxAndSphere(returnCollision, static_cast<CBoxCollider*>(collision), static_cast<CSphereCollider*>(curCollision));
+					break;
+				}
+				break;
+			}
+			case (_int)EColliderType::Sphere:
+			{
+				switch (curCollisionType)
 				{
 				case (_int)EColliderType::Box:
-				{
-					switch (colliderType)
-					{
-					case (_int)EColliderType::Box: // 박스 or 박스
-						BoxAndBox(returnCollider, static_cast<CBoxCollider*>(curCollider), static_cast<CBoxCollider*>(collider));
-						break;
-					case (_int)EColliderType::Sphere: // 박스 or 구
-						BoxAndSphere(returnCollider, static_cast<CBoxCollider*>(curCollider), static_cast<CSphereCollider*>(collider));
-						break;
-					}
+					// 구 or 박스
+					BoxAndSphere(returnCollision, static_cast<CBoxCollider*>(curCollision), static_cast<CSphereCollider*>(collision));
 					break;
-				}
 				case (_int)EColliderType::Sphere:
-				{
-					switch (colliderType)
-					{
-					case (_int)EColliderType::Box:
-						// 구 or 박스
-						BoxAndSphere(returnCollider, static_cast<CBoxCollider*>(collider), static_cast<CSphereCollider*>(curCollider));
-						break;
-					case (_int)EColliderType::Sphere:
-						// 구 or 구
-						SphereAndSphere(returnCollider, static_cast<CSphereCollider*>(curCollider), static_cast<CSphereCollider*>(collider));
-						break;
-					}
+					// 구 or 구
+					SphereAndSphere(returnCollision, static_cast<CSphereCollider*>(collision), static_cast<CSphereCollider*>(curCollision));
 					break;
 				}
-				}
+				break;
+			}
 			}
 		}
 	}
 
-	if (!returnCollider.empty())
+
+	if (!returnCollision.empty())
 		return true;
 
 	return false;
@@ -134,7 +134,7 @@ void CColliderManager::BoxAndBox(std::vector<CGameObject*>& returnCollider, CBox
 	}
 	AABB(returnCollider, box1, box2);
 
-	if (m_gameObject1->GetRotation().x / 90 != 0 || m_gameObject1->GetRotation().y / 90 != 0 || m_gameObject1->GetRotation().z / 90 != 0 &&
+	/*if (m_gameObject1->GetRotation().x / 90 != 0 || m_gameObject1->GetRotation().y / 90 != 0 || m_gameObject1->GetRotation().z / 90 != 0 &&
 		m_gameObject2->GetRotation().x / 90 != 0 || m_gameObject2->GetRotation().y / 90 != 0 || m_gameObject2->GetRotation().z / 90 != 0)
 	{
 		OBB(returnCollider, box1, box2);
@@ -142,7 +142,7 @@ void CColliderManager::BoxAndBox(std::vector<CGameObject*>& returnCollider, CBox
 	else
 	{
 		AABB(returnCollider, box1, box2);
-	}
+	}*/
 }
 
 void CColliderManager::SphereAndSphere(std::vector<CGameObject*>& returnCollider, CSphereCollider* sphere1, CSphereCollider* sphere2)
@@ -161,6 +161,13 @@ void CColliderManager::SphereAndSphere(std::vector<CGameObject*>& returnCollider
 
 void CColliderManager::AABB(std::vector<CGameObject*>& returnCollider, CBoxCollider* box1, CBoxCollider* box2)
 {
+	// offset을 방향을 돌려서
+	vector3 old1 = box1->GetOffset();
+	vector3 old2 = box2->GetOffset();
+
+	m_gameObject1->OutTranslate(box1->GetOffset());
+	m_gameObject2->OutTranslate(box2->GetOffset());
+
 	float distanceX = fabs((m_gameObject1->GetPosition().x + box1->GetOffset().x) - (m_gameObject2->GetPosition().x + box2->GetOffset().x));
 	float radCX = box1->GetBoxSize().x * 0.5f + box2->GetBoxSize().x * 0.5f;
 
@@ -174,6 +181,9 @@ void CColliderManager::AABB(std::vector<CGameObject*>& returnCollider, CBoxColli
 	{
 		returnCollider.emplace_back(m_gameObject2);
 	}
+
+	box1->GetOffset() = old1;
+	box2->GetOffset() = old2;
 
 }
 
@@ -196,11 +206,11 @@ void CColliderManager::OBB(std::vector<CGameObject*>& returnCollider, CBoxCollid
 	m_obj1Vectex[1].x += box1->GetBoxSize().x * 0.5f;
 	m_obj1Vectex[1].y -= box1->GetBoxSize().y * 0.5f;
 
-	m_obj1Vectex[3] = m_gameObject1->GetPosition();
-	m_obj1Vectex[3].x -= box1->GetBoxSize().x * 0.5f;
-	m_obj1Vectex[3].y -= box1->GetBoxSize().y * 0.5f;
+	m_obj1Vectex[2] = m_gameObject1->GetPosition();
+	m_obj1Vectex[2].x -= box1->GetBoxSize().x * 0.5f;
+	m_obj1Vectex[2].y -= box1->GetBoxSize().y * 0.5f;
 
-	m_obj1Vectex[4] = m_gameObject1->GetPosition();
+	m_obj1Vectex[3] = m_gameObject1->GetPosition();
 	m_obj1Vectex[3].x -= box1->GetBoxSize().x * 0.5f;
 	m_obj1Vectex[3].y += box1->GetBoxSize().y * 0.5f;
 	//-----------------------------------

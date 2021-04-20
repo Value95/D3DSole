@@ -7,18 +7,18 @@ BEGIN(Engine)
 class ENGINE_DLL CCollider abstract : public CEngine
 {
 protected:
-	GETTOR_SETTOR(_int,					m_colliderType,		-1,			ColliderType)
+	GETTOR_SETTOR(_int, m_colliderType,	-1,	ColliderType)
+	GETTOR_SETTOR(_bool, m_active, true, Active)
+public:
+	explicit CCollider (void);
+	virtual	~CCollider (void);
 
 public:
-	explicit								CCollider		(void);
-	virtual								   ~CCollider		(void);
-
-public:
-	virtual			void					Awake			(void) PURE;
-	virtual			void					OnDestroy		(void) PURE;
-
-	virtual			void					OnEnable		(void) PURE;
-	virtual			void					OnDisable		(void) PURE;
+	virtual void Awake (void) PURE;
+	virtual void OnDestroy (void) PURE;
+		    	 
+	virtual void OnEnable (void) PURE;
+	virtual void OnDisable (void) PURE;
 };
 
 END

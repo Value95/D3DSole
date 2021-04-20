@@ -12,10 +12,11 @@ CSphereCollider::~CSphereCollider(void)
 {
 }
 
-CSphereCollider* CSphereCollider::Create(_float radius)
+CSphereCollider * CSphereCollider::Create(_float radius, _bool active)
 {
 	CSphereCollider* pSphere = new CSphereCollider();
 	pSphere->m_radius = radius;
+	pSphere->SetActive(active);
 	pSphere->Awake();
 
 	return pSphere;

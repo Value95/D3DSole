@@ -7,7 +7,8 @@ class ENGINE_DLL CSphereComponent final : public CComponent
 private:
 	_MeshData m_meshDate; // 버텍스 ,인덱스 버퍼를저장하기 위한 변수
 	LPD3DXMESH m_mesh;
-	_float radus;
+
+	GETTOR_SETTOR(_float, radus, 0.5f, Radus);
 public:
 	explicit CSphereComponent(void);
 	virtual ~CSphereComponent(void);

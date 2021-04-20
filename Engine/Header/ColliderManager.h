@@ -46,8 +46,7 @@ public:
 	void	OnDisable(void);
 
 	void	ColliderInput(SHARED(CColliderComponent) vecObject);
-	bool	OnColliderEnter(SHARED(CColliderComponent) collider,
-		std::vector<CGameObject*>& returnCollider);
+	bool	OnColliderEnter(CCollider* collision, CGameObject* thisObject, std::vector<CGameObject*>& returnCollision);
 private:
 	void BoxAndSphere(std::vector<CGameObject*>& returnCollider,
 		CBoxCollider* box,

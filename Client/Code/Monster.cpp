@@ -33,7 +33,7 @@ void CMonster::Start(SHARED(CComponent) spThis)
 {
 	__super::Start(spThis);
 
-	player = Engine::GET_CUR_SCENE->FindObjectByName(L"Player");
+	//player = Engine::GET_CUR_SCENE->FindObjectByName(L"Player");
 }
 
 _uint CMonster::FixedUpdate(SHARED(CComponent) spThis)
@@ -43,8 +43,8 @@ _uint CMonster::FixedUpdate(SHARED(CComponent) spThis)
 
 _uint CMonster::Update(SHARED(CComponent) spThis)
 {
-	GetOwner()->Lerp(player->GetPosition(), 1.0f);
-	GetOwner()->LookAt(player->GetPosition());
+	// GetOwner()->Lerp(player->GetPosition(), 1.0f);
+	// GetOwner()->LookAt(player->GetPosition());
 	return NO_EVENT;
 }
 

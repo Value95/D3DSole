@@ -42,9 +42,24 @@ void CDongilScene::Start(void)
 		m_pMainCamera->GetOwner()->SetTarget(pObj.get());
 	}
 
-	SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
-	pObj->SetPosition(vector3(0, -5, 0));
-	pObj->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(300, 1, 300), vector3Zero));
+	{
+		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
+		pObj->SetName(L"Title");
+		pObj->SetPosition(vector3(0, -5, 0));
+		pObj->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(300, 1, 300), vector3Zero));
+	}
+
+	{
+		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Monster", L"Scarecrow", true);
+		pObj->SetName(L"Scarecrow");
+		pObj->SetPosition(vector3(5, -3, 5));
+		pObj->SetScale(vector3(0.01f, 0.01f, 0.01f));
+		pObj->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(1, 10, 1), vector3Zero));
+		pObj->AddComponent<CMonster>();
+		pObj->AddComponent<Engine::CMeshComponent>()->SetMeshKey(L"BarCustomer1.X");
+		pObj->AddComponent<Engine::CBoxComponent>()->SetSize(vector3(1,1,1));
+		pObj->AddComponent<Engine::CGraphicsComponent>();
+	}
 
 	/*{
 		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
@@ -102,6 +117,7 @@ void CDongilScene::InitLayers(void)
 	AddLayer(L"Player");
 	AddLayer(L"EventBlock");
 	AddLayer(L"Default");
+	AddLayer(L"Monster");
 }
 
 void CDongilScene::InitPrototypes(void)

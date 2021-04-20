@@ -52,7 +52,7 @@ _uint CRigidBodyComponent::FixedUpdate(SHARED(CComponent) spThis)
 
 	bool crushCheck = false;
 	if (spCC->GetIsStarted())
-		crushCheck = CColliderManager::GetInstance()->OnColliderEnter(spCC, col);
+		crushCheck = CColliderManager::GetInstance()->OnColliderEnter(spCC->GetColliders()[0], m_pOwner, col);
 
 
 	if (crushCheck)

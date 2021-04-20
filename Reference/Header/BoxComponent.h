@@ -8,6 +8,7 @@ private:
 	_MeshData m_meshDate; // 버텍스 ,인덱스 버퍼를저장하기 위한 변수
 	LPD3DXMESH m_mesh;
 
+	GETTOR_SETTOR(vector3, m_size, vector3Zero, Size);
 public:
 	explicit CBoxComponent(void);
 	virtual	 ~CBoxComponent(void);

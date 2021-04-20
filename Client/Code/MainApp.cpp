@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "MainApp.h"
+
 #pragma region IncludeScenes
 #include "DongilScene.h"
 #pragma endregion
@@ -163,6 +164,7 @@ void CMainApp::InitStaticPrototype(void)
 	Engine::CObjectFactory::GetInstance()->AddPrototype(directionalLight);
 
 	SHARED(Engine::CGameObject) player = Engine::CGameObject::Create(L"Player", L"Player", true);
+	player->SetName(L"Player");
 	player->SetPosition(vector3(0, 0, 0));
 	player->SetScale(vector3(0.01f, 0.01f, 0.01f));
 	player->AddComponent<Engine::CRigidBodyComponent>();
@@ -172,6 +174,10 @@ void CMainApp::InitStaticPrototype(void)
 	player->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(1, 1, 1), vector3Zero));
 	player->AddComponent<Engine::CAnimMeshRenderComponent>()->MeshInput(L"../../Resource/Mesh/Static/Boss/CrystalSpider/", L"CrystalSpider.X");
 	Engine::CObjectFactory::GetInstance()->AddPrototype(player);
+
+	SHARED(Engine::CGameObject) scarecrow= Engine::CGameObject::Create(L"Monster", L"Scarecrow", true);
+	Engine::CObjectFactory::GetInstance()->AddPrototype(scarecrow);
+
 
 	SHARED(Engine::CGameObject) ui = Engine::CGameObject::Create(L"UI", L"Default", true);
 	ui->AddComponent<Engine::CUIComponent>();

@@ -31,7 +31,6 @@ SHARED(CComponent) CSphereComponent::MakeClone(CGameObject* pObject)
 void CSphereComponent::Awake(void)
 {
 	__super::Awake();
-	radus = 0.5f;
 }
 
 

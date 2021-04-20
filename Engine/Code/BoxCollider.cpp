@@ -12,11 +12,12 @@ CBoxCollider::~CBoxCollider(void)
 {
 }
 
-CBoxCollider* CBoxCollider::Create(vector3 boxSize, vector3 offset)
+CBoxCollider * CBoxCollider::Create(vector3 boxSize, vector3 offset, _bool active)
 {
 	CBoxCollider* box = new CBoxCollider();
 	box->SetBoxSize(boxSize);
 	box->SetOffset(offset);
+	box->SetActive(active);
 	box->Awake();
 
 	return box;
