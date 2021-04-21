@@ -158,7 +158,7 @@ void CEditorScene::InitPrototypes(void)
 	directionalLight->AddComponent<Engine::CDirectionalLightComponent>();
 	Engine::CObjectFactory::GetInstance()->AddPrototype(directionalLight);
 
-	SHARED(Engine::CGameObject) ui = Engine::CGameObject::Create(L"UI", L"Default", true);
+	SHARED(Engine::CGameObject) ui = Engine::CGameObject::Create(L"UI", L"UI", true);
 	ui->AddComponent<Engine::CUIComponent>();
 	Engine::CObjectFactory::GetInstance()->AddPrototype(ui);
 }
@@ -464,7 +464,7 @@ void CEditorScene::UIObject(CString textureKey)
 	wTextureKey = CStringW(textureKey);
 
 	// 오브젝트 생성--------------------------------------------------
-	SHARED(Engine::CGameObject) pObj = Engine::ADD_CLONE(L"UI", L"Default", true);
+	SHARED(Engine::CGameObject) pObj = Engine::ADD_CLONE(L"UI", L"UI", true);
 	pObj->SetName(name);
 	pObj->SetPosition(vector3Zero);
 	pObj->GetComponent<Engine::CUIComponent>()->SetTextureKey(wTextureKey);
