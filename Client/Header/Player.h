@@ -40,4 +40,4 @@ private:
 	void Sight();
 };
 
-#endif // !TEXTURECOMPONENT_H
+#endif // !PLAYER_H

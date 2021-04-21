@@ -28,9 +28,13 @@ void CTitleScene::Start(void)
 {
 	__super::Start();
 
+	LoadObject(L"TitleScene");
+
+
 	{
 		m_pMainCamera = Engine::ADD_CLONE(L"Camera", L"Camera", true)->GetComponent<Engine::CCameraComponent>();
 	}
+
 }
 
 _uint CTitleScene::FixedUpdate(void)
@@ -73,9 +77,8 @@ void CTitleScene::OnDisable(void)
 
 void CTitleScene::InitLayers(void)
 {
+	AddLayer(L"Light");
 	AddLayer(L"Camera");
-	AddLayer(L"Player");
-	AddLayer(L"EventBlock");
 	AddLayer(L"Default");
 }
 

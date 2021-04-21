@@ -1,7 +1,9 @@
 #include "stdafx.h"
 #include "Monster.h"
-#include "SceneManager.h"
-#include "Scene.h"
+#include "MonsterInfo.h"
+
+#include "FSM.h"
+
 CMonster::CMonster()
 {
 }
@@ -32,24 +34,25 @@ void CMonster::Awake(void)
 void CMonster::Start(SHARED(CComponent) spThis)
 {
 	__super::Start(spThis);
-
-	//player = Engine::GET_CUR_SCENE->FindObjectByName(L"Player");
+	m_monsterInfo = new CMonsterInfo();
+	m_player = Engine::GET_CUR_SCENE->FindObjectByName(L"Player");
 }
 
 _uint CMonster::FixedUpdate(SHARED(CComponent) spThis)
 {
+	m_monsterFSM[m_monsterState]->FixedUpdate();
 	return NO_EVENT;
 }
 
 _uint CMonster::Update(SHARED(CComponent) spThis)
 {
-	// GetOwner()->Lerp(player->GetPosition(), 1.0f);
-	// GetOwner()->LookAt(player->GetPosition());
+	m_monsterFSM[m_monsterState]->Update();
 	return NO_EVENT;
 }
 
 _uint CMonster::LateUpdate(SHARED(CComponent) spThis)
 {
+	m_monsterFSM[m_monsterState]->LateUpdate();
 	return NO_EVENT;
 }
 
@@ -63,4 +66,22 @@ void CMonster::OnEnable(void)
 
 void CMonster::OnDisable(void)
 {
+}
+
+void CMonster::ChangeFSM(_int state)
+{
+	m_monsterFSM[m_monsterState]->End();
+	m_monsterState = state;
+	m_monsterFSM[m_monsterState]->Start();
+}
+
+void CMonster::Hit(_int damage)
+{
+	m_monsterInfo->AddHp(damage);
+	HitEffect();
+}
+
+void CMonster::HitEffect()
+{
+	std::cout << "HitEffect" << endl;
 }

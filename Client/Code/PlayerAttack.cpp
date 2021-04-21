@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "..\Header\PlayerAttack.h"
-
+#include "PlayerInfo.h"
 
 CPlayerAttack::CPlayerAttack(CPlayer* player)
 {
@@ -14,6 +14,7 @@ CPlayerAttack::~CPlayerAttack()
 
 void CPlayerAttack::Start()
 {
+	init = false;
 	m_player->GetOwner()->GetComponent<Engine::CAnimMeshRenderComponent>()->GetAnimCtrl()->SetSpeed(10);
 
 	if(m_player->GetOwner()->GetComponent<Engine::CRigidBodyComponent>()->GetGroundCheck())
@@ -29,21 +30,21 @@ void CPlayerAttack::End()
 
 _uint CPlayerAttack::FixedUpdate()
 {
-	// 충돌판정
-	std::vector<Engine::CGameObject*> col;
-	if (Engine::CColliderManager::GetInstance()->OnColliderEnter(collision ,m_player->GetOwner(), col))
+	if (!init)
 	{
-		for (auto& object : col)
+		std::vector<Engine::CGameObject*> col;
+		if (Engine::CColliderManager::GetInstance()->OnColliderEnter(collision, m_player->GetOwner(), col))
 		{
-
-			if (object->GetLayerKey() == L"Monster")
+			for (auto& object : col)
 			{
-				wcout << object->GetName().c_str() << endl;
-			//	std::cout << "몬스터 충돌" << endl;
+				if (object->GetLayerKey() == L"Monster")
+				{
+					object->GetComponent<CMonster>()->Hit(m_player->GetPlayerInfo()->GetDamage());
+					init = false;
+				}
 			}
 		}
 	}
-
 	return _uint();
 }
 

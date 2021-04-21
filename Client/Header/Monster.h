@@ -1,10 +1,15 @@
 #ifndef MONSTER_H
 #define MONSTER_H
 
+class CMonsterInfo;
 class CMonster final : public Engine::CComponent
 {
 private:
-	SHARED(Engine::CGameObject) player;
+	GETTOR_SETTOR(vector<FSM*>, m_monsterFSM, {}, MonsterFSM);
+	GETTOR(_int, m_monsterState, 0, MonsterState);
+	GETTOR_SETTOR(CMonsterInfo*, m_monsterInfo, {}, MonsterInfo);
+	SHARED(Engine::CGameObject) m_player;
+
 public:
 	explicit CMonster(void);
 	virtual	 ~CMonster(void);
@@ -24,9 +29,20 @@ public:
 	void OnEnable(void) override;
 	void OnDisable(void) override;
 
-private:
+	void ChangeFSM(_int state);
 
+	template <typename FSMType>
+	void AddFSM(void)
+	{
+		FSMType* fsm = new FSMType(this);
+		m_monsterFSM.emplace_back(fsm);
+		m_monsterFSM[0]->Start();
+	}
+
+	void Hit(_int damage);
+private:
+	void HitEffect();
 
 };
 
-#endif // !TEXTURECOMPONENT_H
+#endif // !MONSTER_H

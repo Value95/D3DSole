@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "DongilScene.h"
 
+#include "ScarecrowIdle.h"
+
 CDongilScene::CDongilScene()
 {
 }
@@ -27,7 +29,7 @@ void CDongilScene::Awake(void)
 void CDongilScene::Start(void)
 {
 	__super::Start();
-	LoadObject(L"File1");
+	LoadObject(L"TestScene");
 
 	{
 		m_pMainCamera = Engine::ADD_CLONE(L"Camera", L"Camera", true)->GetComponent<Engine::CCameraComponent>();
@@ -51,14 +53,10 @@ void CDongilScene::Start(void)
 
 	{
 		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Monster", L"Scarecrow", true);
-		pObj->SetName(L"Scarecrow");
 		pObj->SetPosition(vector3(5, -3, 5));
-		pObj->SetScale(vector3(0.01f, 0.01f, 0.01f));
-		pObj->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(1, 10, 1), vector3Zero));
-		pObj->AddComponent<CMonster>();
-		pObj->AddComponent<Engine::CMeshComponent>()->SetMeshKey(L"BarCustomer1.X");
-		pObj->AddComponent<Engine::CBoxComponent>()->SetSize(vector3(1,1,1));
-		pObj->AddComponent<Engine::CGraphicsComponent>();
+		pObj->AddComponent<CMonster>()->AddFSM<CScarecrowIdle>();
+		
+		
 	}
 
 	/*{
@@ -115,9 +113,9 @@ void CDongilScene::InitLayers(void)
 	AddLayer(L"Light");
 	AddLayer(L"Camera");
 	AddLayer(L"Player");
-	AddLayer(L"EventBlock");
 	AddLayer(L"Default");
 	AddLayer(L"Monster");
+	AddLayer(L"UI");
 }
 
 void CDongilScene::InitPrototypes(void)

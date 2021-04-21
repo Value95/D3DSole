@@ -7,6 +7,7 @@ class CPlayerAttack :
 private:
 	CPlayer* m_player;
 	Engine::CCollider* collision;
+	_bool init;
 public:
 	CPlayerAttack(CPlayer* player);
 	virtual ~CPlayerAttack();

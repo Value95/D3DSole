@@ -30,7 +30,13 @@ public:
 
 private:
 	void ClientSetting();
-	void				InitStaticPrototype(void);
+	void InitStaticPrototype(void);
+
+	void Default();
+	void Light();
+	void UI();
+	void Monster();
+	void Player();
 };
 
 #endif

@@ -150,7 +150,16 @@ void CMainApp::InitStaticPrototype(void)
 	pCamera->AddComponent<Engine::CCameraComponent>();
 	Engine::CObjectFactory::GetInstance()->AddPrototype(pCamera);
 
-
+	Default();
+	Light();
+	UI();
+	Monster();
+	Player();
+}
+// LayerKey 는 중첩 가능
+// ObjectKey 는 중첩 불가능
+void CMainApp::Default()
+{
 	SHARED(Engine::CGameObject) pDefault = Engine::CGameObject::Create(L"Default", L"Default", true);
 	Engine::CObjectFactory::GetInstance()->AddPrototype(pDefault);
 
@@ -159,10 +168,41 @@ void CMainApp::InitStaticPrototype(void)
 	mess->AddComponent<Engine::CMeshComponent>();
 	Engine::CObjectFactory::GetInstance()->AddPrototype(mess);
 
+	SHARED(Engine::CGameObject) collider = Engine::CGameObject::Create(L"Collider", L"Collider", true);
+	Engine::CObjectFactory::GetInstance()->AddPrototype(collider);
+
+	SHARED(Engine::CGameObject) navMesh = Engine::CGameObject::Create(L"NavMesh", L"NavMesh", true);
+	navMesh->AddComponent<Engine::CSphereComponent>();
+	Engine::CObjectFactory::GetInstance()->AddPrototype(navMesh);
+}
+
+void CMainApp::Light()
+{
 	SHARED(Engine::CGameObject) directionalLight = Engine::CGameObject::Create(L"Light", L"DirectionalLight", true);
 	directionalLight->AddComponent<Engine::CDirectionalLightComponent>();
 	Engine::CObjectFactory::GetInstance()->AddPrototype(directionalLight);
+}
 
+void CMainApp::UI()
+{
+	SHARED(Engine::CGameObject) ui = Engine::CGameObject::Create(L"UI", L"UI", true);
+	ui->AddComponent<Engine::CUIComponent>();
+	Engine::CObjectFactory::GetInstance()->AddPrototype(ui);
+}
+
+void CMainApp::Monster()
+{
+	SHARED(Engine::CGameObject) scarecrow = Engine::CGameObject::Create(L"Monster", L"Scarecrow", true);
+	scarecrow->SetName(L"Scarecrow");
+	scarecrow->SetScale(vector3(0.01f, 0.01f, 0.01f));
+	scarecrow->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(1, 10, 1), vector3Zero));
+	scarecrow->AddComponent<Engine::CMeshComponent>()->SetMeshKey(L"BarCustomer1.X");
+	scarecrow->AddComponent<Engine::CGraphicsComponent>();
+	Engine::CObjectFactory::GetInstance()->AddPrototype(scarecrow);
+}
+
+void CMainApp::Player()
+{
 	SHARED(Engine::CGameObject) player = Engine::CGameObject::Create(L"Player", L"Player", true);
 	player->SetName(L"Player");
 	player->SetPosition(vector3(0, 0, 0));
@@ -174,23 +214,5 @@ void CMainApp::InitStaticPrototype(void)
 	player->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(1, 1, 1), vector3Zero));
 	player->AddComponent<Engine::CAnimMeshRenderComponent>()->MeshInput(L"../../Resource/Mesh/Static/Boss/CrystalSpider/", L"CrystalSpider.X");
 	Engine::CObjectFactory::GetInstance()->AddPrototype(player);
-
-	SHARED(Engine::CGameObject) scarecrow= Engine::CGameObject::Create(L"Monster", L"Scarecrow", true);
-	Engine::CObjectFactory::GetInstance()->AddPrototype(scarecrow);
-
-
-	SHARED(Engine::CGameObject) ui = Engine::CGameObject::Create(L"UI", L"Default", true);
-	ui->AddComponent<Engine::CUIComponent>();
-	Engine::CObjectFactory::GetInstance()->AddPrototype(ui);
-
-	SHARED(Engine::CGameObject) collider = Engine::CGameObject::Create(L"Collider", L"Collider", true);
-	Engine::CObjectFactory::GetInstance()->AddPrototype(collider);
-
-	SHARED(Engine::CGameObject) navMesh = Engine::CGameObject::Create(L"NavMesh", L"NavMesh", true);
-	navMesh->AddComponent<Engine::CSphereComponent>();
-	Engine::CObjectFactory::GetInstance()->AddPrototype(navMesh);
-
-
-
 
 }
