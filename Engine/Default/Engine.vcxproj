@@ -60,6 +60,7 @@
     <ClInclude Include="..\Header\ResourceStore.h" />
     <ClInclude Include="..\Header\Scene.h" />
     <ClInclude Include="..\Header\SceneManager.h" />
+    <ClInclude Include="..\Header\SkyBoxComponent.h" />
     <ClInclude Include="..\Header\SoundManager.h" />
     <ClInclude Include="..\Header\SphereCollider.h" />
     <ClInclude Include="..\Header\SphereComponent.h" />
@@ -104,6 +105,7 @@
     <ClCompile Include="..\Code\ResourceStore.cpp" />
     <ClCompile Include="..\Code\Scene.cpp" />
     <ClCompile Include="..\Code\SceneManager.cpp" />
+    <ClCompile Include="..\Code\SkyBoxComponent.cpp" />
     <ClCompile Include="..\Code\SoundManager.cpp" />
     <ClCompile Include="..\Code\SphereCollider.cpp" />
     <ClCompile Include="..\Code\SphereComponent.cpp" />

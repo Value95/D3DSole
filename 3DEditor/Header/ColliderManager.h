@@ -33,6 +33,6 @@ public:
 
 	std::vector<ColliderData*> GetColliderData() { return m_colliderData; }
 	void SetColliderData(ColliderData* value) { m_colliderData.emplace_back(value); }
-
+	ColliderData* FindColliderDate(Engine::CGameObject* obj);
 };
 

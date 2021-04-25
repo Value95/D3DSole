@@ -50,13 +50,11 @@ _uint CGraphicsManager::LateUpdate(void)
 
 _uint CGraphicsManager::PreRender(void)
 {
-
-
 	GET_DEVICE->BeginScene();
 
 	GET_DEVICE->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	GET_DEVICE->SetRenderState(D3DRS_LIGHTING, TRUE);
+	GET_DEVICE->SetRenderState(D3DRS_LIGHTING, FALSE);
 	return NO_EVENT;
 }
 
@@ -73,6 +71,12 @@ _uint CGraphicsManager::Render(void)
 		else
 		{
 			GET_DEVICE->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+		}
+		if (m_skyBox != nullptr)
+		{
+			if (event = m_skyBox->PreRender()) return event;
+			if (event = m_skyBox->Render()) return event;
+			if (event = m_skyBox->PostRender()) return event;
 		}
 
 		for (auto& pGC : m_vRenderList[i])
@@ -129,3 +133,9 @@ _uint CGraphicsManager::AddToRenderList(ERenderID renderID, SHARED(CGraphicsComp
 	return NO_EVENT;
 }
 
+_uint CGraphicsManager::AddToSkyBox(SHARED(CSkyBoxComponent) skyBox)
+{
+	m_skyBox = skyBox;
+
+	return NO_EVENT;
+}

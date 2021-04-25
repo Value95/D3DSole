@@ -200,6 +200,7 @@
     <ClInclude Include="..\Header\PlayerIdle.h" />
     <ClInclude Include="..\Header\PlayerMove.h" />
     <ClInclude Include="..\Header\PlayerInfo.h" />
+    <ClInclude Include="..\Header\PlayerWapon.h" />
     <ClInclude Include="..\Header\ScarecrowIdle.h" />
     <ClInclude Include="..\Header\TitleScene.h" />
     <ClInclude Include="Resource.h" />
@@ -221,6 +222,7 @@
     <ClCompile Include="..\Code\PlayerDeath.cpp" />
     <ClCompile Include="..\Code\PlayerIdle.cpp" />
     <ClCompile Include="..\Code\PlayerMove.cpp" />
+    <ClCompile Include="..\Code\PlayerWapon.cpp" />
     <ClCompile Include="..\Code\ScarecrowIdle.cpp" />
     <ClCompile Include="..\Code\TitleScene.cpp" />
     <ClCompile Include="Client.cpp" />

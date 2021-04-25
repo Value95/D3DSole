@@ -16,6 +16,7 @@
 #include "SphereComponent.h"
 #include "TriangleComponent.h"
 #include "AnimMeshRenderComponent.h"
+#include "SkyBoxComponent.h"
 //--------------------------------------------------
 
 //Light--------------------------------------------

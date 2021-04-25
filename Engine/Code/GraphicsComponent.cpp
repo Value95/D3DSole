@@ -26,6 +26,7 @@ SHARED(CComponent) CGraphicsComponent::MakeClone(CGameObject* pObject)
 
 	return pClone;
 }
+
 void CGraphicsComponent::Awake(void)
 {
 	__super::Awake();
@@ -49,8 +50,7 @@ _uint CGraphicsComponent::Update(SHARED(CComponent) spThis /* Shared pointer of 
 
 _uint CGraphicsComponent::LateUpdate(SHARED(CComponent) spThis)
 {
-	CGraphicsManager::GetInstance()->
-		AddToRenderList(m_renderID, std::dynamic_pointer_cast<CGraphicsComponent>(spThis));
+	CGraphicsManager::GetInstance()->AddToRenderList(m_renderID, std::dynamic_pointer_cast<CGraphicsComponent>(spThis));
 	return NO_EVENT;
 }
 
@@ -84,6 +84,7 @@ _uint CGraphicsComponent::PostRender(void)
 
 void CGraphicsComponent::OnDestroy(void)
 {
+
 }
 
 void CGraphicsComponent::OnEnable(void)
@@ -94,4 +95,5 @@ void CGraphicsComponent::OnEnable(void)
 
 void CGraphicsComponent::OnDisable(void)
 {
+
 }

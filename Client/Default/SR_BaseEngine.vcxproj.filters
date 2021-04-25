@@ -16,15 +16,6 @@
     <Filter Include="01.Scene\06.Dongil">
       <UniqueIdentifier>{9931492b-b9a1-46e1-9796-cc4f82fe4982}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.Components">
-      <UniqueIdentifier>{b14eed87-0db9-451d-a09b-da76ce5f363a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.Components\00.Player">
-      <UniqueIdentifier>{256d244e-7dbf-4fbd-893e-ecb9d016e6dc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.Components\01.Monster">
-      <UniqueIdentifier>{29ea7817-9ebc-447b-b5ee-8709e2bc3a79}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01.Scene\00.Title">
       <UniqueIdentifier>{129ba52e-d62a-4eee-b7e1-0c7e4f2c94dd}</UniqueIdentifier>
     </Filter>
@@ -43,47 +34,59 @@
     <Filter Include="03.FSM">
       <UniqueIdentifier>{ac6f717e-0e7d-4d8d-a516-187494f7f7af}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.Components\00.Player\00.PlayerFMS">
+    <Filter Include="02.Script">
+      <UniqueIdentifier>{b14eed87-0db9-451d-a09b-da76ce5f363a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Script\00.Player">
+      <UniqueIdentifier>{256d244e-7dbf-4fbd-893e-ecb9d016e6dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Script\00.Player\00.PlayerFMS">
       <UniqueIdentifier>{c0784923-4d1f-4371-ad6c-c3760f480a3c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.Components\00.Player\00.PlayerFMS\00.Idle">
+    <Filter Include="02.Script\00.Player\00.PlayerFMS\00.Idle">
       <UniqueIdentifier>{aa8e242d-4c47-4a23-8ac3-b83562fe10f6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.Components\00.Player\00.PlayerFMS\01.Move">
+    <Filter Include="02.Script\00.Player\00.PlayerFMS\01.Move">
       <UniqueIdentifier>{eea4bb26-66c7-4988-8e82-2b1a6669d23c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.Components\00.Player\00.PlayerFMS\02.Attack">
+    <Filter Include="02.Script\00.Player\00.PlayerFMS\02.Attack">
       <UniqueIdentifier>{6884381c-3949-41eb-932f-992a8b263f73}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.Components\00.Player\00.PlayerFMS\03.Death">
+    <Filter Include="02.Script\00.Player\00.PlayerFMS\03.Death">
       <UniqueIdentifier>{e2420da2-581f-48b0-bb3b-7c134f7cd1ca}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.Components\01.Monster\00.MonsterFSM">
-      <UniqueIdentifier>{10a12a7d-ae29-4c4c-80ad-144c572a5737}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.Components\00.Player\01.PlayerInfo">
+    <Filter Include="02.Script\00.Player\01.PlayerInfo">
       <UniqueIdentifier>{946d2dd0-cf96-44be-a247-bdb1725346fa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.Components\01.Monster\01.MonsterInfo">
-      <UniqueIdentifier>{cdd20393-6733-40ad-b956-29889f2a0884}</UniqueIdentifier>
+    <Filter Include="02.Script\01.Monster">
+      <UniqueIdentifier>{29ea7817-9ebc-447b-b5ee-8709e2bc3a79}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.Components\01.Monster\00.MonsterFSM\00.Scarecrow">
+    <Filter Include="02.Script\01.Monster\00.MonsterFSM">
+      <UniqueIdentifier>{10a12a7d-ae29-4c4c-80ad-144c572a5737}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Script\01.Monster\00.MonsterFSM\00.Scarecrow">
       <UniqueIdentifier>{bc2bd289-9f87-45c6-be8a-3cff45016db6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.Components\01.Monster\00.MonsterFSM\00.Scarecrow\00.ScarecrowIdle">
+    <Filter Include="02.Script\01.Monster\00.MonsterFSM\00.Scarecrow\00.ScarecrowIdle">
       <UniqueIdentifier>{8eba8643-6f77-483a-be22-e809cc6f67ff}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.Components\01.Monster\00.MonsterFSM\01.CrystalSpider">
+    <Filter Include="02.Script\01.Monster\00.MonsterFSM\01.CrystalSpider">
       <UniqueIdentifier>{2d896bdd-ef61-4bdb-8eff-e37f5ea6e905}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.Components\01.Monster\00.MonsterFSM\01.CrystalSpider\00.CrystalSpiderIdle">
+    <Filter Include="02.Script\01.Monster\00.MonsterFSM\01.CrystalSpider\00.CrystalSpiderIdle">
       <UniqueIdentifier>{3bf62abf-2d17-43bf-902e-b57e592cd8c0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.Components\01.Monster\00.MonsterFSM\01.CrystalSpider\01.CrystalSpiderMove">
+    <Filter Include="02.Script\01.Monster\00.MonsterFSM\01.CrystalSpider\01.CrystalSpiderMove">
       <UniqueIdentifier>{ed7e64d2-98cd-404c-a7fe-7fccfef9dd31}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.Components\01.Monster\00.MonsterFSM\01.CrystalSpider\02.CrystalSpiderDeath">
+    <Filter Include="02.Script\01.Monster\00.MonsterFSM\01.CrystalSpider\02.CrystalSpiderDeath">
       <UniqueIdentifier>{251b21ee-1e25-4759-851c-91026b5349be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Script\01.Monster\01.MonsterInfo">
+      <UniqueIdentifier>{cdd20393-6733-40ad-b956-29889f2a0884}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Script\00.Player\02.PlayerWapon">
+      <UniqueIdentifier>{ddd9f313-09aa-4dee-879e-99e0d5aba116}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -127,10 +130,10 @@
       <Filter>98.Include</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Player.h">
-      <Filter>02.Components\00.Player</Filter>
+      <Filter>02.Script\00.Player</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Monster.h">
-      <Filter>02.Components\01.Monster</Filter>
+      <Filter>02.Script\01.Monster</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\TitleScene.h">
       <Filter>01.Scene\00.Title</Filter>
@@ -151,25 +154,28 @@
       <Filter>03.FSM</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\PlayerMove.h">
-      <Filter>02.Components\00.Player\00.PlayerFMS\01.Move</Filter>
+      <Filter>02.Script\00.Player\00.PlayerFMS\01.Move</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\PlayerAttack.h">
-      <Filter>02.Components\00.Player\00.PlayerFMS\02.Attack</Filter>
+      <Filter>02.Script\00.Player\00.PlayerFMS\02.Attack</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\PlayerDeath.h">
-      <Filter>02.Components\00.Player\00.PlayerFMS\03.Death</Filter>
+      <Filter>02.Script\00.Player\00.PlayerFMS\03.Death</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\PlayerIdle.h">
-      <Filter>02.Components\00.Player\00.PlayerFMS\00.Idle</Filter>
+      <Filter>02.Script\00.Player\00.PlayerFMS\00.Idle</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\PlayerInfo.h">
-      <Filter>02.Components\00.Player\01.PlayerInfo</Filter>
+      <Filter>02.Script\00.Player\01.PlayerInfo</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\MonsterInfo.h">
-      <Filter>02.Components\01.Monster\01.MonsterInfo</Filter>
+      <Filter>02.Script\01.Monster\01.MonsterInfo</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ScarecrowIdle.h">
-      <Filter>02.Components\01.Monster\00.MonsterFSM\00.Scarecrow\00.ScarecrowIdle</Filter>
+      <Filter>02.Script\01.Monster\00.MonsterFSM\00.Scarecrow\00.ScarecrowIdle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PlayerWapon.h">
+      <Filter>02.Script\00.Player\02.PlayerWapon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -186,10 +192,10 @@
       <Filter>01.Scene\06.Dongil</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Player.cpp">
-      <Filter>02.Components\00.Player</Filter>
+      <Filter>02.Script\00.Player</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Monster.cpp">
-      <Filter>02.Components\01.Monster</Filter>
+      <Filter>02.Script\01.Monster</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\TitleScene.cpp">
       <Filter>01.Scene\00.Title</Filter>
@@ -210,19 +216,22 @@
       <Filter>03.FSM</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\PlayerMove.cpp">
-      <Filter>02.Components\00.Player\00.PlayerFMS\01.Move</Filter>
+      <Filter>02.Script\00.Player\00.PlayerFMS\01.Move</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\PlayerAttack.cpp">
-      <Filter>02.Components\00.Player\00.PlayerFMS\02.Attack</Filter>
+      <Filter>02.Script\00.Player\00.PlayerFMS\02.Attack</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\PlayerDeath.cpp">
-      <Filter>02.Components\00.Player\00.PlayerFMS\03.Death</Filter>
+      <Filter>02.Script\00.Player\00.PlayerFMS\03.Death</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\PlayerIdle.cpp">
-      <Filter>02.Components\00.Player\00.PlayerFMS\00.Idle</Filter>
+      <Filter>02.Script\00.Player\00.PlayerFMS\00.Idle</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ScarecrowIdle.cpp">
-      <Filter>02.Components\01.Monster\00.MonsterFSM\00.Scarecrow\00.ScarecrowIdle</Filter>
+      <Filter>02.Script\01.Monster\00.MonsterFSM\00.Scarecrow\00.ScarecrowIdle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerWapon.cpp">
+      <Filter>02.Script\00.Player\02.PlayerWapon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -41,8 +41,11 @@ public:
 	void OnDisable(void) override;
 	void OnEnable(void) override;
 
-	void		Set_AnimationSet(const _uint& iIndex);
-	void		Play_Animation(const _double& fTimeDelta);
+public:
+	const D3DXFRAME_DERIVED* Get_FrameByName(const char* frameName);
+
+	void Set_AnimationSet(const _uint& iIndex);
+	void Play_Animation(const _double& fTimeDelta);
 
 	void MeshInput(_wcharT* path, _wcharT* fileName);
 private:

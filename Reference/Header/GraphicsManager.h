@@ -9,7 +9,7 @@ class ENGINE_DLL CGraphicsManager final : public CEngine
 	DECLARE_SINGLETON(CGraphicsManager)
 private:
 	std::vector<SHARED(CGraphicsComponent)>	m_vRenderList[(_uint)ERenderID::NumOfRenderID];
-
+	SHARED(CSkyBoxComponent) m_skyBox;
 public:
 	void Awake(void);
 	void Start(void);
@@ -28,6 +28,7 @@ public:
 	void OnDisable(void);
 
 	_uint AddToRenderList(ERenderID renderID,	SHARED(CGraphicsComponent) pGC);
+	_uint AddToSkyBox(SHARED(CSkyBoxComponent) skyBox);
 };
 END
 #endif

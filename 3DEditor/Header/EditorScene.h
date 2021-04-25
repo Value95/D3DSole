@@ -18,6 +18,7 @@ public:
 	Engine::CGameObject* m_pickingObject = nullptr;
 	_int m_pickNumber = -1;
 
+	SHARED(Engine::CGameObject) m_createPosBox;
 	SHARED(Engine::CGameObject) m_box;
 	SHARED(Engine::CGameObject) m_sphere;
 public:
@@ -53,4 +54,6 @@ private:
 	void PrefabObject();
 	void DirectionalLightObject(CString objectKey);
 	void UIObject(CString textureKey);
+
+	void TileCreate();
 };

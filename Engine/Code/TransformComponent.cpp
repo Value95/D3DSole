@@ -140,25 +140,26 @@ void CTransformComponent::UpdateWorldmMatrix(void)
 	else if (m_camera)
 	{
 		matrix4x4 scale, rotateX, rotateY, rotateZ, translation;
-		matrix4x4 preantRotateY, preantTranslation;
+		matrix4x4 preantRotateX, preantRotateY, preantTranslation;
 
 		D3DXMatrixScaling(&scale, m_scale.x,
 			m_scale.y,
 			m_scale.z);
 
-		D3DXMatrixRotationZ(&rotateZ, D3DXToRadian(m_rotation.z)); // 이건 무조건 플레이어를 바라보게
+		D3DXMatrixRotationX(&rotateX, D3DXToRadian(m_rotation.x)); // 이건 무조건 플레이어를 바라보게
 		D3DXMatrixRotationY(&rotateY, D3DXToRadian(m_rotation.y));
-		D3DXMatrixRotationX(&rotateX, D3DXToRadian(m_rotation.x));
+		D3DXMatrixRotationZ(&rotateZ, D3DXToRadian(m_rotation.z));
 
-		D3DXMatrixTranslation(&translation, 0, 4, -10);
+		D3DXMatrixTranslation(&translation, 0, 1, -4);
 
+		D3DXMatrixRotationX(&preantRotateX, D3DXToRadian(m_cameraX));
 		D3DXMatrixRotationY(&preantRotateY, D3DXToRadian(m_cameraY));
 
 		D3DXMatrixTranslation(&preantTranslation, m_target->GetPosition().x,
 			m_target->GetPosition().y,
 			m_target->GetPosition().z);
 
-		m_worldMat = scale * rotateX * rotateY * rotateZ * translation * preantRotateY * preantTranslation;
+		m_worldMat = scale * rotateX * rotateY * rotateZ * translation * preantRotateX * preantRotateY * preantTranslation;
 
 		m_position.x = m_worldMat._41;
 		m_position.y = m_worldMat._42;

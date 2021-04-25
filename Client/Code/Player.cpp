@@ -123,14 +123,16 @@ void CPlayer::Sight()
 	// 카메라 회전
 	if (curPt.y < m_centerPt.y) // mouse up look
 	{
-		_float angleY = deltaTime * (abs(curPt.y - m_centerPt.y) * m_playerInfo->GetMouseSensitivity());
-		Engine::GET_MAIN_CAM->GetOwner()->AddRotationX(-1 * angleY);
+		_float angleY = deltaTime * (abs(curPt.y - m_centerPt.y) * m_playerInfo->GetMouseSensitivity()) * -1;
+		Engine::GET_MAIN_CAM->GetOwner()->AddRotationX(angleY);
+		Engine::GET_MAIN_CAM->GetOwner()->SetCameraX(Engine::GET_MAIN_CAM->GetOwner()->GetCameraX() + angleY);
 	}
 
 	if (curPt.y > m_centerPt.y) // mouse down look
 	{
 		_float angleY = deltaTime * (abs(curPt.y - m_centerPt.y) * m_playerInfo->GetMouseSensitivity());
 		Engine::GET_MAIN_CAM->GetOwner()->AddRotationX(angleY);
+		Engine::GET_MAIN_CAM->GetOwner()->SetCameraX(Engine::GET_MAIN_CAM->GetOwner()->GetCameraX() + angleY);
 	}
 
 	if (curPt.x < m_centerPt.x) // mouse left look

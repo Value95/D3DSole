@@ -194,9 +194,9 @@ void CMainApp::Monster()
 {
 	SHARED(Engine::CGameObject) scarecrow = Engine::CGameObject::Create(L"Monster", L"Scarecrow", true);
 	scarecrow->SetName(L"Scarecrow");
-	scarecrow->SetScale(vector3(0.01f, 0.01f, 0.01f));
+	scarecrow->SetScale(vector3(0.005f, 0.005f, 0.005f));
 	scarecrow->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(1, 10, 1), vector3Zero));
-	scarecrow->AddComponent<Engine::CMeshComponent>()->SetMeshKey(L"BarCustomer1.X");
+	scarecrow->AddComponent<Engine::CMeshComponent>()->SetMeshKey(L"Boss_CrystalSpider_000.X");
 	scarecrow->AddComponent<Engine::CGraphicsComponent>();
 	Engine::CObjectFactory::GetInstance()->AddPrototype(scarecrow);
 }
@@ -208,11 +208,11 @@ void CMainApp::Player()
 	player->SetPosition(vector3(0, 0, 0));
 	player->SetScale(vector3(0.01f, 0.01f, 0.01f));
 	player->AddComponent<Engine::CRigidBodyComponent>();
-	player->GetComponent<Engine::CRigidBodyComponent>()->SetBounciness(0.8f);
+	player->GetComponent<Engine::CRigidBodyComponent>()->SetBounciness(0.0f);
 	player->GetComponent<Engine::CRigidBodyComponent>()->SetMass(80);
 	player->AddComponent<CPlayer>();
-	player->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(1, 1, 1), vector3Zero));
-	player->AddComponent<Engine::CAnimMeshRenderComponent>()->MeshInput(L"../../Resource/Mesh/Static/Boss/CrystalSpider/", L"CrystalSpider.X");
+	player->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(0.1, 0.6, 0.1), vector3(0, 0.3, 0)));
+	player->AddComponent<Engine::CAnimMeshRenderComponent>()->MeshInput(L"../../Resource/Mesh/Static/Player/", L"Player_Player_000.X");
 	Engine::CObjectFactory::GetInstance()->AddPrototype(player);
 
 }

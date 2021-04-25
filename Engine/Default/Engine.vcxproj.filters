@@ -148,6 +148,9 @@
     <Filter Include="02.Components\04.LightComponent\00.DirectionalLight">
       <UniqueIdentifier>{13c190b7-b904-44ae-9a63-5ca89691a3bd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.Components\01.GraphicsComponent\07.SkyBox">
+      <UniqueIdentifier>{b5f19ce7-6264-45f5-86eb-23a09d519bdd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\WndApp.cpp">
@@ -278,6 +281,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\DirectionalLightComponent.cpp">
       <Filter>02.Components\04.LightComponent\00.DirectionalLight</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SkyBoxComponent.cpp">
+      <Filter>02.Components\01.GraphicsComponent\07.SkyBox</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -436,6 +442,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\DirectionalLightComponent.h">
       <Filter>02.Components\04.LightComponent\00.DirectionalLight</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SkyBoxComponent.h">
+      <Filter>02.Components\01.GraphicsComponent\07.SkyBox</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

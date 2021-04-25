@@ -39,6 +39,8 @@ public:
 	SHARED(CGameObject) FindObjectByName(std::wstring name);
 	SHARED(CGameObject)	FindObjectWithKey(std::wstring objectKey);
 	SHARED(CGameObject)	FindObjectPosition(vector3 position);
+	SHARED(CGameObject)	FindObjectPoint(CGameObject* object);
+
 	void AllDelete();
 	_uint FindObjectsWithKey(std::wstring objectKey, std::vector<SHARED(CGameObject)>& gameObjects);
 	void LoadObject(std::wstring path);

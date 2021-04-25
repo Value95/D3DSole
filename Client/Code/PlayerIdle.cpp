@@ -13,7 +13,7 @@ CPlayerIdle::~CPlayerIdle()
 
 void CPlayerIdle::Start()
 {
-	m_player->GetOwner()->GetComponent<Engine::CAnimMeshRenderComponent>()->Set_AnimationSet(1);
+	m_player->GetOwner()->GetComponent<Engine::CAnimMeshRenderComponent>()->Set_AnimationSet(45);
 }
 
 void CPlayerIdle::End()

@@ -5,12 +5,13 @@ BEGIN(Engine)
 class ENGINE_DLL CTransformComponent
 {
 protected:
-	GETTOR(matrix4x4, m_worldMat, {}, WorldMatrix)
+	GETTOR_SETTOR(matrix4x4, m_worldMat, {}, WorldMatrix)
 	GETTOR_SETTOR(vector3, m_position, vector3(0, 0, 0), Position)
 	GETTOR_SETTOR(vector3, m_rotation, vector3(0, 0, 0), Rotation)
 	GETTOR_SETTOR(vector3, m_scale, vector3(1, 1, 1), Scale)
 
 	GETTOR_SETTOR(CGameObject*, m_target, nullptr, Target)
+		GETTOR_SETTOR(_float, m_cameraX, 0, CameraX)
 	GETTOR_SETTOR(_float, m_cameraY, 0, CameraY)
 	GETTOR_SETTOR(_bool, m_camera, false, Camera)
 public:
@@ -50,6 +51,9 @@ public:
 	void SetScaleZ(_float z) { m_scale.z = z; }
 
 	void AddCameraY(_float y) { m_cameraY += y; }
+
+	matrix4x4* GetWorldMatrixPoint() { return &m_worldMat; }
+	void AddWorldMatrix(matrix4x4 mat) { m_worldMat *= mat; }
 private:
 	void UpdateWorldmMatrix(void);
 };

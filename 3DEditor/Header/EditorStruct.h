@@ -14,12 +14,23 @@ typedef struct tagCollider
 {
 	tagCollider()
 	{
+		gameObject = nullptr;
 		colliderType = L"Default";
 		offset = vector3Zero;
 		boxsize = vector3One;
 		radius = 0.5f;
 	}
 
+	tagCollider(Engine::CGameObject* obj)
+	{
+		gameObject = obj;
+		colliderType = L"Default";
+		offset = vector3Zero;
+		boxsize = vector3One;
+		radius = 0.5f;
+	}
+
+	Engine::CGameObject* gameObject;
 	std::wstring colliderType;
 	vector3 offset;
 	vector3 boxsize;

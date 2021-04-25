@@ -2,6 +2,7 @@
 #include "DongilScene.h"
 
 #include "ScarecrowIdle.h"
+#include "PlayerWapon.h"
 
 CDongilScene::CDongilScene()
 {
@@ -34,30 +35,52 @@ void CDongilScene::Start(void)
 	{
 		m_pMainCamera = Engine::ADD_CLONE(L"Camera", L"Camera", true)->GetComponent<Engine::CCameraComponent>();
 		m_pMainCamera->GetOwner()->SetCamera(true);
-		m_pMainCamera->GetOwner()->SetPosition(vector3(0, 4, -10));
+		m_pMainCamera->GetOwner()->SetPosition(vector3(0, 0, 0));
 	}
 
 	{
 		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Player", L"Player", true);
-		pObj->SetPosition(vector3(0,0,0));
+		pObj->SetPosition(vector3(10,5,10));
 
 		m_pMainCamera->GetOwner()->SetTarget(pObj.get());
 	}
 
+	/*{
+		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
+		pObj->SetPosition(vector3(10, 0,10));
+		pObj->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3One, vector3Zero));
+		pObj->AddComponent<Engine::CBoxComponent>()->SetSize(vector3(1, 1, 1));
+	}*/
+
 	{
 		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
-		pObj->SetName(L"Title");
-		pObj->SetPosition(vector3(0, -5, 0));
-		pObj->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(300, 1, 300), vector3Zero));
+		pObj->SetPosition(vector3(0, 0, 0));
+		pObj->AddComponent<Engine::CSkyBoxComponent>()->SetTextureKey(L"MainLogo");
 	}
 
 	{
-		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Monster", L"Scarecrow", true);
-		pObj->SetPosition(vector3(5, -3, 5));
-		pObj->AddComponent<CMonster>()->AddFSM<CScarecrowIdle>();
-		
-		
+		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
+		pObj->SetRotation(vector3(30, -50, 0));
+		pObj->AddComponent<Engine::CDirectionalLightComponent>();
 	}
+
+	{
+		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
+		pObj->SetName(L"Sword");
+		pObj->SetPosition(vector3(0, 0, 0));
+		pObj->SetRotation(vector3(45, 45, 45));
+		pObj->SetScale(vector3(0.01f, 0.01f, 0.01f));
+		pObj->AddComponent<CPlayerWapon>();
+		pObj->AddComponent<Engine::CMeshComponent>()->SetMeshKey(L"Wapon_Sword_000.X");
+		pObj->AddComponent<Engine::CGraphicsComponent>();
+	}
+
+
+	/*{
+		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Monster", L"Scarecrow", true);
+		pObj->SetPosition(vector3(5, 0, 5));
+		pObj->AddComponent<CMonster>()->AddFSM<CScarecrowIdle>();
+	}*/
 
 	/*{
 		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);

@@ -120,6 +120,11 @@ void CAnimMeshRenderComponent::OnEnable(void)
 	__super::OnEnable();
 }
 
+const D3DXFRAME_DERIVED * CAnimMeshRenderComponent::Get_FrameByName(const char * frameName)
+{
+	return (D3DXFRAME_DERIVED*)D3DXFrameFind(m_pRootFrame, frameName);
+}
+
 void CAnimMeshRenderComponent::Set_AnimationSet(const _uint & iIndex)
 {
 	if (nullptr == m_pAniCtrl)

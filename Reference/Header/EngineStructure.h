@@ -4,6 +4,22 @@
 
 namespace Engine
 {
+	 
+	typedef struct _VTXCUBE
+	{
+		vector3	position;
+		vector3	uv;
+	}TexCube;
+	const _uint texCubeFVF = D3DFVF_XYZ | D3DFVF_TEX1 | D3DFVF_TEXCOORDSIZE3(0);
+
+	typedef struct INDEX16
+	{
+		unsigned short _0;
+		unsigned short _1;
+		unsigned short _2;
+
+	}INDEX16;
+
 	typedef struct _CustomVertex
 	{
 		vector3	position;

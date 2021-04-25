@@ -17,10 +17,12 @@ void CPlayerMove::Start()
 {
 	m_player->GetOwner()->GetComponent<Engine::CAnimMeshRenderComponent>()->Set_AnimationSet(0);
 	m_speed = 0;
+	W = false, A = false, S = false, D = false;
 }
 
 void CPlayerMove::End()
 {
+	W = false, A = false, S = false, D = false;
 }
 
 _uint CPlayerMove::FixedUpdate()
@@ -31,9 +33,11 @@ _uint CPlayerMove::FixedUpdate()
 
 _uint CPlayerMove::Update()
 {
+	W = false, A = false, S = false, D = false;
+
+	Move();
 	Jump();
 	Attack();
-	Move();
 	
 	return _uint();
 }
@@ -54,9 +58,7 @@ void CPlayerMove::Move()
 
 	if (!m_player->GetOwner()->GetComponent<Engine::CRigidBodyComponent>()->GetGroundCheck())
 		m_speed *= 0.6f;
-
-	bool W = false, A = false, S = false, D = false;
-
+	
 	if (Engine::CInputManager::GetInstance()->KeyPress(KEY_W))
 	{
 		m_player->GetOwner()->SetRotationY(Engine::GET_MAIN_CAM->GetOwner()->GetRotation().y);
@@ -82,34 +84,79 @@ void CPlayerMove::Move()
 		m_player->GetOwner()->Translate(vector3Right * deltaTime * m_speed);
 		D = true;
 	}
-
+	// 나의 회전값빼기 - 상대의값이 = 양수라면
+	// 음수라면 
 	if (W)
-	{ // -45 , 45
+	{
 		if (A)
-			m_rotation = Engine::MathfMax(m_rotation - (m_player->GetPlayerInfo()->GetRotationSpeed()), -45);
+		{
+			if(m_rotation - 315 >= 0) // 양수 시계
+				m_rotation = Engine::MathfMin(m_rotation + (m_player->GetPlayerInfo()->GetRotationSpeed()), 315);
+			else if(m_rotation - 315 < 0) // 음수 반시계
+				m_rotation = Engine::MathfMax(m_rotation - (m_player->GetPlayerInfo()->GetRotationSpeed()), 315);
+		}
 		else if (D)
-			m_rotation = Engine::MathfMin(m_rotation + (m_player->GetPlayerInfo()->GetRotationSpeed()), 45);
-		else if (W)
-			m_rotation = Engine::MathfMin(m_rotation + (m_player->GetPlayerInfo()->GetRotationSpeed()), 0);
+		{
+			if (m_rotation <= 45)
+			{
+				m_rotation = Engine::MathfMin(m_rotation + (m_player->GetPlayerInfo()->GetRotationSpeed()), 45);
+			}
+			else if (m_rotation > 45)
+			{
+				// 최단경로가 반시계인지 시계인지판단
+				// 반시계이면 -
+				// 시계이면 +
+				// 다만 315 -> 45가되기위해서는 시계이나 +하면 절대 될수가없다.
+
+				m_rotation = Engine::MathfMax(m_rotation - (m_player->GetPlayerInfo()->GetRotationSpeed()), 45);
+			}
+		}
+		else
+		{
+			if (m_rotation <= 0)
+				m_rotation = Engine::MathfMin(m_rotation + (m_player->GetPlayerInfo()->GetRotationSpeed()), 0);
+			else if (m_rotation > 0)
+				m_rotation = Engine::MathfMax(m_rotation - (m_player->GetPlayerInfo()->GetRotationSpeed()), 0);
+		}
 	}
 	else if (S)
-	{ // -225 , -135 , -180
+	{
 		if (A)
-			m_rotation = Engine::MathfMax(m_rotation - (m_player->GetPlayerInfo()->GetRotationSpeed()), -135);
+		{
+			if (m_rotation <= 225)
+				m_rotation = Engine::MathfMin(m_rotation + (m_player->GetPlayerInfo()->GetRotationSpeed()), 225);
+			else if (m_rotation > 225)
+				m_rotation = Engine::MathfMax(m_rotation - (m_player->GetPlayerInfo()->GetRotationSpeed()), 225);
+		}
 		else if (D)
-			m_rotation = Engine::MathfMax(m_rotation - (m_player->GetPlayerInfo()->GetRotationSpeed()), -225);
-		else if (S)
-			m_rotation = Engine::MathfMax(m_rotation - (m_player->GetPlayerInfo()->GetRotationSpeed()), -180);
-	}
-	else if (D)
-	{ // 90
-		m_rotation = Engine::MathfMin(m_rotation + (m_player->GetPlayerInfo()->GetRotationSpeed()), 90);
+		{
+			if (m_rotation <= 125)
+				m_rotation = Engine::MathfMin(m_rotation + (m_player->GetPlayerInfo()->GetRotationSpeed()), 125);
+			else if (m_rotation > 125)
+				m_rotation = Engine::MathfMax(m_rotation - (m_player->GetPlayerInfo()->GetRotationSpeed()), 125);
+		}
+		else
+		{
+			if (m_rotation <= 180)
+				m_rotation = Engine::MathfMin(m_rotation + (m_player->GetPlayerInfo()->GetRotationSpeed()), 180);
+			else if (m_rotation > 180)
+				m_rotation = Engine::MathfMax(m_rotation - (m_player->GetPlayerInfo()->GetRotationSpeed()), 180);
+		}
 	}
 	else if (A)
-	{ // -90
-		m_rotation = Engine::MathfMax(m_rotation - (m_player->GetPlayerInfo()->GetRotationSpeed()), -90);
+	{
+		if (m_rotation <= 270)
+			m_rotation = Engine::MathfMin(m_rotation + (m_player->GetPlayerInfo()->GetRotationSpeed()), 270);
+		else if (m_rotation > 270)
+			m_rotation = Engine::MathfMax(m_rotation - (m_player->GetPlayerInfo()->GetRotationSpeed()), 270);
 	}
-
+	else if (D)
+	{
+		if (m_rotation <= 90)
+			m_rotation = Engine::MathfMin(m_rotation + (m_player->GetPlayerInfo()->GetRotationSpeed()), 90);
+		else if (m_rotation > 90)
+			m_rotation = Engine::MathfMax(m_rotation - (m_player->GetPlayerInfo()->GetRotationSpeed()), 90);
+	}
 
 	if (W || A || S || D)
 		cameraY = Engine::GET_MAIN_CAM->GetOwner()->GetCameraY();
@@ -133,8 +180,8 @@ void CPlayerMove::Jump()
 	{
 		vector3 translate = vector3(0, 1, 0);
 
-		if (m_speed != 0)
-			translate.z = -0.8f;
+		if (W || A || S || D)
+ 			translate.z = -0.3f;
 
 		m_player->GetOwner()->OutTranslate(translate);
 		m_player->GetOwner()->GetComponent<Engine::CRigidBodyComponent>()->AddForce(translate * m_player->GetPlayerInfo()->GetJumpPower());

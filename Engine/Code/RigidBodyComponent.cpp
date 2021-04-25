@@ -220,7 +220,7 @@ void CRigidBodyComponent::DecelerationFunction(std::vector<CGameObject*>& col)
 		if (m_separatingVelocity.y >= -0.1f && m_separatingVelocity.y < 0)
 			m_separatingVelocity.y = 0;
 
-		GetOwner()->AddPosition(m_separatingVelocity);
+		GetOwner()->AddPosition(m_separatingVelocity * -1);
 		m_separatingVelocity = vector3Zero;
 	}
 

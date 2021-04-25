@@ -82,6 +82,9 @@ void CInspectorView::DoDataExchange(CDataExchange* pDX)
 
 void CInspectorView::SetData(Engine::CGameObject* gameObject) // 현재 선택한 오브젝트의 정보를 인스팩터에 표시해주는 함수
 {
+	if (gameObject == nullptr)
+		return;
+
 	UpdateData(TRUE);
 	m_gameObejct = gameObject;
 
@@ -197,7 +200,7 @@ void CInspectorView::InputData() // 선택된 오브젝트한테 트랜스폼 정보 인풋
 	m_hierarchyView->m_objectListBox.SetCurSel(sel); // 새로운 이름이 추가된셀로 다시 셀번호 설정
 
 	// 하이어락키가 가지고있는 오브젝트의 위치값 변경
-	m_hierarchyView->m_objectPos[sel] = m_gameObejct->GetPosition();
+	m_hierarchyView->m_object[sel] = m_gameObejct;
 }
 
 void CInspectorView::LayerAddString()
@@ -268,7 +271,7 @@ void CInspectorView::DeleteObject() // 선택된 오브젝트 삭제
 	}
 
 	
-	m_hierarchyView->m_objectPos.erase(m_hierarchyView->m_objectPos.begin() + sel);
+	m_hierarchyView->m_object.erase(m_hierarchyView->m_object.begin() + sel);
 	m_hierarchyView->m_objectListBox.DeleteString(sel);
 
 	CColliderManager::GetInstance()->DataDelete(sel);

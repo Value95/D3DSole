@@ -10,6 +10,8 @@ private:
 
 	_float m_speed;
 	_float cameraY;
+
+	_bool W, A, S, D;
 public:
 	CPlayerMove(CPlayer* player);
 	virtual ~CPlayerMove();

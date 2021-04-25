@@ -87,13 +87,21 @@ void CFeatureView::ReSetProject()
 {
 	m_hierarchyView = dynamic_cast<CHierarchyView*>(dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd())->m_mainSplitter.GetPane(0, 1));
 	m_hierarchyView->m_objectListBox.ResetContent();
-	m_hierarchyView->m_objectPos.clear();
+	m_hierarchyView->m_object.clear();
 
 	Engine::CSceneManager::GetInstance()->GetCurScene()->AllDelete();
 	dynamic_cast<CEditorScene*>(Engine::GET_CUR_SCENE.get())->SetPickingObject(nullptr);
 
+	SHARED(Engine::CGameObject) m_createPosBox;
 	SHARED(Engine::CGameObject) m_box;
 	SHARED(Engine::CGameObject) m_sphere;
+
+	m_createPosBox = Engine::CObjectFactory::GetInstance()->AddClone(L"Collider", L"Collider", true);
+	m_createPosBox->SetPosition(vector3(9999, 9999, 9999));
+	m_createPosBox->AddComponent<Engine::CBoxComponent>();
+	m_createPosBox->GetComponent<Engine::CBoxComponent>()->SetSize(vector3(0.05f, 0.05f, 0.05f));
+	dynamic_cast<CEditorScene*>(Engine::GET_CUR_SCENE.get())->m_createPosBox = m_createPosBox;
+
 
 	m_box = Engine::CObjectFactory::GetInstance()->AddClone(L"Collider", L"Collider", true);
 	m_box->SetScale(vector3One);
@@ -172,7 +180,7 @@ void CFeatureView::Save()
 		DWORD dwByte = 0;
 		DWORD dwStringSize = 0;
 		CString text;
-		_int objectCount = Engine::GET_CUR_SCENE->GetObjectCount() - layers[L"NavMesh"].get()->GetGameObjects().size() - 3;
+		_int objectCount = Engine::GET_CUR_SCENE->GetObjectCount() - layers[L"NavMesh"].get()->GetGameObjects().size() - 4;
 		_int colliderCount = 0;
 		// 오브젝트
 		WriteFile(hFile, &objectCount, sizeof(_int), &dwByte, nullptr);
@@ -200,8 +208,9 @@ void CFeatureView::Save()
 				WriteFile(hFile, &gameObject->GetRotation(), sizeof(vector3), &dwByte, nullptr); // 회전
 				WriteFile(hFile, &gameObject->GetScale(), sizeof(vector3), &dwByte, nullptr); // 크기
 
-				ColliderData* collider = CColliderManager::GetInstance()->GetColliderData()[colliderCount];
-				colliderCount += 1;
+				// 해당 오브젝트가 하이어락키 몇번째 오브젝트인지 판단하여야함
+
+				ColliderData* collider = CColliderManager::GetInstance()->FindColliderDate(gameObject.get());
 				text = collider->colliderType.c_str();
 				dwStringSize = sizeof(wchar_t) * (text.GetLength() + 1);
 				WriteFile(hFile, &dwStringSize, sizeof(DWORD), &dwByte, nullptr);
@@ -294,9 +303,9 @@ void CFeatureView::Load()
 			ReadFile(hFile, &obj->GetScale(), sizeof(vector3), &dwByte, nullptr);
 
 			m_hierarchyView->m_objectListBox.AddString(obj.get()->GetName().c_str());
-			m_hierarchyView->m_objectPos.emplace_back(obj.get()->GetPosition());
+			m_hierarchyView->m_object.emplace_back(obj.get());
 
-			ColliderData* colliderData = new ColliderData();
+			ColliderData* colliderData = new ColliderData(obj.get());
 
 			ReadFile(hFile, &dwStringSize, sizeof(DWORD), &dwByte, nullptr); // 이름
 			TCHAR* colliderType = new TCHAR[dwStringSize];

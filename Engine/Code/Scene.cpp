@@ -123,12 +123,28 @@ SHARED(CGameObject) CScene::FindObjectPosition(vector3 position)
 {
 	for (auto& layer : m_mLayers)
 	{
-		if (layer.first == L"Camera")
+		if (layer.first == L"Camera" || layer.first == L"Collider")
 			continue;
 
 		for (auto& gameObject : layer.second->GetGameObjects())
 		{
 			if (gameObject->GetPosition() == position)
+				return gameObject;
+		}
+	}
+	return nullptr;
+}
+
+SHARED(CGameObject) CScene::FindObjectPoint(CGameObject* object)
+{
+	for (auto& layer : m_mLayers)
+	{
+		if (layer.first == L"Camera" || layer.first == L"Collider")
+			continue;
+
+		for (auto& gameObject : layer.second->GetGameObjects())
+		{
+			if (gameObject.get() == object)
 				return gameObject;
 		}
 	}

@@ -38,7 +38,7 @@ _uint CDebugRendeerManager::PreRender(void)
 	GET_DEVICE->BeginScene();
 	GET_DEVICE->SetRenderState(D3DRS_LIGHTING, TRUE);
 
-	GET_DEVICE->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	//GET_DEVICE->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
 	return NO_EVENT;
 }

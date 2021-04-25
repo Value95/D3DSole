@@ -35,7 +35,10 @@ void CHierarchyView::SelectObjectClick() // 셀에 맞는 오브젝트 위치값을 가져오고
 	if (sel == -1)
 		return;
 
-	SHARED(Engine::CGameObject) object = Engine::GET_CUR_SCENE->FindObjectPosition(m_objectPos[sel]);
+	SHARED(Engine::CGameObject) object = Engine::GET_CUR_SCENE->FindObjectPoint(m_object[sel]);
+
+	if (object == nullptr)
+		return;
 
 	CInspectorView* inspectorView = dynamic_cast<CInspectorView*>(dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd())->m_rightSplitter.GetPane(0, 0));
 	inspectorView->SetData(object.get());

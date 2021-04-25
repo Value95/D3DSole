@@ -10,7 +10,7 @@ class CHierarchyView : public CFormView
 	DECLARE_DYNCREATE(CHierarchyView)
 public:
 	CListBox m_objectListBox;
-	std::vector<vector3> m_objectPos;
+	std::vector<Engine::CGameObject*> m_object;
 protected:
 	CHierarchyView();           // 동적 만들기에 사용되는 protected 생성자입니다.
 	virtual ~CHierarchyView();
