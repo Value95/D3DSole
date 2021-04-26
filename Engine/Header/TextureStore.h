@@ -12,7 +12,7 @@ private:
 	typedef std::unordered_map<std::wstring, SHARED(_TexData)>	_TexDataMap;
 	GETTOR(_TexDataMap, m_mCurSceneTextureData, {}, CurSceneTextureData);
 	GETTOR(_TexDataMap, m_mStaticTextureData, {}, StaticTextureData);
-
+	std::unordered_map<std::wstring, IDirect3DBaseTexture9*> m_skyTextureData;
 public:
 	void Awake(void) override;
 	void Start(void) override;
@@ -21,6 +21,7 @@ public:
 	void ClearCurResource(void) override;
 
 	SHARED(_TexData) GetTextureData(std::wstring textureKey);
+	IDirect3DBaseTexture9* GetSkyTextureData(std::wstring skyTextureKey);
 	void InitTextureForScene(std::wstring curScene);
 
 private:

@@ -155,7 +155,7 @@ void CEditorScene::InitPrototypes(void)
 	Engine::CObjectFactory::GetInstance()->AddPrototype(camera);
 
 	SHARED(Engine::CGameObject) mess = Engine::CGameObject::Create(L"Default", L"Mess", true);
-	mess->AddComponent<Engine::CGraphicsComponent>();
+	mess->AddComponent<Engine::CStaticMeshRenderComponent>();
 	mess->AddComponent<Engine::CMeshComponent>();
 	Engine::CObjectFactory::GetInstance()->AddPrototype(mess);
 
@@ -241,6 +241,8 @@ void CEditorScene::ObjectPicking(std::wstring layerKey)
 	{
 		POINT point;
 		GetCursorPos(&point);
+		ScreenToClient(Engine::CWndApp::GetInstance()->GetHWnd(), &point);
+
 		vector3		origin;
 
 		if (point.x >= 1056 || point.y >= 648)

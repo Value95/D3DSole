@@ -45,8 +45,6 @@ void CPlayerWapon::Start(SHARED(CComponent) spSelf)
 
 _uint CPlayerWapon::FixedUpdate(SHARED(CComponent) spSelf)
 {
-	GetOwner()->SetPosition(m_playerObj->GetPosition());
-	GetOwner()->SetWorldMatrix(*m_parentBoneMatrix * *m_parentWorldMatrix);
 
 	return _uint();
 }
@@ -58,7 +56,8 @@ _uint CPlayerWapon::Update(SHARED(CComponent) spThis)
 
 _uint CPlayerWapon::LateUpdate(SHARED(CComponent) spThis)
 {
-
+	GetOwner()->SetPosition(m_playerObj->GetPosition());
+	GetOwner()->SetWorldMatrix(*m_parentBoneMatrix * *m_parentWorldMatrix);
 
 	return _uint();
 }

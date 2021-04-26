@@ -60,6 +60,7 @@ void CPlayer::Awake(void)
 void CPlayer::Start(SHARED(CComponent) spThis)
 {
 	__super::Start(spThis);
+	m_anim = GetOwner()->GetComponent<Engine::CAnimMeshRenderComponent>();
 	FSMCreate();
 }
 

@@ -98,7 +98,6 @@ _uint CGameObject::Update(void)
 	if (!m_isEnabled)
 		return event;
 
-
 	for (auto& component : m_mComponents)
 	{
 		if (m_mComponents.empty() || component.second->GetIsEnabled() == false)
@@ -121,7 +120,6 @@ _uint CGameObject::LateUpdate(void)
 	if (!m_isEnabled)
 		return event;
 
-
 	for (auto& component : m_mComponents)
 	{
 		if (component.second->GetIsStarted() == false || component.second->GetIsEnabled() == false)
@@ -130,6 +128,9 @@ _uint CGameObject::LateUpdate(void)
 		if (event = component.second->LateUpdate(component.second))
 			return event;
 	}
+
+
+
 	return event;
 }
 

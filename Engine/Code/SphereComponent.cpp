@@ -3,7 +3,7 @@
 #include "DeviceManager.h"
 #include "GameObject.h"
 #include "DebugRendeerManager.h"
-#include "GraphicsManager.h"
+#include "StaticMeshRenderManager.h"
 
 #include "SceneManager.h"
 

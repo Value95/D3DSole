@@ -15,6 +15,7 @@ private:
 
 	GETTOR_SETTOR(POINT, m_centerPt, {}, CenterPt);
 
+	GETTOR_SETTOR(SHARED(Engine::CAnimMeshRenderComponent), m_anim, nullptr, Anim);
 public:
 	explicit CPlayer(void);
 	virtual	 ~CPlayer(void);

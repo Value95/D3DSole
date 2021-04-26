@@ -1,7 +1,7 @@
 #include "EngineStdafx.h"
 #include "SkyBoxComponent.h"
 #include "DeviceManager.h"
-#include "GraphicsManager.h"
+#include "StaticMeshRenderManager.h"
 #include "SceneManager.h"
 #include "Scene.h"
 #include "TextureStore.h"
@@ -44,8 +44,7 @@ void CSkyBoxComponent::Start(SHARED(CComponent) spThis)
 	std::wstring layerKey = m_pOwner->GetLayerKey();
 	std::wstring objectKey = m_pOwner->GetObjectKey();
 
-	if ((m_pTexData = CTextureStore::GetInstance()->GetTextureData(m_textureKey)) == nullptr)
-		m_pTexData = CTextureStore::GetInstance()->GetTextureData(L"Error");
+	m_pTexData = CTextureStore::GetInstance()->GetSkyTextureData(m_textureKey);
 
 	DateInit();
 }
@@ -62,31 +61,33 @@ _uint CSkyBoxComponent::Update(SHARED(CComponent) spThis)
 
 _uint CSkyBoxComponent::LateUpdate(SHARED(CComponent) spThis)
 {
-	CGraphicsManager::GetInstance()->AddToSkyBox(std::dynamic_pointer_cast<CSkyBoxComponent>(spThis));
-	//GetOwner()->SetPosition(GET_MAIN_CAM->GetOwner()->GetPosition());
-	GetOwner()->AddPositionY(3);
+	CStaticMeshRenderManager::GetInstance()->AddToSkyBox(std::dynamic_pointer_cast<CSkyBoxComponent>(spThis));
+	GetOwner()->SetPosition(GET_MAIN_CAM->GetOwner()->GetPosition());
+	//GetOwner()->AddPositionY(3);
 	return NO_EVENT;
 }
 
 _uint CSkyBoxComponent::PreRender(void)
 {
-	
 	if (GetOwner() == nullptr)
 		MSG_BOX(__FILE__, L"Owner is nullptr");
 
+	GET_DEVICE->SetStreamSource(0, m_meshDate.vertexBuffer, 0, m_meshDate.vertexSize);
+	GET_DEVICE->SetFVF(m_meshDate.FVF);
+	GET_DEVICE->SetIndices(m_meshDate.indexBuffer);
+
 	if (m_pTexData != nullptr)
-		GET_DEVICE->SetTexture(0, m_pTexData->pTexture);
+		GET_DEVICE->SetTexture(0, m_pTexData);
 	else
 		GET_DEVICE->SetTexture(0, nullptr);
 
 	//ÁÂÇ¥¼ÂÆÃ
-	matrix4x4 identityMatrix;
-	D3DXMatrixIdentity(&identityMatrix);
 	GET_DEVICE->SetTransform(D3DTS_WORLD, &GetOwner()->GetWorldMatrix());
-	//GET_DEVICE->SetTransform(D3DTS_VIEW, &identityMatrix);
+	//GET_DEVICE->SetTransform(D3DTS_VIEW, &GET_CUR_SCENE->GetMainCamera()->GetViewMatrix());
 	//GET_DEVICE->SetTransform(D3DTS_PROJECTION, &GET_CUR_SCENE->GetMainCamera()->GetOrthoMatrix());
 
 	GET_DEVICE->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	GET_DEVICE->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
 	return _uint();
 }
@@ -94,9 +95,7 @@ _uint CSkyBoxComponent::PreRender(void)
 _uint CSkyBoxComponent::Render(void)
 {
 	GET_DEVICE->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, m_meshDate.vertexCount, 0, m_meshDate.faceCount);
-
 	GET_DEVICE->SetTransform(D3DTS_PROJECTION, &GET_CUR_SCENE->GetMainCamera()->GetProjMatrix());
-
 
 	return _uint();
 }
@@ -162,12 +161,12 @@ void CSkyBoxComponent::DateInit()
 
 	m_meshDate.vertexBuffer->Unlock();
 
-	GET_DEVICE->CreateIndexBuffer(6 * sizeof(INDEX16), 0, D3DFMT_INDEX16, D3DPOOL_DEFAULT, &m_meshDate.indexBuffer, NULL);
+	GET_DEVICE->CreateIndexBuffer(12 * sizeof(INDEX16), 0, D3DFMT_INDEX16, D3DPOOL_DEFAULT, &m_meshDate.indexBuffer, NULL);
 	m_meshDate.indexSize = sizeof(INDEX16);
 	INDEX16* pIndices = nullptr;
 
 	m_meshDate.indexBuffer->Lock(0, 0, (void**)&pIndices, 0);
-	m_meshDate.faceCount = 2;
+	m_meshDate.faceCount = 12;
 
 	// X+
 	pIndices[0]._0 = 1;

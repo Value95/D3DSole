@@ -127,6 +127,7 @@ const D3DXFRAME_DERIVED * CAnimMeshRenderComponent::Get_FrameByName(const char *
 
 void CAnimMeshRenderComponent::Set_AnimationSet(const _uint & iIndex)
 {
+	m_animValue = iIndex;
 	if (nullptr == m_pAniCtrl)
 		return;
 

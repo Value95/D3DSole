@@ -6,7 +6,8 @@
 #include "TransformComponent.h"
 
 // Graphics-----------------------------------------
-#include "GraphicsComponent.h"
+#include "StaticMeshRenderComponent.h"
+#include "AnimMeshRenderComponent.h"
 #include "CameraComponent.h"
 #include "TextureComponent.h"
 #include "MeshComponent.h"
@@ -15,7 +16,6 @@
 #include "LineComponent.h"
 #include "SphereComponent.h"
 #include "TriangleComponent.h"
-#include "AnimMeshRenderComponent.h"
 #include "SkyBoxComponent.h"
 //--------------------------------------------------
 

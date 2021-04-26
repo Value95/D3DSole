@@ -217,9 +217,6 @@
       <Filter>02.Components\03.CameraComponent</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\GraphicsManager.cpp">
-      <Filter>00.Engine\03.Graphics\00.GraphicsManager</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\GraphicsManager.cpp">
       <Filter>00.Engine\01.Graphics\00.Manager</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UIManager.cpp">
@@ -264,9 +261,6 @@
     <ClCompile Include="..\Code\DebugRenderManager.cpp">
       <Filter>00.Engine\03.Graphics\03.DebugRenderManager</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\GraphicsComponent.cpp">
-      <Filter>02.Components\01.GraphicsComponent\00.Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\HierarchyLoader.cpp">
       <Filter>03.AnimCtrl\00.HierarchyLoader</Filter>
     </ClCompile>
@@ -284,6 +278,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\SkyBoxComponent.cpp">
       <Filter>02.Components\01.GraphicsComponent\07.SkyBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\StaticMeshRenderComponent.cpp">
+      <Filter>02.Components\01.GraphicsComponent\00.Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\StaticMeshRenderManager.cpp">
+      <Filter>00.Engine\03.Graphics\00.GraphicsManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -372,9 +372,6 @@
       <Filter>02.Components\03.CameraComponent</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\GraphicsManager.h">
-      <Filter>00.Engine\03.Graphics\00.GraphicsManager</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\GraphicsManager.h">
       <Filter>00.Engine\01.Graphics\00.Manager</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\EngineExtern.h">
@@ -425,9 +422,6 @@
     <ClInclude Include="..\Header\EngineMatrixFunction.h">
       <Filter>99.Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\GraphicsComponent.h">
-      <Filter>02.Components\01.GraphicsComponent\00.Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\HierarchyLoader.h">
       <Filter>03.AnimCtrl\00.HierarchyLoader</Filter>
     </ClInclude>
@@ -445,6 +439,12 @@
     </ClInclude>
     <ClInclude Include="..\Header\SkyBoxComponent.h">
       <Filter>02.Components\01.GraphicsComponent\07.SkyBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\StaticMeshRenderComponent.h">
+      <Filter>02.Components\01.GraphicsComponent\00.Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\StaticMeshRenderManager.h">
+      <Filter>00.Engine\03.Graphics\00.GraphicsManager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

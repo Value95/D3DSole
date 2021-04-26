@@ -2,7 +2,6 @@
 #include "MainEditor.h"
 #include "EditorScene.h"
 
-
 CMainEditor::CMainEditor()
 {
 }
@@ -25,7 +24,7 @@ void CMainEditor::Awake(void)
 	m_main = dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd());
 
 	Engine::CObjectFactory::GetInstance()->Awake();
-	Engine::CGraphicsManager::GetInstance()->Awake();
+	Engine::CStaticMeshRenderManager::GetInstance()->Awake();
 	Engine::CUIManager::GetInstance()->Awake();
 	Engine::CInputManager::GetInstance()->Awake();
 	Engine::CSceneManager::GetInstance()->Awake();
@@ -34,7 +33,7 @@ void CMainEditor::Awake(void)
 void CMainEditor::Start(void)
 {
 	Engine::CObjectFactory::GetInstance()->Start();
-	Engine::CGraphicsManager::GetInstance()->Start();
+	Engine::CStaticMeshRenderManager::GetInstance()->Start();
 	Engine::CUIManager::GetInstance()->Start();
 	Engine::CInputManager::GetInstance()->Start();
 	Engine::CSceneManager::GetInstance()->Start();
@@ -45,7 +44,7 @@ _uint CMainEditor::FixedUpdate(void)
 {
 	_uint event = NO_EVENT;
 
-	if (event = Engine::CGraphicsManager::GetInstance()->FixedUpdate())	return event;
+	if (event = Engine::CStaticMeshRenderManager::GetInstance()->FixedUpdate())	return event;
 	if (event = Engine::CInputManager::GetInstance()->FixedUpdate())	return event;
 	if (event = Engine::CSceneManager::GetInstance()->FixedUpdate())	return event;
 
@@ -56,7 +55,7 @@ _uint CMainEditor::Update(void)
 {
 	_uint event = NO_EVENT;
 
-	if (event = Engine::CGraphicsManager::GetInstance()->Update())	return event;
+	if (event = Engine::CStaticMeshRenderManager::GetInstance()->Update())	return event;
 	if (event = Engine::CInputManager::GetInstance()->Update())		return event;
 	if (event = Engine::CSceneManager::GetInstance()->Update())		return event;
 
@@ -66,7 +65,7 @@ _uint CMainEditor::Update(void)
 _uint CMainEditor::LateUpdate(void)
 {
 	_uint event = NO_EVENT;
-	if (event = Engine::CGraphicsManager::GetInstance()->LateUpdate())	return event;
+	if (event = Engine::CStaticMeshRenderManager::GetInstance()->LateUpdate())	return event;
 	if (event = Engine::CInputManager::GetInstance()->LateUpdate())		return event;
 	if (event = Engine::CSceneManager::GetInstance()->LateUpdate())		return event;
 
@@ -76,8 +75,8 @@ _uint CMainEditor::LateUpdate(void)
 _uint CMainEditor::Render(void)
 {
 	_uint event = NO_EVENT;
-	if (event = Engine::CGraphicsManager::GetInstance()->PreRender())	return event;
-	if (event = Engine::CGraphicsManager::GetInstance()->Render())	return event;
+	if (event = Engine::CStaticMeshRenderManager::GetInstance()->PreRender())	return event;
+	if (event = Engine::CStaticMeshRenderManager::GetInstance()->Render())	return event;
 
 	if (m_main->m_mode == CMainFrame::Mode::NavMesh)
 	{
@@ -101,7 +100,7 @@ _uint CMainEditor::Render(void)
 _uint CMainEditor::PostRender(void)
 {
 	_uint event = NO_EVENT;
-	if (event = Engine::CGraphicsManager::GetInstance()->PostRender())	return event;
+	if (event = Engine::CStaticMeshRenderManager::GetInstance()->PostRender())	return event;
 
 	if (m_main->m_mode == CMainFrame::Mode::NavMesh)
 		if (event = CNavMeshManager::GetInstance()->PostRender()) return event;
@@ -116,7 +115,7 @@ _uint CMainEditor::PostRender(void)
 
 void CMainEditor::OnDestroy(void)
 {
-	Engine::CGraphicsManager::GetInstance()->DestroyInstance();
+	Engine::CStaticMeshRenderManager::GetInstance()->DestroyInstance();
 	Engine::CInputManager::GetInstance()->DestroyInstance();
 	Engine::CSceneManager::GetInstance()->DestroyInstance();
 	Engine::CObjectFactory::GetInstance()->DestroyInstance();

@@ -15,13 +15,14 @@ CPlayerMove::~CPlayerMove()
 
 void CPlayerMove::Start()
 {
-	m_player->GetOwner()->GetComponent<Engine::CAnimMeshRenderComponent>()->Set_AnimationSet(0);
+	m_player->GetOwner()->GetComponent<Engine::CAnimMeshRenderComponent>()->Set_AnimationSet(54);
 	m_speed = 0;
 	W = false, A = false, S = false, D = false;
 }
 
 void CPlayerMove::End()
 {
+	m_player->GetOwner()->GetComponent<Engine::CAnimMeshRenderComponent>()->Set_AnimationSet(53);
 	W = false, A = false, S = false, D = false;
 }
 

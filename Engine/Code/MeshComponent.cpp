@@ -1,6 +1,6 @@
 #include "EngineStdafx.h"
 #include "MeshComponent.h"
-#include "GraphicsManager.h"
+#include "StaticMeshRenderManager.h"
 #include "MeshStore.h"
 #include "DataStore.h"
 #include "GameObject.h"

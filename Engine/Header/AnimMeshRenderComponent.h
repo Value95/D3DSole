@@ -19,6 +19,8 @@ protected:
 	 _wcharT	m_fileName[MAX_PATH];
 	GETTOR_SETTOR(ERenderID,m_renderID,		ERenderID::Base,	RenderID)
 
+	GETTOR_SETTOR(_int, m_animValue, 0, AnimValue)
+
 public:
 	explicit CAnimMeshRenderComponent(void);
 	~CAnimMeshRenderComponent(void);

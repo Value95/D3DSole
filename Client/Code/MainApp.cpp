@@ -25,7 +25,7 @@ void CMainApp::Awake(void)
 	srand((unsigned)time(NULL));
 
 	Engine::CObjectFactory::GetInstance()->Awake();
-	Engine::CGraphicsManager::GetInstance()->Awake();
+	Engine::CStaticMeshRenderManager::GetInstance()->Awake();
 	Engine::CAnimMeshRenderManager::GetInstance()->Awake();
 	Engine::CInputManager::GetInstance()->Awake();
 	Engine::CSceneManager::GetInstance()->Awake();
@@ -40,7 +40,7 @@ void CMainApp::Start(void)
 	InitStaticPrototype();
 
 	Engine::CObjectFactory::GetInstance()->Start();
-	Engine::CGraphicsManager::GetInstance()->Start();
+	Engine::CStaticMeshRenderManager::GetInstance()->Start();
 	Engine::CAnimMeshRenderManager::GetInstance()->Start();
 	Engine::CInputManager::GetInstance()->Start();
 	Engine::CSceneManager::GetInstance()->Start();
@@ -54,7 +54,7 @@ _uint CMainApp::FixedUpdate(void)
 {
 	_uint event = NO_EVENT;
 
-	if (event = Engine::CGraphicsManager::GetInstance()->FixedUpdate())	return event;
+	if (event = Engine::CStaticMeshRenderManager::GetInstance()->FixedUpdate())	return event;
 	if (event = Engine::CAnimMeshRenderManager::GetInstance()->FixedUpdate())	return event;
 	if (event = Engine::CInputManager::GetInstance()->FixedUpdate())	return event;
 	if (event = Engine::CSceneManager::GetInstance()->FixedUpdate())	return event;
@@ -66,7 +66,7 @@ _uint CMainApp::Update(void)
 {
 	_uint event = NO_EVENT;
 
-	if (event = Engine::CGraphicsManager::GetInstance()->Update())	return event;
+	if (event = Engine::CStaticMeshRenderManager::GetInstance()->Update())	return event;
 	if (event = Engine::CAnimMeshRenderManager::GetInstance()->Update())	return event;
 	if (event = Engine::CInputManager::GetInstance()->Update())		return event;
 	if (event = Engine::CSceneManager::GetInstance()->Update())		return event;
@@ -76,7 +76,7 @@ _uint CMainApp::Update(void)
 _uint CMainApp::LateUpdate(void)
 {
 	_uint event = NO_EVENT;
-	if (event = Engine::CGraphicsManager::GetInstance()->LateUpdate())	return event;
+	if (event = Engine::CStaticMeshRenderManager::GetInstance()->LateUpdate())	return event;
 	if (event = Engine::CAnimMeshRenderManager::GetInstance()->LateUpdate())	return event;
 	if (event = Engine::CInputManager::GetInstance()->LateUpdate())		return event;
 	if (event = Engine::CSceneManager::GetInstance()->LateUpdate())		return event;
@@ -90,8 +90,8 @@ _uint CMainApp::Render(void)
 {
 	_uint event = NO_EVENT;
 	
-	if (event = Engine::CGraphicsManager::GetInstance()->PreRender())	return event;
-	if (event = Engine::CGraphicsManager::GetInstance()->Render())	return event;
+	if (event = Engine::CStaticMeshRenderManager::GetInstance()->PreRender())	return event;
+	if (event = Engine::CStaticMeshRenderManager::GetInstance()->Render())	return event;
 
 	if (event = Engine::CAnimMeshRenderManager::GetInstance()->PreRender())	return event;
 	if (event = Engine::CAnimMeshRenderManager::GetInstance()->Render())	return event;
@@ -108,7 +108,7 @@ _uint CMainApp::Render(void)
 _uint CMainApp::PostRender(void)
 {
 	_uint event = NO_EVENT;
-	if (event = Engine::CGraphicsManager::GetInstance()->PostRender())	return event;
+	if (event = Engine::CStaticMeshRenderManager::GetInstance()->PostRender())	return event;
 	if (event = Engine::CAnimMeshRenderManager::GetInstance()->PostRender())	return event;
 	if (event = Engine::CUIManager::GetInstance()->PostRender())		return event;
 	if (event = Engine::CDebugRendeerManager::GetInstance()->PostRender())	return event;
@@ -117,7 +117,7 @@ _uint CMainApp::PostRender(void)
 
 void CMainApp::OnDestroy(void)
 {
-	Engine::CGraphicsManager::GetInstance()->DestroyInstance();
+	Engine::CStaticMeshRenderManager::GetInstance()->DestroyInstance();
 	Engine::CAnimMeshRenderManager::GetInstance()->DestroyInstance();
 	Engine::CInputManager::GetInstance()->DestroyInstance();
 	Engine::CSceneManager::GetInstance()->DestroyInstance();
@@ -164,7 +164,7 @@ void CMainApp::Default()
 	Engine::CObjectFactory::GetInstance()->AddPrototype(pDefault);
 
 	SHARED(Engine::CGameObject) mess = Engine::CGameObject::Create(L"Default", L"Mess", true);
-	mess->AddComponent<Engine::CGraphicsComponent>();
+	mess->AddComponent<Engine::CStaticMeshRenderComponent>();
 	mess->AddComponent<Engine::CMeshComponent>();
 	Engine::CObjectFactory::GetInstance()->AddPrototype(mess);
 
@@ -197,7 +197,7 @@ void CMainApp::Monster()
 	scarecrow->SetScale(vector3(0.005f, 0.005f, 0.005f));
 	scarecrow->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(1, 10, 1), vector3Zero));
 	scarecrow->AddComponent<Engine::CMeshComponent>()->SetMeshKey(L"Boss_CrystalSpider_000.X");
-	scarecrow->AddComponent<Engine::CGraphicsComponent>();
+	scarecrow->AddComponent<Engine::CStaticMeshRenderComponent>();
 	Engine::CObjectFactory::GetInstance()->AddPrototype(scarecrow);
 }
 

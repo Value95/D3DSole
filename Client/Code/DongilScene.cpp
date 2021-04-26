@@ -30,7 +30,7 @@ void CDongilScene::Awake(void)
 void CDongilScene::Start(void)
 {
 	__super::Start();
-	LoadObject(L"TestScene");
+	//LoadObject(L"TestScene");
 
 	{
 		m_pMainCamera = Engine::ADD_CLONE(L"Camera", L"Camera", true)->GetComponent<Engine::CCameraComponent>();
@@ -45,17 +45,18 @@ void CDongilScene::Start(void)
 		m_pMainCamera->GetOwner()->SetTarget(pObj.get());
 	}
 
-	/*{
+	{
 		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
 		pObj->SetPosition(vector3(10, 0,10));
 		pObj->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3One, vector3Zero));
 		pObj->AddComponent<Engine::CBoxComponent>()->SetSize(vector3(1, 1, 1));
-	}*/
+	}
 
 	{
 		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
 		pObj->SetPosition(vector3(0, 0, 0));
-		pObj->AddComponent<Engine::CSkyBoxComponent>()->SetTextureKey(L"MainLogo");
+		pObj->SetScale(vector3(10, 10, 10));
+		pObj->AddComponent<Engine::CSkyBoxComponent>()->SetTextureKey(L"burger0");
 	}
 
 	{
@@ -72,7 +73,7 @@ void CDongilScene::Start(void)
 		pObj->SetScale(vector3(0.01f, 0.01f, 0.01f));
 		pObj->AddComponent<CPlayerWapon>();
 		pObj->AddComponent<Engine::CMeshComponent>()->SetMeshKey(L"Wapon_Sword_000.X");
-		pObj->AddComponent<Engine::CGraphicsComponent>();
+		pObj->AddComponent<Engine::CStaticMeshRenderComponent>();
 	}
 
 
@@ -89,7 +90,7 @@ void CDongilScene::Start(void)
 		pObj->SetRotationY(120);
 		pObj->SetScale(vector3(0.01f, 0.01f, 0.01f));
 		pObj->AddComponent<Engine::CMeshComponent>()->SetMeshKey(L"CrystalSpider.X");
-		pObj->AddComponent<Engine::CGraphicsComponent>();
+		pObj->AddComponent<Engine::CStaticMeshRenderComponent>();
 	}*/
 }
 
@@ -183,7 +184,7 @@ pObj->SetPosition(vector3(0, 0, 7));
 pObj->AddComponent<CPlayer>();
 pObj->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(1, 1, 1), vector3Zero));
 pObj->AddComponent<Engine::CMeshComponent>()->SetMeshKey(L"sylva.X");
-pObj->AddComponent<Engine::CGraphicsComponent>();
+pObj->AddComponent<Engine::CStaticMeshRenderComponent>();
 }*/
 
 /*{
@@ -207,7 +208,7 @@ pObj->SetPosition(vector3(7, 0, 0));
 pObj->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(1, 1, 1), vector3Zero));
 pObj->AddComponent<Engine::CMeshComponent>();
 pObj->AddComponent<Engine::CTextureComponent>();
-pObj->AddComponent<Engine::CGraphicsComponent>();
+pObj->AddComponent<Engine::CStaticMeshRenderComponent>();
 }
 
 {
@@ -216,7 +217,7 @@ pObj->SetPosition(vector3(-7, 0, 0));
 pObj->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(1, 1, 1), vector3Zero));
 pObj->AddComponent<Engine::CMeshComponent>();
 pObj->AddComponent<Engine::CTextureComponent>();
-pObj->AddComponent<Engine::CGraphicsComponent>();
+pObj->AddComponent<Engine::CStaticMeshRenderComponent>();
 }
 
 {
@@ -225,7 +226,7 @@ pObj->SetPosition(vector3(0, 7, 0));
 pObj->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(1, 1, 1), vector3Zero));
 pObj->AddComponent<Engine::CMeshComponent>();
 pObj->AddComponent<Engine::CTextureComponent>();
-pObj->AddComponent<Engine::CGraphicsComponent>();
+pObj->AddComponent<Engine::CStaticMeshRenderComponent>();
 }
 
 {
@@ -234,5 +235,5 @@ pObj->SetPosition(vector3(0, -7, 0));
 pObj->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(1, 1, 1), vector3Zero));
 pObj->AddComponent<Engine::CMeshComponent>();
 pObj->AddComponent<Engine::CTextureComponent>();
-pObj->AddComponent<Engine::CGraphicsComponent>();
+pObj->AddComponent<Engine::CStaticMeshRenderComponent>();
 }*/

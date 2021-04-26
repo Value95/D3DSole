@@ -7,7 +7,6 @@ class CPlayerIdle :
 private:
 	CPlayer* m_player;
 
-	_int T;
 public:
 	CPlayerIdle(CPlayer* player);
 	virtual ~CPlayerIdle();

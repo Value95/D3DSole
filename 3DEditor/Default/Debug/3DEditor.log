@@ -122,63 +122,114 @@ c:\program files (x86)\microsoft directx sdk (june 2010)\include\dwrite.h(4993):
   c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50975): note: 'DWRITE_E_ALREADYREGISTERED'의 이전 정의를 참조하십시오.
 c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\enginedefine.h(8): warning C4005: 'EDITOR_MODE': 매크로 재정의
   c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\enginedefine.h(8): note: 명령줄 인수: 'EDITOR_MODE'의 이전 정의를 참조하십시오.
-c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\default\stdafx.h(75): warning C4067: 전처리기 지시문 다음에 예기치 않은 토큰이 있습니다. 줄 바꿈 문자가 필요합니다.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\default\stdafx.h(67): warning C4067: 전처리기 지시문 다음에 예기치 않은 토큰이 있습니다. 줄 바꿈 문자가 필요합니다.
   3DEditor.cpp
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\default\resource.h(5): warning C4005: 'IDD_ABOUTBOX': 매크로 재정의
+  c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\wndapp.h(9): note: 'IDD_ABOUTBOX'의 이전 정의를 참조하십시오.
 c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\default\3deditor.cpp(15): warning C4005: 'new': 매크로 재정의
   c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\enginedefine.h(54): note: 'new'의 이전 정의를 참조하십시오.
   ProjectView.cpp
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\default\resource.h(5): warning C4005: 'IDD_ABOUTBOX': 매크로 재정의
+  c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\wndapp.h(9): note: 'IDD_ABOUTBOX'의 이전 정의를 참조하십시오.
 c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\projectview.cpp(11): warning C4005: 'new': 매크로 재정의
   c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\enginedefine.h(54): note: 'new'의 이전 정의를 참조하십시오.
   PrefabManager.cpp
   NavMeshManager.cpp
   MainFrm.cpp
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\default\resource.h(5): warning C4005: 'IDD_ABOUTBOX': 매크로 재정의
+  c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\wndapp.h(9): note: 'IDD_ABOUTBOX'의 이전 정의를 참조하십시오.
 c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\mainfrm.cpp(16): warning C4005: 'new': 매크로 재정의
   c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\enginedefine.h(54): note: 'new'의 이전 정의를 참조하십시오.
 c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\mainfrm.cpp(108): warning C4244: '초기화 중': 'float'에서 '_uint'(으)로 변환하면서 데이터가 손실될 수 있습니다.
 c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\mainfrm.cpp(111): warning C4244: '초기화 중': 'float'에서 '_uint'(으)로 변환하면서 데이터가 손실될 수 있습니다.
 c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\mainfrm.cpp(112): warning C4244: '초기화 중': 'float'에서 '_uint'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   MainEditor.cpp
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(28): error C3083: 'CStaticMeshRenderManager': '::'의 왼쪽에 있는 기호는 형식이어야 합니다.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(28): error C2039: 'GetInstance': 'Engine'의 멤버가 아닙니다.
+  c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\texturestore.h(7): note: 'Engine' 선언을 참조하십시오.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(28): error C3861: 'GetInstance': 식별자를 찾을 수 없습니다.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(28): error C2227: '->Awake' 왼쪽은 클래스/구조체/공용 구조체/제네릭 형식을 가리켜야 합니다.
+  c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(28): note: 'unknown-type' 형식입니다.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(37): error C3083: 'CStaticMeshRenderManager': '::'의 왼쪽에 있는 기호는 형식이어야 합니다.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(37): error C2039: 'GetInstance': 'Engine'의 멤버가 아닙니다.
+  c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\texturestore.h(7): note: 'Engine' 선언을 참조하십시오.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(37): error C3861: 'GetInstance': 식별자를 찾을 수 없습니다.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(37): error C2227: '->Start' 왼쪽은 클래스/구조체/공용 구조체/제네릭 형식을 가리켜야 합니다.
+  c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(37): note: 'unknown-type' 형식입니다.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(48): error C3083: 'CStaticMeshRenderManager': '::'의 왼쪽에 있는 기호는 형식이어야 합니다.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(48): error C2039: 'GetInstance': 'Engine'의 멤버가 아닙니다.
+  c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\texturestore.h(7): note: 'Engine' 선언을 참조하십시오.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(48): error C3861: 'GetInstance': 식별자를 찾을 수 없습니다.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(48): error C2227: '->FixedUpdate' 왼쪽은 클래스/구조체/공용 구조체/제네릭 형식을 가리켜야 합니다.
+  c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(48): note: 'unknown-type' 형식입니다.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(59): error C3083: 'CStaticMeshRenderManager': '::'의 왼쪽에 있는 기호는 형식이어야 합니다.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(59): error C2039: 'GetInstance': 'Engine'의 멤버가 아닙니다.
+  c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\texturestore.h(7): note: 'Engine' 선언을 참조하십시오.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(59): error C3861: 'GetInstance': 식별자를 찾을 수 없습니다.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(59): error C2227: '->Update' 왼쪽은 클래스/구조체/공용 구조체/제네릭 형식을 가리켜야 합니다.
+  c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(59): note: 'unknown-type' 형식입니다.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(69): error C3083: 'CStaticMeshRenderManager': '::'의 왼쪽에 있는 기호는 형식이어야 합니다.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(69): error C2039: 'GetInstance': 'Engine'의 멤버가 아닙니다.
+  c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\texturestore.h(7): note: 'Engine' 선언을 참조하십시오.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(69): error C3861: 'GetInstance': 식별자를 찾을 수 없습니다.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(69): error C2227: '->LateUpdate' 왼쪽은 클래스/구조체/공용 구조체/제네릭 형식을 가리켜야 합니다.
+  c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(69): note: 'unknown-type' 형식입니다.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(79): error C3083: 'CStaticMeshRenderManager': '::'의 왼쪽에 있는 기호는 형식이어야 합니다.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(79): error C2039: 'GetInstance': 'Engine'의 멤버가 아닙니다.
+  c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\texturestore.h(7): note: 'Engine' 선언을 참조하십시오.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(79): error C3861: 'GetInstance': 식별자를 찾을 수 없습니다.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(79): error C2227: '->PreRender' 왼쪽은 클래스/구조체/공용 구조체/제네릭 형식을 가리켜야 합니다.
+  c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(79): note: 'unknown-type' 형식입니다.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(80): error C3083: 'CStaticMeshRenderManager': '::'의 왼쪽에 있는 기호는 형식이어야 합니다.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(80): error C2039: 'GetInstance': 'Engine'의 멤버가 아닙니다.
+  c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\texturestore.h(7): note: 'Engine' 선언을 참조하십시오.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(80): error C3861: 'GetInstance': 식별자를 찾을 수 없습니다.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(80): error C2227: '->Render' 왼쪽은 클래스/구조체/공용 구조체/제네릭 형식을 가리켜야 합니다.
+  c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(80): note: 'unknown-type' 형식입니다.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(104): error C3083: 'CStaticMeshRenderManager': '::'의 왼쪽에 있는 기호는 형식이어야 합니다.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(104): error C2039: 'GetInstance': 'Engine'의 멤버가 아닙니다.
+  c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\texturestore.h(7): note: 'Engine' 선언을 참조하십시오.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(104): error C3861: 'GetInstance': 식별자를 찾을 수 없습니다.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(104): error C2227: '->PostRender' 왼쪽은 클래스/구조체/공용 구조체/제네릭 형식을 가리켜야 합니다.
+  c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(104): note: 'unknown-type' 형식입니다.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(119): error C3083: 'CStaticMeshRenderManager': '::'의 왼쪽에 있는 기호는 형식이어야 합니다.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(119): error C2039: 'GetInstance': 'Engine'의 멤버가 아닙니다.
+  c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\texturestore.h(7): note: 'Engine' 선언을 참조하십시오.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(119): error C3861: 'GetInstance': 식별자를 찾을 수 없습니다.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(119): error C2227: '->DestroyInstance' 왼쪽은 클래스/구조체/공용 구조체/제네릭 형식을 가리켜야 합니다.
+  c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\maineditor.cpp(119): note: 'unknown-type' 형식입니다.
   InspectorView.cpp
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\default\resource.h(5): warning C4005: 'IDD_ABOUTBOX': 매크로 재정의
+  c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\wndapp.h(9): note: 'IDD_ABOUTBOX'의 이전 정의를 참조하십시오.
 c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\inspectorview.cpp(11): warning C4005: 'new': 매크로 재정의
   c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\enginedefine.h(54): note: 'new'의 이전 정의를 참조하십시오.
 c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\inspectorview.cpp(168): warning C4800: 'BOOL': 'true' 또는 'false'로 bool 값을 강제하고 있습니다(성능 경고).
   HierarchyView.cpp
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\default\resource.h(5): warning C4005: 'IDD_ABOUTBOX': 매크로 재정의
+  c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\wndapp.h(9): note: 'IDD_ABOUTBOX'의 이전 정의를 참조하십시오.
 c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\hierarchyview.cpp(9): warning C4005: 'new': 매크로 재정의
   c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\enginedefine.h(54): note: 'new'의 이전 정의를 참조하십시오.
   FeatureView.cpp
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\default\resource.h(5): warning C4005: 'IDD_ABOUTBOX': 매크로 재정의
+  c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\wndapp.h(9): note: 'IDD_ABOUTBOX'의 이전 정의를 참조하십시오.
 c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\featureview.cpp(7): warning C4005: 'new': 매크로 재정의
   c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\enginedefine.h(54): note: 'new'의 이전 정의를 참조하십시오.
   EditorScene.cpp
-c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\editorscene.cpp(291): warning C4018: '<=': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\editorscene.cpp(442): warning C4305: '인수': 'double'에서 'FLOAT'(으)로 잘립니다.
-c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\editorscene.cpp(686): warning C4018: '<=': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\editorscene.cpp(704): warning C4018: '<=': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\editorscene.cpp(293): warning C4018: '<=': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\editorscene.cpp(444): warning C4305: '인수': 'double'에서 'FLOAT'(으)로 잘립니다.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\editorscene.cpp(688): warning C4018: '<=': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\editorscene.cpp(706): warning C4018: '<=': signed 또는 unsigned가 일치하지 않습니다.
   EditorExtern.cpp
   ColliderManager.cpp
   3DEditorView.cpp
-c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\wndapp.h(9): warning C4005: 'IDD_ABOUTBOX': 매크로 재정의
-  c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\default\resource.h(5): note: 'IDD_ABOUTBOX'의 이전 정의를 참조하십시오.
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\default\resource.h(5): warning C4005: 'IDD_ABOUTBOX': 매크로 재정의
+  c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\wndapp.h(9): note: 'IDD_ABOUTBOX'의 이전 정의를 참조하십시오.
 c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\3deditorview.cpp(22): warning C4005: 'new': 매크로 재정의
   c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\enginedefine.h(54): note: 'new'의 이전 정의를 참조하십시오.
   3DEditorDoc.cpp
+c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\default\resource.h(5): warning C4005: 'IDD_ABOUTBOX': 매크로 재정의
+  c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\wndapp.h(9): note: 'IDD_ABOUTBOX'의 이전 정의를 참조하십시오.
 c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\3deditordoc.cpp(17): warning C4005: 'new': 매크로 재정의
   c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\enginedefine.h(54): note: 'new'의 이전 정의를 참조하십시오.
   코드를 생성하고 있습니다...
 c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\navmeshmanager.cpp(250): warning C4715: 'CNavMeshManager::ObjectPicking': 모든 제어 경로에서 값을 반환하지는 않습니다.
-3DEditorDoc.obj : warning LNK4258: '/entry:WinMainCRTStartup' 지시문은 '/ENTRY:wWinMainCRTStartup' 스위치와 호환되지 않습니다. 무시됩니다.
-3DEditorView.obj : warning LNK4258: '/entry:WinMainCRTStartup' 지시문은 '/ENTRY:wWinMainCRTStartup' 스위치와 호환되지 않습니다. 무시됩니다.
-ColliderManager.obj : warning LNK4258: '/entry:WinMainCRTStartup' 지시문은 '/ENTRY:wWinMainCRTStartup' 스위치와 호환되지 않습니다. 무시됩니다.
-EditorExtern.obj : warning LNK4258: '/entry:WinMainCRTStartup' 지시문은 '/ENTRY:wWinMainCRTStartup' 스위치와 호환되지 않습니다. 무시됩니다.
-EditorScene.obj : warning LNK4258: '/entry:WinMainCRTStartup' 지시문은 '/ENTRY:wWinMainCRTStartup' 스위치와 호환되지 않습니다. 무시됩니다.
-FeatureView.obj : warning LNK4258: '/entry:WinMainCRTStartup' 지시문은 '/ENTRY:wWinMainCRTStartup' 스위치와 호환되지 않습니다. 무시됩니다.
-HierarchyView.obj : warning LNK4258: '/entry:WinMainCRTStartup' 지시문은 '/ENTRY:wWinMainCRTStartup' 스위치와 호환되지 않습니다. 무시됩니다.
-InspectorView.obj : warning LNK4258: '/entry:WinMainCRTStartup' 지시문은 '/ENTRY:wWinMainCRTStartup' 스위치와 호환되지 않습니다. 무시됩니다.
-MainEditor.obj : warning LNK4258: '/entry:WinMainCRTStartup' 지시문은 '/ENTRY:wWinMainCRTStartup' 스위치와 호환되지 않습니다. 무시됩니다.
-MainFrm.obj : warning LNK4258: '/entry:WinMainCRTStartup' 지시문은 '/ENTRY:wWinMainCRTStartup' 스위치와 호환되지 않습니다. 무시됩니다.
-NavMeshManager.obj : warning LNK4258: '/entry:WinMainCRTStartup' 지시문은 '/ENTRY:wWinMainCRTStartup' 스위치와 호환되지 않습니다. 무시됩니다.
-PrefabManager.obj : warning LNK4258: '/entry:WinMainCRTStartup' 지시문은 '/ENTRY:wWinMainCRTStartup' 스위치와 호환되지 않습니다. 무시됩니다.
-ProjectView.obj : warning LNK4258: '/entry:WinMainCRTStartup' 지시문은 '/ENTRY:wWinMainCRTStartup' 스위치와 호환되지 않습니다. 무시됩니다.
-3DEditor.obj : warning LNK4258: '/entry:WinMainCRTStartup' 지시문은 '/ENTRY:wWinMainCRTStartup' 스위치와 호환되지 않습니다. 무시됩니다.
-stdafx.obj : warning LNK4258: '/entry:WinMainCRTStartup' 지시문은 '/ENTRY:wWinMainCRTStartup' 스위치와 호환되지 않습니다. 무시됩니다.
-  3DEditor.vcxproj -> C:\Users\ehddl\OneDrive\바탕 화면\D3DSole\3DEditor\Default\../../Bin/3DEditor/Debug/x86\3DEditor.exe
-  3DEditor.vcxproj -> ../../Bin/3DEditor/Debug/x86\3DEditor.pdb (Partial PDB)
