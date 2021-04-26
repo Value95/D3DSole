@@ -13,7 +13,10 @@ CPlayerIdle::~CPlayerIdle()
 
 void CPlayerIdle::Start()
 {
-	m_player->GetOwner()->GetComponent<Engine::CAnimMeshRenderComponent>()->Set_AnimationSet(45);
+	T = 0;
+	m_player->GetOwner()->GetComponent<Engine::CAnimMeshRenderComponent>()->Set_AnimationSet(T);
+	m_player->GetOwner()->GetComponent<Engine::CAnimMeshRenderComponent>()->GetAnimCtrl()->SetSpeed(0.5f);
+
 }
 
 void CPlayerIdle::End()
@@ -27,6 +30,14 @@ _uint CPlayerIdle::FixedUpdate()
 
 _uint CPlayerIdle::Update()
 {
+	if (m_player->GetOwner()->GetComponent<Engine::CAnimMeshRenderComponent>()->GetAnimCtrl()->Is_AnimationSetEnd())
+	{
+		T++;
+		std::cout << "애니메이션 넘버 : " << T << endl;
+		m_player->GetOwner()->GetComponent<Engine::CAnimMeshRenderComponent>()->Set_AnimationSet(T);
+	}
+
+
 	if (Engine::CInputManager::GetInstance()->KeyPress(KEY_W) ||
 		Engine::CInputManager::GetInstance()->KeyPress(KEY_A) ||
 		Engine::CInputManager::GetInstance()->KeyPress(KEY_S) ||

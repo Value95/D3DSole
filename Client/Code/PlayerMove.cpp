@@ -58,7 +58,7 @@ void CPlayerMove::Move()
 
 	if (!m_player->GetOwner()->GetComponent<Engine::CRigidBodyComponent>()->GetGroundCheck())
 		m_speed *= 0.6f;
-	
+
 	if (Engine::CInputManager::GetInstance()->KeyPress(KEY_W))
 	{
 		m_player->GetOwner()->SetRotationY(Engine::GET_MAIN_CAM->GetOwner()->GetRotation().y);
@@ -90,77 +90,44 @@ void CPlayerMove::Move()
 	{
 		if (A)
 		{
-			if(m_rotation - 315 >= 0) // 양수 시계
-				m_rotation = Engine::MathfMin(m_rotation + (m_player->GetPlayerInfo()->GetRotationSpeed()), 315);
-			else if(m_rotation - 315 < 0) // 음수 반시계
-				m_rotation = Engine::MathfMax(m_rotation - (m_player->GetPlayerInfo()->GetRotationSpeed()), 315);
+			m_rotation = 315;
 		}
 		else if (D)
 		{
-			if (m_rotation <= 45)
-			{
-				m_rotation = Engine::MathfMin(m_rotation + (m_player->GetPlayerInfo()->GetRotationSpeed()), 45);
-			}
-			else if (m_rotation > 45)
-			{
-				// 최단경로가 반시계인지 시계인지판단
-				// 반시계이면 -
-				// 시계이면 +
-				// 다만 315 -> 45가되기위해서는 시계이나 +하면 절대 될수가없다.
-
-				m_rotation = Engine::MathfMax(m_rotation - (m_player->GetPlayerInfo()->GetRotationSpeed()), 45);
-			}
+			m_rotation = 45;
 		}
 		else
 		{
-			if (m_rotation <= 0)
-				m_rotation = Engine::MathfMin(m_rotation + (m_player->GetPlayerInfo()->GetRotationSpeed()), 0);
-			else if (m_rotation > 0)
-				m_rotation = Engine::MathfMax(m_rotation - (m_player->GetPlayerInfo()->GetRotationSpeed()), 0);
+			m_rotation = 0;
 		}
 	}
 	else if (S)
 	{
 		if (A)
 		{
-			if (m_rotation <= 225)
-				m_rotation = Engine::MathfMin(m_rotation + (m_player->GetPlayerInfo()->GetRotationSpeed()), 225);
-			else if (m_rotation > 225)
-				m_rotation = Engine::MathfMax(m_rotation - (m_player->GetPlayerInfo()->GetRotationSpeed()), 225);
+			m_rotation = 225;
 		}
 		else if (D)
 		{
-			if (m_rotation <= 125)
-				m_rotation = Engine::MathfMin(m_rotation + (m_player->GetPlayerInfo()->GetRotationSpeed()), 125);
-			else if (m_rotation > 125)
-				m_rotation = Engine::MathfMax(m_rotation - (m_player->GetPlayerInfo()->GetRotationSpeed()), 125);
+			m_rotation = 125;
 		}
 		else
 		{
-			if (m_rotation <= 180)
-				m_rotation = Engine::MathfMin(m_rotation + (m_player->GetPlayerInfo()->GetRotationSpeed()), 180);
-			else if (m_rotation > 180)
-				m_rotation = Engine::MathfMax(m_rotation - (m_player->GetPlayerInfo()->GetRotationSpeed()), 180);
+			m_rotation = 180;
 		}
 	}
 	else if (A)
 	{
-		if (m_rotation <= 270)
-			m_rotation = Engine::MathfMin(m_rotation + (m_player->GetPlayerInfo()->GetRotationSpeed()), 270);
-		else if (m_rotation > 270)
-			m_rotation = Engine::MathfMax(m_rotation - (m_player->GetPlayerInfo()->GetRotationSpeed()), 270);
+		m_rotation = 270;
 	}
 	else if (D)
 	{
-		if (m_rotation <= 90)
-			m_rotation = Engine::MathfMin(m_rotation + (m_player->GetPlayerInfo()->GetRotationSpeed()), 90);
-		else if (m_rotation > 90)
-			m_rotation = Engine::MathfMax(m_rotation - (m_player->GetPlayerInfo()->GetRotationSpeed()), 90);
+		m_rotation = 90;
 	}
 
 	if (W || A || S || D)
 		cameraY = Engine::GET_MAIN_CAM->GetOwner()->GetCameraY();
-	else if(m_player->GetOwner()->GetComponent<Engine::CRigidBodyComponent>()->GetGroundCheck())
+	else if (m_player->GetOwner()->GetComponent<Engine::CRigidBodyComponent>()->GetGroundCheck())
 		m_player->ChangeFSM(CPlayer::STATE::IDLE);
 
 	m_player->GetOwner()->SetRotationY(m_rotation - 180 + cameraY);
