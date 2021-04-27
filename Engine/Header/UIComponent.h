@@ -11,6 +11,9 @@ private:
 	GETTOR_SETTOR(std::wstring, m_textureKey, L"", TextureKey) // 이미지를 불러올 키값
 	GETTOR_SETTOR(SHARED(_TexData), m_pTexData, nullptr, TexData) // 이미지를 저장할 변수
 
+	vector2 m_xUV; // xUV값을 저장할 변수
+	vector2 m_yUV; // xUV값을 저장할 변수
+
 	_MeshData m_meshDate; // 버텍스 ,인덱스 버퍼를저장하기 위한 변수
 public:
 	explicit						CUIComponent	(void);
@@ -35,9 +38,11 @@ public:
 	void OnEnable(void) override;
 	void OnDisable(void) override;
 
+	void SetXUV(vector2 value);
+	void SetYUV(vector2 value);
 private:
 	void DateInit();
-
+	void UVSetting();
 };
 END
 

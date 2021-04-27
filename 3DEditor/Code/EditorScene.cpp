@@ -249,7 +249,7 @@ void CEditorScene::ObjectPicking(std::wstring layerKey)
 			return;
 
 		// 마우스좌표(뷰포트) -> (월드행렬)로변환
-		D3DVIEWPORT9		ViewPort;
+		D3DVIEWPORT9 ViewPort;
 		ZeroMemory(&ViewPort, sizeof(D3DVIEWPORT9));
 
 		Engine::GET_DEVICE->GetViewport(&ViewPort);
@@ -287,7 +287,7 @@ void CEditorScene::ObjectPicking(std::wstring layerKey)
 		D3DXVec3TransformNormal(&rayDir, &rayDir, &matWorld);
 		//-------------------------------------------------------------
 
-		Engine::CGameObject* obj = Engine::CRaycast::RayCast(rayPos, rayDir, 1000, layerKey);
+		Engine::CGameObject* obj = Engine::CRaycast::MeshRayCast(rayPos, rayDir, 1000, layerKey);
 		if (obj != nullptr)
 		{
 			for (int i = 0; i <= m_hierarchyView->m_object.size() - 1; i++)

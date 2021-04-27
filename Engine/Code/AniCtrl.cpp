@@ -47,7 +47,7 @@ void CAniCtrl::Set_AnimationSet(const _uint & iIndex)
 
 	m_pAniCtrl->GetAnimationSet(iIndex, &pAS);	
 
-	m_dPeriod = pAS->GetPeriod();	// 현재 애니메이션 셋이 지닌 전체 재생 시간 반환
+	m_dPeriod = pAS->GetPeriod() -1;	// 현재 애니메이션 셋이 지닌 전체 재생 시간 반환
 
 	////m_pAniCtrl->GetAnimationSetByName();
 	m_pAniCtrl->SetTrackAnimationSet(m_iNewTrack, pAS);
@@ -99,7 +99,7 @@ _bool CAniCtrl::Is_AnimationSetEnd(void)
 
 	m_pAniCtrl->GetTrackDesc(m_iCurrentTrack, &TrackInfo);
 
-	if (TrackInfo.Position >= m_dPeriod - 0.1)
+	if (TrackInfo.Position >= m_dPeriod)
 		return true;
 
 	return false;
@@ -130,4 +130,15 @@ CAniCtrl* CAniCtrl::Create(const CAniCtrl& rhs)
 void CAniCtrl::OnDestroy()
 {
 	SafeRelease(m_pAniCtrl);
+}
+
+_float CAniCtrl::CurentTime()
+{
+	D3DXTRACK_DESC		TrackInfo;
+	ZeroMemory(&TrackInfo, sizeof(D3DXTRACK_DESC));
+
+	m_pAniCtrl->GetTrackDesc(m_iCurrentTrack, &TrackInfo);
+
+	_float percentage = TrackInfo.Position / m_dPeriod;
+	return percentage;
 }

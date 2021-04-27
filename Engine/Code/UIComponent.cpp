@@ -36,6 +36,8 @@ SHARED(CComponent) CUIComponent::MakeClone(CGameObject* pObject)
 void CUIComponent::Awake(void)
 {
 	__super::Awake();
+	m_xUV = vector2(0, 1);
+	m_yUV = vector2(0, 1);
 }
 
 
@@ -123,6 +125,18 @@ void CUIComponent::OnDisable(void)
 {
 }
 
+void CUIComponent::SetXUV(vector2 value)
+{
+	m_xUV = value;
+	UVSetting();
+}
+
+void CUIComponent::SetYUV(vector2 value)
+{
+	m_yUV = value;
+	UVSetting();
+}
+
 void CUIComponent::DateInit()
 {
 	m_meshDate.FVF = customFVF;
@@ -137,16 +151,16 @@ void CUIComponent::DateInit()
 	m_meshDate.vertexCount = 4;
 
 	pVertices[0].position = vector3(-0.5f, 0.5f, 0);
-	pVertices[0].uv = vector2(0, 0);
+	pVertices[0].uv = vector2(m_xUV.x, m_yUV.x);
 
 	pVertices[1].position = vector3(0.5f, 0.5f, 0);
-	pVertices[1].uv = vector2(1, 0);
+	pVertices[1].uv = vector2(m_xUV.y, m_yUV.x);
 
 	pVertices[2].position = vector3(0.5f, -0.5f, 0);
-	pVertices[2].uv = vector2(1, 1);
+	pVertices[2].uv = vector2(m_xUV.y, m_yUV.y);
 
 	pVertices[3].position = vector3(-0.5f, -0.5f, 0);
-	pVertices[3].uv = vector2(0, 1);
+	pVertices[3].uv = vector2(m_xUV.x, m_yUV.y);
 		
 	pVertices[0].normal = vector3Back;
 	pVertices[1].normal = vector3Back;
@@ -170,5 +184,32 @@ void CUIComponent::DateInit()
 	pIndices[5] = 3;
 
 	m_meshDate.indexBuffer->Unlock();
+
+}
+
+void CUIComponent::UVSetting()
+{
+	_CustomVertex* pVertices = nullptr;
+
+	m_meshDate.vertexBuffer->Lock(0, 0, (void**)&pVertices, 0);
+
+	pVertices[0].position = vector3(-0.5f, 0.5f, 0);
+	pVertices[0].uv = vector2(m_xUV.x, m_yUV.x);
+
+	pVertices[1].position = vector3(0.5f, 0.5f, 0);
+	pVertices[1].uv = vector2(m_xUV.y, m_yUV.x);
+
+	pVertices[2].position = vector3(0.5f, -0.5f, 0);
+	pVertices[2].uv = vector2(m_xUV.y, m_yUV.y);
+
+	pVertices[3].position = vector3(-0.5f, -0.5f, 0);
+	pVertices[3].uv = vector2(m_xUV.x, m_yUV.y);
+
+	pVertices[0].normal = vector3Back;
+	pVertices[1].normal = vector3Back;
+	pVertices[2].normal = vector3Back;
+	pVertices[3].normal = vector3Back;
+
+	m_meshDate.vertexBuffer->Unlock();
 
 }

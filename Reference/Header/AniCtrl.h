@@ -27,6 +27,7 @@ public:
 	static CAniCtrl* Create(LPD3DXANIMATIONCONTROLLER pAniCtrl);
 	static CAniCtrl* Create(const CAniCtrl& rhs);
 	void OnDestroy();
+	_float CurentTime();
 };
 
 END

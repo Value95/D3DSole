@@ -17,7 +17,7 @@ CRaycast::~CRaycast()
 }
 
 // 원점(origin) , 방향(direction) , 거리(maxDistance) , 레이어(layerKey) , 히트지점(outHit)
-CGameObject * CRaycast::RayCast(vector3 origin, vector3 direction, _float maxDistance, std::wstring layerKey, vector3& outHit)
+CGameObject * CRaycast::MeshRayCast(vector3 origin, vector3 direction, _float maxDistance, std::wstring layerKey, vector3& outHit)
 {
 	BOOL	hit;
 	DWORD	dwfaceIndex;
@@ -55,7 +55,7 @@ CGameObject * CRaycast::RayCast(vector3 origin, vector3 direction, _float maxDis
 	return gameObject;
 }
 
-CGameObject * CRaycast::RayCast(vector3 origin, vector3 direction, _float maxDistance, std::wstring layerKey)
+CGameObject * CRaycast::MeshRayCast(vector3 origin, vector3 direction, _float maxDistance, std::wstring layerKey)
 {
 	BOOL hit;
 	DWORD dwfaceIndex;
@@ -91,6 +91,112 @@ CGameObject * CRaycast::RayCast(vector3 origin, vector3 direction, _float maxDis
 		}
 	}
 	return gameObject;
+}
+
+CGameObject * CRaycast::BoxRayCast(vector3 origin, vector3 direction, _float maxDistance, std::wstring layerKey, vector3 & outHit)
+{
+	_float t = FLT_MAX;
+	CGameObject* pGameObject = nullptr;
+
+	CLayer* pLayer = GET_CUR_SCENE->GetLayers()[layerKey].get();
+
+	for (auto& object : pLayer->GetGameObjects())
+	{
+		if (object->GetPosition() == origin)
+			continue;
+
+		_float tMin = 0;
+		_float tMax = maxDistance;
+
+		vector3 minPos = (object->GetScale()* 0.5f) * -1;
+		vector3 maxPos = (object->GetScale()* 0.5f);
+
+		D3DXVec3TransformCoord(&minPos, &minPos, &object->GetWorldMatrix());
+		D3DXVec3TransformCoord(&maxPos, &maxPos, &object->GetWorldMatrix());
+
+		// 문제는 오브젝트의크기
+		// 플레이어의 0.001과 돌의 1은 같은 크기이다. 근데 이것을 월드로보면 플레이어는 돌에 100배작다.
+
+		for (int i = 0; i < 3; ++i)
+		{
+			if (minPos[i] > maxPos[i])
+			{
+				_float temp = minPos[i];
+				minPos[i] = maxPos[i];
+				maxPos[i] = temp;
+			}
+		}
+
+		// D3DXIntersectTri
+
+		if (!RayIntersectCheck(direction.x, origin.x, minPos.x, maxPos.x, tMin, tMax))
+			continue;
+		if (!RayIntersectCheck(direction.y, origin.y, minPos.y, maxPos.y, tMin, tMax))
+			continue;
+		if (!RayIntersectCheck(direction.z, origin.z, minPos.z, maxPos.z, tMin, tMax))
+			continue;
+
+		if (tMin < t)
+		{
+			t = tMin;
+			pGameObject = object.get();
+		}
+	}
+
+	return pGameObject;
+}
+
+CGameObject * CRaycast::BoxRayCast(vector3 origin, vector3 direction, _float maxDistance, std::wstring layerKey)
+{
+	_float t = FLT_MAX;
+	CGameObject* pGameObject = nullptr;
+
+	CLayer* pLayer = GET_CUR_SCENE->GetLayers()[layerKey].get();
+
+	for (auto& object : pLayer->GetGameObjects())
+	{
+		if (object->GetPosition() == origin)
+			continue;
+
+		_float tMin = 0;
+		_float tMax = maxDistance;
+
+		vector3 minPos = (object->GetScale()* 0.5f) * -1;
+		vector3 maxPos = (object->GetScale()* 0.5f);
+
+		D3DXVec3TransformCoord(&minPos, &minPos, &object->GetWorldMatrix());
+		D3DXVec3TransformCoord(&maxPos, &maxPos, &object->GetWorldMatrix());
+
+		// 문제는 오브젝트의크기
+		// 플레이어의 0.001과 돌의 1은 같은 크기이다. 근데 이것을 월드로보면 플레이어는 돌에 100배작다.
+
+		for (int i = 0; i < 3; ++i)
+		{
+			if (minPos[i] > maxPos[i])
+			{
+				_float temp = minPos[i];
+				minPos[i] = maxPos[i];
+				maxPos[i] = temp;
+			}
+		}
+
+		// D3DXIntersectTri
+
+		if (!RayIntersectCheck(direction.x, origin.x, minPos.x, maxPos.x, tMin, tMax))
+			continue;
+		if (!RayIntersectCheck(direction.y, origin.y, minPos.y, maxPos.y, tMin, tMax))
+			continue;
+		if (!RayIntersectCheck(direction.z, origin.z, minPos.z, maxPos.z, tMin, tMax))
+			continue;
+
+		if (tMin < t)
+		{
+			t = tMin;
+			pGameObject = object.get();
+		}
+	}
+
+	return pGameObject;
 }
 
 _bool CRaycast::RayIntersectCheck(_float rayAxisDir, _float rayAxisStart,

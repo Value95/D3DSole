@@ -132,9 +132,9 @@ void CColliderManager::BoxAndBox(std::vector<CGameObject*>& returnCollider, CBox
 	{
 		return;
 	}
-	AABB(returnCollider, box1, box2);
+	//AABB(returnCollider, box1, box2);
 
-	/*if (m_gameObject1->GetRotation().x / 90 != 0 || m_gameObject1->GetRotation().y / 90 != 0 || m_gameObject1->GetRotation().z / 90 != 0 &&
+	if (m_gameObject1->GetRotation().x / 90 != 0 || m_gameObject1->GetRotation().y / 90 != 0 || m_gameObject1->GetRotation().z / 90 != 0 &&
 		m_gameObject2->GetRotation().x / 90 != 0 || m_gameObject2->GetRotation().y / 90 != 0 || m_gameObject2->GetRotation().z / 90 != 0)
 	{
 		OBB(returnCollider, box1, box2);
@@ -142,7 +142,7 @@ void CColliderManager::BoxAndBox(std::vector<CGameObject*>& returnCollider, CBox
 	else
 	{
 		AABB(returnCollider, box1, box2);
-	}*/
+	}
 }
 
 void CColliderManager::SphereAndSphere(std::vector<CGameObject*>& returnCollider, CSphereCollider* sphere1, CSphereCollider* sphere2)
@@ -161,7 +161,6 @@ void CColliderManager::SphereAndSphere(std::vector<CGameObject*>& returnCollider
 
 void CColliderManager::AABB(std::vector<CGameObject*>& returnCollider, CBoxCollider* box1, CBoxCollider* box2)
 {
-	// offset을 방향을 돌려서
 	vector3 old1 = box1->GetOffset();
 	vector3 old2 = box2->GetOffset();
 
@@ -192,7 +191,7 @@ void CColliderManager::OBB(std::vector<CGameObject*>& returnCollider, CBoxCollid
 	float distanceZ = fabs((m_gameObject1->GetPosition().z + box1->GetOffset().z) - (m_gameObject2->GetPosition().z + box2->GetOffset().z));
 	float radCZ = box1->GetBoxSize().z * 0.5f + box2->GetBoxSize().z * 0.5f;
 
-	if (distanceZ > radCZ)
+	if (distanceZ > radCZ) // Z검사 (원래라면 이것도 백터 길이구해서 비교하는게 맞으나 현재 게임에 z축 회전으로 인한 충돌 문제는 없어서 좀더 간결하게 하기위해서 z는 이런식으로 제외함)
 	{
 		return;
 	}
@@ -201,75 +200,88 @@ void CColliderManager::OBB(std::vector<CGameObject*>& returnCollider, CBoxCollid
 	m_obj1Vectex[0] = m_gameObject1->GetPosition();
 	m_obj1Vectex[0].x += box1->GetBoxSize().x * 0.5f;
 	m_obj1Vectex[0].y += box1->GetBoxSize().y * 0.5f;
+	m_obj1Vectex[0].z = 0;
 
 	m_obj1Vectex[1] = m_gameObject1->GetPosition();
 	m_obj1Vectex[1].x += box1->GetBoxSize().x * 0.5f;
 	m_obj1Vectex[1].y -= box1->GetBoxSize().y * 0.5f;
+	m_obj1Vectex[1].z = 0;
 
 	m_obj1Vectex[2] = m_gameObject1->GetPosition();
 	m_obj1Vectex[2].x -= box1->GetBoxSize().x * 0.5f;
 	m_obj1Vectex[2].y -= box1->GetBoxSize().y * 0.5f;
+	m_obj1Vectex[2].z = 0;
 
 	m_obj1Vectex[3] = m_gameObject1->GetPosition();
 	m_obj1Vectex[3].x -= box1->GetBoxSize().x * 0.5f;
 	m_obj1Vectex[3].y += box1->GetBoxSize().y * 0.5f;
+	m_obj1Vectex[3].z = 0;
 	//-----------------------------------
 	m_obj2Vectex[0] = m_gameObject2->GetPosition();
 	m_obj2Vectex[0].x += box2->GetBoxSize().x * 0.5f;
 	m_obj2Vectex[0].y += box2->GetBoxSize().y * 0.5f;
+	m_obj2Vectex[0].z = 0;
 
 	m_obj2Vectex[1] = m_gameObject2->GetPosition();
 	m_obj2Vectex[1].x += box2->GetBoxSize().x * 0.5f;
 	m_obj2Vectex[1].y -= box2->GetBoxSize().y * 0.5f;
+	m_obj2Vectex[1].z = 0;
 
 	m_obj2Vectex[2] = m_gameObject2->GetPosition();
 	m_obj2Vectex[2].x -= box2->GetBoxSize().x * 0.5f;
 	m_obj2Vectex[2].y -= box2->GetBoxSize().y * 0.5f;
+	m_obj2Vectex[2].z = 0;
 
 	m_obj2Vectex[3] = m_gameObject2->GetPosition();
 	m_obj2Vectex[3].x -= box2->GetBoxSize().x * 0.5f;
 	m_obj2Vectex[3].y += box2->GetBoxSize().y * 0.5f;
+	m_obj2Vectex[3].z = 0;
 	//---------------------------------- 축 구하기
 	matrix4x4 rotation;
-	D3DXMatrixRotationYawPitchRoll(&rotation, m_gameObject1->GetRotation().x, m_gameObject1->GetRotation().y, m_gameObject1->GetRotation().z);
+	D3DXMatrixRotationYawPitchRoll(&rotation, D3DXToRadian(m_gameObject1->GetRotation().y), D3DXToRadian(m_gameObject1->GetRotation().x), D3DXToRadian(m_gameObject1->GetRotation().z));
 
-	m_box1UP = m_obj1Vectex[0] - m_obj1Vectex[3];
+	m_box1UP = m_obj1Vectex[1] - m_obj1Vectex[0];
 	D3DXVec3TransformNormal(&m_box1UP, &m_box1UP, &rotation);
 	D3DXVec3Normalize(&m_box1UP, &m_box1UP);
 
-	m_box1Right = m_obj1Vectex[0] - m_obj1Vectex[1];
+	m_box1Right = m_obj1Vectex[3] - m_obj1Vectex[0]; 
 	D3DXVec3TransformNormal(&m_box1Right, &m_box1Right, &rotation);
 	D3DXVec3Normalize(&m_box1Right, &m_box1Right);
-	//--------------------------------------------
-	D3DXMatrixRotationYawPitchRoll(&rotation, m_gameObject2->GetRotation().x, m_gameObject2->GetRotation().y, m_gameObject2->GetRotation().z);
 
-	m_box2UP = m_obj2Vectex[0] - m_obj2Vectex[3];
+	//--------------------------------------------
+	D3DXMatrixRotationYawPitchRoll(&rotation, D3DXToRadian(m_gameObject2->GetRotation().y), D3DXToRadian(m_gameObject2->GetRotation().x), D3DXToRadian(m_gameObject2->GetRotation().z));
+	
+	m_box2UP = m_obj2Vectex[1] - m_obj2Vectex[0];
 	D3DXVec3TransformNormal(&m_box2UP, &m_box2UP, &rotation);
 	D3DXVec3Normalize(&m_box2UP, &m_box2UP);
 
-	m_box2Right = m_obj2Vectex[0] - m_obj2Vectex[1];
+	m_box2Right = m_obj2Vectex[3] - m_obj2Vectex[0];
 	D3DXVec3TransformNormal(&m_box2Right, &m_box2Right, &rotation);
 	D3DXVec3Normalize(&m_box2Right, &m_box2Right);
 	//-------------------------------------------
 	box1Size = box1->GetBoxSize();
 	box2Size = box2->GetBoxSize();
 	m_distance = m_gameObject1->GetPosition() - m_gameObject2->GetPosition();
+	m_distance.z = 0;
+
 	if (CheckShaft(m_box1UP) && CheckShaft(m_box2UP) && CheckShaft(m_box1Right) && CheckShaft(m_box2Right))
 	{
 		returnCollider.emplace_back(m_gameObject2);
 	}
+
 }
 
 bool CColliderManager::CheckShaft(vector3 shaft)
 {
 	_float distance = abs(D3DXVec3Dot(&shaft, &m_distance));
 
-	if (distance > abs(D3DXVec3Dot(&shaft, &(m_box1UP * box1Size.y * 0.5)))
-		+ abs(D3DXVec3Dot(&shaft, &(m_box1Right * box1Size.x * 0.5)))
-		+ abs(D3DXVec3Dot(&shaft, &(m_box2UP * box2Size.y * 0.5)))
-		+ abs(D3DXVec3Dot(&shaft, &(m_box2Right * box2Size.x * 0.5))))
-	{
+	_float T = abs(D3DXVec3Dot(&shaft, &(m_box1UP * box1Size.y * 0.5)))
+			 + abs(D3DXVec3Dot(&shaft, &(m_box1Right * box1Size.x * 0.5)))
+			 + abs(D3DXVec3Dot(&shaft, &(m_box2UP * box2Size.y * 0.5)))
+			 + abs(D3DXVec3Dot(&shaft, &(m_box2Right * box2Size.x * 0.5)));
 
+	if (distance > T)
+	{
 		return false;
 	}
 

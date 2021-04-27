@@ -239,7 +239,7 @@ Engine::CGameObject* CNavMeshManager::ObjectPicking()
 		D3DXVec3TransformCoord(&rayPos, &rayPos, &matView);
 		D3DXVec3TransformNormal(&rayDir, &rayDir, &matView);
 
-		Engine::CGameObject* obj = Engine::CRaycast::RayCast(rayPos, rayDir, 1000, L"NavMesh");
+		Engine::CGameObject* obj = Engine::CRaycast::MeshRayCast(rayPos, rayDir, 1000, L"NavMesh");
 		if (obj != nullptr)
 		{
 			CInspectorView* inspectorView = dynamic_cast<CInspectorView*>(dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd())->m_rightSplitter.GetPane(0, 0));

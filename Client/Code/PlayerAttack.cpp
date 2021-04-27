@@ -18,9 +18,9 @@ void CPlayerAttack::Start()
 	m_player->GetOwner()->GetComponent<Engine::CAnimMeshRenderComponent>()->GetAnimCtrl()->SetSpeed(10);
 
 	if(m_player->GetOwner()->GetComponent<Engine::CRigidBodyComponent>()->GetGroundCheck())
-		m_player->GetOwner()->GetComponent<Engine::CAnimMeshRenderComponent>()->Set_AnimationSet(0);
+		m_player->GetOwner()->GetComponent<Engine::CAnimMeshRenderComponent>()->Set_AnimationSet(45);
 	else
-		m_player->GetOwner()->GetComponent<Engine::CAnimMeshRenderComponent>()->Set_AnimationSet(7);
+		m_player->GetOwner()->GetComponent<Engine::CAnimMeshRenderComponent>()->Set_AnimationSet(45);
 }
 
 void CPlayerAttack::End()
@@ -37,11 +37,7 @@ _uint CPlayerAttack::FixedUpdate()
 		{
 			for (auto& object : col)
 			{
-				if (object->GetLayerKey() == L"Monster")
-				{
-					object->GetComponent<CMonster>()->Hit(m_player->GetPlayerInfo()->GetDamage());
-					init = false;
-				}
+				Attack(object);
 			}
 		}
 	}
@@ -66,4 +62,17 @@ _uint CPlayerAttack::LateUpdate()
 
 void CPlayerAttack::OnDestroy(void)
 {
+}
+
+void CPlayerAttack::Attack(Engine::CGameObject* gameObject)
+{
+	if (gameObject->GetLayerKey() == L"Monster")
+	{
+		gameObject->GetComponent<CMonster>()->Hit(m_player->GetPlayerInfo()->GetDamage());
+		init = false;
+	}
+	else if (gameObject->GetName() == L"Boss")
+	{
+
+	}
 }

@@ -32,48 +32,50 @@ void CDongilScene::Start(void)
 	__super::Start();
 	//LoadObject(L"TestScene");
 
-	{
+	{ // 카메라
 		m_pMainCamera = Engine::ADD_CLONE(L"Camera", L"Camera", true)->GetComponent<Engine::CCameraComponent>();
 		m_pMainCamera->GetOwner()->SetCamera(true);
 		m_pMainCamera->GetOwner()->SetPosition(vector3(0, 0, 0));
 	}
 
-	{
-		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Player", L"Player", true);
-		pObj->SetPosition(vector3(10,5,10));
-
-		m_pMainCamera->GetOwner()->SetTarget(pObj.get());
-	}
-
-	{
-		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
-		pObj->SetPosition(vector3(10, 0,10));
-		pObj->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3One, vector3Zero));
-		pObj->AddComponent<Engine::CBoxComponent>()->SetSize(vector3(1, 1, 1));
-	}
-
-	{
+	{ // 스카이박스
 		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
 		pObj->SetPosition(vector3(0, 0, 0));
 		pObj->SetScale(vector3(10, 10, 10));
 		pObj->AddComponent<Engine::CSkyBoxComponent>()->SetTextureKey(L"burger0");
 	}
 
-	{
+	{ // 라이트
 		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
 		pObj->SetRotation(vector3(30, -50, 0));
 		pObj->AddComponent<Engine::CDirectionalLightComponent>();
 	}
 
+	{ // 플레이어
+		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Player", L"Player", true);
+		pObj->SetPosition(vector3(10,15,10));
+		pObj->SetRotation(vector3(0, 0, 0));
+		pObj->AddComponent<Engine::CBoxComponent>()->SetSize(vector3(0.5,0.5,0.5) * 100);
+		m_pMainCamera->GetOwner()->SetTarget(pObj.get());
+	}
+
 	{
 		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
 		pObj->SetName(L"Sword");
-		pObj->SetPosition(vector3(0, 0, 0));
 		pObj->SetRotation(vector3(45, 45, 45));
 		pObj->SetScale(vector3(0.01f, 0.01f, 0.01f));
 		pObj->AddComponent<CPlayerWapon>();
 		pObj->AddComponent<Engine::CMeshComponent>()->SetMeshKey(L"Wapon_Sword_000.X");
 		pObj->AddComponent<Engine::CStaticMeshRenderComponent>();
+	}
+
+	{ // 바닥
+		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
+		pObj->SetPosition(vector3(13, 0, 10));
+		pObj->SetRotation(vector3(0, 0, 35));
+
+		pObj->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(10,1,10), vector3Zero));
+		pObj->AddComponent<Engine::CBoxComponent>()->SetSize(vector3(10, 1, 10));
 	}
 
 

@@ -20,5 +20,8 @@ public:
 	virtual _uint Update() override;
 	virtual _uint LateUpdate() override;
 	virtual void OnDestroy(void) override;
+
+private:
+	void Attack(Engine::CGameObject* gameObject);
 };
 

@@ -211,7 +211,7 @@ void CMainApp::Player()
 	player->GetComponent<Engine::CRigidBodyComponent>()->SetBounciness(0.0f);
 	player->GetComponent<Engine::CRigidBodyComponent>()->SetMass(80);
 	player->AddComponent<CPlayer>();
-	player->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(0.1, 0.6, 0.1), vector3(0, 0.3, 0)));
+	player->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(0.5, 0.5, 0.5), vector3(0, 0.0, 0)));
 	player->AddComponent<Engine::CAnimMeshRenderComponent>()->MeshInput(L"../../Resource/Mesh/Static/Player/", L"Player_Player_000.X");
 	Engine::CObjectFactory::GetInstance()->AddPrototype(player);
 

@@ -10,6 +10,16 @@ class CSphereCollider;
 class CRayCollider;
 class ENGINE_DLL CColliderManager final : public CEngine
 {
+private:
+	typedef		struct tagOBB
+	{
+		vector3		point[8];
+		vector3		center;
+		vector3		projAxis[3];		// 각 면으로 뻗어나가는 방향 벡터
+		vector3		axis[3];			// 면체와 평행항 축 벡터
+
+	}Obb;
+
 	DECLARE_SINGLETON(CColliderManager)
 private:
 	std::vector<SHARED(CColliderComponent)> m_vecCollider;
