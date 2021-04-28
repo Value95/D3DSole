@@ -68,6 +68,15 @@ void CDongilScene::Start(void)
 		pObj->AddComponent<Engine::CStaticMeshRenderComponent>();
 	}
 
+	{
+		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Monster", L"Scarecrow", true);
+		pObj->SetName(L"Scarecrow");
+		pObj->AddComponent<Engine::CBoxComponent>()->SetSize(vector3(1, 10, 1) * 100);
+		pObj->AddComponent<CMonster>()->AddFSM<CScarecrowIdle>();
+		pObj->SetPosition(vector3(0, -1, 0));
+	}
+	
+
 	{ // ¹Ù´Ú
 		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"MapObject", L"Tile", true);
 		pObj->SetPosition(vector3(13, -3, 10));

@@ -21,6 +21,10 @@ SHARED(Engine::CComponent) CMonster::MakeClone(Engine::CGameObject* pObject)
 
 	pClone->SetIsAwaked(m_isAwaked);
 
+	pClone->SetMonsterFSM(m_monsterFSM);
+	pClone->SetMonsterMaintenanceFSM(m_monsterMaintenanceFSM);
+
+	pClone->SetMonsterInfo(m_monsterInfo);
 
 	return pClone;
 }
@@ -28,31 +32,39 @@ SHARED(Engine::CComponent) CMonster::MakeClone(Engine::CGameObject* pObject)
 void CMonster::Awake(void)
 {
 	__super::Awake();
-}
+	if(m_monsterInfo == nullptr)
+		m_monsterInfo = new CMonsterInfo();
 
+}
 
 void CMonster::Start(SHARED(CComponent) spThis)
 {
 	__super::Start(spThis);
-	m_monsterInfo = new CMonsterInfo();
 	m_player = Engine::GET_CUR_SCENE->FindObjectByName(L"Player");
+	m_hitCheck = false;
 }
 
 _uint CMonster::FixedUpdate(SHARED(CComponent) spThis)
 {
 	m_monsterFSM[m_monsterState]->FixedUpdate();
+	//m_monsterMaintenanceFSM->FixedUpdate();
 	return NO_EVENT;
 }
 
 _uint CMonster::Update(SHARED(CComponent) spThis)
 {
 	m_monsterFSM[m_monsterState]->Update();
+	//m_monsterMaintenanceFSM->Update();
 	return NO_EVENT;
 }
 
 _uint CMonster::LateUpdate(SHARED(CComponent) spThis)
 {
+
 	m_monsterFSM[m_monsterState]->LateUpdate();
+	//m_monsterMaintenanceFSM->LateUpdate();
+
+	m_hitCheck = true;
 	return NO_EVENT;
 }
 
@@ -77,11 +89,12 @@ void CMonster::ChangeFSM(_int state)
 
 void CMonster::Hit(_int damage)
 {
-	m_monsterInfo->AddHp(damage);
+	m_hitCheck = true;
+	m_monsterInfo->AddHp(-damage);
 	HitEffect();
 }
 
 void CMonster::HitEffect()
 {
-	std::cout << "HitEffect" << endl;
+	//std::cout << "HitEffect" << endl;
 }

@@ -6,7 +6,12 @@ class CScarecrowIdle :
 {
 private:
 	CMonster* m_monster;
-	_bool init = false;
+	_bool m_init = false;
+
+	_float m_resetTime;
+	_float m_resetTimeMax;
+
+	_float m_pastHP;
 public:
 	CScarecrowIdle(CMonster* monster);
 	virtual ~CScarecrowIdle();

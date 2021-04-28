@@ -6,9 +6,12 @@ class CMonster final : public Engine::CComponent
 {
 private:
 	GETTOR_SETTOR(vector<FSM*>, m_monsterFSM, {}, MonsterFSM);
+	GETTOR_SETTOR(FSM*, m_monsterMaintenanceFSM, {}, MonsterMaintenanceFSM);
 	GETTOR(_int, m_monsterState, 0, MonsterState);
 	GETTOR_SETTOR(CMonsterInfo*, m_monsterInfo, {}, MonsterInfo);
 	SHARED(Engine::CGameObject) m_player;
+
+	GETTOR(_bool, m_hitCheck, 0, HitCheck);
 
 public:
 	explicit CMonster(void);

@@ -5,6 +5,10 @@
 #include "DongilScene.h"
 #pragma endregion
 
+#pragma region Monster
+#include "ScarecrowIdle.h"
+#pragma endregion
+
 CMainApp::CMainApp(void)
 {
 }
@@ -156,8 +160,7 @@ void CMainApp::InitStaticPrototype(void)
 	Monster();
 	Player();
 }
-// LayerKey 는 중첩 가능
-// ObjectKey 는 중첩 불가능
+
 void CMainApp::Default()
 {
 	SHARED(Engine::CGameObject) default = Engine::CGameObject::Create(L"Default", L"Default", true);

@@ -2,10 +2,12 @@
 #include "..\Header\PlayerAttack.h"
 #include "PlayerInfo.h"
 
+#include "MonsterInfo.h"
+
 CPlayerAttack::CPlayerAttack(CPlayer* player)
 {
 	m_player = player;
-	collision = Engine::CBoxCollider::Create(vector3(1, 1, 1), vector3(0,0,-3));
+	collision = Engine::CBoxCollider::Create(vector3(1, 1, 1), vector3(0,0,-2));
 }
 
 CPlayerAttack::~CPlayerAttack()
@@ -71,6 +73,7 @@ void CPlayerAttack::Attack(Engine::CGameObject* gameObject)
 	if (gameObject->GetLayerKey() == L"Monster")
 	{
 		gameObject->GetComponent<CMonster>()->Hit(m_player->GetPlayerInfo()->GetDamage());
+		cout << "몬스터 체력 : " << gameObject->GetComponent<CMonster>()->GetMonsterInfo()->GetHP() << endl;
 		init = false;
 	}
 	else if (gameObject->GetName() == L"Boss")
