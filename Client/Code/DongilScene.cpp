@@ -53,54 +53,36 @@ void CDongilScene::Start(void)
 
 	{ // 플레이어
 		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Player", L"Player", true);
-		pObj->SetPosition(vector3(10,15,10));
+		pObj->SetPosition(vector3(10, 15, 10));
 		pObj->SetRotation(vector3(0, 0, 0));
-		pObj->AddComponent<Engine::CBoxComponent>()->SetSize(vector3(0.5,0.5,0.5) * 100);
+		pObj->AddComponent<Engine::CBoxComponent>()->SetSize(vector3(0.5, 0.5, 0.5) * 100);
 		m_pMainCamera->GetOwner()->SetTarget(pObj.get());
 	}
 
 	{
 		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
 		pObj->SetName(L"Sword");
-		pObj->SetRotation(vector3(45, 45, 45));
-		pObj->SetScale(vector3(0.01f, 0.01f, 0.01f));
+		pObj->SetRotation(vector3(0, 155, 0));
 		pObj->AddComponent<CPlayerWapon>();
 		pObj->AddComponent<Engine::CMeshComponent>()->SetMeshKey(L"Wapon_Sword_000.X");
 		pObj->AddComponent<Engine::CStaticMeshRenderComponent>();
 	}
 
 	{ // 바닥
-		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
-		pObj->SetPosition(vector3(13, 0, 10));
-		pObj->SetRotation(vector3(0, 0, 35));
+		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"MapObject", L"Tile", true);
+		pObj->SetPosition(vector3(13, -3, 10));
+		pObj->SetRotation(vector3(0, 0, 0));
 
-		pObj->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(10,1,10), vector3Zero));
-		pObj->AddComponent<Engine::CBoxComponent>()->SetSize(vector3(10, 1, 10));
+		pObj->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(30, 1, 30), vector3Zero));
+		pObj->AddComponent<Engine::CBoxComponent>()->SetSize(vector3(30, 1, 30));
 	}
-
-
-	/*{
-		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Monster", L"Scarecrow", true);
-		pObj->SetPosition(vector3(5, 0, 5));
-		pObj->AddComponent<CMonster>()->AddFSM<CScarecrowIdle>();
-	}*/
-
-	/*{
-		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
-		pObj->SetPosition(vector3(0, 0, 7));
-		pObj->SetCamera(true);
-		pObj->SetRotationY(120);
-		pObj->SetScale(vector3(0.01f, 0.01f, 0.01f));
-		pObj->AddComponent<Engine::CMeshComponent>()->SetMeshKey(L"CrystalSpider.X");
-		pObj->AddComponent<Engine::CStaticMeshRenderComponent>();
-	}*/
 }
 
 _uint CDongilScene::FixedUpdate(void)
 {
 	__super::FixedUpdate();
 
-	return _uint();
+	return NO_EVENT;
 }
 
 _uint CDongilScene::Update(void)
@@ -142,6 +124,7 @@ void CDongilScene::InitLayers(void)
 	AddLayer(L"Default");
 	AddLayer(L"Monster");
 	AddLayer(L"UI");
+	AddLayer(L"MapObject");
 }
 
 void CDongilScene::InitPrototypes(void)

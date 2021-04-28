@@ -14,6 +14,7 @@ private:
 	CHierarchyView* m_hierarchyView;
 	CInspectorView* m_inspectorView;
 
+	SHARED(Engine::CGameObject) T;
 public:
 	Engine::CGameObject* m_pickingObject = nullptr;
 	_int m_pickNumber = -1;

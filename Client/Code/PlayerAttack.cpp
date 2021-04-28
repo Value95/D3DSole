@@ -17,10 +17,12 @@ void CPlayerAttack::Start()
 	init = false;
 	m_player->GetOwner()->GetComponent<Engine::CAnimMeshRenderComponent>()->GetAnimCtrl()->SetSpeed(10);
 
-	if(m_player->GetOwner()->GetComponent<Engine::CRigidBodyComponent>()->GetGroundCheck())
+	m_player->GetOwner()->GetComponent<Engine::CAnimMeshRenderComponent>()->Set_AnimationSet(34);
+
+	/*if(m_player->GetOwner()->GetComponent<Engine::CRigidBodyComponent>()->GetGroundCheck())
 		m_player->GetOwner()->GetComponent<Engine::CAnimMeshRenderComponent>()->Set_AnimationSet(45);
 	else
-		m_player->GetOwner()->GetComponent<Engine::CAnimMeshRenderComponent>()->Set_AnimationSet(45);
+		m_player->GetOwner()->GetComponent<Engine::CAnimMeshRenderComponent>()->Set_AnimationSet(45);*/
 }
 
 void CPlayerAttack::End()
@@ -41,7 +43,7 @@ _uint CPlayerAttack::FixedUpdate()
 			}
 		}
 	}
-	return _uint();
+	return NO_EVENT;
 }
 
 _uint CPlayerAttack::Update()
@@ -52,12 +54,12 @@ _uint CPlayerAttack::Update()
 		m_player->ChangeFSM(CPlayer::STATE::IDLE);
 	}
 
-	return _uint();
+	return NO_EVENT;
 }
 
 _uint CPlayerAttack::LateUpdate()
 {
-	return _uint();
+	return NO_EVENT;
 }
 
 void CPlayerAttack::OnDestroy(void)

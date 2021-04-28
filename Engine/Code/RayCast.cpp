@@ -19,28 +19,39 @@ CRaycast::~CRaycast()
 // 원점(origin) , 방향(direction) , 거리(maxDistance) , 레이어(layerKey) , 히트지점(outHit)
 CGameObject * CRaycast::MeshRayCast(vector3 origin, vector3 direction, _float maxDistance, std::wstring layerKey, vector3& outHit)
 {
-	BOOL	hit;
-	DWORD	dwfaceIndex;
+	BOOL hit;
+	DWORD dwfaceIndex;
 	_float u, v, dist;
 	HRESULT hr;
 
 	CGameObject* gameObject = nullptr;
 
 	CLayer* pLayer = GET_CUR_SCENE->GetLayers()[layerKey].get();
+
+	vector3 Torigin;
+	vector3 Tdirection;
+
 	for (auto& object : pLayer->GetGameObjects())
 	{
 		SHARED(Engine::CMeshComponent) meshCom = object->GetComponent<Engine::CMeshComponent>();
 
+		// 월드 -> 로컬
+		matrix4x4 matWorld = object->GetWorldMatrix();
+		D3DXMatrixInverse(&matWorld, NULL, &matWorld);
+
+		D3DXVec3TransformCoord(&Torigin, &origin, &matWorld);
+		D3DXVec3TransformNormal(&Tdirection, &direction, &matWorld);
+
 		hr = D3DXIntersect(meshCom->GetMeshData()->mesh,
-			&origin,
-			&direction,
+			&Torigin,
+			&Tdirection,
 			&hit,
 			&dwfaceIndex,
 			&u, &v, &dist, nullptr, nullptr);
 
-		if (hit == true)
+		if (hit == true && maxDistance >= dist)
 		{
-			outHit = vector3(origin + (dist * direction)); // 맞은위치 충돌위치를
+			outHit = vector3(Torigin + (dist * Tdirection)); // 맞은위치 충돌위치를
 			if (EPSILON > outHit.x && -EPSILON < outHit.x)
 				outHit.x = 0.f;
 			if (EPSILON > outHit.y && -EPSILON < outHit.y)
@@ -65,20 +76,31 @@ CGameObject * CRaycast::MeshRayCast(vector3 origin, vector3 direction, _float ma
 	CGameObject* gameObject = nullptr;
 
 	CLayer* pLayer = GET_CUR_SCENE->GetLayers()[layerKey].get();
+
+	vector3 Torigin;
+	vector3 Tdirection;
+
 	for (auto& object : pLayer->GetGameObjects())
 	{
 		SHARED(Engine::CMeshComponent) meshCom = object->GetComponent<Engine::CMeshComponent>();
 
+		// 월드 -> 로컬
+		matrix4x4 matWorld = object->GetWorldMatrix();
+		D3DXMatrixInverse(&matWorld, NULL, &matWorld);
+
+		D3DXVec3TransformCoord(&Torigin, &origin, &matWorld);
+		D3DXVec3TransformNormal(&Tdirection, &direction, &matWorld);
+
 		hr = D3DXIntersect(meshCom->GetMeshData()->mesh,
-			&origin,
-			&direction,
+			&Torigin,
+			&Tdirection,
 			&hit,
 			&dwfaceIndex,
 			&u, &v, &dist, nullptr, nullptr);
 
 		if (hit == true && maxDistance >= dist)
 		{
-			vector3 outHit = vector3(origin + (dist * direction)); // 맞은위치 충돌위치를
+			vector3 outHit = vector3(Torigin + (dist * Tdirection)); // 맞은위치 충돌위치를
 			if (EPSILON > outHit.x && -EPSILON < outHit.x)
 				outHit.x = 0.f;
 			if (EPSILON > outHit.y && -EPSILON < outHit.y)
@@ -95,6 +117,8 @@ CGameObject * CRaycast::MeshRayCast(vector3 origin, vector3 direction, _float ma
 
 CGameObject * CRaycast::BoxRayCast(vector3 origin, vector3 direction, _float maxDistance, std::wstring layerKey, vector3 & outHit)
 {
+	// 콜라이더랑 충돌하는 RayCast가필요하다.	
+
 	_float t = FLT_MAX;
 	CGameObject* pGameObject = nullptr;
 

@@ -26,8 +26,9 @@ public:
 	virtual void OnDestroy(void) override;
 
 private:
-	void Move();
-	void Attack();
-	void Jump();
+	bool Move();
+	void Rotation();
+	bool Attack();
+	bool Jump();
 };
 

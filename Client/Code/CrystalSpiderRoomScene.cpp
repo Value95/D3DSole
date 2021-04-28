@@ -37,7 +37,7 @@ _uint CCrystalSpiderRoomScene::FixedUpdate(void)
 {
 	__super::FixedUpdate();
 
-	return _uint();
+	return NO_EVENT;
 }
 
 _uint CCrystalSpiderRoomScene::Update(void)

@@ -37,7 +37,7 @@ _uint CMainRoomScene::FixedUpdate(void)
 {
 	__super::FixedUpdate();
 
-	return _uint();
+	return NO_EVENT;
 }
 
 _uint CMainRoomScene::Update(void)

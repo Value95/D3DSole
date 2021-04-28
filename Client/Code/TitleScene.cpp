@@ -41,7 +41,7 @@ _uint CTitleScene::FixedUpdate(void)
 {
 	__super::FixedUpdate();
 
-	return _uint();
+	return NO_EVENT;
 }
 
 _uint CTitleScene::Update(void)

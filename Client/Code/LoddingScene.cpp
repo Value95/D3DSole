@@ -37,7 +37,7 @@ _uint CLoddingScene::FixedUpdate(void)
 {
 	__super::FixedUpdate();
 
-	return _uint();
+	return NO_EVENT;
 }
 
 _uint CLoddingScene::Update(void)

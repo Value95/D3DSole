@@ -21,17 +21,17 @@ void CPlayerDeath::End()
 
 _uint CPlayerDeath::FixedUpdate()
 {
-	return _uint();
+	return NO_EVENT;
 }
 
 _uint CPlayerDeath::Update()
 {
-	return _uint();
+	return NO_EVENT;
 }
 
 _uint CPlayerDeath::LateUpdate()
 {
-	return _uint();
+	return NO_EVENT;
 }
 
 void CPlayerDeath::OnDestroy(void)

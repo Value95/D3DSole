@@ -54,6 +54,12 @@ void CEditorScene::Start(void)
 		m_sphere->SetPosition(vector3(9999, 9999, 9999));
 		m_sphere->AddComponent<Engine::CSphereComponent>();
 	}
+
+	{
+		T = Engine::CObjectFactory::GetInstance()->AddClone(L"Debug", L"Line", true);
+		T->GetComponent<Engine::CLineComponent>()->EndLinePosition(vector3(0, 0, 0));
+		T->SetPosition(Engine::GET_MAIN_CAM->GetOwner()->GetPosition());
+	}
 }
 
 _uint CEditorScene::FixedUpdate(void)
@@ -84,7 +90,8 @@ _uint CEditorScene::Update(void)
 
 	POINT point;
 	GetCursorPos(&point);
-	if (point.x >= 1056 || point.y >= 648)
+	cout << point.y << endl;
+	if (point.x >= 1057 || point.y >= 670)
 		return event;
 
 
@@ -146,6 +153,7 @@ void CEditorScene::InitLayers(void)
 	AddLayer(L"Light");
 	AddLayer(L"NavMesh");
 	AddLayer(L"Collider");
+	AddLayer(L"Debug");
 }
 
 void CEditorScene::InitPrototypes(void)
@@ -174,6 +182,10 @@ void CEditorScene::InitPrototypes(void)
 	SHARED(Engine::CGameObject) ui = Engine::CGameObject::Create(L"UI", L"UI", true);
 	ui->AddComponent<Engine::CUIComponent>();
 	Engine::CObjectFactory::GetInstance()->AddPrototype(ui);
+
+	SHARED(Engine::CGameObject) T = Engine::CGameObject::Create(L"Debug", L"Line", true);
+	T->AddComponent<Engine::CLineComponent>();
+	Engine::CObjectFactory::GetInstance()->AddPrototype(T);
 }
 
 void CEditorScene::Camera()
@@ -245,7 +257,7 @@ void CEditorScene::ObjectPicking(std::wstring layerKey)
 
 		vector3		origin;
 
-		if (point.x >= 1056 || point.y >= 648)
+		if (point.x >= 1057 || point.y >= 670)
 			return;
 
 		// 마우스좌표(뷰포트) -> (월드행렬)로변환
@@ -255,7 +267,7 @@ void CEditorScene::ObjectPicking(std::wstring layerKey)
 		Engine::GET_DEVICE->GetViewport(&ViewPort);
 
 		origin.x = point.x / (1056 * 0.5f) - 1.f;
-		origin.y = point.y / (648 * -0.5f) + 1.f;
+		origin.y = point.y / (670 * -0.5f) + 1.f;
 		origin.z = 0.f;
 
 		// 투영 -> 뷰스페이스
@@ -279,13 +291,10 @@ void CEditorScene::ObjectPicking(std::wstring layerKey)
 		D3DXVec3TransformCoord(&rayPos, &rayPos, &matView);
 		D3DXVec3TransformNormal(&rayDir, &rayDir, &matView);
 
-		// 월드 -> 로컬
-		matrix4x4 matWorld = Engine::GET_MAIN_CAM->GetOwner()->GetWorldMatrix();
-		D3DXMatrixInverse(&matWorld, NULL, &matWorld);
-
-		D3DXVec3TransformCoord(&rayPos, &rayPos, &matWorld);
-		D3DXVec3TransformNormal(&rayDir, &rayDir, &matWorld);
+		
 		//-------------------------------------------------------------
+		T->SetPosition(Engine::GET_MAIN_CAM->GetOwner()->GetPosition());
+		T->GetComponent<Engine::CLineComponent>()->EndLinePosition(rayDir * 1000);
 
 		Engine::CGameObject* obj = Engine::CRaycast::MeshRayCast(rayPos, rayDir, 1000, layerKey);
 		if (obj != nullptr)

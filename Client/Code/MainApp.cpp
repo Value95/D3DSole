@@ -160,8 +160,11 @@ void CMainApp::InitStaticPrototype(void)
 // ObjectKey 는 중첩 불가능
 void CMainApp::Default()
 {
-	SHARED(Engine::CGameObject) pDefault = Engine::CGameObject::Create(L"Default", L"Default", true);
-	Engine::CObjectFactory::GetInstance()->AddPrototype(pDefault);
+	SHARED(Engine::CGameObject) default = Engine::CGameObject::Create(L"Default", L"Default", true);
+	Engine::CObjectFactory::GetInstance()->AddPrototype(default);
+
+	SHARED(Engine::CGameObject) mapObject = Engine::CGameObject::Create(L"MapObject", L"Tile", true);
+	Engine::CObjectFactory::GetInstance()->AddPrototype(mapObject);
 
 	SHARED(Engine::CGameObject) mess = Engine::CGameObject::Create(L"Default", L"Mess", true);
 	mess->AddComponent<Engine::CStaticMeshRenderComponent>();

@@ -25,17 +25,17 @@ void CScarecrowIdle::End()
 
 _uint CScarecrowIdle::FixedUpdate()
 {
-	return _uint();
+	return NO_EVENT;
 }
 
 _uint CScarecrowIdle::Update()
 {
-	return _uint();
+	return NO_EVENT;
 }
 
 _uint CScarecrowIdle::LateUpdate()
 {
-	return _uint();
+	return NO_EVENT;
 }
 
 void CScarecrowIdle::OnDestroy(void)

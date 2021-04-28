@@ -65,6 +65,7 @@ _uint CRigidBodyComponent::FixedUpdate(SHARED(CComponent) spThis)
 	}
 	else if (!crushCheck || !m_groundCheck)
 	{
+		m_groundCheck = false;
 		GravityDrag(m_velocity);
 
 		m_separatingVelocity = GetOwner()->GetPosition();
