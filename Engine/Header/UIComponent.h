@@ -10,6 +10,7 @@ private:
 
 	GETTOR_SETTOR(std::wstring, m_textureKey, L"", TextureKey) // 이미지를 불러올 키값
 	GETTOR_SETTOR(SHARED(_TexData), m_pTexData, nullptr, TexData) // 이미지를 저장할 변수
+	GETTOR_SETTOR(CShader*, m_shader,{}, Shader)
 
 	vector2 m_xUV; // xUV값을 저장할 변수
 	vector2 m_yUV; // xUV값을 저장할 변수

@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "TextureStore.h"
 #include "AnimMeshRenderManager.h"
+#include "ShaderStore.h"
 
 #include "SceneManager.h"
 
@@ -54,11 +55,30 @@ void CEffectComponent::Start(SHARED(CComponent) spThis)
 			m_texData[i] = CTextureStore::GetInstance()->GetTextureData(L"Error");
 	}
 
+	if (m_shader)
+		m_shader->SetEffectShader(*CShaderStore::GetInstance()->GetShaderData(m_shader->GetShaderKey()));
+
 	DateInit();
 }
 
 _uint CEffectComponent::FixedUpdate(SHARED(CComponent) spThis)
 {
+	matrix4x4 matWorld, matView, matBill;
+
+	matWorld = GetOwner()->GetWorldMatrix();
+	GET_DEVICE->GetTransform(D3DTS_VIEW, &matView);
+
+	D3DXMatrixIdentity(&matBill);
+
+	matBill._11 = matView._11;
+	matBill._13 = matView._13;
+	matBill._31 = matView._31;
+	matBill._33 = matView._33;
+	D3DXMatrixInverse(&matBill, NULL, &matBill);
+
+	// 주의!! 월 = matBill * (스 * 자 * 이) 이기 때문에...
+	GetOwner()->SetWorldMatrix(matBill * matWorld);
+
 	return NO_EVENT;
 }
 
@@ -100,13 +120,20 @@ _uint CEffectComponent::PreRender(void)
 	else
 		GET_DEVICE->SetTexture(0, nullptr);
 
-	//렌더 셋팅
 
 	//좌표셋팅
 	GET_DEVICE->SetTransform(D3DTS_WORLD, &GetOwner()->GetWorldMatrix());
 	GET_DEVICE->SetTransform(D3DTS_VIEW, &GET_CUR_SCENE->GetMainCamera()->GetViewMatrix());
 	GET_DEVICE->SetTransform(D3DTS_PROJECTION, &GET_CUR_SCENE->GetMainCamera()->GetProjMatrix());
 
+	m_shader->GetEffectShader()->SetMatrix("g_matWorld", &GetOwner()->GetWorldMatrix());
+	m_shader->GetEffectShader()->SetMatrix("g_matView", &GET_CUR_SCENE->GetMainCamera()->GetViewMatrix());
+	m_shader->GetEffectShader()->SetMatrix("g_matProj", &GET_CUR_SCENE->GetMainCamera()->GetProjMatrix());
+
+	m_shader->GetEffectShader()->SetTexture("g_BaseTexture", m_texData[m_effectCurCount]->pTexture);
+
+	if (m_shader)
+		m_shader->ShaderReady();
 
 	return _uint();
 }
@@ -121,6 +148,9 @@ _uint CEffectComponent::Render(void)
 
 _uint CEffectComponent::PostRender(void)
 {
+	if (m_shader)
+		m_shader->ShaderEnd();
+
 	return _uint();
 }
 

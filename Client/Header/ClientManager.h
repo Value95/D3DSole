@@ -21,6 +21,7 @@
 #include "DataStore.h"
 #include "MeshStore.h"
 #include "TextureStore.h"
+#include "ShaderStore.h"
 
 
 #endif //  CLIENTMANAGER_H

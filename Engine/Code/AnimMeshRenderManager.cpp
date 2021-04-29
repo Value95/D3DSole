@@ -31,10 +31,10 @@ _uint CAnimMeshRenderManager::LateUpdate(void)
 {
 	for (int i = 0; i < (_int)ERenderID::NumOfRenderID; ++i)
 	{
-		for (auto& it = m_vRenderList[i].begin(); it != m_vRenderList[i].end();)
+		for (auto& it = m_animRenderList[i].begin(); it != m_animRenderList[i].end();)
 		{
 			if ((*it)->GetOwner() == nullptr)
-				it = m_vRenderList[i].erase(it);
+				it = m_animRenderList[i].erase(it);
 			else
 				++it;
 		}
@@ -55,33 +55,8 @@ _uint CAnimMeshRenderManager::Render(void)
 {
 	_uint event = NO_EVENT;
 
-	for (_uint i = 0; i < (_uint)ERenderID::NumOfRenderID; ++i)
-	{
-		if ((_uint)ERenderID::WireFrame == i)
-		{
-			GET_DEVICE->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-		}
-		else
-		{
-			GET_DEVICE->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-		}
-
-		for (auto& pGC : m_vRenderList[i])
-		{
-			if (pGC->GetOwner() != nullptr)
-			{
-				if (GET_MAIN_CAM->IsInFrustum(pGC->GetOwner()->GetPosition()))
-				{
-					if (event = pGC->PreRender()) return event;
-					if (event = pGC->Render()) return event;
-					if (event = pGC->PostRender()) return event;
-				}
-			}
-
-			pGC.reset();		
-		}
-		m_vRenderList[i].clear();
-	}
+	event = AnimMeshRender();
+	event = EffectMeshRender();
 
 	return event;
 }
@@ -95,7 +70,7 @@ _uint CAnimMeshRenderManager::PostRender(void)
 void CAnimMeshRenderManager::OnDestroy(void)
 {
 	for (_uint i = 0; i < (_uint)ERenderID::NumOfRenderID; ++i)
-		m_vRenderList[i].clear();
+		m_animRenderList[i].clear();
 }
 
 void CAnimMeshRenderManager::OnEnable(void)
@@ -114,8 +89,70 @@ _uint CAnimMeshRenderManager::AddToRenderList(ERenderID renderID, SHARED(CAnimMe
 	if (ERenderID::NumOfRenderID <= renderID)
 		return OUT_OF_RANGE;
 
-	m_vRenderList[(_uint)renderID].push_back(pGC);
+	m_animRenderList[(_uint)renderID].emplace_back(pGC);
 
 	return NO_EVENT;
 }
 
+_uint CAnimMeshRenderManager::AddToEffectRenderList(SHARED(CEffectComponent) effectComPonent)
+{
+	if (effectComPonent == nullptr)
+		return NULL_PARAMETER;
+
+	m_effectRenderList.emplace_back(effectComPonent);
+	return _uint();
+}
+
+_uint CAnimMeshRenderManager::AnimMeshRender()
+{
+	_uint event = NO_EVENT;
+
+	for (_uint i = 0; i < (_uint)ERenderID::NumOfRenderID; ++i)
+	{
+		for (auto& pGC : m_animRenderList[i])
+		{
+			if (pGC->GetOwner() != nullptr)
+			{
+				if (GET_MAIN_CAM->IsInFrustum(pGC->GetOwner()->GetPosition()))
+				{
+					if (event = pGC->PreRender()) return event;
+					if (event = pGC->Render()) return event;
+					if (event = pGC->PostRender()) return event;
+				}
+			}
+
+			pGC.reset();
+		}
+		m_animRenderList[i].clear();
+	}
+	return event;
+}
+
+_uint CAnimMeshRenderManager::EffectMeshRender()
+{
+	_uint event = NO_EVENT;
+
+	GET_DEVICE->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE); // 알파모드 시작
+	GET_DEVICE->SetRenderState(D3DRS_ALPHAREF, 1); // 알파 기준 설정
+	GET_DEVICE->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER); // 알파 테스팅 수행
+
+	for (auto& pGC : m_effectRenderList)
+	{
+		if (pGC->GetOwner() != nullptr)
+		{
+			if (GET_MAIN_CAM->IsInFrustum(pGC->GetOwner()->GetPosition()))
+			{
+				if (event = pGC->PreRender()) return event;
+				if (event = pGC->Render()) return event;
+				if (event = pGC->PostRender()) return event;
+			}
+		}
+
+		pGC.reset();
+	}
+	m_effectRenderList.clear();
+
+	GET_DEVICE->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE); // 알파모드 헤제
+
+	return event;
+}

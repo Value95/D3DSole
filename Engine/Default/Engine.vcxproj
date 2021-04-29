@@ -33,6 +33,7 @@
     <ClInclude Include="..\Header\DebugRendeerManager.h" />
     <ClInclude Include="..\Header\DeviceManager.h" />
     <ClInclude Include="..\Header\DirectionalLightComponent.h" />
+    <ClInclude Include="..\Header\EffectComponent.h" />
     <ClInclude Include="..\Header\Engine.h" />
     <ClInclude Include="..\Header\EngineComponents.h" />
     <ClInclude Include="..\Header\EngineExtern.h" />
@@ -58,6 +59,8 @@
     <ClInclude Include="..\Header\ResourceStore.h" />
     <ClInclude Include="..\Header\Scene.h" />
     <ClInclude Include="..\Header\SceneManager.h" />
+    <ClInclude Include="..\Header\Shader.h" />
+    <ClInclude Include="..\Header\ShaderStore.h" />
     <ClInclude Include="..\Header\SkyBoxComponent.h" />
     <ClInclude Include="..\Header\SoundManager.h" />
     <ClInclude Include="..\Header\SphereCollider.h" />
@@ -87,6 +90,7 @@
     <ClCompile Include="..\Code\DebugRenderManager.cpp" />
     <ClCompile Include="..\Code\DeviceManager.cpp" />
     <ClCompile Include="..\Code\DirectionalLightComponent.cpp" />
+    <ClCompile Include="..\Code\EffectComponent.cpp" />
     <ClCompile Include="..\Code\Engine.cpp" />
     <ClCompile Include="..\Code\FRC.cpp" />
     <ClCompile Include="..\Code\GameObject.cpp" />
@@ -103,6 +107,8 @@
     <ClCompile Include="..\Code\ResourceStore.cpp" />
     <ClCompile Include="..\Code\Scene.cpp" />
     <ClCompile Include="..\Code\SceneManager.cpp" />
+    <ClCompile Include="..\Code\Shader.cpp" />
+    <ClCompile Include="..\Code\ShaderStore.cpp" />
     <ClCompile Include="..\Code\SkyBoxComponent.cpp" />
     <ClCompile Include="..\Code\SoundManager.cpp" />
     <ClCompile Include="..\Code\SphereCollider.cpp" />

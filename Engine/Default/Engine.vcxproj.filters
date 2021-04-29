@@ -151,6 +151,15 @@
     <Filter Include="02.Components\01.GraphicsComponent\07.SkyBox">
       <UniqueIdentifier>{b5f19ce7-6264-45f5-86eb-23a09d519bdd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.Components\01.GraphicsComponent\08.Effect">
+      <UniqueIdentifier>{c4be88e3-6b16-4503-b45f-e786845087c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Shader">
+      <UniqueIdentifier>{160a241e-80da-4e37-ab75-228c44df5726}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00.Engine\09.ResourceStore\03.ShaderStore">
+      <UniqueIdentifier>{2e8d9c69-0d11-41ad-a5fb-227543c4892d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\WndApp.cpp">
@@ -215,9 +224,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\CameraComponent.cpp">
       <Filter>02.Components\03.CameraComponent</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\GraphicsManager.cpp">
-      <Filter>00.Engine\01.Graphics\00.Manager</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UIManager.cpp">
       <Filter>00.Engine\03.Graphics\02.UIManager</Filter>
@@ -284,6 +290,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\StaticMeshRenderManager.cpp">
       <Filter>00.Engine\03.Graphics\00.GraphicsManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\EffectComponent.cpp">
+      <Filter>02.Components\01.GraphicsComponent\08.Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Shader.cpp">
+      <Filter>04.Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ShaderStore.cpp">
+      <Filter>00.Engine\09.ResourceStore\03.ShaderStore</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -371,9 +386,6 @@
     <ClInclude Include="..\Header\CameraComponent.h">
       <Filter>02.Components\03.CameraComponent</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\GraphicsManager.h">
-      <Filter>00.Engine\01.Graphics\00.Manager</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\EngineExtern.h">
       <Filter>99.Include</Filter>
     </ClInclude>
@@ -445,6 +457,15 @@
     </ClInclude>
     <ClInclude Include="..\Header\StaticMeshRenderManager.h">
       <Filter>00.Engine\03.Graphics\00.GraphicsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\EffectComponent.h">
+      <Filter>02.Components\01.GraphicsComponent\08.Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Shader.h">
+      <Filter>04.Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ShaderStore.h">
+      <Filter>00.Engine\09.ResourceStore\03.ShaderStore</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

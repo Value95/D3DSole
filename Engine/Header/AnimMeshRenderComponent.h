@@ -9,6 +9,8 @@ class CMeshComponent;
 class ENGINE_DLL CAnimMeshRenderComponent final : public CComponent
 {
 protected:
+	GETTOR_SETTOR(CShader*, m_shader,{}, Shader)
+
 	GETTOR_SETTOR(CHierarchyLoader*, m_pLoader, nullptr, Loader);
 	GETTOR_SETTOR(D3DXFRAME*, m_pRootFrame, nullptr, RootFrame);
 	GETTOR_SETTOR(CAniCtrl*, m_pAniCtrl, {}, AnimCtrl);

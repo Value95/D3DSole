@@ -4,6 +4,7 @@
 #include "AnimMeshRenderManager.h"
 #include "SceneManager.h"
 #include "Scene.h"
+#include "ShaderStore.h"
 
 USING(Engine)
 CAnimMeshRenderComponent::CAnimMeshRenderComponent(void)  
@@ -39,6 +40,10 @@ void CAnimMeshRenderComponent::Awake(void)
 void CAnimMeshRenderComponent::Start(SHARED(CComponent) spThis)
 {
 	__super::Start(spThis);
+
+	if (m_shader)
+		m_shader->SetEffectShader(*CShaderStore::GetInstance()->GetShaderData(m_shader->GetShaderKey()));
+
 }
 
 _uint CAnimMeshRenderComponent::FixedUpdate(SHARED(CComponent) spThis)

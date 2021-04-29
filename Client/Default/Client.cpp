@@ -28,6 +28,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	Engine::CWndApp::GetInstance()->Awake();
 	Engine::CDeviceManager::GetInstance()->Awake();
 	Engine::CMeshStore::GetInstance()->Awake();
+	Engine::CShaderStore::GetInstance()->Awake();
 	Engine::CTextureStore::GetInstance()->Awake();
 #pragma endregion
 
@@ -37,6 +38,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	Engine::CDeviceManager::GetInstance()->Start();
 	Engine::CFRC::GetInstance()->Start();
 	Engine::CMeshStore::GetInstance()->Start();
+	Engine::CShaderStore::GetInstance()->Start();
 	Engine::CTextureStore::GetInstance()->Start();
 #pragma endregion
 

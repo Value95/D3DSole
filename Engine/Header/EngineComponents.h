@@ -17,6 +17,7 @@
 #include "SphereComponent.h"
 #include "TriangleComponent.h"
 #include "SkyBoxComponent.h"
+#include "EffectComponent.h"
 //--------------------------------------------------
 
 //Light--------------------------------------------
@@ -30,5 +31,8 @@
 #include "Collider.h"
 #include "SphereCollider.h"
 #include "BoxCollider.h"
+//--------------------------------------------------
+//Shaer---------------------------------------------
+#include"Shader.h"
 //--------------------------------------------------
 #endif

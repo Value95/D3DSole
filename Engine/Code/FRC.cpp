@@ -44,9 +44,12 @@ bool CFRC::FrameLock(void)
 		m_spfLimit = 0.f;
 		QueryPerformanceFrequency(&m_cpuTick);
 
+		std::cout << m_fps << endl;
 
 		if (m_deltaTime > 0.1)
+		{
 			return false;
+		}
 
 
 		return true;

@@ -92,10 +92,12 @@ void CMeshStore::ParsingMesh(std::wstring filePath, std::wstring fileName)
 		if (FAILED(D3DXCreateTextureFromFile(GET_DEVICE, fullPath, (LPDIRECT3DTEXTURE9*)&Ttexture)))
 			return;
 		TmeshComData->texture.emplace_back(Ttexture);
-
-		//TmeshComData->AddTexture(GET_DEVICE, fullPath);
 	}
 
-	m_mStaticMeshData[fileName] = TmeshComData;
+	if(m_isStatic)
+		m_mStaticMeshData[fileName] = TmeshComData;
+	else
+		m_mCurSceneMeshData[fileName] = TmeshComData;
+
 	
 }

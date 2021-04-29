@@ -8,6 +8,7 @@
 #include "DataStore.h"
 #include "MeshStore.h"
 #include "TextureStore.h"
+#include "ShaderStore.h"
 
 
 USING(Engine)
@@ -27,6 +28,7 @@ void CScene::Awake(void)
 		CDataStore::GetInstance()->InitDataForScene(m_name);
 		CMeshStore::GetInstance()->InitMeshForScene(m_name);
 		CTextureStore::GetInstance()->InitTextureForScene(m_name);
+		CShaderStore::GetInstance()->InitShaderForScene(m_name);
 	}
 }
 

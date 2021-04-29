@@ -65,7 +65,7 @@ void CDongilScene::Start(void)
 		pObj->SetRotation(vector3(0, 155, 0));
 		pObj->AddComponent<CPlayerWapon>();
 		pObj->AddComponent<Engine::CMeshComponent>()->SetMeshKey(L"Wapon_Sword_000.X");
-		pObj->AddComponent<Engine::CStaticMeshRenderComponent>();
+		pObj->AddComponent<Engine::CStaticMeshRenderComponent>()->SetShader(Engine::CShader::Create(L"Shader_Sample.hpp"));
 	}
 
 	{
@@ -76,6 +76,20 @@ void CDongilScene::Start(void)
 		pObj->SetPosition(vector3(0, -1, 0));
 	}
 	
+	{
+		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
+		pObj->SetPosition(vector3(5, 0, 0));
+		pObj->AddComponent<Engine::CEffectComponent>()->Reset(L"Explosion", 89);
+		pObj->AddComponent<Engine::CAnimMeshRenderComponent>();
+	}
+
+	{
+		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"UI", L"UI", true);
+		pObj->SetPosition(vector3(0, 0, 0));
+		pObj->SetScale(vector3(800, 600, 0));
+		pObj->GetComponent<Engine::CUIComponent>()->SetTextureKey(L"MainLogo");
+		pObj->GetComponent<Engine::CUIComponent>()->SetShader(Engine::CShader::Create(L"Shader_Sample.hpp"));
+	}
 
 	{ // ¹Ù´Ú
 		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"MapObject", L"Tile", true);

@@ -9,6 +9,7 @@ private:
 	GETTOR_SETTOR(_int, m_effectCount, 0, EffectCount)
 	GETTOR_SETTOR(std::vector<SHARED(_TexData)>, m_texData, {}, TexData) // 이미지를 저장할 변수
 
+	GETTOR_SETTOR(CShader*, m_shader, {}, Shader)
 
 	_MeshData m_meshDate; // 버텍스 ,인덱스 버퍼를저장하기 위한 변수
 	_int m_effectCurCount;

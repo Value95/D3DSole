@@ -12,11 +12,6 @@ namespace Engine
 	enum class ERenderID
 	{
 		Base,
-		NonAlpha,
-		Alpha,
-		UI,
-		WireFrame,
-		Last,
 		NumOfRenderID
 	};
 

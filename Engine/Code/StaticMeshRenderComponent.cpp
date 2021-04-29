@@ -4,6 +4,7 @@
 #include "StaticMeshRenderManager.h"
 #include "SceneManager.h"
 #include "Scene.h"
+#include "ShaderStore.h"
 
 USING(Engine)
 CStaticMeshRenderComponent::CStaticMeshRenderComponent(void)  
@@ -36,6 +37,10 @@ void CStaticMeshRenderComponent::Start(SHARED(CComponent) spThis)
 {
 	__super::Start(spThis);
 	m_mesh = m_pOwner->GetComponent<CMeshComponent>();
+
+	if(m_shader)
+		m_shader->SetEffectShader(*CShaderStore::GetInstance()->GetShaderData(m_shader->GetShaderKey()));
+
 }
 
 _uint CStaticMeshRenderComponent::FixedUpdate(SHARED(CComponent) spThis)
@@ -59,6 +64,9 @@ _uint CStaticMeshRenderComponent::PreRender(void)
 	if (m_mesh == nullptr)
 		MSG_BOX(__FILE__, L"m_pMesh is nullptr");
 
+	GET_DEVICE->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	GET_DEVICE->SetRenderState(D3DRS_LIGHTING, FALSE);
+
 	GET_DEVICE->SetTransform(D3DTS_WORLD, &GetOwner()->GetWorldMatrix());
 	GET_DEVICE->SetTransform(D3DTS_VIEW, &GET_CUR_SCENE->GetMainCamera()->GetViewMatrix());
 	GET_DEVICE->SetTransform(D3DTS_PROJECTION, &GET_CUR_SCENE->GetMainCamera()->GetProjMatrix());
@@ -79,6 +87,7 @@ _uint CStaticMeshRenderComponent::Render(void)
 
 _uint CStaticMeshRenderComponent::PostRender(void)
 {
+
 	return _uint();
 }
 

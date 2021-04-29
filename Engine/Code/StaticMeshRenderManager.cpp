@@ -52,9 +52,7 @@ _uint CStaticMeshRenderManager::PreRender(void)
 {
 	GET_DEVICE->BeginScene();
 
-	GET_DEVICE->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-
-	GET_DEVICE->SetRenderState(D3DRS_LIGHTING, FALSE);
+	
 	return NO_EVENT;
 }
 
@@ -71,16 +69,6 @@ _uint CStaticMeshRenderManager::Render(void)
 
 	for (_uint i = 0; i < (_uint)ERenderID::NumOfRenderID; ++i)
 	{
-		if ((_uint)ERenderID::WireFrame == i)
-		{
-			GET_DEVICE->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-		}
-		else
-		{
-			GET_DEVICE->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-		}
-	
-
 		for (auto& pGC : m_vRenderList[i])
 		{
 			if (pGC->GetOwner() != nullptr)

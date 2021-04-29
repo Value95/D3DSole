@@ -52,7 +52,6 @@ _uint CScarecrowIdle::LateUpdate()
 		if (m_resetTime <= 0)
 		{
 			m_monster->GetMonsterInfo()->SetHP(m_monster->GetMonsterInfo()->GetMaxHP());
-			system("cls");
 		}
 	}
 	else

@@ -8,7 +8,8 @@ class ENGINE_DLL CAnimMeshRenderManager final : public CEngine
 {
 	DECLARE_SINGLETON(CAnimMeshRenderManager)
 private:
-	std::vector<SHARED(CAnimMeshRenderComponent)>	m_vRenderList[(_uint)ERenderID::NumOfRenderID];
+	std::vector<SHARED(CAnimMeshRenderComponent)> m_animRenderList[(_uint)ERenderID::NumOfRenderID];
+	std::vector<SHARED(CEffectComponent)> m_effectRenderList;
 
 public:
 	void Awake(void);
@@ -28,6 +29,11 @@ public:
 	void OnDisable(void);
 
 	_uint AddToRenderList(ERenderID renderID,	SHARED(CAnimMeshRenderComponent) pGC);
+	_uint AddToEffectRenderList(SHARED(CEffectComponent) effectComPonent);
+
+private:
+	_uint AnimMeshRender();
+	_uint EffectMeshRender();
 };
 END
 #endif
