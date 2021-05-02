@@ -166,13 +166,13 @@ void CMainApp::Default()
 	SHARED(Engine::CGameObject) default = Engine::CGameObject::Create(L"Default", L"Default", true);
 	Engine::CObjectFactory::GetInstance()->AddPrototype(default);
 
-	SHARED(Engine::CGameObject) mapObject = Engine::CGameObject::Create(L"MapObject", L"Tile", true);
-	Engine::CObjectFactory::GetInstance()->AddPrototype(mapObject);
-
 	SHARED(Engine::CGameObject) mess = Engine::CGameObject::Create(L"Default", L"Mess", true);
 	mess->AddComponent<Engine::CStaticMeshRenderComponent>();
 	mess->AddComponent<Engine::CMeshComponent>();
 	Engine::CObjectFactory::GetInstance()->AddPrototype(mess);
+
+	SHARED(Engine::CGameObject) mapObject = Engine::CGameObject::Create(L"MapObject", L"Tile", true);
+	Engine::CObjectFactory::GetInstance()->AddPrototype(mapObject);
 
 	SHARED(Engine::CGameObject) collider = Engine::CGameObject::Create(L"Collider", L"Collider", true);
 	Engine::CObjectFactory::GetInstance()->AddPrototype(collider);
@@ -180,6 +180,11 @@ void CMainApp::Default()
 	SHARED(Engine::CGameObject) navMesh = Engine::CGameObject::Create(L"NavMesh", L"NavMesh", true);
 	navMesh->AddComponent<Engine::CSphereComponent>();
 	Engine::CObjectFactory::GetInstance()->AddPrototype(navMesh);
+
+	SHARED(Engine::CGameObject) map = Engine::CGameObject::Create(L"Map", L"Map", true);
+	map->AddComponent<Engine::CStaticMeshRenderComponent>();
+	map->AddComponent<Engine::CMeshComponent>();
+	Engine::CObjectFactory::GetInstance()->AddPrototype(map);
 }
 
 void CMainApp::Light()
@@ -202,8 +207,6 @@ void CMainApp::Monster()
 	scarecrow->SetName(L"Scarecrow");
 	scarecrow->SetScale(vector3(0.005f, 0.005f, 0.005f));
 	scarecrow->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(1, 10, 1), vector3Zero));
-	scarecrow->AddComponent<Engine::CMeshComponent>()->SetMeshKey(L"Boss_CrystalSpider_000.X");
-	scarecrow->AddComponent<Engine::CStaticMeshRenderComponent>();
 	Engine::CObjectFactory::GetInstance()->AddPrototype(scarecrow);
 }
 
@@ -217,7 +220,6 @@ void CMainApp::Player()
 	player->GetComponent<Engine::CRigidBodyComponent>()->SetBounciness(0.0f);
 	player->GetComponent<Engine::CRigidBodyComponent>()->SetMass(80);
 	player->AddComponent<CPlayer>();
-	player->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(0.5, 0.5, 0.5), vector3(0, 0.0, 0)));
 	player->AddComponent<Engine::CAnimMeshRenderComponent>()->MeshInput(L"../../Resource/Mesh/Static/Player/", L"Player_Player_000.X");
 	Engine::CObjectFactory::GetInstance()->AddPrototype(player);
 

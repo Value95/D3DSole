@@ -34,15 +34,13 @@ void CPlayerWapon::Start(SHARED(CComponent) spSelf)
 
 	SHARED(Engine::CAnimMeshRenderComponent) playerMeshCom = Engine::GET_CUR_SCENE->FindObjectByName(L"Player")->GetComponent<Engine::CAnimMeshRenderComponent>();
 
-	const Engine::D3DXFRAME_DERIVED* pFrame = playerMeshCom->Get_FrameByName("R_FINGER11");
+	const Engine::D3DXFRAME_DERIVED* pFrame = playerMeshCom->Get_FrameByName("R_ARM2");
 
 	m_parentBoneMatrix = &pFrame->CombinedTransformationMatrix;
 
 	m_playerObj = Engine::GET_CUR_SCENE->FindObjectByName(L"Player");
 
 	m_parentWorldMatrix = m_playerObj->GetWorldMatrixPoint();
-
-	vector3 a = GetOwner()->GetRotation();
 }
 
 _uint CPlayerWapon::FixedUpdate(SHARED(CComponent) spSelf)
@@ -62,7 +60,7 @@ _uint CPlayerWapon::LateUpdate(SHARED(CComponent) spThis)
 	matrix4x4 bone = *m_parentBoneMatrix * *m_parentWorldMatrix;
 
 	matrix4x4 world = GetOwner()->GetWorldMatrix();
-	world._41 = 1;
+	world._41 = -30;
 	world._42 = 1;
 	world._43 = 1;
 

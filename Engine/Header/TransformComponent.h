@@ -22,6 +22,7 @@ protected:
 	void TransformUpdate();
 public:
 	vector3 ReturnTranslate(vector3 translation);
+	vector3 ReturnPosTranslate(vector3 translation);
 	void OutTranslate(vector3& translation);
 	void Translate(vector3 translation);
 	void CameraDirTranslate(vector3 translation);

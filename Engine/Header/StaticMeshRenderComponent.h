@@ -7,10 +7,11 @@ class CShader;
 class ENGINE_DLL CStaticMeshRenderComponent final : public CComponent
 {
 protected:
+	GETTOR_SETTOR(CShader*, m_shader,{}, Shader)
+
 	GETTOR(SHARED(CMeshComponent),m_mesh,nullptr,Mesh)
 
 	GETTOR_SETTOR(ERenderID, m_renderID,	ERenderID::Base, RenderID)
-	GETTOR_SETTOR(CShader*, m_shader, {}, Shader)
 
 public:
 	explicit CStaticMeshRenderComponent(void);

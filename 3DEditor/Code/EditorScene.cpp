@@ -37,28 +37,22 @@ void CEditorScene::Start(void)
 	m_pMainCamera = Engine::ADD_CLONE(L"Camera", L"Camera", true)->GetComponent<Engine::CCameraComponent>();
 
 	{
-		m_createPosBox = Engine::CObjectFactory::GetInstance()->AddClone(L"Collider", L"Collider", true);
+		m_createPosBox = Engine::CObjectFactory::GetInstance()->AddClone(L"Debug", L"Debug", true);
 		m_createPosBox->SetPosition(vector3(9999, 9999, 9999));
 		m_createPosBox->AddComponent<Engine::CBoxComponent>();
 		m_createPosBox->GetComponent<Engine::CBoxComponent>()->SetSize(vector3(0.05f, 0.05f, 0.05f));
 	}
 
 	{
-		m_box = Engine::CObjectFactory::GetInstance()->AddClone(L"Collider", L"Collider", true);
+		m_box = Engine::CObjectFactory::GetInstance()->AddClone(L"Debug", L"Debug", true);
 		m_box->SetPosition(vector3(9999, 9999, 9999));
 		m_box->AddComponent<Engine::CBoxComponent>();
 	}
 
 	{
-		m_sphere = Engine::CObjectFactory::GetInstance()->AddClone(L"Collider", L"Collider", true);
+		m_sphere = Engine::CObjectFactory::GetInstance()->AddClone(L"Debug", L"Debug", true);
 		m_sphere->SetPosition(vector3(9999, 9999, 9999));
 		m_sphere->AddComponent<Engine::CSphereComponent>();
-	}
-
-	{
-		T = Engine::CObjectFactory::GetInstance()->AddClone(L"Debug", L"Line", true);
-		T->GetComponent<Engine::CLineComponent>()->EndLinePosition(vector3(0, 0, 0));
-		T->SetPosition(Engine::GET_MAIN_CAM->GetOwner()->GetPosition());
 	}
 }
 
@@ -98,7 +92,8 @@ _uint CEditorScene::Update(void)
 	if (m_main->m_mode == CMainFrame::Mode::Normal)
 	{
 		ObjectCreate();
-		ObjectPicking(L"Default");
+		ObjectPicking(L"Map");
+		ObjectPicking(L"Collider");
 		ColliderSesting(m_pickNumber, m_pickingObject);
 	}
 	else if (m_main->m_mode == CMainFrame::Mode::NavMesh)
@@ -149,6 +144,7 @@ void CEditorScene::InitLayers(void)
 {
 	AddLayer(L"Camera");
 	AddLayer(L"Default");
+	AddLayer(L"Map");
 	AddLayer(L"UI");
 	AddLayer(L"Light");
 	AddLayer(L"NavMesh");
@@ -162,30 +158,34 @@ void CEditorScene::InitPrototypes(void)
 	camera->AddComponent<Engine::CCameraComponent>();
 	Engine::CObjectFactory::GetInstance()->AddPrototype(camera);
 
-	SHARED(Engine::CGameObject) mess = Engine::CGameObject::Create(L"Default", L"Mess", true);
+	SHARED(Engine::CGameObject) mess = Engine::CGameObject::Create(L"Map", L"Map", true);
+	mess->SetScale(vector3(0.01f, 0.01f, 0.01f));
 	mess->AddComponent<Engine::CStaticMeshRenderComponent>();
 	mess->AddComponent<Engine::CMeshComponent>();
 	Engine::CObjectFactory::GetInstance()->AddPrototype(mess);
 
 	SHARED(Engine::CGameObject) collider = Engine::CGameObject::Create(L"Collider", L"Collider", true);
+	collider->SetScale(vector3(0.01f, 0.01f, 0.01f));
+	collider->AddComponent<Engine::CStaticMeshRenderComponent>();
+	collider->AddComponent<Engine::CMeshComponent>();
 	Engine::CObjectFactory::GetInstance()->AddPrototype(collider);
+
+
+	SHARED(Engine::CGameObject) debug = Engine::CGameObject::Create(L"Debug", L"Debug", true);
+	Engine::CObjectFactory::GetInstance()->AddPrototype(debug);
 
 	SHARED(Engine::CGameObject) navMesh = Engine::CGameObject::Create(L"NavMesh", L"NavMesh", true);
 	navMesh->AddComponent<Engine::CSphereComponent>();
 	Engine::CObjectFactory::GetInstance()->AddPrototype(navMesh);
 
-	SHARED(Engine::CGameObject) directionalLight = Engine::CGameObject::Create(L"Light", L"DirectionalLight", true);
-	directionalLight->SetRotation(vector3(30, -50, 0));
-	directionalLight->AddComponent<Engine::CDirectionalLightComponent>();
-	Engine::CObjectFactory::GetInstance()->AddPrototype(directionalLight);
-
 	SHARED(Engine::CGameObject) ui = Engine::CGameObject::Create(L"UI", L"UI", true);
 	ui->AddComponent<Engine::CUIComponent>();
 	Engine::CObjectFactory::GetInstance()->AddPrototype(ui);
 
-	SHARED(Engine::CGameObject) T = Engine::CGameObject::Create(L"Debug", L"Line", true);
-	T->AddComponent<Engine::CLineComponent>();
-	Engine::CObjectFactory::GetInstance()->AddPrototype(T);
+	SHARED(Engine::CGameObject) directionalLight = Engine::CGameObject::Create(L"Light", L"DirectionalLight", true);
+	directionalLight->SetRotation(vector3(30, -50, 0));
+	directionalLight->AddComponent<Engine::CDirectionalLightComponent>();
+	Engine::CObjectFactory::GetInstance()->AddPrototype(directionalLight);
 }
 
 void CEditorScene::Camera()
@@ -206,7 +206,7 @@ void CEditorScene::Camera()
 		m_pMainCamera->CameraRotation();
 	}
 
-	vector3 createPos = m_pMainCamera->GetOwner()->ReturnTranslate(vector3(0, 0, 2));
+	vector3 createPos = m_pMainCamera->GetOwner()->ReturnPosTranslate(vector3(0, 0, 2));
 	m_createPosBox->SetPosition(createPos);
 }
 
@@ -293,9 +293,6 @@ void CEditorScene::ObjectPicking(std::wstring layerKey)
 
 		
 		//-------------------------------------------------------------
-		T->SetPosition(Engine::GET_MAIN_CAM->GetOwner()->GetPosition());
-		T->GetComponent<Engine::CLineComponent>()->EndLinePosition(rayDir * 1000);
-
 		Engine::CGameObject* obj = Engine::CRaycast::MeshRayCast(rayPos, rayDir, 1000, layerKey);
 		if (obj != nullptr)
 		{
@@ -390,12 +387,12 @@ void CEditorScene::NormalObject(CString messKey)
 	std::wstring wMessKey;
 	wMessKey = CStringW(messKey);
 
-	SHARED(Engine::CGameObject) pObj = Engine::ADD_CLONE(L"Default", L"Mess", true);
+	SHARED(Engine::CGameObject) pObj = Engine::ADD_CLONE(L"Map", L"Map", true);
 	pObj->SetIsEnabled(true);
 	pObj->SetName(L"GameObejct");
 	pObj->GetComponent<Engine::CMeshComponent>()->SetMeshKey(wMessKey);
 
-	pObj->SetPosition(m_pMainCamera->GetOwner()->ReturnTranslate(vector3(0, 0, 2)));
+	pObj->SetPosition(m_pMainCamera->GetOwner()->ReturnPosTranslate(vector3(0, 0, 2)));
 	CColliderManager::GetInstance()->SetColliderData(new ColliderData(pObj.get()));
 
 	m_hierarchyView->m_objectListBox.AddString(pObj.get()->GetName().c_str());
@@ -410,7 +407,7 @@ void CEditorScene::PrefabObject()
 	std::wstring wMessKey;
 	CString messKey;
 	std::wstring name = L"GameObejct";
-	std::wstring layerKey = L"Default", objectKey = L"Mess";
+	std::wstring layerKey = L"Map", objectKey = L"Map";
 	vector3 rotation = vector3Zero;
 	vector3 scale = vector3One;
 
@@ -442,15 +439,15 @@ void CEditorScene::PrefabObject()
 	wMessKey = CStringW(messKey);
 
 	// 오브젝트 생성--------------------------------------------------
-	SHARED(Engine::CGameObject) pObj = Engine::ADD_CLONE(L"Default", L"Mess", true);
+	SHARED(Engine::CGameObject) pObj = Engine::ADD_CLONE(L"Map", L"Map", true);
 	pObj->SetLayerKey(layerKey);
 	pObj->SetObjectKey(objectKey);
 	pObj->SetIsEnabled(enable);
 	pObj->SetName(name);
 	pObj->GetComponent<Engine::CMeshComponent>()->SetMeshKey(wMessKey);
 
-	//pObj->SetPosition(m_pMainCamera->GetOwner()->ReturnTranslate(vector3(0, 0, 5)));
-	pObj->SetPosition(vector3(6.63512,1.17806,15.0252));
+	pObj->SetPosition(m_pMainCamera->GetOwner()->ReturnReturnPosTranslateTranslate(vector3(0, 0, 2)));
+	//pObj->SetPosition(vector3(6.63512,1.17806,15.0252));
 
 	pObj->SetRotation(rotation);
 	pObj->SetScale(scale);
@@ -476,7 +473,7 @@ void CEditorScene::DirectionalLightObject(CString objectKey)
 	SHARED(Engine::CGameObject) pObj = Engine::ADD_CLONE(L"Light", wObjectKey, true);
 	pObj->SetName(name);
 
-	pObj->SetPosition(m_pMainCamera->GetOwner()->ReturnTranslate(vector3(0, 0, 2)));
+	pObj->SetPosition(m_pMainCamera->GetOwner()->ReturnPosTranslate(vector3(0, 0, 2)));
 	CColliderManager::GetInstance()->SetColliderData(new ColliderData(pObj.get()));
 
 	m_hierarchyView->m_objectListBox.AddString(pObj.get()->GetName().c_str());
@@ -516,180 +513,6 @@ void CEditorScene::TileCreate()
 	withd = 30;
 	height = 30;
 
-	/*
-	for (int i = 0; i < withd; i++)
-	{
-		for (int j = 0; j < height; j++)
-		{
-			std::wstring wMessKey;
-			wMessKey = L"MapObject_Floor_100.X";
-
-			SHARED(Engine::CGameObject) pObj = Engine::ADD_CLONE(L"Default", L"Mess", true);
-			pObj->SetIsEnabled(true);
-			pObj->SetName(L"MapObject_Tile");
-			pObj->GetComponent<Engine::CMeshComponent>()->SetMeshKey(wMessKey);
-			pObj->SetScale(vector3(0.01f, 0.01f, 0.01f));
-			pObj->SetPosition(vector3(0.78f * i, 0 , 0.78f * j));
-
-			CColliderManager::GetInstance()->SetColliderData(new ColliderData(pObj.get()));
-
-			m_hierarchyView->m_objectListBox.AddString(pObj.get()->GetName().c_str());
-			m_hierarchyView->m_object.emplace_back(pObj.get());
-
-			m_inspectorView->SetData(pObj.get());
-
-		}
-	}
-	//*/
-
-	/*
-	for (int i = 0; i < withd; i++)
-	{
-		for (int j = 0; j < 2; j++)
-		{
-			std::wstring wMessKey;
-			wMessKey = L"MapObject_Wall_104.X";
-
-			SHARED(Engine::CGameObject) pObj = Engine::ADD_CLONE(L"Default", L"Mess", true);
-			pObj->SetIsEnabled(true);
-			pObj->SetName(L"MapObject_Wall");
-			pObj->GetComponent<Engine::CMeshComponent>()->SetMeshKey(wMessKey);
-			pObj->SetScale(vector3(0.01f, 0.01f, 0.01f));
-			pObj->SetPosition(vector3(0.78f * i, 1.1783 * j, -0.45675));
-
-			ColliderData* box = new ColliderData(pObj.get());
-			box->colliderType = L"BOX";
-			box->offset = vector3(0, 0.5f, 0);
-			box->boxsize = vector3(0.8f, 1.5f, 0.1f);
-
-			CColliderManager::GetInstance()->SetColliderData(box);
-
-			m_hierarchyView->m_objectListBox.AddString(pObj.get()->GetName().c_str());
-			m_hierarchyView->m_object.emplace_back(pObj.get());
-
-			m_inspectorView->SetData(pObj.get());
-		}
-	}
-	//*/
-
-	/*
-	for (int i = 0; i < withd; i++)
-	{
-		for (int j = 0; j < 2; j++)
-		{
-			std::wstring wMessKey;
-			wMessKey = L"MapObject_Wall_104.X";
-
-			SHARED(Engine::CGameObject) pObj = Engine::ADD_CLONE(L"Default", L"Mess", true);
-			pObj->SetIsEnabled(true);
-			pObj->SetName(L"MapObject_Wall");
-			pObj->GetComponent<Engine::CMeshComponent>()->SetMeshKey(wMessKey);
-			pObj->SetScale(vector3(0.01f, 0.01f, 0.01f));
-			pObj->SetPosition(vector3(0.78f * i, 1.1783 * j, 23));
-
-			ColliderData* box = new ColliderData(pObj.get());
-			box->colliderType = L"BOX";
-			box->offset = vector3(0, 0.5f, 0);
-			box->boxsize = vector3(0.8f, 1.5f, 0.1f);
-
-			CColliderManager::GetInstance()->SetColliderData(box);
-
-			m_hierarchyView->m_objectListBox.AddString(pObj.get()->GetName().c_str());
-			m_hierarchyView->m_object.emplace_back(pObj.get());
-
-			m_inspectorView->SetData(pObj.get());
-		}
-	}
-	//*/
-
-	/*
-	for (int i = 0; i < height; i++)
-	{
-		for (int j = 0; j < 2; j++)
-		{
-			std::wstring wMessKey;
-			wMessKey = L"MapObject_Wall_104.X";
-
-			SHARED(Engine::CGameObject) pObj = Engine::ADD_CLONE(L"Default", L"Mess", true);
-			pObj->SetIsEnabled(true);
-			pObj->SetName(L"MapObject_Wall");
-			pObj->GetComponent<Engine::CMeshComponent>()->SetMeshKey(wMessKey);
-			pObj->SetRotation(vector3(0, 90, 0));
-			pObj->SetScale(vector3(0.01f, 0.01f, 0.01f));
-			pObj->SetPosition(vector3(-0.418087, 0 + (1.1783 * j), -0.14302 + (0.78292 * i)));
-
-			ColliderData* box = new ColliderData(pObj.get());
-			box->colliderType = L"BOX";
-			box->offset = vector3(0, 0.5f, 0);
-			box->boxsize = vector3(0.1f, 1.5f, 0.8f);
-
-			CColliderManager::GetInstance()->SetColliderData(box);
-
-			m_hierarchyView->m_objectListBox.AddString(pObj.get()->GetName().c_str());
-			m_hierarchyView->m_object.emplace_back(pObj.get());
-
-			m_inspectorView->SetData(pObj.get());
-		}
-	}
-	//*/
-
-	/*
-	for (int i = 0; i < height; i++)
-	{
-		for (int j = 0; j < 2; j++)
-		{
-			std::wstring wMessKey;
-			wMessKey = L"MapObject_Wall_104.X";
-
-			SHARED(Engine::CGameObject) pObj = Engine::ADD_CLONE(L"Default", L"Mess", true);
-			pObj->SetIsEnabled(true);
-			pObj->SetName(L"MapObject_Wall");
-			pObj->GetComponent<Engine::CMeshComponent>()->SetMeshKey(wMessKey);
-			pObj->SetRotation(vector3(0, 90, 0));
-			pObj->SetScale(vector3(0.01f, 0.01f, 0.01f));
-			pObj->SetPosition(vector3(23, 0 + (1.1783 * j), -0.14302 + (0.78292 * i)));
-
-			ColliderData* box = new ColliderData(pObj.get());
-			box->colliderType = L"BOX";
-			box->offset = vector3(0, 0.5f, 0);
-			box->boxsize = vector3(0.1f, 1.5f, 0.8f);
-
-			CColliderManager::GetInstance()->SetColliderData(box);
-
-			m_hierarchyView->m_objectListBox.AddString(pObj.get()->GetName().c_str());
-			m_hierarchyView->m_object.emplace_back(pObj.get());
-
-			m_inspectorView->SetData(pObj.get());
-		}
-	}
-//*/
-
-	/*
-	for (int i = 0; i < withd; i++)
-	{
-		for (int j = 0; j < height; j++)
-		{
-			std::wstring wMessKey;
-			wMessKey = L"MapObject_Floor_100.X";
-
-			SHARED(Engine::CGameObject) pObj = Engine::ADD_CLONE(L"Default", L"Mess", true);
-			pObj->SetIsEnabled(true);
-			pObj->SetName(L"MapObject_Tile");
-			pObj->GetComponent<Engine::CMeshComponent>()->SetMeshKey(wMessKey);
-			pObj->SetScale(vector3(0.01f, 0.01f, 0.01f));
-			pObj->SetRotation(vector3(0, 180, 0));
-			pObj->SetPosition(vector3(0.78f * i, 2.3566, 0.78f * j));
-
-			CColliderManager::GetInstance()->SetColliderData(new ColliderData(pObj.get()));
-
-			m_hierarchyView->m_objectListBox.AddString(pObj.get()->GetName().c_str());
-			m_hierarchyView->m_object.emplace_back(pObj.get());
-
-			m_inspectorView->SetData(pObj.get());
-
-		}
-	}
-//*/
 }
 
 void CEditorScene::ColliderSesting(int value, Engine::CGameObject * object)

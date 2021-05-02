@@ -8,6 +8,8 @@ private:
 	CPlayer* m_player;
 	Engine::CCollider* collision;
 	_bool init;
+	_int m_attackAnimNumber;
+	_bool m_nextAttack;
 public:
 	CPlayerAttack(CPlayer* player);
 	virtual ~CPlayerAttack();
@@ -22,6 +24,7 @@ public:
 	virtual void OnDestroy(void) override;
 
 private:
-	void Attack(Engine::CGameObject* gameObject);
+	void GroundAttack();
+	void JumpAttack();
 };
 

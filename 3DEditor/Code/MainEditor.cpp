@@ -122,6 +122,7 @@ void CMainEditor::OnDestroy(void)
 	Engine::CDataStore::GetInstance()->DestroyInstance();
 	Engine::CMeshStore::GetInstance()->DestroyInstance();
 	Engine::CTextureStore::GetInstance()->DestroyInstance();
+	Engine::CShaderStore::GetInstance()->DestroyInstance();
 	Engine::CDebugRendeerManager::GetInstance()->DestroyInstance();
 	Engine::CUIManager::GetInstance()->DestroyInstance();
 	CNavMeshManager::DestroyInstance();

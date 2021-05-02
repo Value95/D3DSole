@@ -88,6 +88,12 @@
     <Filter Include="02.Script\00.Player\02.PlayerWapon">
       <UniqueIdentifier>{ddd9f313-09aa-4dee-879e-99e0d5aba116}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.Script\00.Player\00.PlayerFMS\04.DeshAttack">
+      <UniqueIdentifier>{ff56a6ff-33fb-4917-9825-cbf38a187849}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Script\00.Player\00.PlayerFMS\05.Hit">
+      <UniqueIdentifier>{0465eaf7-ef5f-471f-b841-0c516801980e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -177,6 +183,12 @@
     <ClInclude Include="..\Header\PlayerWapon.h">
       <Filter>02.Script\00.Player\02.PlayerWapon</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\PlayerHit.h">
+      <Filter>02.Script\00.Player\00.PlayerFMS\05.Hit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PlayerDeshAttack.h">
+      <Filter>02.Script\00.Player\00.PlayerFMS\04.DeshAttack</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -232,6 +244,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\PlayerWapon.cpp">
       <Filter>02.Script\00.Player\02.PlayerWapon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerDeshAttack.cpp">
+      <Filter>02.Script\00.Player\00.PlayerFMS\04.DeshAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerHit.cpp">
+      <Filter>02.Script\00.Player\00.PlayerFMS\05.Hit</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

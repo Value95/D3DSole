@@ -47,7 +47,7 @@ void CAniCtrl::Set_AnimationSet(const _uint & iIndex)
 
 	m_pAniCtrl->GetAnimationSet(iIndex, &pAS);	
 
-	m_dPeriod = pAS->GetPeriod() -1;	// 현재 애니메이션 셋이 지닌 전체 재생 시간 반환
+	m_dPeriod = pAS->GetPeriod();	// 현재 애니메이션 셋이 지닌 전체 재생 시간 반환
 
 	////m_pAniCtrl->GetAnimationSetByName();
 	m_pAniCtrl->SetTrackAnimationSet(m_iNewTrack, pAS);
@@ -57,18 +57,18 @@ void CAniCtrl::Set_AnimationSet(const _uint & iIndex)
 	m_pAniCtrl->UnkeyAllTrackEvents(m_iNewTrack);
 
 	// 지정한 트랙의 사용 유무를 결정하는 함수, 3인자 : 언제부터 트랙을 사용 또는 해제할 것인지 결정
-	m_pAniCtrl->KeyTrackEnable(m_iCurrentTrack, FALSE, m_fAccTime + 0.25);
+	m_pAniCtrl->KeyTrackEnable(m_iCurrentTrack, FALSE, m_fAccTime + 0.1);
 
 	// 트랙이 해제되는 시간동안 현재 애니메이션 셋은 어떤 속도로 움직일지 결정(속도의 상수 값은 각자 1)
-	m_pAniCtrl->KeyTrackSpeed(m_iCurrentTrack, 1.f, m_fAccTime, 0.25, D3DXTRANSITION_LINEAR);
+	m_pAniCtrl->KeyTrackSpeed(m_iCurrentTrack, 1.f, m_fAccTime, 0.1, D3DXTRANSITION_LINEAR);
 
 	// 트랙이 해제되는 시간동안 현재 애니메이션 셋은 어떤 가중치를 갖게 할 지(속도의 상수 값은 각자 1)
-	m_pAniCtrl->KeyTrackWeight(m_iCurrentTrack, 0.1f, m_fAccTime, 0.25, D3DXTRANSITION_LINEAR);
+	m_pAniCtrl->KeyTrackWeight(m_iCurrentTrack, 0.1f, m_fAccTime, 0.1, D3DXTRANSITION_LINEAR);
 	
 	// 새로 들어온 트랙 활성화의 유무를 판단하는 함수
 	m_pAniCtrl->SetTrackEnable(m_iNewTrack, TRUE);
-	m_pAniCtrl->KeyTrackSpeed(m_iNewTrack, 1.f, m_fAccTime, 0.25, D3DXTRANSITION_LINEAR);
-	m_pAniCtrl->KeyTrackWeight(m_iNewTrack, 0.9f, m_fAccTime, 0.25, D3DXTRANSITION_LINEAR);
+	m_pAniCtrl->KeyTrackSpeed(m_iNewTrack, 1.f, m_fAccTime, 0.1, D3DXTRANSITION_LINEAR);
+	m_pAniCtrl->KeyTrackWeight(m_iNewTrack, 0.9f, m_fAccTime, 0.1, D3DXTRANSITION_LINEAR);
 
 	m_pAniCtrl->ResetTime(); // 애니메이션이 재생되던 시간을 다시 세팅(advanced함수 호출 시 내부적으로 누적되던 시간 리셋)
 

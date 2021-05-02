@@ -96,19 +96,19 @@ void CFeatureView::ReSetProject()
 	SHARED(Engine::CGameObject) m_box;
 	SHARED(Engine::CGameObject) m_sphere;
 
-	m_createPosBox = Engine::CObjectFactory::GetInstance()->AddClone(L"Collider", L"Collider", true);
+	m_createPosBox = Engine::CObjectFactory::GetInstance()->AddClone(L"Debug", L"Debug", true);
 	m_createPosBox->SetPosition(vector3(9999, 9999, 9999));
 	m_createPosBox->AddComponent<Engine::CBoxComponent>();
 	m_createPosBox->GetComponent<Engine::CBoxComponent>()->SetSize(vector3(0.05f, 0.05f, 0.05f));
 	dynamic_cast<CEditorScene*>(Engine::GET_CUR_SCENE.get())->m_createPosBox = m_createPosBox;
 
 
-	m_box = Engine::CObjectFactory::GetInstance()->AddClone(L"Collider", L"Collider", true);
+	m_box = Engine::CObjectFactory::GetInstance()->AddClone(L"Debug", L"Debug", true);
 	m_box->SetScale(vector3One);
 	m_box->AddComponent<Engine::CBoxComponent>();
 	dynamic_cast<CEditorScene*>(Engine::GET_CUR_SCENE.get())->m_box = m_box;
 
-	m_sphere = Engine::CObjectFactory::GetInstance()->AddClone(L"Collider", L"Collider", true);
+	m_sphere = Engine::CObjectFactory::GetInstance()->AddClone(L"Debug", L"Debug", true);
 	m_sphere->SetScale(vector3Zero);
 	m_sphere->AddComponent<Engine::CSphereComponent>();
 	dynamic_cast<CEditorScene*>(Engine::GET_CUR_SCENE.get())->m_sphere = m_sphere;
@@ -187,7 +187,7 @@ void CFeatureView::Save()
 
 		for (auto& layer : layers)
 		{
-			if(layer.first == L"NavMesh" || layer.first == L"Collider" || layer.first == L"Camera")
+			if(layer.first == L"NavMesh" || layer.first == L"Debug" || layer.first == L"Camera")
 				continue;
 
 			for (auto& gameObject : layer.second->GetGameObjects())
@@ -285,7 +285,16 @@ void CFeatureView::Load()
 
 			std::wstring objectKey = LoadWstring(&hFile, &dwByte); // 오브젝트
 
-			SHARED(Engine::CGameObject) obj = Engine::ADD_CLONE(layerKey, objectKey, true);
+			SHARED(Engine::CGameObject) obj;
+			obj = Engine::ADD_CLONE(layerKey, objectKey, true);
+
+			if (obj == nullptr)
+			{
+				obj = Engine::ADD_CLONE(L"Map", L"Map", true);
+				obj->SetLayerKey(layerKey);
+				obj->SetObjectKey(objectKey);
+			}
+
 			obj->SetName(strName);
 
 			if (obj->GetComponent<Engine::CUIComponent>())

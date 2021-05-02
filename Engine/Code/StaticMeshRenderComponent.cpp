@@ -7,7 +7,7 @@
 #include "ShaderStore.h"
 
 USING(Engine)
-CStaticMeshRenderComponent::CStaticMeshRenderComponent(void)  
+CStaticMeshRenderComponent::CStaticMeshRenderComponent(void)
 {
 }
 
@@ -38,7 +38,7 @@ void CStaticMeshRenderComponent::Start(SHARED(CComponent) spThis)
 	__super::Start(spThis);
 	m_mesh = m_pOwner->GetComponent<CMeshComponent>();
 
-	if(m_shader)
+	if (m_shader)
 		m_shader->SetEffectShader(*CShaderStore::GetInstance()->GetShaderData(m_shader->GetShaderKey()));
 
 }
@@ -70,6 +70,18 @@ _uint CStaticMeshRenderComponent::PreRender(void)
 	GET_DEVICE->SetTransform(D3DTS_WORLD, &GetOwner()->GetWorldMatrix());
 	GET_DEVICE->SetTransform(D3DTS_VIEW, &GET_CUR_SCENE->GetMainCamera()->GetViewMatrix());
 	GET_DEVICE->SetTransform(D3DTS_PROJECTION, &GET_CUR_SCENE->GetMainCamera()->GetProjMatrix());
+
+	if (m_shader)
+	{
+		m_shader->GetEffectShader()->SetMatrix("g_matWorld", &GetOwner()->GetWorldMatrix());
+		m_shader->GetEffectShader()->SetMatrix("g_matView", &GET_CUR_SCENE->GetMainCamera()->GetViewMatrix());
+		m_shader->GetEffectShader()->SetMatrix("g_matProj", &GET_CUR_SCENE->GetMainCamera()->GetProjMatrix());
+
+		m_shader->GetEffectShader()->SetTexture("g_BaseTexture", m_mesh->GetMeshData()->texture[0]);
+
+		m_shader->ShaderReady();
+	}
+
 
 	return NO_EVENT;
 }

@@ -188,6 +188,12 @@ void CColliderManager::AABB(std::vector<CGameObject*>& returnCollider, CBoxColli
 
 void CColliderManager::OBB(std::vector<CGameObject*>& returnCollider, CBoxCollider* box1, CBoxCollider* box2)
 {
+	vector3 old1 = box1->GetOffset();
+	vector3 old2 = box2->GetOffset();
+
+	m_gameObject1->OutTranslate(box1->GetOffset());
+	m_gameObject2->OutTranslate(box2->GetOffset());
+
 	float distanceZ = fabs((m_gameObject1->GetPosition().z + box1->GetOffset().z) - (m_gameObject2->GetPosition().z + box2->GetOffset().z));
 	float radCZ = box1->GetBoxSize().z * 0.5f + box2->GetBoxSize().z * 0.5f;
 
@@ -261,13 +267,16 @@ void CColliderManager::OBB(std::vector<CGameObject*>& returnCollider, CBoxCollid
 	//-------------------------------------------
 	box1Size = box1->GetBoxSize();
 	box2Size = box2->GetBoxSize();
-	m_distance = m_gameObject1->GetPosition() - m_gameObject2->GetPosition();
+	m_distance = (m_gameObject1->GetPosition() + box1->GetOffset()) - (m_gameObject2->GetPosition() + box2->GetOffset());
 	m_distance.z = 0;
 
 	if (CheckShaft(m_box1UP) && CheckShaft(m_box2UP) && CheckShaft(m_box1Right) && CheckShaft(m_box2Right))
 	{
 		returnCollider.emplace_back(m_gameObject2);
 	}
+
+	box1->GetOffset() = old1;
+	box2->GetOffset() = old2;
 
 }
 

@@ -140,8 +140,15 @@ void ClassName::DestroyInstance(void)												\
 #else
 #define deltaTime Engine::CFRC::GetInstance()->GetDeltaTime()
 #endif
+
 #define TIME_MEASURE_START CFRC::GetInstance()->TimerStart()
 #define GET_ELAPSED_TIME CFRC::GetInstance()->GetElapsedTime()
+
+#ifdef EXPORTS_ENGINE
+#define fullTime CFRC::GetInstance()->GetFullTime()
+#else
+#define fullTime Engine::CFRC::GetInstance()->GetFullTime()
+#endif
 
 //DataStore Macro
 #define GET_VALUE(isStatic, sectionKey, objectKey, varKey, result)					\
@@ -171,24 +178,3 @@ CObjectFactory::GetInstance()->AddClone(layerKey, objectKey, isStatic)
 //
 //#define PRINT_STRING(...) PRINT_STRING_MACRO_CHOOSER(__VA_ARGS__)(__VA_ARGS__)
 #endif // ! MACRO_H	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

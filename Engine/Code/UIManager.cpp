@@ -36,13 +36,6 @@ _uint CUIManager::PreRender(void)
 {
 	GET_DEVICE->BeginScene();
 
-	GET_DEVICE->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	GET_DEVICE->SetRenderState(D3DRS_LIGHTING, FALSE);
-
-
-	GET_DEVICE->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE); // 알파모드 시작
-	GET_DEVICE->SetRenderState(D3DRS_ALPHAREF, 1); // 알파 기준 설정
-	GET_DEVICE->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER); // 알파 테스팅 수행
 	return NO_EVENT;
 }
 
@@ -66,7 +59,6 @@ _uint CUIManager::Render(void)
 		m_vRenderList[i].clear();
 	}
 
-	GET_DEVICE->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE); // 알파모드 헤제
 
 	return event;
 }

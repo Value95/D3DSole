@@ -39,6 +39,7 @@
 #include "EditorStruct.h"
 #include "EditorDefine.h"
 
+#include "sal.h"
 /* for std Header */
 #include <vector>
 #include <list>
@@ -76,8 +77,9 @@
 #include "Raycast.h"
 
 #include "DataStore.h"
-#include"MeshStore.h"
+#include "MeshStore.h"
 #include "TextureStore.h"
+#include "ShaderStore.h"
 
 using namespace std;
 

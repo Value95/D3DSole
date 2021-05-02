@@ -15,20 +15,20 @@ public:
 
 	static		SHARED(CMainEditor)	Create(void);
 
-	void				Awake(void);
-	void				Start(void);
+	void	Awake(void);
+	void	Start(void);
 
-	_uint				FixedUpdate(void);
-	_uint				Update(void);
-	_uint				LateUpdate(void);
+	_uint	FixedUpdate(void);
+	_uint	Update(void);
+	_uint	LateUpdate(void);
 
-	_uint				Render(void);
-	_uint				PostRender(void);
+	_uint	Render(void);
+	_uint	PostRender(void);
 
-	void				OnDestroy(void);
+	void	OnDestroy(void);
 
-	void				OnEnable(void);
-	void				OnDisable(void);
+	void	OnEnable(void);
+	void	OnDisable(void);
 
 };
 

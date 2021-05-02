@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "DongilScene.h"
+#include "SceneManager.h"
 
 #include "ScarecrowIdle.h"
 #include "PlayerWapon.h"
@@ -30,7 +31,7 @@ void CDongilScene::Awake(void)
 void CDongilScene::Start(void)
 {
 	__super::Start();
-	//LoadObject(L"TestScene");
+	LoadObject(L"TestScene");
 
 	{ // 카메라
 		m_pMainCamera = Engine::ADD_CLONE(L"Camera", L"Camera", true)->GetComponent<Engine::CCameraComponent>();
@@ -51,21 +52,13 @@ void CDongilScene::Start(void)
 		pObj->AddComponent<Engine::CDirectionalLightComponent>();
 	}
 
-	{ // 플레이어
-		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Player", L"Player", true);
-		pObj->SetPosition(vector3(10, 15, 10));
-		pObj->SetRotation(vector3(0, 0, 0));
-		pObj->AddComponent<Engine::CBoxComponent>()->SetSize(vector3(0.5, 0.5, 0.5) * 100);
-		m_pMainCamera->GetOwner()->SetTarget(pObj.get());
-	}
-
 	{
 		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
 		pObj->SetName(L"Sword");
-		pObj->SetRotation(vector3(0, 155, 0));
+		pObj->SetRotation(vector3(0, 90, 0));
 		pObj->AddComponent<CPlayerWapon>();
 		pObj->AddComponent<Engine::CMeshComponent>()->SetMeshKey(L"Wapon_Sword_000.X");
-		pObj->AddComponent<Engine::CStaticMeshRenderComponent>()->SetShader(Engine::CShader::Create(L"Shader_Sample.hpp"));
+		pObj->AddComponent<Engine::CStaticMeshRenderComponent>();
 	}
 
 	{
@@ -75,35 +68,13 @@ void CDongilScene::Start(void)
 		pObj->AddComponent<CMonster>()->AddFSM<CScarecrowIdle>();
 		pObj->SetPosition(vector3(0, -1, 0));
 	}
-	
-	{
-		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
-		pObj->SetPosition(vector3(5, 0, 0));
-		pObj->AddComponent<Engine::CEffectComponent>()->Reset(L"Explosion", 89);
-		pObj->AddComponent<Engine::CAnimMeshRenderComponent>();
-	}
-
-	{
-		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"UI", L"UI", true);
-		pObj->SetPosition(vector3(0, 0, 0));
-		pObj->SetScale(vector3(800, 600, 0));
-		pObj->GetComponent<Engine::CUIComponent>()->SetTextureKey(L"MainLogo");
-		pObj->GetComponent<Engine::CUIComponent>()->SetShader(Engine::CShader::Create(L"Shader_Sample.hpp"));
-	}
-
-	{ // 바닥
-		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"MapObject", L"Tile", true);
-		pObj->SetPosition(vector3(13, -3, 10));
-		pObj->SetRotation(vector3(0, 0, 0));
-
-		pObj->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(30, 1, 30), vector3Zero));
-		pObj->AddComponent<Engine::CBoxComponent>()->SetSize(vector3(30, 1, 30));
-	}
 }
 
 _uint CDongilScene::FixedUpdate(void)
 {
 	__super::FixedUpdate();
+
+	m_pMainCamera->GetOwner()->SetTarget(Engine::GET_CUR_SCENE->FindObjectByName(L"Player").get());
 
 	return NO_EVENT;
 }
@@ -148,6 +119,8 @@ void CDongilScene::InitLayers(void)
 	AddLayer(L"Monster");
 	AddLayer(L"UI");
 	AddLayer(L"MapObject");
+	AddLayer(L"Collider");
+	AddLayer(L"Map");
 }
 
 void CDongilScene::InitPrototypes(void)
@@ -155,6 +128,22 @@ void CDongilScene::InitPrototypes(void)
 
 }
 
+/*
+
+{
+SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
+pObj->SetPosition(vector3(5, 0, 0));
+pObj->AddComponent<Engine::CEffectComponent>()->Reset(L"Explosion", 89);
+pObj->AddComponent<Engine::CAnimMeshRenderComponent>();
+}
+
+{
+	SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"UI", L"UI", true);
+	pObj->SetPosition(vector3(0, 0, 0));
+	pObj->SetScale(vector3(800, 600, 0));
+	pObj->GetComponent<Engine::CUIComponent>()->SetTextureKey(L"MainLogo");
+	pObj->GetComponent<Engine::CUIComponent>()->SetShader(Engine::CShader::Create(L"Shader_Sample.hpp"));
+}*/
 
 /*{
 SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);

@@ -8,7 +8,6 @@
 
 USING(Engine)
 IMPLEMENT_SINGLETON(CShaderStore)
-
 void CShaderStore::Awake(void)
 {
 	__super::Awake();

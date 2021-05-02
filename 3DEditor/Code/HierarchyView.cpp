@@ -44,7 +44,7 @@ void CHierarchyView::SelectObjectClick() // 셀에 맞는 오브젝트 위치값을 가져오고
 	inspectorView->SetData(object.get());
 
 	Engine::GET_MAIN_CAM->GetOwner()->SetPosition(object->GetPosition());
-	Engine::GET_MAIN_CAM->GetOwner()->SetPosition(Engine::GET_MAIN_CAM->GetOwner()->ReturnTranslate(vector3(0, 0, -8)));
+	Engine::GET_MAIN_CAM->GetOwner()->SetPosition(Engine::GET_MAIN_CAM->GetOwner()->ReturnPosTranslate(vector3(0, 0, -8)));
 
 	dynamic_cast<CEditorScene*>(Engine::GET_CUR_SCENE.get())->m_pickingObject = object.get();
 	dynamic_cast<CEditorScene*>(Engine::GET_CUR_SCENE.get())->m_pickNumber = sel;

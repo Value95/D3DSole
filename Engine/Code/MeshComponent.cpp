@@ -42,9 +42,6 @@ void CMeshComponent::Start(SHARED(CComponent) spThis)
 	std::wstring layeKey = m_pOwner->GetLayerKey();
 	std::wstring objectKey = m_pOwner->GetObjectKey();
 
-	if (m_meshKey == L"")
-		m_meshKey = L"Cube";
-
 	m_pMeshData = CMeshStore::GetInstance()->GetMeshData(m_meshKey);
 }
 

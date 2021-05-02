@@ -126,14 +126,16 @@ _uint CEffectComponent::PreRender(void)
 	GET_DEVICE->SetTransform(D3DTS_VIEW, &GET_CUR_SCENE->GetMainCamera()->GetViewMatrix());
 	GET_DEVICE->SetTransform(D3DTS_PROJECTION, &GET_CUR_SCENE->GetMainCamera()->GetProjMatrix());
 
-	m_shader->GetEffectShader()->SetMatrix("g_matWorld", &GetOwner()->GetWorldMatrix());
-	m_shader->GetEffectShader()->SetMatrix("g_matView", &GET_CUR_SCENE->GetMainCamera()->GetViewMatrix());
-	m_shader->GetEffectShader()->SetMatrix("g_matProj", &GET_CUR_SCENE->GetMainCamera()->GetProjMatrix());
-
-	m_shader->GetEffectShader()->SetTexture("g_BaseTexture", m_texData[m_effectCurCount]->pTexture);
-
 	if (m_shader)
+	{
+		m_shader->GetEffectShader()->SetMatrix("g_matWorld", &GetOwner()->GetWorldMatrix());
+		m_shader->GetEffectShader()->SetMatrix("g_matView", &GET_CUR_SCENE->GetMainCamera()->GetViewMatrix());
+		m_shader->GetEffectShader()->SetMatrix("g_matProj", &GET_CUR_SCENE->GetMainCamera()->GetProjMatrix());
+
+		m_shader->GetEffectShader()->SetTexture("g_BaseTexture", m_texData[m_effectCurCount]->pTexture);
+
 		m_shader->ShaderReady();
+	}
 
 	return _uint();
 }

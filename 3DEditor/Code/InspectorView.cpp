@@ -208,14 +208,26 @@ void CInspectorView::LayerAddString()
 	m_layerComboBox.AddString(TEXT("Default"));
 	m_layerComboBox.AddString(TEXT("Light"));
 	m_layerComboBox.AddString(TEXT("UI"));
+	m_layerComboBox.AddString(TEXT("MapObject"));
+	m_layerComboBox.AddString(TEXT("Collider"));
+	m_layerComboBox.AddString(TEXT("Light"));
+	m_layerComboBox.AddString(TEXT("Monster"));
+	m_layerComboBox.AddString(TEXT("Player"));
+	m_layerComboBox.AddString(TEXT("Map"));
 }
 
 void CInspectorView::ObjectAddString()
 {
 	m_objectKeyComboBox.AddString(TEXT("Default"));
+	m_objectKeyComboBox.AddString(TEXT("Tile"));
 	m_objectKeyComboBox.AddString(TEXT("Mess"));
-	m_objectKeyComboBox.AddString(TEXT("UI"));
+	m_objectKeyComboBox.AddString(TEXT("Collider"));
+	m_objectKeyComboBox.AddString(TEXT("NavMesh"));
 	m_objectKeyComboBox.AddString(TEXT("DirectionalLight"));
+	m_objectKeyComboBox.AddString(TEXT("UI"));
+	m_objectKeyComboBox.AddString(TEXT("Scarecrow"));
+	m_objectKeyComboBox.AddString(TEXT("Player"));
+	m_objectKeyComboBox.AddString(TEXT("Map"));
 }
 
 void CInspectorView::ColliderAddString()

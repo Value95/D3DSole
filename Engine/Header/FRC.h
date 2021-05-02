@@ -14,6 +14,7 @@ private:
 	LARGE_INTEGER m_beginTime = {};
 	//측정 종료시의 진동수
 	LARGE_INTEGER m_endTime = {};
+	
 	//한 프레임의 속도 리미트. second per frame limit.
 	_float m_spfLimit = 0.f;
 	//1초에 몇 프레임이 흘러가는지.
@@ -21,8 +22,8 @@ private:
 
 	LONGLONG m_timer = {};
 
-
-	GETTOR(_float,			m_deltaTime,		0.f,		DeltaTime)
+	GETTOR(_float, m_fullTime, 0.f, FullTime)
+	GETTOR(_float, m_deltaTime,	0.f, DeltaTime)
 public:
 	void Awake(void) override;
 	void Start(void);

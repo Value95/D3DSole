@@ -34,8 +34,9 @@ void CFRC::OnDisable(void)
 bool CFRC::FrameLock(void)
 {
 	QueryPerformanceCounter(&m_endTime);
-	m_spfLimit += float(m_endTime.QuadPart - m_beginTime.QuadPart) / m_cpuTick.QuadPart;
-
+	float sumValue = float(m_endTime.QuadPart - m_beginTime.QuadPart) / m_cpuTick.QuadPart;
+	m_spfLimit += sumValue;
+	m_fullTime += sumValue;
 	m_beginTime.QuadPart = m_endTime.QuadPart;
 
 	if ((1.f / m_fps) < m_spfLimit)
@@ -44,7 +45,7 @@ bool CFRC::FrameLock(void)
 		m_spfLimit = 0.f;
 		QueryPerformanceFrequency(&m_cpuTick);
 
-		std::cout << m_fps << endl;
+		//std::cout << m_fps << endl;
 
 		if (m_deltaTime > 0.1)
 		{

@@ -96,14 +96,23 @@ _uint CUIComponent::PreRender(void)
 	GET_DEVICE->SetTransform(D3DTS_VIEW, &identityMatrix);
 	GET_DEVICE->SetTransform(D3DTS_PROJECTION, &GET_CUR_SCENE->GetMainCamera()->GetOrthoMatrix());
 
-	m_shader->GetEffectShader()->SetMatrix("g_matWorld", &GetOwner()->GetWorldMatrix());
-	m_shader->GetEffectShader()->SetMatrix("g_matView", &identityMatrix);
-	m_shader->GetEffectShader()->SetMatrix("g_matProj", &GET_CUR_SCENE->GetMainCamera()->GetOrthoMatrix());
-
-	m_shader->GetEffectShader()->SetTexture("g_BaseTexture", m_pTexData->pTexture);
-
 	if (m_shader)
+	{
+		m_shader->GetEffectShader()->SetMatrix("g_matWorld", &GetOwner()->GetWorldMatrix());
+		m_shader->GetEffectShader()->SetMatrix("g_matView", &identityMatrix);
+		m_shader->GetEffectShader()->SetMatrix("g_matProj", &GET_CUR_SCENE->GetMainCamera()->GetOrthoMatrix());
+
+		m_shader->GetEffectShader()->SetTexture("g_BaseTexture", m_pTexData->pTexture);
+
 		m_shader->ShaderReady();
+	}
+
+	GET_DEVICE->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	GET_DEVICE->SetRenderState(D3DRS_LIGHTING, FALSE);
+
+	GET_DEVICE->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE); // 알파모드 시작
+	GET_DEVICE->SetRenderState(D3DRS_ALPHAREF, 1); // 알파 기준 설정
+	GET_DEVICE->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER); // 알파 테스팅 수행
 
 	return _uint();
 }
@@ -120,6 +129,9 @@ _uint CUIComponent::PostRender(void)
 {
 	if (m_shader)
 		m_shader->ShaderEnd();
+
+	GET_DEVICE->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE); // 알파모드 헤제
+
 
 	return _uint();
 }

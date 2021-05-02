@@ -83,11 +83,10 @@ _uint CSkyBoxComponent::PreRender(void)
 
 	//ÁÂÇ¥¼ÂÆÃ
 	GET_DEVICE->SetTransform(D3DTS_WORLD, &GetOwner()->GetWorldMatrix());
-	//GET_DEVICE->SetTransform(D3DTS_VIEW, &GET_CUR_SCENE->GetMainCamera()->GetViewMatrix());
-	//GET_DEVICE->SetTransform(D3DTS_PROJECTION, &GET_CUR_SCENE->GetMainCamera()->GetOrthoMatrix());
 
 	GET_DEVICE->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	GET_DEVICE->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+	GET_DEVICE->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	return _uint();
 }

@@ -25,6 +25,15 @@ vector3 CTransformComponent::ReturnTranslate(vector3 translation)
 	D3DXMatrixRotationYawPitchRoll(&rotate, D3DXToRadian(m_rotation.y), D3DXToRadian(m_rotation.x), D3DXToRadian(m_rotation.z));
 	D3DXVec3TransformCoord(&translation, &translation, &rotate);
 
+	return translation;
+}
+
+vector3 CTransformComponent::ReturnPosTranslate(vector3 translation)
+{
+	matrix4x4 rotate;
+	D3DXMatrixRotationYawPitchRoll(&rotate, D3DXToRadian(m_rotation.y), D3DXToRadian(m_rotation.x), D3DXToRadian(m_rotation.z));
+	D3DXVec3TransformCoord(&translation, &translation, &rotate);
+
 	return m_position + translation;
 }
 

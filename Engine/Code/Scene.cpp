@@ -125,7 +125,7 @@ SHARED(CGameObject) CScene::FindObjectPosition(vector3 position)
 {
 	for (auto& layer : m_mLayers)
 	{
-		if (layer.first == L"Camera" || layer.first == L"Collider")
+		if (layer.first == L"Camera" || layer.first == L"Debug")
 			continue;
 
 		for (auto& gameObject : layer.second->GetGameObjects())
@@ -141,7 +141,7 @@ SHARED(CGameObject) CScene::FindObjectPoint(CGameObject* object)
 {
 	for (auto& layer : m_mLayers)
 	{
-		if (layer.first == L"Camera" || layer.first == L"Collider")
+		if (layer.first == L"Camera" || layer.first == L"Debug")
 			continue;
 
 		for (auto& gameObject : layer.second->GetGameObjects())
@@ -220,6 +220,8 @@ void CScene::LoadObject(std::wstring path)
 		{
 			obj->GetComponent<Engine::CMeshComponent>()->SetMeshKey(LoadWstring(&hFile, &dwByte));
 		}
+		else
+			LoadWstring(&hFile, &dwByte);
 
 		ReadFile(hFile, &obj->GetIsEnabled(), sizeof(bool), &dwByte, nullptr);
 		ReadFile(hFile, &obj->GetPosition(), sizeof(vector3), &dwByte, nullptr);

@@ -17,6 +17,7 @@
 #include "ObjectFactory.h"
 #include "Layer.h"
 #include "Component.h"
+#include "Raycast.h"
 
 #include "DataStore.h"
 #include "MeshStore.h"

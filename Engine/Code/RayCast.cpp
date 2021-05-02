@@ -91,12 +91,12 @@ CGameObject * CRaycast::MeshRayCast(vector3 origin, vector3 direction, _float ma
 		D3DXVec3TransformCoord(&Torigin, &origin, &matWorld);
 		D3DXVec3TransformNormal(&Tdirection, &direction, &matWorld);
 
-		hr = D3DXIntersect(meshCom->GetMeshData()->mesh,
-			&Torigin,
-			&Tdirection,
-			&hit,
-			&dwfaceIndex,
-			&u, &v, &dist, nullptr, nullptr);
+		hr = D3DXIntersect(meshCom->GetMeshData()->mesh, // 해당 매쉬
+			&Torigin, // 시작위치
+			&Tdirection, // 방향
+			&hit, // 충돌지점 넘겨받음 out
+			&dwfaceIndex, // 매쉬에서 충돌된 인덱스번호 out
+			&u, &v, &dist, nullptr, nullptr); // dist는 거리 out
 
 		if (hit == true && maxDistance >= dist)
 		{
@@ -184,9 +184,21 @@ CGameObject * CRaycast::BoxRayCast(vector3 origin, vector3 direction, _float max
 
 		_float tMin = 0;
 		_float tMax = maxDistance;
+		CCollider* collider = object->GetComponent<Engine::CColliderComponent>()->GetColliders()[0];
 
-		vector3 minPos = (object->GetScale()* 0.5f) * -1;
-		vector3 maxPos = (object->GetScale()* 0.5f);
+		vector3 minPos;
+		vector3 maxPos;
+
+		if (collider->GetColliderType() == (int)EColliderType::Box)
+		{
+			CBoxCollider* boxCollider = static_cast<Engine::CBoxCollider*>(collider);
+			minPos = (boxCollider->GetBoxSize() * 0.5f) * -1;
+			maxPos = (boxCollider->GetBoxSize() * 0.5f);
+		}
+		else if (collider->GetColliderType() == (int)EColliderType::Sphere)
+		{
+			collider = dynamic_cast<Engine::CSphereCollider*>(collider);
+		}
 
 		D3DXVec3TransformCoord(&minPos, &minPos, &object->GetWorldMatrix());
 		D3DXVec3TransformCoord(&maxPos, &maxPos, &object->GetWorldMatrix());

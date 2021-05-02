@@ -73,7 +73,7 @@ _uint CStaticMeshRenderManager::Render(void)
 		{
 			if (pGC->GetOwner() != nullptr)
 			{
-				if (GET_MAIN_CAM->IsInFrustum(pGC->GetOwner()->GetPosition()))
+				//if (GET_MAIN_CAM->IsInFrustum(pGC->GetOwner()->GetPosition()))
 				{
 					if (event = pGC->PreRender()) return event;
 					if (event = pGC->Render()) return event;
