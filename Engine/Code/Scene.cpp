@@ -248,6 +248,8 @@ void CScene::LoadObject(std::wstring path)
 		{
 			obj->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CSphereCollider::Create(colliderData->radius));
 		}
+		SafeDelete(colliderType);
+		SafeDelete(colliderData);
 	}
 
 	CloseHandle(hFile);

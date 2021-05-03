@@ -162,12 +162,30 @@ STDMETHODIMP Engine::CHierarchyLoader::DestroyFrame(THIS_ LPD3DXFRAME pFrameToFr
 
 STDMETHODIMP Engine::CHierarchyLoader::DestroyMeshContainer(THIS_ LPD3DXMESHCONTAINER pMeshContainerToFree)
 {
+	D3DXMESHCONTAINER_DERIVED*	pDerivedMeshContainer = (D3DXMESHCONTAINER_DERIVED*)pMeshContainerToFree;
+
+	for (_ulong i = 0; i < pDerivedMeshContainer->NumMaterials; ++i)
+		SafeRelease(pDerivedMeshContainer->ppTexture[i]);
+
+	SafeDeleteArray(pDerivedMeshContainer->ppTexture);
+
+	SafeDeleteArray(pDerivedMeshContainer->pMaterials);
+	SafeDeleteArray(pDerivedMeshContainer->pAdjacency);
+
+	SafeRelease(pDerivedMeshContainer->MeshData.pMesh);
+	SafeRelease(pDerivedMeshContainer->pOriginalMesh);
+	SafeRelease(pDerivedMeshContainer->pSkinInfo);
+
+	SafeDeleteArray(pDerivedMeshContainer->Name);
+
+	SafeDelete(pDerivedMeshContainer);
+
 	return S_OK;
 }
 
 CHierarchyLoader * CHierarchyLoader::Create(const _wcharT * filePath)
 {
-	CHierarchyLoader*		pInstance = new CHierarchyLoader(filePath);
+	CHierarchyLoader* pInstance = new CHierarchyLoader(filePath);
 
 	if (FAILED(pInstance->Start(filePath)))
 		SafeRelease(pInstance);

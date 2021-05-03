@@ -86,6 +86,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	Engine::CWndApp::GetInstance()->DestroyInstance();
 	Engine::CFRC::GetInstance()->DestroyInstance();
 	Engine::CDataStore::GetInstance()->DestroyInstance();
+	Engine::CShaderStore::GetInstance()->DestroyInstance();
 #pragma endregion
 	return (int)msg.wParam;
 }

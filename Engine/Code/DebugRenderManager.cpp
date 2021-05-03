@@ -163,7 +163,7 @@ _uint CDebugRendeerManager::AddToSphereRenderList(SHARED(CSphereComponent) pGC)
 	if (pGC == nullptr)
 		return NULL_PARAMETER;
 
-	m_sphereRenderList.emplace_back(pGC);
+	//m_sphereRenderList.emplace_back(pGC);
 	return NO_EVENT;
 }
 

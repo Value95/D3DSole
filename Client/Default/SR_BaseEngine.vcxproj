@@ -188,6 +188,13 @@
     <ClInclude Include="..\Header\ClientTypedef.h" />
     <ClInclude Include="..\Header\CrystalSpiderRoomScene.h" />
     <ClInclude Include="..\Header\DongilScene.h" />
+    <ClInclude Include="..\Header\DrakenAttack1.h" />
+    <ClInclude Include="..\Header\DrakenAttack2.h" />
+    <ClInclude Include="..\Header\DrakenDeath.h" />
+    <ClInclude Include="..\Header\DrakenHit.h" />
+    <ClInclude Include="..\Header\DrakenIdle.h" />
+    <ClInclude Include="..\Header\DrakenMaintenance.h" />
+    <ClInclude Include="..\Header\DrakenMove.h" />
     <ClInclude Include="..\Header\FSM.h" />
     <ClInclude Include="..\Header\LoddingScene.h" />
     <ClInclude Include="..\Header\MainApp.h" />
@@ -214,6 +221,13 @@
     <ClCompile Include="..\Code\AgentSanwaMoneyRoomScene.cpp" />
     <ClCompile Include="..\Code\CrystalSpiderRoomScene.cpp" />
     <ClCompile Include="..\Code\DongilScene.cpp" />
+    <ClCompile Include="..\Code\DrakenAttack1.cpp" />
+    <ClCompile Include="..\Code\DrakenAttack2.cpp" />
+    <ClCompile Include="..\Code\DrakenDeath.cpp" />
+    <ClCompile Include="..\Code\DrakenHit.cpp" />
+    <ClCompile Include="..\Code\DrakenIdle.cpp" />
+    <ClCompile Include="..\Code\DrakenMaintenance.cpp" />
+    <ClCompile Include="..\Code\DrakenMove.cpp" />
     <ClCompile Include="..\Code\FSM.cpp" />
     <ClCompile Include="..\Code\LoddingScene.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />

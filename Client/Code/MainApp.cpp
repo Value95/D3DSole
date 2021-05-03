@@ -7,6 +7,7 @@
 
 #pragma region Monster
 #include "ScarecrowIdle.h"
+#include "DrakenIdle.h"
 #pragma endregion
 
 CMainApp::CMainApp(void)
@@ -208,6 +209,17 @@ void CMainApp::Monster()
 	scarecrow->SetScale(vector3(0.005f, 0.005f, 0.005f));
 	scarecrow->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(1, 10, 1), vector3Zero));
 	Engine::CObjectFactory::GetInstance()->AddPrototype(scarecrow);
+
+	SHARED(Engine::CGameObject) draken = Engine::CGameObject::Create(L"Monster", L"Draken", true);
+	draken->SetName(L"Draken");
+	draken->SetPosition(vector3(0, 0, 0));
+	draken->SetScale(vector3(0.01f, 0.01f, 0.01f));
+	draken->AddComponent<CMonster>()->AddFSM<CDrakenIdle>();
+	draken->AddComponent<Engine::CRigidBodyComponent>();
+	draken->GetComponent<Engine::CRigidBodyComponent>()->SetBounciness(0.0f);
+	draken->GetComponent<Engine::CRigidBodyComponent>()->SetMass(80);
+	draken->AddComponent<Engine::CAnimMeshRenderComponent>()->MeshInput(L"../../Resource/Mesh/Static/DynamicMesh/Boss/", L"boss.X");
+	Engine::CObjectFactory::GetInstance()->AddPrototype(draken);
 }
 
 void CMainApp::Player()
@@ -220,7 +232,7 @@ void CMainApp::Player()
 	player->GetComponent<Engine::CRigidBodyComponent>()->SetBounciness(0.0f);
 	player->GetComponent<Engine::CRigidBodyComponent>()->SetMass(80);
 	player->AddComponent<CPlayer>();
-	player->AddComponent<Engine::CAnimMeshRenderComponent>()->MeshInput(L"../../Resource/Mesh/Static/Player/", L"Player_Player_000.X");
+	player->AddComponent<Engine::CAnimMeshRenderComponent>()->MeshInput(L"../../Resource/Mesh/Static/DynamicMesh/Player/", L"Player_Player_000.X");
 	Engine::CObjectFactory::GetInstance()->AddPrototype(player);
 
 }

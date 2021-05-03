@@ -94,6 +94,30 @@
     <Filter Include="02.Script\00.Player\00.PlayerFMS\05.Hit">
       <UniqueIdentifier>{0465eaf7-ef5f-471f-b841-0c516801980e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.Script\01.Monster\00.MonsterFSM\02.Draken">
+      <UniqueIdentifier>{3763d271-5600-4dc7-9076-ba8cbd341894}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Script\01.Monster\00.MonsterFSM\02.Draken\01.DrakenIdle">
+      <UniqueIdentifier>{dd0a74ec-ef2e-4a86-9988-2467a0513cef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Script\01.Monster\00.MonsterFSM\02.Draken\02.DrakenMove">
+      <UniqueIdentifier>{3d9c2677-d20b-46ba-bfca-7a9ddf33541f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Script\01.Monster\00.MonsterFSM\02.Draken\03.DrakenAttack1">
+      <UniqueIdentifier>{77e138bf-24a2-4862-9450-6b9a722b9129}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Script\01.Monster\00.MonsterFSM\02.Draken\04.DrakenAttack2">
+      <UniqueIdentifier>{9eace0a8-722d-4172-9958-a6b20462553a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Script\01.Monster\00.MonsterFSM\02.Draken\05.DrakenHit">
+      <UniqueIdentifier>{100ebac6-5087-4b14-ad45-7a40590c0e0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Script\01.Monster\00.MonsterFSM\02.Draken\06.DrakenDeath">
+      <UniqueIdentifier>{7308b21d-542e-491d-8931-64c37c3fa15d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Script\01.Monster\00.MonsterFSM\02.Draken\00.DrakenMaintenance">
+      <UniqueIdentifier>{ba4da3ca-6928-4a17-bc04-f449907a1ddf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -189,6 +213,27 @@
     <ClInclude Include="..\Header\PlayerDeshAttack.h">
       <Filter>02.Script\00.Player\00.PlayerFMS\04.DeshAttack</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\DrakenIdle.h">
+      <Filter>02.Script\01.Monster\00.MonsterFSM\02.Draken\01.DrakenIdle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\DrakenMove.h">
+      <Filter>02.Script\01.Monster\00.MonsterFSM\02.Draken\02.DrakenMove</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\DrakenAttack1.h">
+      <Filter>02.Script\01.Monster\00.MonsterFSM\02.Draken\03.DrakenAttack1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\DrakenDeath.h">
+      <Filter>02.Script\01.Monster\00.MonsterFSM\02.Draken\06.DrakenDeath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\DrakenHit.h">
+      <Filter>02.Script\01.Monster\00.MonsterFSM\02.Draken\05.DrakenHit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\DrakenAttack2.h">
+      <Filter>02.Script\01.Monster\00.MonsterFSM\02.Draken\04.DrakenAttack2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\DrakenMaintenance.h">
+      <Filter>02.Script\01.Monster\00.MonsterFSM\02.Draken\00.DrakenMaintenance</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -250,6 +295,27 @@
     </ClCompile>
     <ClCompile Include="..\Code\PlayerHit.cpp">
       <Filter>02.Script\00.Player\00.PlayerFMS\05.Hit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DrakenAttack1.cpp">
+      <Filter>02.Script\01.Monster\00.MonsterFSM\02.Draken\03.DrakenAttack1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DrakenAttack2.cpp">
+      <Filter>02.Script\01.Monster\00.MonsterFSM\02.Draken\04.DrakenAttack2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DrakenDeath.cpp">
+      <Filter>02.Script\01.Monster\00.MonsterFSM\02.Draken\06.DrakenDeath</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DrakenHit.cpp">
+      <Filter>02.Script\01.Monster\00.MonsterFSM\02.Draken\05.DrakenHit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DrakenMove.cpp">
+      <Filter>02.Script\01.Monster\00.MonsterFSM\02.Draken\02.DrakenMove</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DrakenIdle.cpp">
+      <Filter>02.Script\01.Monster\00.MonsterFSM\02.Draken\01.DrakenIdle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DrakenMaintenance.cpp">
+      <Filter>02.Script\01.Monster\00.MonsterFSM\02.Draken\00.DrakenMaintenance</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

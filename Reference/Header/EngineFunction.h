@@ -34,12 +34,12 @@ namespace Engine
 	DWORD SafeRelease(T& pointer)
 	{
 		DWORD	dwRefCnt = 0;
-		/*if (NULL != pointer)
+		if (NULL != pointer)
 		{
-			dwRefCnt = pointer->OnDestroy();
-			if (dwRefCnt == 0)
+			/*dwRefCnt = pointer->Release();
+			if (dwRefCnt == 0)*/
 				pointer = NULL;
-		}*/
+		}
 		return dwRefCnt;
 	}
 

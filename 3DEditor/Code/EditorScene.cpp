@@ -446,7 +446,7 @@ void CEditorScene::PrefabObject()
 	pObj->SetName(name);
 	pObj->GetComponent<Engine::CMeshComponent>()->SetMeshKey(wMessKey);
 
-	pObj->SetPosition(m_pMainCamera->GetOwner()->ReturnReturnPosTranslateTranslate(vector3(0, 0, 2)));
+	pObj->SetPosition(m_pMainCamera->GetOwner()->ReturnPosTranslate(vector3(0, 0, 2)));
 	//pObj->SetPosition(vector3(6.63512,1.17806,15.0252));
 
 	pObj->SetRotation(rotation);

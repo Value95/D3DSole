@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Player.h"
 #include "PlayerInfo.h"
+#include "MonsterInfo.h"
 
 #include "FSM.h"
 #include "PlayerIdle.h"
@@ -17,6 +18,7 @@ CPlayer::CPlayer()
 
 CPlayer::~CPlayer(void)
 {
+	OnDestroy();
 }
 
 SHARED(Engine::CComponent) CPlayer::MakeClone(Engine::CGameObject* pObject)
@@ -26,6 +28,7 @@ SHARED(Engine::CComponent) CPlayer::MakeClone(Engine::CGameObject* pObject)
 	pClone->SetName(m_name);
 
 	pClone->SetIsAwaked(m_isAwaked);
+	pClone->SetPlayerInfo(m_playerInfo);
 
 	return pClone;
 }
@@ -95,6 +98,13 @@ _uint CPlayer::LateUpdate(SHARED(CComponent) spThis)
 
 void CPlayer::OnDestroy(void)
 {
+	/*if (m_playerFSM != nullptr)
+	{
+		for (int i = 0; i < STATE::STATEEND; i++)
+		{
+			SAFE_DELETE(m_playerFSM[i]);
+		}
+	}*/
 }
 
 void CPlayer::OnEnable(void)
@@ -112,13 +122,12 @@ void CPlayer::ChangeFSM(STATE state)
 	m_playerFSM[m_playerState]->Start();
 }
 
-void CPlayer::Attack(Engine::CGameObject * gameObject)
+void CPlayer::Attack(Engine::CGameObject* gameObject)
 {
 	if (gameObject->GetLayerKey() == L"Monster")
 	{
 		gameObject->GetComponent<CMonster>()->Hit(GetPlayerInfo()->GetDamage());
-		//cout << "몬스터 체력 : " << gameObject->GetComponent<CMonster>()->GetMonsterInfo()->GetHP() << endl;
-		
+		cout << "몬스터 체력 : " << gameObject->GetComponent<CMonster>()->GetMonsterInfo()->GetHP() << endl;
 	}
 	else if (gameObject->GetName() == L"Boss")
 	{

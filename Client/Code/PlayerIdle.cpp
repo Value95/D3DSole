@@ -15,7 +15,7 @@ void CPlayerIdle::Start()
 {
 	m_player->GetAnim()->GetAnimCtrl()->SetSpeed(1.0f);
 
-	if (m_player->GetAnim()->GetAnimValue() == 108)
+	if (m_player->GetAnim()->GetAnimValue() == 9)
 		m_player->GetAnim()->Set_AnimationSet(37);
 	else
 		m_player->GetAnim()->Set_AnimationSet(110);

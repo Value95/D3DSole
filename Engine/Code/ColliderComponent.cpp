@@ -11,6 +11,7 @@ CColliderComponent::CColliderComponent(void)
 
 CColliderComponent::~CColliderComponent(void)
 {
+	OnDestroy();
 }
 
 SHARED(CComponent) CColliderComponent::MakeClone(CGameObject* pObject)
@@ -20,8 +21,6 @@ SHARED(CComponent) CColliderComponent::MakeClone(CGameObject* pObject)
 	pClone->SetName(m_name);
 	pClone->SetIsAwaked(m_isAwaked);
 	pClone->SetColliders(m_vColliders);
-
-
 
 	return pClone;
 }
@@ -55,7 +54,10 @@ _uint CColliderComponent::LateUpdate(SHARED(CComponent) spSelf)
 
 void CColliderComponent::OnDestroy(void)
 {
-
+	for (int i = 0; i < m_vColliders.size(); i++)
+	{
+		SAFE_DELETE(m_vColliders[i]);
+	}
 }
 
 void CColliderComponent::OnEnable(void)
@@ -64,6 +66,7 @@ void CColliderComponent::OnEnable(void)
 
 void CColliderComponent::OnDisable(void)
 {
+
 }
 
 CColliderComponent* CColliderComponent::AddCollider(CCollider* collider)

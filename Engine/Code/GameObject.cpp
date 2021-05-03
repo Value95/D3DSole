@@ -15,6 +15,7 @@ CGameObject::CGameObject(const CGameObject & other)
 
 CGameObject::~CGameObject(void)
 {
+	OnDestroy();
 }
 
 SHARED(CGameObject) CGameObject::Create(std::wstring layerKey, 

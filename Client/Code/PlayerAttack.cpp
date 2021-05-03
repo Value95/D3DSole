@@ -7,11 +7,12 @@
 CPlayerAttack::CPlayerAttack(CPlayer* player)
 {
 	m_player = player;
-	collision = Engine::CBoxCollider::Create(vector3(3, 3, 3), vector3(0,0,-2));
+	collision = Engine::CBoxCollider::Create(vector3(1, 4, 3), vector3(0, 0.9,-1));
 }
 
 CPlayerAttack::~CPlayerAttack()
 {
+	OnDestroy();
 }
 
 void CPlayerAttack::Start()
@@ -83,6 +84,8 @@ _uint CPlayerAttack::LateUpdate()
 
 void CPlayerAttack::OnDestroy(void)
 {
+	SAFE_DELETE(collision);
+
 }
 
 void CPlayerAttack::GroundAttack()

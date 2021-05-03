@@ -23,6 +23,7 @@ void CShaderStore::Start(void)
 void CShaderStore::OnDestroy(void)
 {
 	m_StaticShaderData.clear();
+	m_mCurSceneShaderData.clear();
 }
 
 void CShaderStore::ClearCurResource(void)
@@ -56,12 +57,6 @@ void CShaderStore::InitResource(std::wstring sourcePath)
 void CShaderStore::ParsingMesh(std::wstring filePath, std::wstring fileName)
 {
 	LPD3DXEFFECT* effectShader = new LPD3DXEFFECT;
-	
-	/*_wcharT* path = (_wcharT*)filePath.c_str();
-	//_wcharT* file = (_wcharT*)fileName.c_str();
-
-	lstrcat(path, L"\\");
-	lstrcat(path, (_wcharT*)fileName.c_str());*/
 
 	D3DXCreateEffectFromFile(GET_DEVICE,
 		L"..\\..\\Resource\\Shader\\Static\\Shader_Sample.hpp",

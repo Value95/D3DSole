@@ -5,11 +5,12 @@
 CPlayerDeshAttack::CPlayerDeshAttack(CPlayer* player)
 {
 	m_player = player;
-	collision = Engine::CBoxCollider::Create(vector3(3, 3, 3), vector3(0, 0, -2));
+	collision = Engine::CBoxCollider::Create(vector3(1, 4, 3), vector3(0, 0.9, -1));
 }
 
 CPlayerDeshAttack::~CPlayerDeshAttack()
 {
+	OnDestroy();
 }
 
 void CPlayerDeshAttack::Start()
@@ -37,7 +38,6 @@ _uint CPlayerDeshAttack::FixedUpdate()
 			for (auto& object : col)
 			{
 				m_player->Attack(object);
-				cout << "АјАн" << endl;
 				init = true;
 			}
 		}
@@ -74,4 +74,5 @@ _uint CPlayerDeshAttack::LateUpdate()
 
 void CPlayerDeshAttack::OnDestroy(void)
 {
+	SAFE_DELETE(collision);
 }

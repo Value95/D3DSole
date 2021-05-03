@@ -97,8 +97,8 @@ _uint CLayer::LateUpdate(void)
 
 void CLayer::OnDestroy(void)
 {
-	m_vGameObjects.clear(); // 여기가 문제
-	m_vGameObjects.shrink_to_fit();
+	m_vGameObjects.clear();
+	//m_vGameObjects.shrink_to_fit();
 }
 
 void CLayer::OnEnable(void)

@@ -4,14 +4,20 @@
 class CMonsterInfo;
 class CMonster final : public Engine::CComponent
 {
+public:	enum DRAKEN_STATE { IDLE, MOVE, ATTACK1, ATTACK2, HIT, DEATH, STATEEND };
+
+
 private:
 	GETTOR_SETTOR(vector<FSM*>, m_monsterFSM, {}, MonsterFSM);
 	GETTOR_SETTOR(FSM*, m_monsterMaintenanceFSM, {}, MonsterMaintenanceFSM);
 	GETTOR(_int, m_monsterState, 0, MonsterState);
 	GETTOR_SETTOR(CMonsterInfo*, m_monsterInfo, {}, MonsterInfo);
-	SHARED(Engine::CGameObject) m_player;
+	GETTOR(SHARED(Engine::CGameObject), m_player, {}, Player);
+	GETTOR(SHARED(CPlayer), m_playerCom, {}, PlayerCom);
 
 	GETTOR(_bool, m_hitCheck, 0, HitCheck);
+
+	GETTOR_SETTOR(SHARED(Engine::CAnimMeshRenderComponent), m_anim, nullptr, Anim);
 
 public:
 	explicit CMonster(void);
@@ -34,18 +40,20 @@ public:
 
 	void ChangeFSM(_int state);
 
+	void Hit(_int damage);
+	void AddFSM(FSM* fsm);
+	void Attack(_float damage);
+
 	template <typename FSMType>
 	void AddFSM(void)
 	{
+		m_monsterState = 0;
 		FSMType* fsm = new FSMType(this);
 		m_monsterFSM.emplace_back(fsm);
-		m_monsterFSM[0]->Start();
 	}
 
-	void Hit(_int damage);
 private:
 	void HitEffect();
-
 };
 
 #endif // !MONSTER_H

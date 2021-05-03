@@ -9,6 +9,7 @@ CComponent::CComponent()
 
 CComponent::~CComponent(void)
 {
+	OnDestroy();
 }
 
 void CComponent::Awake(void)

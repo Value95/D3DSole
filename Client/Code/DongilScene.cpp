@@ -62,12 +62,21 @@ void CDongilScene::Start(void)
 	}
 
 	{
+		/*SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
+		pObj->SetName(L"Sword");
+		pObj->SetRotation(vector3(0, 90, 0));
+		//pObj->AddComponent<CPlayerWapon>();
+		pObj->AddComponent<Engine::CMeshComponent>()->SetMeshKey(L"Boss_Sword.X");
+		pObj->AddComponent<Engine::CStaticMeshRenderComponent>();*/
+	}
+
+	/*{
 		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Monster", L"Scarecrow", true);
 		pObj->SetName(L"Scarecrow");
 		pObj->AddComponent<Engine::CBoxComponent>()->SetSize(vector3(1, 10, 1) * 100);
 		pObj->AddComponent<CMonster>()->AddFSM<CScarecrowIdle>();
 		pObj->SetPosition(vector3(0, -1, 0));
-	}
+	}*/
 }
 
 _uint CDongilScene::FixedUpdate(void)

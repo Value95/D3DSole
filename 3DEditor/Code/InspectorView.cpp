@@ -228,6 +228,7 @@ void CInspectorView::ObjectAddString()
 	m_objectKeyComboBox.AddString(TEXT("Scarecrow"));
 	m_objectKeyComboBox.AddString(TEXT("Player"));
 	m_objectKeyComboBox.AddString(TEXT("Map"));
+	m_objectKeyComboBox.AddString(TEXT("Draken"));
 }
 
 void CInspectorView::ColliderAddString()

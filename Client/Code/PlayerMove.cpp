@@ -113,10 +113,10 @@ bool CPlayerMove::Move()
 
 	if (W || A || S || D) // 이동했을 경우
 	{
-		if (m_player->GetOwner()->GetComponent<Engine::CAnimMeshRenderComponent>()->GetAnimValue() != 108 &&
+		if (m_player->GetOwner()->GetComponent<Engine::CAnimMeshRenderComponent>()->GetAnimValue() != 9 &&
 			m_player->GetOwner()->GetComponent<Engine::CRigidBodyComponent>()->GetGroundCheck())
 		{
-			m_player->GetOwner()->GetComponent<Engine::CAnimMeshRenderComponent>()->Set_AnimationSet(108);
+			m_player->GetOwner()->GetComponent<Engine::CAnimMeshRenderComponent>()->Set_AnimationSet(9);
 		}
 
 		cameraY = Engine::GET_MAIN_CAM->GetOwner()->GetCameraY();
@@ -326,7 +326,10 @@ bool CPlayerMove::DeshActivation()
 bool CPlayerMove::MoveCheck(vector3 dir)
 {
 	vector3 orgine = m_player->GetOwner()->GetPosition();
+
 	Engine::CGameObject* obj = Engine::CRaycast::BoxRayCast(orgine, dir, m_moveCheckDir, L"Collider");
+	//obj = Engine::CRaycast::BoxRayCast(orgine, dir, m_moveCheckDir, L"Monster");
+
 	if (obj != nullptr)
 	{
 		return false;

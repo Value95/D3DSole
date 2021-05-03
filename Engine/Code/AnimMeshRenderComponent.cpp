@@ -114,6 +114,11 @@ _uint CAnimMeshRenderComponent::PostRender(void)
 
 void CAnimMeshRenderComponent::OnDestroy(void)
 {
+	/*m_pLoader->DestroyFrame();
+	m_pLoader->DestroyMeshContainer();
+	SafeDelete(m_pRootFrame);
+	SafeDelete(m_pAniCtrl);
+	SafeDeleteArray(m_vMeshContainers);*/
 }
 
 void CAnimMeshRenderComponent::OnEnable(void)
