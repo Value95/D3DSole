@@ -1,11 +1,10 @@
 #pragma once
-#include "FSM.h"
+#include "MonsterFSM.h"
 class CMonster;
 class CDrakenAttack1 :
-	public FSM
+	public MonsterFSM
 {
 private:
-	CMonster* m_monster;
 	Engine::CCollider* collision;
 	_bool init;
 	_bool m_attack;

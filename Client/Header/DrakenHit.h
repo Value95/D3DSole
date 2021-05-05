@@ -1,11 +1,10 @@
 #pragma once
-#include "FSM.h"
+#include "MonsterFSM.h"
 class CMonster;
 class CDrakenHit :
-	public FSM
+	public MonsterFSM
 {
 private:
-	CMonster* m_monster;
 
 public:
 	CDrakenHit(CMonster* monster);

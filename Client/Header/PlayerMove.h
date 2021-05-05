@@ -5,7 +5,6 @@ class CPlayerMove :
 	public FSM
 {
 private:
-	CPlayer* m_player;
 	_float m_rotation;
 
 	_float m_speed;

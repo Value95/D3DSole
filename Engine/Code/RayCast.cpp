@@ -35,7 +35,7 @@ CGameObject * CRaycast::MeshRayCast(vector3 origin, vector3 direction, _float ma
 	{
 		SHARED(Engine::CMeshComponent) meshCom = object->GetComponent<Engine::CMeshComponent>();
 
-		if (meshCom)
+		if (!meshCom->GetMeshData())
 			continue;
 
 		// 월드 -> 로컬
@@ -87,7 +87,7 @@ CGameObject * CRaycast::MeshRayCast(vector3 origin, vector3 direction, _float ma
 	{
 		SHARED(Engine::CMeshComponent) meshCom = object->GetComponent<Engine::CMeshComponent>();
 
-		if (meshCom)
+		if (!meshCom->GetMeshData())
 			continue;
 
 		// 월드 -> 로컬

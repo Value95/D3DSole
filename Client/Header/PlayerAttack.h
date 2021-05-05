@@ -5,7 +5,6 @@ class CPlayerAttack :
 	public FSM
 {
 private:
-	CPlayer* m_player;
 	Engine::CCollider* collision;
 	_bool init;
 	_int m_attackAnimNumber;

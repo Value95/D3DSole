@@ -40,6 +40,23 @@ _uint CCameraMove::FixedUpdate(SHARED(CComponent) spThis)
 
 _uint CCameraMove::Update(SHARED(CComponent) spThis)
 {
+	/*vector3 orgine = GetOwner()->GetPosition();
+	vector3 dir = GetOwner()->GetTarget()->GetPosition() - GetOwner()->GetPosition();
+	D3DXVec3Normalize(&dir, &dir);
+	_float distance = Engine::Distance(orgine, GetOwner()->GetTarget()->GetPosition());
+	vector3 outHit;
+	Engine::CGameObject* obj = Engine::CRaycast::MeshRayCast(orgine, dir, distance, L"Map", outHit);
+
+	if (obj == nullptr)
+	{
+		GetOwner()->SetCameraDirPos(vector3(0, 3, -8));
+	}
+	else
+	{
+		vector3 a = orgine - outHit;
+		GetOwner()->SetCameraDirPos(orgine - outHit);
+	}*/
+
 	return NO_EVENT;
 }
 

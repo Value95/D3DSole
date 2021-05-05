@@ -159,6 +159,8 @@ void CTransformComponent::UpdateWorldmMatrix(void)
 		D3DXMatrixRotationY(&rotateY, D3DXToRadian(m_rotation.y));
 		D3DXMatrixRotationZ(&rotateZ, D3DXToRadian(m_rotation.z));
 
+
+		// 나중에 CameraMove로 이동시키자
 		D3DXMatrixTranslation(&translation, m_cameraDirPos.x, m_cameraDirPos.y, m_cameraDirPos.z);
 
 		D3DXMatrixRotationX(&preantRotateX, D3DXToRadian(m_cameraX));

@@ -5,9 +5,7 @@ class CPlayerIdle :
 	public FSM
 {
 private:
-	CPlayer* m_player;
 
-	_int T;
 public:
 	CPlayerIdle(CPlayer* player);
 	virtual ~CPlayerIdle();

@@ -1,6 +1,9 @@
 #pragma once
 class FSM
 {
+protected:
+	GETTOR_SETTOR(CPlayer*, m_player, {}, Player);
+
 public:
 	FSM();
 	~FSM();

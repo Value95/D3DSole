@@ -5,6 +5,8 @@
 #include "DongilScene.h"
 #pragma endregion
 
+#include "CameraMove.h"
+
 #pragma region Monster
 #include "ScarecrowIdle.h"
 #include "DrakenIdle.h"
@@ -153,6 +155,7 @@ void CMainApp::InitStaticPrototype(void)
 	pCamera->SetPosition(vector3(0, 0, 0));
 	pCamera->SetRotation(vector3Zero);
 	pCamera->AddComponent<Engine::CCameraComponent>();
+	pCamera->AddComponent<CCameraMove>();
 	Engine::CObjectFactory::GetInstance()->AddPrototype(pCamera);
 
 	Default();

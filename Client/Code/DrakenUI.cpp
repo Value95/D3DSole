@@ -55,7 +55,7 @@ void CDrakenUI::Update()
 		_float a = (float)m_curHp / (float)*m_hpMax; // 깍인 체력의 비율
 		_float b = m_hpUiScaleX * a;
 		_float c = m_hpUiScaleX - b; // UI가 줄여야되는 스케일
-		cout << c << endl;
+
 		m_hpUI[1]->AddPosition(m_hpUI[1]->ReturnTranslate(vector3Right * (-c * 0.5f)));
 		m_hpUI[1]->SetScaleX(b);
 	}

@@ -328,8 +328,8 @@ bool CPlayerMove::MoveCheck(vector3 dir)
 	vector3 orgine = m_player->GetOwner()->GetPosition();
 
 	Engine::CGameObject* obj = Engine::CRaycast::BoxRayCast(orgine, dir, m_moveCheckDir, L"Collider");
-	if(obj == nullptr)
-		obj = Engine::CRaycast::BoxRayCast(orgine, dir, m_moveCheckDir, L"Monster");
+	/*if(obj == nullptr)
+		obj = Engine::CRaycast::BoxRayCast(orgine, dir, m_moveCheckDir, L"Monster");*/
 
 	if (obj != nullptr)
 	{

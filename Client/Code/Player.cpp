@@ -165,7 +165,7 @@ void CPlayer::FSMCreate()
 	m_playerFSM[STATE::DEATH] = new CPlayerDeath(this);
 }
 
-void CPlayer::Sight()
+void CPlayer::Sight() //나중에 CameraMove로 이동시키자
 {
 	POINT curPt;
 	GetCursorPos(&curPt);

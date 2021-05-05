@@ -5,7 +5,6 @@ class CPlayerDeath :
 	public FSM
 {
 private:
-	CPlayer* m_player;
 
 public:
 	CPlayerDeath(CPlayer* player);

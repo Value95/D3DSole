@@ -136,14 +136,14 @@
     <Filter Include="02.Script\02.Camera">
       <UniqueIdentifier>{ccb2df84-ed09-44ae-9efe-644ca9822fc4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.Script\02.Camera\00.CameraCollider">
-      <UniqueIdentifier>{cd173667-ee41-440b-a436-a4a7e12cbf1f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03.FSM\00.PlayerFSM">
       <UniqueIdentifier>{dfed9694-bdfa-4871-a0fa-da6614583dcf}</UniqueIdentifier>
     </Filter>
     <Filter Include="03.FSM\01.MonsterFSM">
       <UniqueIdentifier>{198b4eae-59f8-4d5f-9268-22342f835d0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Script\02.Camera\00.CameraMove">
+      <UniqueIdentifier>{cd173667-ee41-440b-a436-a4a7e12cbf1f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -207,9 +207,6 @@
     <ClInclude Include="..\Header\CrystalSpiderRoomScene.h">
       <Filter>01.Scene\04.CrystalSpiderRoom</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\FSM.h">
-      <Filter>03.FSM</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\PlayerMove.h">
       <Filter>02.Script\00.Player\00.PlayerFMS\01.Move</Filter>
     </ClInclude>
@@ -271,10 +268,13 @@
       <Filter>02.Script\01.Monster\03.MonsterUI\03.DrakenUI</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CameraMove.h">
-      <Filter>02.Script\02.Camera\00.CameraCollider</Filter>
+      <Filter>02.Script\02.Camera\00.CameraMove</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\MonsterFSM.h">
       <Filter>03.FSM\01.MonsterFSM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\FSM.h">
+      <Filter>03.FSM\00.PlayerFSM</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -310,9 +310,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\AgentSanwaMoneyRoomScene.cpp">
       <Filter>01.Scene\03.AgentSanwaMoneyRoom</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\FSM.cpp">
-      <Filter>03.FSM</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\PlayerMove.cpp">
       <Filter>02.Script\00.Player\00.PlayerFMS\01.Move</Filter>
@@ -369,10 +366,13 @@
       <Filter>02.Script\01.Monster\03.MonsterUI\03.DrakenUI</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CameraMove.cpp">
-      <Filter>02.Script\02.Camera\00.CameraCollider</Filter>
+      <Filter>02.Script\02.Camera\00.CameraMove</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\MonsterFSM.cpp">
       <Filter>03.FSM\01.MonsterFSM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\FSM.cpp">
+      <Filter>03.FSM\00.PlayerFSM</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

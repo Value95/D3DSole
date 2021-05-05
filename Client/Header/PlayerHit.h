@@ -5,7 +5,6 @@ class CPlayerHit :
 	public FSM
 {
 private:
-	CPlayer* m_player;
 
 public:
 	CPlayerHit(CPlayer* player);

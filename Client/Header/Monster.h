@@ -1,6 +1,7 @@
 #ifndef MONSTER_H
 #define MONSTER_H
 
+class MonsterFSM;
 class CMonsterInfo;
 class CMonster final : public Engine::CComponent
 {
@@ -8,8 +9,8 @@ public:	enum DRAKEN_STATE { IDLE, MOVE, ATTACK1, ATTACK2, HIT, DEATH, STATEEND }
 
 
 private:
-	GETTOR_SETTOR(vector<FSM*>, m_monsterFSM, {}, MonsterFSM);
-	GETTOR_SETTOR(FSM*, m_monsterMaintenanceFSM, {}, MonsterMaintenanceFSM);
+	GETTOR_SETTOR(vector<MonsterFSM*>, m_monsterFSM, {}, MonsterFSM);
+	GETTOR_SETTOR(MonsterFSM*, m_monsterMaintenanceFSM, {}, MonsterMaintenanceFSM);
 	GETTOR(_int, m_monsterState, 0, MonsterState);
 	GETTOR_SETTOR(CMonsterInfo*, m_monsterInfo, {}, MonsterInfo);
 	GETTOR(SHARED(Engine::CGameObject), m_player, {}, Player);
@@ -41,7 +42,7 @@ public:
 	void ChangeFSM(_int state);
 
 	void Hit(_int damage);
-	void AddFSM(FSM* fsm);
+	void AddFSM(MonsterFSM* fsm);
 	void Attack(_float damage);
 
 	template <typename FSMType>

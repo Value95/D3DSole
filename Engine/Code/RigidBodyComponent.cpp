@@ -51,6 +51,7 @@ _uint CRigidBodyComponent::FixedUpdate(SHARED(CComponent) spThis)
 	SHARED(CColliderComponent) spCC = m_pOwner->GetComponent<CColliderComponent>();
 
 	bool crushCheck = false;
+
 	if (spCC->GetIsStarted())
 	{
 		CColliderManager::GetInstance()->OnColliderEnter(spCC->GetColliders()[0], m_pOwner, col);
@@ -66,6 +67,7 @@ _uint CRigidBodyComponent::FixedUpdate(SHARED(CComponent) spThis)
 
 	if (crushCheck)
 	{
+		cout << "지상" << endl;
 		DecelerationFunction(col);
 
 		ElasticCollision(col);
@@ -74,6 +76,7 @@ _uint CRigidBodyComponent::FixedUpdate(SHARED(CComponent) spThis)
 	}
 	else if (!crushCheck || !m_groundCheck)
 	{
+		cout << "공중" << endl;
 		m_groundCheck = false;
 		GravityDrag(m_velocity);
 
@@ -187,6 +190,9 @@ void CRigidBodyComponent::ElasticCollision(std::vector<CGameObject*>& obj)
 
 	for (auto& collisionObj : obj)
 	{
+		if (collisionObj->GetComponent<CColliderComponent>()->GetIsTrigger() == false)
+			continue;
+
 		if (collisionObj == GetOwner())
 			continue;
 

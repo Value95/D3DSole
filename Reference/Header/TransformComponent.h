@@ -10,7 +10,7 @@ protected:
 	GETTOR_SETTOR(vector3, m_rotation, vector3(0, 0, 0), Rotation)
 	GETTOR_SETTOR(vector3, m_scale, vector3(1, 1, 1), Scale)
 
-	// 카메라를위한 변수
+	// 카메라를위한 변수 -- 나중에 CameraMove로 이동시키자
 	GETTOR_SETTOR(CGameObject*, m_target, nullptr, Target)
 	GETTOR_SETTOR(_float, m_cameraX, 0, CameraX)
 	GETTOR_SETTOR(_float, m_cameraY, 0, CameraY)

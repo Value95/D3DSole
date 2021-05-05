@@ -5,7 +5,6 @@ class CPlayerDeshAttack :
 	public FSM
 {
 private:
-	CPlayer* m_player;
 	Engine::CCollider* collision;
 
 	_bool init;
