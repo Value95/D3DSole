@@ -6,7 +6,9 @@ class CDrakenAttack2 :
 {
 private:
 	CMonster* m_monster;
-
+	Engine::CCollider* collision;
+	_bool init;
+	_bool m_attack[2];
 public:
 	CDrakenAttack2(CMonster* monster);
 	virtual ~CDrakenAttack2();

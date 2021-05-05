@@ -14,7 +14,7 @@ void CUIManager::Awake(void)
 
 void CUIManager::Start(void)
 {
-	m_vRenderList.resize(100);
+	m_uiRenderList.resize(100);
 }
 
 _uint CUIManager::FixedUpdate(void)
@@ -42,9 +42,9 @@ _uint CUIManager::PreRender(void)
 _uint CUIManager::Render(void)
 {
 	_uint event = NO_EVENT;
-	for (_uint i = 0; i < m_vRenderList.size(); ++i)
+	for (_uint i = 0; i < m_uiRenderList.size(); ++i)
 	{
-		for (auto& pGC : m_vRenderList[i])
+		for (auto& pGC : m_uiRenderList[i])
 		{
 			if (pGC->GetOwner() != nullptr)
 			{
@@ -56,9 +56,23 @@ _uint CUIManager::Render(void)
 			pGC.reset();
 		}
 
-		m_vRenderList[i].clear();
+		m_uiRenderList[i].clear();
 	}
 
+	for (auto& pGC : m_worldUiRenderList)
+	{
+		if (pGC->GetOwner() != nullptr)
+		{
+			if (event = pGC->PreRender()) return event;
+			if (event = pGC->Render()) return event;
+			if (event = pGC->PostRender()) return event;
+		}
+
+		pGC.reset();
+	}
+
+
+	m_worldUiRenderList.clear();
 
 	return event;
 }
@@ -74,7 +88,9 @@ _uint CUIManager::PostRender(void)
 void CUIManager::OnDestroy(void)
 {
 	for (_uint i = 0; i < (_uint)ERenderID::NumOfRenderID; ++i)
-		m_vRenderList[i].clear();
+		m_uiRenderList[i].clear();
+
+	m_worldUiRenderList.clear();
 }
 
 void CUIManager::OnEnable(void)
@@ -90,8 +106,19 @@ _uint CUIManager::AddToRenderList(_uint sortingLayer, SHARED(CUIComponent) pGC)
 	if (pGC == nullptr)
 		return NULL_PARAMETER;
 
-	m_vRenderList.at(sortingLayer).emplace_back(pGC);
+	m_uiRenderList.at(sortingLayer).emplace_back(pGC);
 
 	return NO_EVENT;
+}
+
+_uint CUIManager::AddToWorldUIRenderList(SHARED(CWorldUIComponent) pGC)
+{
+	if (pGC == nullptr)
+		return NULL_PARAMETER;
+
+	m_worldUiRenderList.emplace_back(pGC);
+
+	return NO_EVENT;
+
 }
 

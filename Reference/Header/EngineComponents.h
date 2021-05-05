@@ -18,6 +18,7 @@
 #include "TriangleComponent.h"
 #include "SkyBoxComponent.h"
 #include "EffectComponent.h"
+#include "WorldUIComponent.h"
 //--------------------------------------------------
 
 //Light--------------------------------------------

@@ -179,6 +179,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\AgentSanwaMoneyRoomScene.h" />
+    <ClInclude Include="..\Header\CameraMove.h" />
     <ClInclude Include="..\Header\ClientComponent.h" />
     <ClInclude Include="..\Header\ClientDefine.h" />
     <ClInclude Include="..\Header\ClientEnum.h" />
@@ -195,17 +196,21 @@
     <ClInclude Include="..\Header\DrakenIdle.h" />
     <ClInclude Include="..\Header\DrakenMaintenance.h" />
     <ClInclude Include="..\Header\DrakenMove.h" />
+    <ClInclude Include="..\Header\DrakenUI.h" />
+    <ClInclude Include="..\Header\DrakenWapon.h" />
     <ClInclude Include="..\Header\FSM.h" />
     <ClInclude Include="..\Header\LoddingScene.h" />
     <ClInclude Include="..\Header\MainApp.h" />
     <ClInclude Include="..\Header\MainRoomScene.h" />
     <ClInclude Include="..\Header\Monster.h" />
+    <ClInclude Include="..\Header\MonsterFSM.h" />
     <ClInclude Include="..\Header\MonsterInfo.h" />
     <ClInclude Include="..\Header\Player.h" />
     <ClInclude Include="..\Header\PlayerAttack.h" />
     <ClInclude Include="..\Header\PlayerDeath.h" />
     <ClInclude Include="..\Header\PlayerDeshAttack.h" />
     <ClInclude Include="..\Header\PlayerHit.h" />
+    <ClInclude Include="..\Header\PlayerHP.h" />
     <ClInclude Include="..\Header\PlayerIdle.h" />
     <ClInclude Include="..\Header\PlayerMove.h" />
     <ClInclude Include="..\Header\PlayerInfo.h" />
@@ -219,6 +224,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\AgentSanwaMoneyRoomScene.cpp" />
+    <ClCompile Include="..\Code\CameraMove.cpp" />
     <ClCompile Include="..\Code\CrystalSpiderRoomScene.cpp" />
     <ClCompile Include="..\Code\DongilScene.cpp" />
     <ClCompile Include="..\Code\DrakenAttack1.cpp" />
@@ -228,16 +234,20 @@
     <ClCompile Include="..\Code\DrakenIdle.cpp" />
     <ClCompile Include="..\Code\DrakenMaintenance.cpp" />
     <ClCompile Include="..\Code\DrakenMove.cpp" />
+    <ClCompile Include="..\Code\DrakenUI.cpp" />
+    <ClCompile Include="..\Code\DrakenWapon.cpp" />
     <ClCompile Include="..\Code\FSM.cpp" />
     <ClCompile Include="..\Code\LoddingScene.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />
     <ClCompile Include="..\Code\MainRoomScene.cpp" />
     <ClCompile Include="..\Code\Monster.cpp" />
+    <ClCompile Include="..\Code\MonsterFSM.cpp" />
     <ClCompile Include="..\Code\Player.cpp" />
     <ClCompile Include="..\Code\PlayerAttack.cpp" />
     <ClCompile Include="..\Code\PlayerDeath.cpp" />
     <ClCompile Include="..\Code\PlayerDeshAttack.cpp" />
     <ClCompile Include="..\Code\PlayerHit.cpp" />
+    <ClCompile Include="..\Code\PlayerHP.cpp" />
     <ClCompile Include="..\Code\PlayerIdle.cpp" />
     <ClCompile Include="..\Code\PlayerMove.cpp" />
     <ClCompile Include="..\Code\PlayerWapon.cpp" />

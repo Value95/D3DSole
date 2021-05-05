@@ -52,8 +52,17 @@ _uint CRigidBodyComponent::FixedUpdate(SHARED(CComponent) spThis)
 
 	bool crushCheck = false;
 	if (spCC->GetIsStarted())
-		crushCheck = CColliderManager::GetInstance()->OnColliderEnter(spCC->GetColliders()[0], m_pOwner, col);
+	{
+		CColliderManager::GetInstance()->OnColliderEnter(spCC->GetColliders()[0], m_pOwner, col);
 
+		for (auto& check : col)
+		{
+			if (check->GetComponent<CColliderComponent>()->GetIsTrigger())
+			{
+				crushCheck = true;
+			}
+		}
+	}
 
 	if (crushCheck)
 	{

@@ -4,6 +4,7 @@
 
 #include "ScarecrowIdle.h"
 #include "PlayerWapon.h"
+#include "DrakenWapon.h"
 
 CDongilScene::CDongilScene()
 {
@@ -62,12 +63,12 @@ void CDongilScene::Start(void)
 	}
 
 	{
-		/*SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
+		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
 		pObj->SetName(L"Sword");
-		pObj->SetRotation(vector3(0, 90, 0));
-		//pObj->AddComponent<CPlayerWapon>();
+		pObj->SetRotation(vector3(90, 0, 0));
+		pObj->AddComponent<CDrakenWapon>();
 		pObj->AddComponent<Engine::CMeshComponent>()->SetMeshKey(L"Boss_Sword.X");
-		pObj->AddComponent<Engine::CStaticMeshRenderComponent>();*/
+		pObj->AddComponent<Engine::CStaticMeshRenderComponent>();
 	}
 
 	/*{
@@ -77,13 +78,14 @@ void CDongilScene::Start(void)
 		pObj->AddComponent<CMonster>()->AddFSM<CScarecrowIdle>();
 		pObj->SetPosition(vector3(0, -1, 0));
 	}*/
+
+	m_pMainCamera->GetOwner()->SetTarget(Engine::GET_CUR_SCENE->FindObjectByName(L"Player").get());
 }
 
 _uint CDongilScene::FixedUpdate(void)
 {
 	__super::FixedUpdate();
 
-	m_pMainCamera->GetOwner()->SetTarget(Engine::GET_CUR_SCENE->FindObjectByName(L"Player").get());
 
 	return NO_EVENT;
 }

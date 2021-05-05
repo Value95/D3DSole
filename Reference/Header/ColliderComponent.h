@@ -8,7 +8,7 @@ class ENGINE_DLL CColliderComponent final : public CComponent
 {
 protected:
 	GETTOR_SETTOR(std::vector<CCollider*>, m_vColliders,{}, Colliders)
-
+	GETTOR_SETTOR(_bool, m_isTrigger, true, IsTrigger)
 public:
 	explicit CColliderComponent(void);
 	~CColliderComponent(void);

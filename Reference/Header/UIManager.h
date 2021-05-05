@@ -9,7 +9,10 @@ class ENGINE_DLL CUIManager final : public CEngine
 	DECLARE_SINGLETON(CUIManager)
 private:
 	typedef std::vector<std::vector<SHARED(CUIComponent)>> _UICOMPONENTS;
-	_UICOMPONENTS		m_vRenderList;
+	typedef std::vector<SHARED(CWorldUIComponent)> _WORLDUICOMPONENTS;
+
+	_UICOMPONENTS m_uiRenderList;
+	_WORLDUICOMPONENTS m_worldUiRenderList;
 public:
 	void Awake(void);
 	void Start(void);
@@ -28,6 +31,7 @@ public:
 	void OnDisable(void);
 		 
 	_uint AddToRenderList(_uint sortingLayer, SHARED(CUIComponent) pGC);
+	_uint AddToWorldUIRenderList(SHARED(CWorldUIComponent) pGC);
 };
 END
 #endif

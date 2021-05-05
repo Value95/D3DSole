@@ -159,7 +159,7 @@ void CTransformComponent::UpdateWorldmMatrix(void)
 		D3DXMatrixRotationY(&rotateY, D3DXToRadian(m_rotation.y));
 		D3DXMatrixRotationZ(&rotateZ, D3DXToRadian(m_rotation.z));
 
-		D3DXMatrixTranslation(&translation, 0, 1, -4);
+		D3DXMatrixTranslation(&translation, m_cameraDirPos.x, m_cameraDirPos.y, m_cameraDirPos.z);
 
 		D3DXMatrixRotationX(&preantRotateX, D3DXToRadian(m_cameraX));
 		D3DXMatrixRotationY(&preantRotateY, D3DXToRadian(m_cameraY));

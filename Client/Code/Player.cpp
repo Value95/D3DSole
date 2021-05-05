@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Player.h"
 #include "PlayerInfo.h"
+#include "PlayerHP.h"
 #include "MonsterInfo.h"
 
 #include "FSM.h"
@@ -65,6 +66,7 @@ void CPlayer::Awake(void)
 void CPlayer::Start(SHARED(CComponent) spThis)
 {
 	__super::Start(spThis);
+	m_playerHP = new CPlayerHP(&m_playerInfo->GetHP(), &m_playerInfo->GetHpMax());
 	m_anim = GetOwner()->GetComponent<Engine::CAnimMeshRenderComponent>();
 	FSMCreate();
 }
@@ -80,10 +82,11 @@ _uint CPlayer::Update(SHARED(CComponent) spThis)
 {
 	Sight();
 	m_playerFSM[m_playerState]->Update();
+	m_playerHP->Update();
 
 	if (Engine::CInputManager::GetInstance()->KeyDown(KEY_Q))
 	{
-		Hit(100, 0);
+		Hit(50, 0);
 	}
 
 	return NO_EVENT;
@@ -126,6 +129,7 @@ void CPlayer::Attack(Engine::CGameObject* gameObject)
 {
 	if (gameObject->GetLayerKey() == L"Monster")
 	{
+		_float aa = GetPlayerInfo()->GetDamage();
 		gameObject->GetComponent<CMonster>()->Hit(GetPlayerInfo()->GetDamage());
 		cout << "몬스터 체력 : " << gameObject->GetComponent<CMonster>()->GetMonsterInfo()->GetHP() << endl;
 	}

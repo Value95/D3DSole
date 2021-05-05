@@ -8,7 +8,7 @@ private:
 	CMonster* m_monster;
 	Engine::CCollider* collision;
 	_bool init;
-
+	_bool m_attack;
 public:
 	CDrakenAttack1(CMonster* monster);
 	virtual ~CDrakenAttack1();

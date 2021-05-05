@@ -3,6 +3,7 @@
 
 class FSM;
 class CPlayerInfo;
+class CPlayerHP;
 class CPlayer final : public Engine::CComponent
 {
 public:	enum STATE {IDLE, MOVE, ATTACK, DESHATTACK, HIT, DEATH, STATEEND};
@@ -16,6 +17,7 @@ private:
 	GETTOR_SETTOR(POINT, m_centerPt, {}, CenterPt);
 
 	GETTOR_SETTOR(SHARED(Engine::CAnimMeshRenderComponent), m_anim, nullptr, Anim);
+	CPlayerHP* m_playerHP;
 public:
 	explicit CPlayer(void);
 	virtual	 ~CPlayer(void);

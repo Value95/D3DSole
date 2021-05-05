@@ -81,6 +81,7 @@ void CTextureStore::ParsingTexture(std::wstring filePath, std::wstring fileName)
 		CString extension = PathFindExtension(fileName.c_str());
 		
 		CString dds = ".dds";
+		CString tga = ".tga";
 		CString png = ".png";
 		if (!extension.Compare(dds))
 		{
@@ -91,7 +92,7 @@ void CTextureStore::ParsingTexture(std::wstring filePath, std::wstring fileName)
 			m_skyTextureData.insert(pair<std::wstring, IDirect3DBaseTexture9*>(texKey, texture));
 			
 		}
-		else if (!extension.Compare(png))
+		else if (!extension.Compare(png) || !extension.Compare(tga))
 		{
 			if (FAILED(D3DXGetImageInfoFromFile(fullPath.c_str(), &pNewTex->imageInfo)))
 				MSG_BOX(__FILE__, (L"TexKey : [" + texKey + L"] get image info failed in ParsingTexture").c_str());

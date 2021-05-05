@@ -35,8 +35,8 @@ SHARED(CComponent) CUIComponent::MakeClone(CGameObject* pObject)
 void CUIComponent::Awake(void)
 {
 	__super::Awake();
-	m_xUV = vector2(0, 1);
-	m_yUV = vector2(0, 1);
+	m_xUV = vector2(0, 1.0f);
+	m_yUV = vector2(0, 1.0f);
 }
 
 
@@ -68,7 +68,7 @@ _uint CUIComponent::Update(SHARED(CComponent) spThis)
 
 _uint CUIComponent::LateUpdate(SHARED(CComponent) spThis)
 {
-	CUIManager::GetInstance()->AddToRenderList(m_sortingLayer, std::dynamic_pointer_cast<CUIComponent>(spThis));
+	CUIManager::GetInstance()->AddToRenderList(m_sortingLayer, std::static_pointer_cast<CUIComponent>(spThis));
 
 	return NO_EVENT;
 }
@@ -212,9 +212,16 @@ void CUIComponent::DateInit()
 
 void CUIComponent::UVSetting()
 {
+	m_meshDate.FVF = customFVF;
+	m_meshDate.vertexSize = sizeof(_CustomVertex);
+	m_meshDate.vertexNumInFace = 3;
+	// FVF를 지정하여 보관할 데이터의 형식을 지정하고 사용자 정점을 보관할 메모리할당
+	GET_DEVICE->CreateVertexBuffer(4 * sizeof(_CustomVertex), 0, m_meshDate.FVF, D3DPOOL_MANAGED, &m_meshDate.vertexBuffer, NULL);
+
 	_CustomVertex* pVertices = nullptr;
 
 	m_meshDate.vertexBuffer->Lock(0, 0, (void**)&pVertices, 0);
+	m_meshDate.vertexCount = 4;
 
 	pVertices[0].position = vector3(-0.5f, 0.5f, 0);
 	pVertices[0].uv = vector2(m_xUV.x, m_yUV.x);
@@ -234,5 +241,23 @@ void CUIComponent::UVSetting()
 	pVertices[3].normal = vector3Back;
 
 	m_meshDate.vertexBuffer->Unlock();
+
+	GET_DEVICE->CreateIndexBuffer(6 * sizeof(WORD), 0, D3DFMT_INDEX16, D3DPOOL_DEFAULT, &m_meshDate.indexBuffer, NULL);
+	m_meshDate.indexSize = sizeof(WORD);
+	WORD* pIndices = nullptr;
+
+	m_meshDate.indexBuffer->Lock(0, 0, (void**)&pIndices, 0);
+	m_meshDate.faceCount = 2;
+
+	pIndices[0] = 0;
+	pIndices[1] = 1;
+	pIndices[2] = 2;
+	pIndices[3] = 0;
+	pIndices[4] = 2;
+	pIndices[5] = 3;
+
+	m_meshDate.indexBuffer->Unlock();
+
+
 
 }

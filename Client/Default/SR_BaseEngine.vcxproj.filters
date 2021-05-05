@@ -118,6 +118,33 @@
     <Filter Include="02.Script\01.Monster\00.MonsterFSM\02.Draken\00.DrakenMaintenance">
       <UniqueIdentifier>{ba4da3ca-6928-4a17-bc04-f449907a1ddf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.Script\01.Monster\02.MonsterWapon">
+      <UniqueIdentifier>{2bfe5a04-680f-48f6-b075-70997d9fa3cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Script\01.Monster\02.MonsterWapon\02.DrakenWapon">
+      <UniqueIdentifier>{217623ea-7d04-48fc-9b6b-50df8323956e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Script\00.Player\03.PlayerHP">
+      <UniqueIdentifier>{b415e6bd-cc72-46a9-a128-c3b000fa610b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Script\01.Monster\03.MonsterUI">
+      <UniqueIdentifier>{fbdace7f-de48-4bc7-b4d0-c7f41e13ff56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Script\01.Monster\03.MonsterUI\03.DrakenUI">
+      <UniqueIdentifier>{aadd886b-c18b-4462-91b3-56efc84f934b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Script\02.Camera">
+      <UniqueIdentifier>{ccb2df84-ed09-44ae-9efe-644ca9822fc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Script\02.Camera\00.CameraCollider">
+      <UniqueIdentifier>{cd173667-ee41-440b-a436-a4a7e12cbf1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.FSM\00.PlayerFSM">
+      <UniqueIdentifier>{dfed9694-bdfa-4871-a0fa-da6614583dcf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.FSM\01.MonsterFSM">
+      <UniqueIdentifier>{198b4eae-59f8-4d5f-9268-22342f835d0a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -234,6 +261,21 @@
     <ClInclude Include="..\Header\DrakenMaintenance.h">
       <Filter>02.Script\01.Monster\00.MonsterFSM\02.Draken\00.DrakenMaintenance</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\DrakenWapon.h">
+      <Filter>02.Script\01.Monster\02.MonsterWapon\02.DrakenWapon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PlayerHP.h">
+      <Filter>02.Script\00.Player\03.PlayerHP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\DrakenUI.h">
+      <Filter>02.Script\01.Monster\03.MonsterUI\03.DrakenUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CameraMove.h">
+      <Filter>02.Script\02.Camera\00.CameraCollider</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MonsterFSM.h">
+      <Filter>03.FSM\01.MonsterFSM</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -316,6 +358,21 @@
     </ClCompile>
     <ClCompile Include="..\Code\DrakenMaintenance.cpp">
       <Filter>02.Script\01.Monster\00.MonsterFSM\02.Draken\00.DrakenMaintenance</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DrakenWapon.cpp">
+      <Filter>02.Script\01.Monster\02.MonsterWapon\02.DrakenWapon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerHP.cpp">
+      <Filter>02.Script\00.Player\03.PlayerHP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DrakenUI.cpp">
+      <Filter>02.Script\01.Monster\03.MonsterUI\03.DrakenUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CameraMove.cpp">
+      <Filter>02.Script\02.Camera\00.CameraCollider</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MonsterFSM.cpp">
+      <Filter>03.FSM\01.MonsterFSM</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

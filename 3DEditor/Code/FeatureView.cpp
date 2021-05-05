@@ -326,6 +326,8 @@ void CFeatureView::Load()
 			ReadFile(hFile, &colliderData->radius, sizeof(_float), &dwByte, nullptr);
 
 			CColliderManager::GetInstance()->SetColliderData(colliderData);
+
+			SAFE_DELETE(colliderType);
 		}
 
 		//-------------------------------------------------------------------------------

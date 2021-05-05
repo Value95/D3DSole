@@ -12,7 +12,7 @@ public:
 	CPlayerIdle(CPlayer* player);
 	virtual ~CPlayerIdle();
 public:
-	virtual void Start() override;
+	virtual void Start() override; 
 	virtual void End() override;
 
 	virtual _uint FixedUpdate() override;

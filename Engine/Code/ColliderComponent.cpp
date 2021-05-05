@@ -21,7 +21,7 @@ SHARED(CComponent) CColliderComponent::MakeClone(CGameObject* pObject)
 	pClone->SetName(m_name);
 	pClone->SetIsAwaked(m_isAwaked);
 	pClone->SetColliders(m_vColliders);
-
+	pClone->SetIsTrigger(m_isTrigger);
 	return pClone;
 }
 

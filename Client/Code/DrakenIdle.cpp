@@ -24,6 +24,8 @@ void CDrakenIdle::Start()
 	if (!m_init)
 	{
 		m_init = true;
+		m_monster->GetOwner()->GetComponent<Engine::CColliderComponent>()->SetIsTrigger(false);
+
 		m_monster->GetMonsterFSM().reserve(CMonster::DRAKEN_STATE::STATEEND);
 		m_monster->GetMonsterInfo()->SetHP(1000);
 		m_monster->GetMonsterInfo()->SetMaxHP(1000);
@@ -31,6 +33,7 @@ void CDrakenIdle::Start()
 		m_monster->GetMonsterInfo()->AddPatternTime(7);
 		m_monster->GetMonsterInfo()->AddPatternTime(10);
 		m_monster->GetMonsterInfo()->AddDamager(10);
+		m_monster->GetMonsterInfo()->AddDamager(15);
 
 		m_monster->SetMonsterMaintenanceFSM(new CDrakenMaintenance(m_monster));
 		m_monster->AddFSM(new CDrakenMove(m_monster));
@@ -55,10 +58,15 @@ _uint CDrakenIdle::FixedUpdate()
 
 _uint CDrakenIdle::Update()
 {
-	if (m_monster->GetAnim()->GetAnimCtrl()->Is_AnimationSetEnd())
+	m_monster->GetOwner()->LookAt(m_monster->GetPlayer()->GetPosition());
+	m_monster->GetOwner()->AddRotationY(180);
+
+	if (Engine::Distance(m_monster->GetOwner()->GetPosition(), m_monster->GetPlayer()->GetPosition()) > 6.0f)
 	{
 		m_monster->ChangeFSM(CMonster::DRAKEN_STATE::MOVE);
 	}
+
+
 	return NO_EVENT;
 }
 

@@ -168,8 +168,8 @@ void CMainApp::Default()
 	Engine::CObjectFactory::GetInstance()->AddPrototype(default);
 
 	SHARED(Engine::CGameObject) mess = Engine::CGameObject::Create(L"Default", L"Mess", true);
-	mess->AddComponent<Engine::CStaticMeshRenderComponent>();
 	mess->AddComponent<Engine::CMeshComponent>();
+	mess->AddComponent<Engine::CStaticMeshRenderComponent>();
 	Engine::CObjectFactory::GetInstance()->AddPrototype(mess);
 
 	SHARED(Engine::CGameObject) mapObject = Engine::CGameObject::Create(L"MapObject", L"Tile", true);
@@ -183,8 +183,8 @@ void CMainApp::Default()
 	Engine::CObjectFactory::GetInstance()->AddPrototype(navMesh);
 
 	SHARED(Engine::CGameObject) map = Engine::CGameObject::Create(L"Map", L"Map", true);
-	map->AddComponent<Engine::CStaticMeshRenderComponent>();
 	map->AddComponent<Engine::CMeshComponent>();
+	map->AddComponent<Engine::CStaticMeshRenderComponent>();
 	Engine::CObjectFactory::GetInstance()->AddPrototype(map);
 }
 
@@ -200,6 +200,10 @@ void CMainApp::UI()
 	SHARED(Engine::CGameObject) ui = Engine::CGameObject::Create(L"UI", L"UI", true);
 	ui->AddComponent<Engine::CUIComponent>();
 	Engine::CObjectFactory::GetInstance()->AddPrototype(ui);
+
+	SHARED(Engine::CGameObject) worldUi = Engine::CGameObject::Create(L"UI", L"WorldUI", true);
+	worldUi->AddComponent<Engine::CWorldUIComponent>();
+	Engine::CObjectFactory::GetInstance()->AddPrototype(worldUi);
 }
 
 void CMainApp::Monster()

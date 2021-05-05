@@ -1,12 +1,14 @@
 #pragma once
 #include "FSM.h"
 class CMonster;
+class CDrakenUI;
 class CDrakenMaintenance :
 	public FSM
 {
 private:
 	CMonster* m_monster;
-
+	CDrakenUI* m_drakenUI;
+	// 몬스터 체력 컴포넌트
 public:
 	CDrakenMaintenance(CMonster* monster);
 	virtual ~CDrakenMaintenance();

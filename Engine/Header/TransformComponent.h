@@ -10,10 +10,13 @@ protected:
 	GETTOR_SETTOR(vector3, m_rotation, vector3(0, 0, 0), Rotation)
 	GETTOR_SETTOR(vector3, m_scale, vector3(1, 1, 1), Scale)
 
+	// 카메라를위한 변수
 	GETTOR_SETTOR(CGameObject*, m_target, nullptr, Target)
-		GETTOR_SETTOR(_float, m_cameraX, 0, CameraX)
+	GETTOR_SETTOR(_float, m_cameraX, 0, CameraX)
 	GETTOR_SETTOR(_float, m_cameraY, 0, CameraY)
 	GETTOR_SETTOR(_bool, m_camera, false, Camera)
+	GETTOR_SETTOR(vector3, m_cameraDirPos, vector3(0, 3, -8), CameraDirPos)
+
 public:
 	explicit	CTransformComponent(void);
 	~CTransformComponent(void);
@@ -50,6 +53,10 @@ public:
 	void SetScaleX(_float x) { m_scale.x = x; }
 	void SetScaleY(_float y) { m_scale.y = y; }
 	void SetScaleZ(_float z) { m_scale.z = z; }
+
+	void AddScaleX(_float x) { m_scale.x += x; }
+	void AddScaleY(_float y) { m_scale.y += y; }
+	void AddScaleZ(_float z) { m_scale.z += z; }
 
 	void AddCameraY(_float y) { m_cameraY += y; }
 

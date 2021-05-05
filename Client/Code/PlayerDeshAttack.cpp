@@ -20,7 +20,7 @@ void CPlayerDeshAttack::Start()
 	
 	memset(m_attack, true, sizeof(m_attack));
 
-	m_player->GetOwner()->GetComponent<Engine::CAnimMeshRenderComponent>()->GetAnimCtrl()->SetSpeed(1);
+	m_player->GetOwner()->GetComponent<Engine::CAnimMeshRenderComponent>()->GetAnimCtrl()->SetSpeed(2);
 	m_player->GetAnim()->Set_AnimationSet(m_attackAnimNumber);
 }
 

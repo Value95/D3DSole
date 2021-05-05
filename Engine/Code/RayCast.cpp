@@ -35,6 +35,9 @@ CGameObject * CRaycast::MeshRayCast(vector3 origin, vector3 direction, _float ma
 	{
 		SHARED(Engine::CMeshComponent) meshCom = object->GetComponent<Engine::CMeshComponent>();
 
+		if (meshCom)
+			continue;
+
 		// 월드 -> 로컬
 		matrix4x4 matWorld = object->GetWorldMatrix();
 		D3DXMatrixInverse(&matWorld, NULL, &matWorld);
@@ -83,6 +86,9 @@ CGameObject * CRaycast::MeshRayCast(vector3 origin, vector3 direction, _float ma
 	for (auto& object : pLayer->GetGameObjects())
 	{
 		SHARED(Engine::CMeshComponent) meshCom = object->GetComponent<Engine::CMeshComponent>();
+
+		if (meshCom)
+			continue;
 
 		// 월드 -> 로컬
 		matrix4x4 matWorld = object->GetWorldMatrix();

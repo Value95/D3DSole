@@ -49,7 +49,7 @@ void CMonster::Start(SHARED(CComponent) spThis)
 	static_cast<CDrakenIdle*>(m_monsterFSM[0])->SetMonster(this);
 
 	m_monsterFSM[0]->Start();
-
+	m_monsterMaintenanceFSM->Start();
 
 	m_hitCheck = false;
 }

@@ -52,6 +52,10 @@ void CDrakenMove::Move()
 		m_monster->GetOwner()->AddRotationY(180);
 		m_monster->GetOwner()->Translate(vector3Back * m_monster->GetMonsterInfo()->GetSpeed());
 	}
+	else
+	{
+		m_monster->ChangeFSM(CMonster::DRAKEN_STATE::IDLE);
+	}
 }
 
 

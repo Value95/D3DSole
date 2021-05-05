@@ -12,7 +12,7 @@ public:
 	CMonsterInfo::CMonsterInfo()	{	}
 	CMonsterInfo::~CMonsterInfo()	{	}
 
-	void AddHp(_int hp) { m_hp += hp; }
+	void AddHp(_int hp) { m_hp = Engine::MathfMax(m_hp + hp, 0); }
 	void AddDamager(_float damage) { m_damage.emplace_back(damage); }
 	void AddPatternTime(_float time) 
 	{

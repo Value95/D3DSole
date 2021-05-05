@@ -74,6 +74,7 @@
     <ClInclude Include="..\Header\UIComponent.h" />
     <ClInclude Include="..\Header\UIManager.h" />
     <ClInclude Include="..\Header\WndApp.h" />
+    <ClInclude Include="..\Header\WorldUIComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\AniCtrl.cpp" />
@@ -122,6 +123,7 @@
     <ClCompile Include="..\Code\UIComponent.cpp" />
     <ClCompile Include="..\Code\UIManager.cpp" />
     <ClCompile Include="..\Code\WndApp.cpp" />
+    <ClCompile Include="..\Code\WorldUIComponent.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{4C76B4D7-D8D2-497D-A46B-BCF80ADFC40A}</ProjectGuid>
