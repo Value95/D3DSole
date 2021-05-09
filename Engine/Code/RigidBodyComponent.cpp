@@ -67,7 +67,6 @@ _uint CRigidBodyComponent::FixedUpdate(SHARED(CComponent) spThis)
 
 	if (crushCheck)
 	{
-		cout << "지상" << endl;
 		DecelerationFunction(col);
 
 		ElasticCollision(col);
@@ -76,7 +75,6 @@ _uint CRigidBodyComponent::FixedUpdate(SHARED(CComponent) spThis)
 	}
 	else if (!crushCheck || !m_groundCheck)
 	{
-		cout << "공중" << endl;
 		m_groundCheck = false;
 		GravityDrag(m_velocity);
 

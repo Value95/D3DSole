@@ -12,9 +12,7 @@ private:
 	FSM* m_playerFSM[STATE::STATEEND];
 	GETTOR(STATE, m_playerState, STATE::IDLE, PlayerState);
 	GETTOR_SETTOR(CPlayerInfo*, m_playerInfo, {}, PlayerInfo);
-	GETTOR_SETTOR(_bool, m_moveLook, false , MoveLook);
-
-	GETTOR_SETTOR(POINT, m_centerPt, {}, CenterPt);
+	GETTOR_SETTOR(_bool, m_idleLook, {}, IdleLook);
 
 	GETTOR_SETTOR(SHARED(Engine::CAnimMeshRenderComponent), m_anim, nullptr, Anim);
 	CPlayerHP* m_playerHP;
@@ -40,9 +38,10 @@ public:
 	void ChangeFSM(STATE state);
 	void Attack(Engine::CGameObject* gameObject);
 	void Hit(_int damage, _int hitType);
+	void IdleLookState();
+	void IdleLookEnd();
 private:
 	void FSMCreate();
-	void Sight();
 };
 
 #endif // !PLAYER_H

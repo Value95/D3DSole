@@ -192,10 +192,10 @@
     <ClInclude Include="..\Header\DrakenAttack1.h" />
     <ClInclude Include="..\Header\DrakenAttack2.h" />
     <ClInclude Include="..\Header\DrakenDeath.h" />
-    <ClInclude Include="..\Header\DrakenHit.h" />
     <ClInclude Include="..\Header\DrakenIdle.h" />
     <ClInclude Include="..\Header\DrakenMaintenance.h" />
     <ClInclude Include="..\Header\DrakenMove.h" />
+    <ClInclude Include="..\Header\DrakenProduction.h" />
     <ClInclude Include="..\Header\DrakenUI.h" />
     <ClInclude Include="..\Header\DrakenWapon.h" />
     <ClInclude Include="..\Header\FSM.h" />
@@ -230,10 +230,10 @@
     <ClCompile Include="..\Code\DrakenAttack1.cpp" />
     <ClCompile Include="..\Code\DrakenAttack2.cpp" />
     <ClCompile Include="..\Code\DrakenDeath.cpp" />
-    <ClCompile Include="..\Code\DrakenHit.cpp" />
     <ClCompile Include="..\Code\DrakenIdle.cpp" />
     <ClCompile Include="..\Code\DrakenMaintenance.cpp" />
     <ClCompile Include="..\Code\DrakenMove.cpp" />
+    <ClCompile Include="..\Code\DrakenProduction.cpp" />
     <ClCompile Include="..\Code\DrakenUI.cpp" />
     <ClCompile Include="..\Code\DrakenWapon.cpp" />
     <ClCompile Include="..\Code\FSM.cpp" />

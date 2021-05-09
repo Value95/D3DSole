@@ -109,12 +109,6 @@
     <Filter Include="02.Script\01.Monster\00.MonsterFSM\02.Draken\04.DrakenAttack2">
       <UniqueIdentifier>{9eace0a8-722d-4172-9958-a6b20462553a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.Script\01.Monster\00.MonsterFSM\02.Draken\05.DrakenHit">
-      <UniqueIdentifier>{100ebac6-5087-4b14-ad45-7a40590c0e0e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.Script\01.Monster\00.MonsterFSM\02.Draken\06.DrakenDeath">
-      <UniqueIdentifier>{7308b21d-542e-491d-8931-64c37c3fa15d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.Script\01.Monster\00.MonsterFSM\02.Draken\00.DrakenMaintenance">
       <UniqueIdentifier>{ba4da3ca-6928-4a17-bc04-f449907a1ddf}</UniqueIdentifier>
     </Filter>
@@ -127,12 +121,6 @@
     <Filter Include="02.Script\00.Player\03.PlayerHP">
       <UniqueIdentifier>{b415e6bd-cc72-46a9-a128-c3b000fa610b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.Script\01.Monster\03.MonsterUI">
-      <UniqueIdentifier>{fbdace7f-de48-4bc7-b4d0-c7f41e13ff56}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.Script\01.Monster\03.MonsterUI\03.DrakenUI">
-      <UniqueIdentifier>{aadd886b-c18b-4462-91b3-56efc84f934b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.Script\02.Camera">
       <UniqueIdentifier>{ccb2df84-ed09-44ae-9efe-644ca9822fc4}</UniqueIdentifier>
     </Filter>
@@ -144,6 +132,18 @@
     </Filter>
     <Filter Include="02.Script\02.Camera\00.CameraMove">
       <UniqueIdentifier>{cd173667-ee41-440b-a436-a4a7e12cbf1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Script\01.Monster\00.MonsterFSM\02.Draken\06.DiakenDeath">
+      <UniqueIdentifier>{ab17fc32-b6b8-477c-9a0c-c31516f21113}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Script\01.Monster\03.MonsterUI">
+      <UniqueIdentifier>{fbdace7f-de48-4bc7-b4d0-c7f41e13ff56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Script\01.Monster\03.MonsterUI\03.DrakenUI">
+      <UniqueIdentifier>{aadd886b-c18b-4462-91b3-56efc84f934b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Script\01.Monster\00.MonsterFSM\02.Draken\05.DrakenProduction">
+      <UniqueIdentifier>{100ebac6-5087-4b14-ad45-7a40590c0e0e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -246,12 +246,6 @@
     <ClInclude Include="..\Header\DrakenAttack1.h">
       <Filter>02.Script\01.Monster\00.MonsterFSM\02.Draken\03.DrakenAttack1</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\DrakenDeath.h">
-      <Filter>02.Script\01.Monster\00.MonsterFSM\02.Draken\06.DrakenDeath</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\DrakenHit.h">
-      <Filter>02.Script\01.Monster\00.MonsterFSM\02.Draken\05.DrakenHit</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\DrakenAttack2.h">
       <Filter>02.Script\01.Monster\00.MonsterFSM\02.Draken\04.DrakenAttack2</Filter>
     </ClInclude>
@@ -275,6 +269,12 @@
     </ClInclude>
     <ClInclude Include="..\Header\FSM.h">
       <Filter>03.FSM\00.PlayerFSM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\DrakenDeath.h">
+      <Filter>02.Script\01.Monster\00.MonsterFSM\02.Draken\06.DiakenDeath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\DrakenProduction.h">
+      <Filter>02.Script\01.Monster\00.MonsterFSM\02.Draken\05.DrakenProduction</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -341,12 +341,6 @@
     <ClCompile Include="..\Code\DrakenAttack2.cpp">
       <Filter>02.Script\01.Monster\00.MonsterFSM\02.Draken\04.DrakenAttack2</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\DrakenDeath.cpp">
-      <Filter>02.Script\01.Monster\00.MonsterFSM\02.Draken\06.DrakenDeath</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\DrakenHit.cpp">
-      <Filter>02.Script\01.Monster\00.MonsterFSM\02.Draken\05.DrakenHit</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\DrakenMove.cpp">
       <Filter>02.Script\01.Monster\00.MonsterFSM\02.Draken\02.DrakenMove</Filter>
     </ClCompile>
@@ -373,6 +367,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\FSM.cpp">
       <Filter>03.FSM\00.PlayerFSM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DrakenDeath.cpp">
+      <Filter>02.Script\01.Monster\00.MonsterFSM\02.Draken\06.DiakenDeath</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DrakenProduction.cpp">
+      <Filter>02.Script\01.Monster\00.MonsterFSM\02.Draken\05.DrakenProduction</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

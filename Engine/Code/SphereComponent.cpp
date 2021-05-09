@@ -37,6 +37,7 @@ void CSphereComponent::Awake(void)
 void CSphereComponent::Start(SHARED(CComponent) spThis)
 {
 	__super::Start(spThis);
+	m_mesh = nullptr;
 }
 
 _uint CSphereComponent::FixedUpdate(SHARED(CComponent) spThis)
@@ -73,6 +74,9 @@ _uint CSphereComponent::PreRender(void)
 
 _uint CSphereComponent::Render(void)
 {
+	if (m_mesh == nullptr)
+		m_mesh->Release();
+
 	D3DXCreateSphere(GET_DEVICE, radus, 30, 30, &m_mesh, NULL); // D3D ÇÔ¼ö
 
 	m_mesh->DrawSubset(0);

@@ -28,7 +28,7 @@ void CDrakenAttack1::End()
 
 _uint CDrakenAttack1::FixedUpdate()
 {
-	if (!init && m_monster->GetAnim()->GetAnimCtrl()->CurentTime() >= 0.7f && m_monster->GetAnim()->GetAnimCtrl()->CurentTime() <= 0.75f)
+	if (!init)
 	{
 		std::vector<Engine::CGameObject*> col;
 		if (Engine::CColliderManager::GetInstance()->OnColliderEnter(collision, m_monster->GetOwner(), col))
@@ -63,7 +63,8 @@ _uint CDrakenAttack1::Update()
 		m_monster->GetAnim()->Set_AnimationSet(3);
 	}
 
-	if (m_attack && m_monster->GetAnim()->GetAnimValue() == 4 && m_monster->GetAnim()->GetAnimCtrl()->CurentTime() >= 0.5f)
+	if (m_attack && m_monster->GetAnim()->GetAnimValue() == 4 &&
+		m_monster->GetAnim()->GetAnimCtrl()->CurentTime() <= 0.75f && m_monster->GetAnim()->GetAnimCtrl()->CurentTime() >= 0.7f)
 	{
 		init = false;
 		m_attack = false;

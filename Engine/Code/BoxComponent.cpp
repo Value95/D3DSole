@@ -37,7 +37,7 @@ void CBoxComponent::Awake(void)
 void CBoxComponent::Start(SHARED(CComponent) spThis)
 {
 	__super::Start(spThis);
-
+	m_mesh = nullptr;
 	DateInit();
 }
 
@@ -77,6 +77,9 @@ _uint CBoxComponent::PreRender(void)
 
 _uint CBoxComponent::Render(void)
 {
+	if(m_mesh != nullptr)
+		m_mesh->Release();
+
 	D3DXCreateBox(GET_DEVICE, m_size.x, m_size.y, m_size.z, &m_mesh, NULL); // D3D ÇÔ¼ö
 
 	m_mesh->DrawSubset(0);

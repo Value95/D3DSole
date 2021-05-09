@@ -5,7 +5,7 @@
 #include "SceneManager.h"
 
 USING(Engine)
-CTransformComponent::CTransformComponent(void)  
+CTransformComponent::CTransformComponent(void)
 {
 
 }
@@ -46,7 +46,7 @@ void CTransformComponent::OutTranslate(vector3 & translation)
 
 // 자신의 회전축을 기준으로 이동한다.
 void CTransformComponent::Translate(vector3 translation)
-{	
+{
 	matrix4x4 rotate;
 	D3DXMatrixRotationYawPitchRoll(&rotate, D3DXToRadian(m_rotation.y), D3DXToRadian(m_rotation.x), D3DXToRadian(m_rotation.z));
 	D3DXVec3TransformCoord(&translation, &translation, &rotate);
@@ -98,6 +98,40 @@ void CTransformComponent::Lerp(vector3 targetPosition, _float speed)
 // 타겟을 바라보게 회전해준다.
 void CTransformComponent::LookAt(vector3 target, vector3 worldUp)
 {
+	LookAtX(target, worldUp);
+	LookAtY(target, worldUp);
+}
+
+void CTransformComponent::LookAtX(vector3 target, vector3 worldUp)
+{
+	matrix4x4 matrix;
+	vector3 axis, dir;
+	_float angle, dot;
+
+	target.y = m_position.y;
+	dir = target - m_position;
+
+	D3DXVec3Normalize(&dir, &dir);
+	D3DXVec3Cross(&axis, &vector3Up, &dir);
+	D3DXVec3Normalize(&axis, &axis);
+
+	dot = D3DXVec3Dot(&vector3Up, &dir);
+
+	angle = acos(dot);
+	D3DXMatrixRotationAxis(&matrix, &axis, angle);
+
+	quaternion RY; // 회전
+	D3DXMatrixDecompose(&D3DXVECTOR3(), &RY, &D3DXVECTOR3(), &matrix);
+
+	if (dir.z > 0)
+		m_rotation.y = 90 + abs(((D3DXToDegree(RY.z) * 2) - 90)) - 180;
+	else if (dir.z < 0)
+		m_rotation.y = (D3DXToDegree(RY.z) * 2) - 180;
+
+}
+
+void CTransformComponent::LookAtY(vector3 target, vector3 worldUp)
+{
 	matrix4x4 matrix;
 	vector3 axis, dir;
 	_float angle, dot;
@@ -110,20 +144,16 @@ void CTransformComponent::LookAt(vector3 target, vector3 worldUp)
 
 	dot = D3DXVec3Dot(&vector3Up, &dir);
 
-	angle = acos(dot);
+	angle = atan(dot);
 	D3DXMatrixRotationAxis(&matrix, &axis, angle);
 
-	quaternion R; // 회전
-	D3DXMatrixDecompose(&D3DXVECTOR3(), &R, &D3DXVECTOR3(), &matrix);
+	quaternion RX; // 회전
+	D3DXMatrixDecompose(&D3DXVECTOR3(), &RX, &D3DXVECTOR3(), &matrix);
 
-	if (dir.z >= 0)
-	{
-		m_rotation.y = 90 + abs(((D3DXToDegree(R.z) * 2) - 90)) - 180;
-	}
-	else
-	{
-		m_rotation.y = (D3DXToDegree(R.z) * 2) - 180;
-	}
+	if (target.x - m_position.x > 0)
+		m_rotation.x = 90 + abs(((D3DXToDegree(RX.z) * 2) - 90)) - 180;
+	else if (target.x - m_position.x < 0)
+		m_rotation.x = (90 + abs(((D3DXToDegree(RX.z) * 2) - 90)) - 180) * -1;
 }
 
 void CTransformComponent::UpdateWorldmMatrix(void)

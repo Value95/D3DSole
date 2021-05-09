@@ -4,7 +4,8 @@
 class CCameraMove final : public Engine::CComponent
 {
 private:
-	
+	GETTOR_SETTOR(POINT, m_centerPt, {}, CenterPt);
+
 public:
 	explicit CCameraMove(void);
 	virtual	 ~CCameraMove(void);
@@ -24,6 +25,9 @@ public:
 	void OnEnable(void) override;
 	void OnDisable(void) override;
 
+private:
+	void Sight();
+	void CameraCrush();
 };
 
 #endif // !CAMERAMOVE_H

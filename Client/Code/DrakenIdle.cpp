@@ -7,7 +7,7 @@
 #include "DrakenMove.h"
 #include "DrakenAttack1.h"
 #include "DrakenAttack2.h"
-#include "DrakenHit.h"
+#include "DrakenProduction.h"
 #include "DrakenDeath.h"
 
 CDrakenIdle::CDrakenIdle(CMonster* monster)
@@ -39,14 +39,17 @@ void CDrakenIdle::Start()
 		m_monster->AddFSM(new CDrakenMove(m_monster));
 		m_monster->AddFSM(new CDrakenAttack1(m_monster));
 		m_monster->AddFSM(new CDrakenAttack2(m_monster));
-		m_monster->AddFSM(new CDrakenHit(m_monster));
+		m_monster->AddFSM(new CDrakenProduction(m_monster));
 		m_monster->AddFSM(new CDrakenDeath(m_monster));
+
+		m_monster->ChangeFSM(CMonster::DRAKEN_STATE::PRODUCTION);
+		return;
 	}
 
 	m_monster->GetAnim()->GetAnimCtrl()->SetSpeed(1.0f);
 	m_monster->GetAnim()->Set_AnimationSet(16);
 }
-// 2 -> 1 -> 14 -> 16 연출때의 모습
+
 void CDrakenIdle::End()
 {
 }
@@ -58,7 +61,7 @@ _uint CDrakenIdle::FixedUpdate()
 
 _uint CDrakenIdle::Update()
 {
-	m_monster->GetOwner()->LookAt(m_monster->GetPlayer()->GetPosition());
+	m_monster->GetOwner()->LookAtX(m_monster->GetPlayer()->GetPosition());
 	m_monster->GetOwner()->AddRotationY(180);
 
 	if (Engine::Distance(m_monster->GetOwner()->GetPosition(), m_monster->GetPlayer()->GetPosition()) > 6.0f)

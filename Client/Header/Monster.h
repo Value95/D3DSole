@@ -5,7 +5,7 @@ class MonsterFSM;
 class CMonsterInfo;
 class CMonster final : public Engine::CComponent
 {
-public:	enum DRAKEN_STATE { IDLE, MOVE, ATTACK1, ATTACK2, HIT, DEATH, STATEEND };
+public:	enum DRAKEN_STATE { IDLE, MOVE, ATTACK1, ATTACK2, PRODUCTION, DEATH, STATEEND };
 
 
 private:

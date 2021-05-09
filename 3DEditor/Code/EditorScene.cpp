@@ -84,7 +84,6 @@ _uint CEditorScene::Update(void)
 
 	POINT point;
 	GetCursorPos(&point);
-	cout << point.y << endl;
 	if (point.x >= 1057 || point.y >= 670)
 		return event;
 

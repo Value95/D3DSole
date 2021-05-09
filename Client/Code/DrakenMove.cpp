@@ -48,7 +48,7 @@ void CDrakenMove::Move()
 {
 	if (Engine::Distance(m_monster->GetOwner()->GetPosition(), m_monster->GetPlayer()->GetPosition()) >= 5.5f)
 	{
-		m_monster->GetOwner()->LookAt(m_monster->GetPlayer()->GetPosition());
+		m_monster->GetOwner()->LookAtX(m_monster->GetPlayer()->GetPosition());
 		m_monster->GetOwner()->AddRotationY(180);
 		m_monster->GetOwner()->Translate(vector3Back * m_monster->GetMonsterInfo()->GetSpeed());
 	}

@@ -326,10 +326,11 @@ bool CPlayerMove::DeshActivation()
 bool CPlayerMove::MoveCheck(vector3 dir)
 {
 	vector3 orgine = m_player->GetOwner()->GetPosition();
-
+	orgine.y -= 1;
 	Engine::CGameObject* obj = Engine::CRaycast::BoxRayCast(orgine, dir, m_moveCheckDir, L"Collider");
-	/*if(obj == nullptr)
-		obj = Engine::CRaycast::BoxRayCast(orgine, dir, m_moveCheckDir, L"Monster");*/
+
+	if(obj == nullptr)
+		obj = Engine::CRaycast::BoxRayCast(orgine, dir, m_moveCheckDir, L"Map");
 
 	if (obj != nullptr)
 	{

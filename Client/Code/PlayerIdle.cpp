@@ -27,11 +27,26 @@ void CPlayerIdle::End()
 
 _uint CPlayerIdle::FixedUpdate()
 {
+	if(m_player->GetIdleLook())
+		return NO_EVENT;
+
+
 	return NO_EVENT;
 }
 
 _uint CPlayerIdle::Update()
 {
+	if (m_player->GetIdleLook())
+	{
+		if (m_player->GetAnim()->GetAnimValue() != 110)
+		{
+			m_player->GetAnim()->Set_AnimationSet(110);
+		}
+
+		return NO_EVENT;
+	}
+
+
 	if (m_player->GetAnim()->GetAnimValue() == 37 && m_player->GetAnim()->GetAnimCtrl()->Is_AnimationSetEnd())
 	{
 		m_player->GetAnim()->Set_AnimationSet(110);
@@ -63,6 +78,10 @@ _uint CPlayerIdle::Update()
 
 _uint CPlayerIdle::LateUpdate()
 {
+	if (m_player->GetIdleLook())
+		return NO_EVENT;
+
+
 	return NO_EVENT;
 }
 

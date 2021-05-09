@@ -54,7 +54,9 @@ CGameObject * CRaycast::MeshRayCast(vector3 origin, vector3 direction, _float ma
 
 		if (hit == true && maxDistance >= dist)
 		{
-			outHit = vector3(Torigin + (dist * Tdirection)); // 맞은위치 충돌위치를
+
+
+			outHit = vector3(origin + (dist * direction)); // 맞은위치 충돌위치를
 			if (EPSILON > outHit.x && -EPSILON < outHit.x)
 				outHit.x = 0.f;
 			if (EPSILON > outHit.y && -EPSILON < outHit.y)

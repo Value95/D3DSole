@@ -39,11 +39,13 @@ void CDrakenUI::SetMonsterHP(_int* hp, _int* hpMax)
 
 void CDrakenUI::Update()
 {
+	m_hpUI[0]->LookAtX(m_monster->GetPlayer()->GetPosition());
+	m_hpUI[1]->LookAtX(m_monster->GetPlayer()->GetPosition());
+
 	m_hpUI[0]->SetPosition(m_monster->GetOwner()->GetPosition() + m_hpUIPos);
-	m_hpUI[0]->SetRotation(m_monster->GetOwner()->GetRotation());
+	//m_hpUI[0]->SetRotation(m_monster->GetOwner()->GetRotation());
 	m_hpUI[1]->SetPosition(m_monster->GetOwner()->GetPosition() + m_hpUIPos);
-	m_hpUI[1]->SetRotation(m_monster->GetOwner()->GetRotation());
-	//m_hpUI[1]->Translate(vector3Back * 2);
+	//m_hpUI[1]->SetRotation(m_monster->GetOwner()->GetRotation());
 
 	if (m_curHp == 0)
 	{
