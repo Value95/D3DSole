@@ -120,6 +120,7 @@ void CDongilScene::InitLayers(void)
 	AddLayer(L"Player");
 	AddLayer(L"Default");
 	AddLayer(L"Monster");
+	AddLayer(L"Boss");
 	AddLayer(L"UI");
 	AddLayer(L"MapObject");
 	AddLayer(L"Collider");

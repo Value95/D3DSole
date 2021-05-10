@@ -145,6 +145,33 @@
     <Filter Include="02.Script\01.Monster\00.MonsterFSM\02.Draken\05.DrakenProduction">
       <UniqueIdentifier>{100ebac6-5087-4b14-ad45-7a40590c0e0e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.Script\00.Player\00.PlayerFMS\06.Debug">
+      <UniqueIdentifier>{653c09d0-f6f4-499b-a896-d775070b166c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Script\00.Player\00.PlayerFMS\07.Attack2">
+      <UniqueIdentifier>{07beca14-ac12-4cff-b64e-9c9b5577add6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Script\01.Monster\00.MonsterFSM\03.SoldierSpear">
+      <UniqueIdentifier>{de2fb575-4ff6-49a5-9250-05bb419878e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Script\01.Monster\00.MonsterFSM\03.SoldierSpear\01.SoldierSpearIdle">
+      <UniqueIdentifier>{b8b2e443-ee33-4c6c-8445-100fbdfc06cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Script\01.Monster\00.MonsterFSM\03.SoldierSpear\02.SoldierSpearMove">
+      <UniqueIdentifier>{dbb92302-5080-47bd-b0f0-dbf660f844a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Script\01.Monster\00.MonsterFSM\03.SoldierSpear\03.SoldierSpearAttack1">
+      <UniqueIdentifier>{d4c873ab-e912-4f12-a805-43038c4c03c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Script\01.Monster\00.MonsterFSM\03.SoldierSpear\04.SoldierSpearHit">
+      <UniqueIdentifier>{40a5b1dd-bb34-4a93-b621-fe4e68402166}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Script\01.Monster\00.MonsterFSM\03.SoldierSpear\05.SoldierSpearDeath">
+      <UniqueIdentifier>{42d1ab9b-3745-471e-aaa9-90dcca889f1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Script\01.Monster\00.MonsterFSM\03.SoldierSpear\00.SoldierSpearMaintenance">
+      <UniqueIdentifier>{ba076d16-fcc8-437c-9294-af2d784bb470}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -276,6 +303,30 @@
     <ClInclude Include="..\Header\DrakenProduction.h">
       <Filter>02.Script\01.Monster\00.MonsterFSM\02.Draken\05.DrakenProduction</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\PlayerDebug.h">
+      <Filter>02.Script\00.Player\00.PlayerFMS\06.Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PlayerAttack2.h">
+      <Filter>02.Script\00.Player\00.PlayerFMS\07.Attack2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SoldierSpearIdle.h">
+      <Filter>02.Script\01.Monster\00.MonsterFSM\03.SoldierSpear\01.SoldierSpearIdle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SoldierSpearMove.h">
+      <Filter>02.Script\01.Monster\00.MonsterFSM\03.SoldierSpear\02.SoldierSpearMove</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SoldierSpearAttack1.h">
+      <Filter>02.Script\01.Monster\00.MonsterFSM\03.SoldierSpear\03.SoldierSpearAttack1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SoldierSpearHit.h">
+      <Filter>02.Script\01.Monster\00.MonsterFSM\03.SoldierSpear\04.SoldierSpearHit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SoldierSpearDeath.h">
+      <Filter>02.Script\01.Monster\00.MonsterFSM\03.SoldierSpear\05.SoldierSpearDeath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SoldierSpearMaintenance.h">
+      <Filter>02.Script\01.Monster\00.MonsterFSM\03.SoldierSpear\00.SoldierSpearMaintenance</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -373,6 +424,30 @@
     </ClCompile>
     <ClCompile Include="..\Code\DrakenProduction.cpp">
       <Filter>02.Script\01.Monster\00.MonsterFSM\02.Draken\05.DrakenProduction</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerDebug.cpp">
+      <Filter>02.Script\00.Player\00.PlayerFMS\06.Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerAttack2.cpp">
+      <Filter>02.Script\00.Player\00.PlayerFMS\07.Attack2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoldierSpearIdle.cpp">
+      <Filter>02.Script\01.Monster\00.MonsterFSM\03.SoldierSpear\01.SoldierSpearIdle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoldierSpearMove.cpp">
+      <Filter>02.Script\01.Monster\00.MonsterFSM\03.SoldierSpear\02.SoldierSpearMove</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoldierSpearAttack1.cpp">
+      <Filter>02.Script\01.Monster\00.MonsterFSM\03.SoldierSpear\03.SoldierSpearAttack1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoldierSpearDeath.cpp">
+      <Filter>02.Script\01.Monster\00.MonsterFSM\03.SoldierSpear\05.SoldierSpearDeath</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoldierSpearHit.cpp">
+      <Filter>02.Script\01.Monster\00.MonsterFSM\03.SoldierSpear\04.SoldierSpearHit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoldierSpearMaintenance.cpp">
+      <Filter>02.Script\01.Monster\00.MonsterFSM\03.SoldierSpear\00.SoldierSpearMaintenance</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

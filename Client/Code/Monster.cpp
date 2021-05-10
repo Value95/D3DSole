@@ -57,7 +57,7 @@ void CMonster::Start(SHARED(CComponent) spThis)
 _uint CMonster::FixedUpdate(SHARED(CComponent) spThis)
 {
 	m_monsterFSM[m_monsterState]->FixedUpdate();
-	m_monsterMaintenanceFSM->FixedUpdate();
+	//m_monsterMaintenanceFSM->FixedUpdate();
 
 	return NO_EVENT;
 }
@@ -65,7 +65,7 @@ _uint CMonster::FixedUpdate(SHARED(CComponent) spThis)
 _uint CMonster::Update(SHARED(CComponent) spThis)
 {
 	m_monsterFSM[m_monsterState]->Update();
-	m_monsterMaintenanceFSM->Update();
+	//m_monsterMaintenanceFSM->Update();
 
 	return NO_EVENT;
 }
@@ -73,7 +73,7 @@ _uint CMonster::Update(SHARED(CComponent) spThis)
 _uint CMonster::LateUpdate(SHARED(CComponent) spThis)
 {
 	m_monsterFSM[m_monsterState]->LateUpdate();
-	m_monsterMaintenanceFSM->LateUpdate();
+	//m_monsterMaintenanceFSM->LateUpdate();
 
 	m_hitCheck = true;
 	return NO_EVENT;

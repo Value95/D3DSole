@@ -46,7 +46,7 @@ void CDrakenMove::OnDestroy(void)
 
 void CDrakenMove::Move()
 {
-	if (Engine::Distance(m_monster->GetOwner()->GetPosition(), m_monster->GetPlayer()->GetPosition()) >= 5.5f)
+	if (Engine::Distance(m_monster->GetOwner()->GetPosition(), m_monster->GetPlayer()->GetPosition()) >= 4.5f)
 	{
 		m_monster->GetOwner()->LookAtX(m_monster->GetPlayer()->GetPosition());
 		m_monster->GetOwner()->AddRotationY(180);

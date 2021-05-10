@@ -139,7 +139,7 @@ void CCameraComponent::CameraMove()
 	_float speed = 300.f;
 	if (Engine::IMKEY_PRESS(KEY_SHIFT))
 	{
-		speed = 4;
+		speed = 600;
 	}
 
 	if (Engine::IMKEY_PRESS(KEY_W))

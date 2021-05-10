@@ -62,7 +62,7 @@ _uint CCameraMove::FixedUpdate(SHARED(CComponent) spThis)
 _uint CCameraMove::Update(SHARED(CComponent) spThis)
 {
 	Sight();
-	CameraCrush();
+	//CameraCrush();
 	return NO_EVENT;
 }
 

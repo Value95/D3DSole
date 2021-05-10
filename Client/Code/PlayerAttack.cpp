@@ -7,7 +7,7 @@
 CPlayerAttack::CPlayerAttack(CPlayer* player)
 {
 	m_player = player;
-	collision = Engine::CBoxCollider::Create(vector3(1, 4, 3), vector3(0, 0.9,-1));
+	collision = Engine::CBoxCollider::Create(vector3(1, 4, 3), vector3(0, 0.9, -1));
 }
 
 CPlayerAttack::~CPlayerAttack()
@@ -33,9 +33,9 @@ void CPlayerAttack::Start()
 	}
 	else
 	{
-		m_attackAnimNumber = 15;
+		m_attackAnimNumber = 20;
 		m_player->GetOwner()->GetComponent<Engine::CAnimMeshRenderComponent>()->Set_AnimationSet(m_attackAnimNumber);
-		m_player->GetOwner()->GetComponent<Engine::CRigidBodyComponent>()->TranslateForce((vector3Up + vector3Back) * 3);
+		m_player->GetOwner()->GetComponent<Engine::CRigidBodyComponent>()->TranslateForce(vector3Up * 3);
 	}
 }
 
@@ -53,7 +53,7 @@ _uint CPlayerAttack::FixedUpdate()
 		{
 			for (auto& object : col)
 			{
-				m_player->Attack(object);
+				m_player->Attack(object, m_player->GetPlayerInfo()->GetDamageA());
 				init = true;
 			}
 		}
@@ -63,12 +63,18 @@ _uint CPlayerAttack::FixedUpdate()
 
 _uint CPlayerAttack::Update()
 {
+	if (Engine::CInputManager::GetInstance()->KeyPress(KEY_Q) && m_player->GetOwner()->GetComponent<Engine::CRigidBodyComponent>()->GetGroundCheck())
+	{
+		m_player->ChangeFSM(CPlayer::STATE::ATTACK2);
+		return NO_EVENT;
+	}
+
 	if (Engine::IMKEY_DOWN(KEY_LBUTTON))
 	{
 		m_nextAttack = true;
 	}
 
-	if(m_player->GetOwner()->GetComponent<Engine::CRigidBodyComponent>()->GetGroundCheck())
+	if(m_attackAnimNumber > 20 && m_player->GetOwner()->GetComponent<Engine::CRigidBodyComponent>()->GetGroundCheck())
 		GroundAttack();
 	else
 		JumpAttack();
@@ -108,7 +114,7 @@ void CPlayerAttack::GroundAttack()
 			else
 			{
 				m_attackAnimNumber -= 2;
-				m_player->GetOwner()->GetComponent<Engine::CRigidBodyComponent>()->TranslateForce(vector3Back * 3);
+				m_player->GetOwner()->GetComponent<Engine::CRigidBodyComponent>()->TranslateForce(vector3Back);
 			}
 
 			init = false;
@@ -122,6 +128,20 @@ void CPlayerAttack::JumpAttack()
 {
 	if (m_player->GetOwner()->GetComponent<Engine::CAnimMeshRenderComponent>()->GetAnimCtrl()->Is_AnimationSetEnd())
 	{
-		m_player->ChangeFSM(CPlayer::STATE::IDLE);
+		if (!m_nextAttack || m_attackAnimNumber <= 18)
+		{
+			m_player->ChangeFSM(CPlayer::STATE::IDLE);
+			return;
+		}
+		
+		m_player->GetOwner()->SetRotationY(Engine::GET_MAIN_CAM->GetOwner()->GetRotation().y);
+		m_player->GetOwner()->AddRotationY(-180);
+
+		m_attackAnimNumber--;
+		init = false;
+
+		m_player->GetOwner()->GetComponent<Engine::CAnimMeshRenderComponent>()->Set_AnimationSet(m_attackAnimNumber);
+		m_player->GetOwner()->GetComponent<Engine::CRigidBodyComponent>()->TranslateForce(vector3Up * 3);
 	}
+
 }

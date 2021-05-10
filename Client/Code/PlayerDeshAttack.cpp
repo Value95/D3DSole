@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "PlayerDeshAttack.h"
+#include "PlayerInfo.h"
 
 
 CPlayerDeshAttack::CPlayerDeshAttack(CPlayer* player)
@@ -37,7 +38,7 @@ _uint CPlayerDeshAttack::FixedUpdate()
 		{
 			for (auto& object : col)
 			{
-				m_player->Attack(object);
+				m_player->Attack(object, m_player->GetPlayerInfo()->GetDamageB());
 				init = true;
 			}
 		}

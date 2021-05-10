@@ -11,6 +11,8 @@
 #include "PlayerDeath.h"
 #include "PlayerDeshAttack.h"
 #include "PlayerHit.h"
+#include "PlayerDebug.h"
+#include "PlayerAttack2.h"
 
 CPlayer::CPlayer()
 {
@@ -61,11 +63,6 @@ _uint CPlayer::Update(SHARED(CComponent) spThis)
 	m_playerFSM[m_playerState]->Update();
 	m_playerHP->Update();
 
-	if (Engine::CInputManager::GetInstance()->KeyDown(KEY_Q))
-	{
-		Hit(50, 0);
-	}
-
 	return NO_EVENT;
 }
 
@@ -102,13 +99,23 @@ void CPlayer::ChangeFSM(STATE state)
 	m_playerFSM[m_playerState]->Start();
 }
 
-void CPlayer::Attack(Engine::CGameObject* gameObject)
+void CPlayer::Attack(Engine::CGameObject* gameObject, _float damage)
 {
 	if (gameObject->GetLayerKey() == L"Monster")
 	{
-		_float aa = GetPlayerInfo()->GetDamage();
-		gameObject->GetComponent<CMonster>()->Hit(GetPlayerInfo()->GetDamage());
-		cout << "몬스터 체력 : " << gameObject->GetComponent<CMonster>()->GetMonsterInfo()->GetHP() << endl;
+		gameObject->GetComponent<CMonster>()->Hit(damage);
+	}
+	else if (gameObject->GetLayerKey() == L"Boss")
+	{
+		gameObject->GetComponent<CMonster>()->Hit(damage);
+	}
+}
+
+void CPlayer::UpAttack(Engine::CGameObject * gameObject, _float force)
+{
+	if (gameObject->GetLayerKey() == L"Monster")
+	{
+		gameObject->GetComponent<CMonster>()->GetOwner()->GetComponent<Engine::CRigidBodyComponent>()->AddForce(vector3Up * force);
 	}
 	else if (gameObject->GetName() == L"Boss")
 	{
@@ -144,11 +151,13 @@ void CPlayer::IdleLookEnd()
 void CPlayer::FSMCreate()
 {
 	m_playerFSM[STATE::IDLE] = new CPlayerIdle(this);
-	m_playerFSM[STATE::IDLE]->Start();
-
 	m_playerFSM[STATE::MOVE] = new CPlayerMove(this);
 	m_playerFSM[STATE::ATTACK] = new CPlayerAttack(this);
 	m_playerFSM[STATE::DESHATTACK] = new CPlayerDeshAttack(this);
 	m_playerFSM[STATE::HIT] = new CPlayerHit(this);
 	m_playerFSM[STATE::DEATH] = new CPlayerDeath(this);
+	m_playerFSM[STATE::DEBUGMODE] = new CPlayerDebug(this);
+	m_playerFSM[STATE::ATTACK2] = new CPlayerAttack2(this);
+
+	m_playerFSM[STATE::IDLE]->Start();
 }

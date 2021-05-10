@@ -9,7 +9,10 @@ protected:
 	GETTOR_SETTOR(_float, m_speed, 200, Speed)
 	GETTOR_SETTOR(_float, m_deshSpeed, 300, DeshSpeed)
 	GETTOR_SETTOR(_float, m_mouseSensitivity, 5, MouseSensitivity);
-	GETTOR_SETTOR(_int, m_damage, 300, Damage);
+	GETTOR_SETTOR(_int, m_damageA, 100, DamageA);
+	GETTOR_SETTOR(_int, m_damageB, 100, DamageB);
+	GETTOR_SETTOR(_int, m_damageC, 100, DamageC);
+	GETTOR_SETTOR(_int, m_damageD, 10, DamageD);
 public:
 	CPlayerInfo::CPlayerInfo()
 	{

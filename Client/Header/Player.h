@@ -6,7 +6,7 @@ class CPlayerInfo;
 class CPlayerHP;
 class CPlayer final : public Engine::CComponent
 {
-public:	enum STATE {IDLE, MOVE, ATTACK, DESHATTACK, HIT, DEATH, STATEEND};
+public:	enum STATE {IDLE, MOVE, ATTACK, DEATH, DESHATTACK, HIT, DEBUGMODE, ATTACK2, STATEEND};
 
 private:
 	FSM* m_playerFSM[STATE::STATEEND];
@@ -36,7 +36,8 @@ public:
 	void OnDisable(void) override;
 
 	void ChangeFSM(STATE state);
-	void Attack(Engine::CGameObject* gameObject);
+	void Attack(Engine::CGameObject* gameObject, _float damage);
+	void UpAttack(Engine::CGameObject* gameObject, _float force);
 	void Hit(_int damage, _int hitType);
 	void IdleLookState();
 	void IdleLookEnd();

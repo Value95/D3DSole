@@ -6,6 +6,7 @@ class CDrakenIdle :
 {
 private:
 	_bool m_init = false;
+	_int m_animCount;
 
 public:
 	CDrakenIdle(CMonster* monster);

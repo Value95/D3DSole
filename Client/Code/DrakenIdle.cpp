@@ -42,12 +42,17 @@ void CDrakenIdle::Start()
 		m_monster->AddFSM(new CDrakenProduction(m_monster));
 		m_monster->AddFSM(new CDrakenDeath(m_monster));
 
-		m_monster->ChangeFSM(CMonster::DRAKEN_STATE::PRODUCTION);
-		return;
+		//m_monster->ChangeFSM(CMonster::DRAKEN_STATE::PRODUCTION);
+		//return;
 	}
 
+	//m_monster->GetAnim()->GetAnimCtrl()->SetSpeed(1.0f);
+	//m_monster->GetAnim()->Set_AnimationSet(16);
+
+	m_animCount = 0;
 	m_monster->GetAnim()->GetAnimCtrl()->SetSpeed(1.0f);
-	m_monster->GetAnim()->Set_AnimationSet(16);
+	m_monster->GetAnim()->Set_AnimationSet(m_animCount);
+
 }
 
 void CDrakenIdle::End()
@@ -61,13 +66,33 @@ _uint CDrakenIdle::FixedUpdate()
 
 _uint CDrakenIdle::Update()
 {
-	m_monster->GetOwner()->LookAtX(m_monster->GetPlayer()->GetPosition());
+	if (Engine::CInputManager::GetInstance()->KeyDown(KEY_LBUTTON))
+	{
+		m_animCount++;
+		m_monster->GetAnim()->Set_AnimationSet(m_animCount);
+		cout << m_animCount << endl;
+	}
+
+	if (Engine::CInputManager::GetInstance()->KeyDown(KEY_RBUTTON))
+	{
+		m_animCount--;
+		m_monster->GetAnim()->Set_AnimationSet(m_animCount);
+		cout << m_animCount << endl;
+	}
+
+
+	/*m_monster->GetOwner()->LookAtX(m_monster->GetPlayer()->GetPosition());
 	m_monster->GetOwner()->AddRotationY(180);
 
-	if (Engine::Distance(m_monster->GetOwner()->GetPosition(), m_monster->GetPlayer()->GetPosition()) > 6.0f)
+	m_monster->GetOwner()->LookAtX(m_monster->GetPlayer()->GetPosition());
+	m_monster->GetOwner()->AddRotationY(180);
+	m_monster->GetOwner()->Translate(vector3Left * m_monster->GetMonsterInfo()->GetSpeed());
+
+
+	if (Engine::Distance(m_monster->GetOwner()->GetPosition(), m_monster->GetPlayer()->GetPosition()) > 5.0f)
 	{
 		m_monster->ChangeFSM(CMonster::DRAKEN_STATE::MOVE);
-	}
+	}*/
 
 
 	return NO_EVENT;

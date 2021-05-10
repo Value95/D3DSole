@@ -212,6 +212,7 @@ void CInspectorView::LayerAddString()
 	m_layerComboBox.AddString(TEXT("Collider"));
 	m_layerComboBox.AddString(TEXT("Light"));
 	m_layerComboBox.AddString(TEXT("Monster"));
+	m_layerComboBox.AddString(TEXT("Boss"));
 	m_layerComboBox.AddString(TEXT("Player"));
 	m_layerComboBox.AddString(TEXT("Map"));
 }
@@ -229,6 +230,7 @@ void CInspectorView::ObjectAddString()
 	m_objectKeyComboBox.AddString(TEXT("Player"));
 	m_objectKeyComboBox.AddString(TEXT("Map"));
 	m_objectKeyComboBox.AddString(TEXT("Draken"));
+	m_objectKeyComboBox.AddString(TEXT("Soldier_spear"));
 }
 
 void CInspectorView::ColliderAddString()

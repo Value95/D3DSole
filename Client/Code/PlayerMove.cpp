@@ -183,6 +183,14 @@ bool CPlayerMove::Attack()
 		WW = false, AA = false, SS = false, DD = false;
 		return true;
 	}
+
+	if (Engine::CInputManager::GetInstance()->KeyPress(KEY_Q) && m_player->GetOwner()->GetComponent<Engine::CRigidBodyComponent>()->GetGroundCheck())
+	{
+		m_player->ChangeFSM(CPlayer::STATE::ATTACK2);
+		WW = false, AA = false, SS = false, DD = false;
+		return true;
+	}
+
 	return false;
 }
 
@@ -326,7 +334,7 @@ bool CPlayerMove::DeshActivation()
 bool CPlayerMove::MoveCheck(vector3 dir)
 {
 	vector3 orgine = m_player->GetOwner()->GetPosition();
-	orgine.y -= 1;
+	orgine.y += 0.9;
 	Engine::CGameObject* obj = Engine::CRaycast::BoxRayCast(orgine, dir, m_moveCheckDir, L"Collider");
 
 	if(obj == nullptr)

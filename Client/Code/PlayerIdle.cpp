@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "..\Header\PlayerIdle.h"
+#include "PlayerIdle.h"
 #include "Player.h"
 
 CPlayerIdle::CPlayerIdle(CPlayer* player)
@@ -19,6 +19,8 @@ void CPlayerIdle::Start()
 		m_player->GetAnim()->Set_AnimationSet(37);
 	else
 		m_player->GetAnim()->Set_AnimationSet(110);
+
+	//m_player->ChangeFSM(CPlayer::STATE::DEBUGMODE);
 }
 
 void CPlayerIdle::End()
@@ -68,7 +70,12 @@ _uint CPlayerIdle::Update()
 		m_player->GetOwner()->GetComponent<Engine::CAnimMeshRenderComponent>()->Set_AnimationSet(100);
 	}
 
-	if (Engine::IMKEY_DOWN(KEY_LBUTTON))
+	if (Engine::CInputManager::GetInstance()->KeyPress(KEY_Q) && m_player->GetOwner()->GetComponent<Engine::CRigidBodyComponent>()->GetGroundCheck())
+	{
+		m_player->ChangeFSM(CPlayer::STATE::ATTACK2);
+	}
+
+	if (Engine::CInputManager::GetInstance()->KeyPress(KEY_LBUTTON))
 	{
 		m_player->ChangeFSM(CPlayer::STATE::ATTACK);
 	}

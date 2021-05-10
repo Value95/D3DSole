@@ -15,7 +15,7 @@ protected:
 	GETTOR_SETTOR(_float, m_cameraX, 0, CameraX)
 	GETTOR_SETTOR(_float, m_cameraY, 0, CameraY)
 	GETTOR_SETTOR(_bool, m_camera, false, Camera)
-	GETTOR_SETTOR(vector3, m_cameraDirPos, vector3(0, 3, -4), CameraDirPos)
+	GETTOR_SETTOR(vector3, m_cameraDirPos, vector3(0, 3, -8), CameraDirPos)
 
 public:
 	explicit	CTransformComponent(void);

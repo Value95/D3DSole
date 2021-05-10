@@ -207,7 +207,9 @@
     <ClInclude Include="..\Header\MonsterInfo.h" />
     <ClInclude Include="..\Header\Player.h" />
     <ClInclude Include="..\Header\PlayerAttack.h" />
+    <ClInclude Include="..\Header\PlayerAttack2.h" />
     <ClInclude Include="..\Header\PlayerDeath.h" />
+    <ClInclude Include="..\Header\PlayerDebug.h" />
     <ClInclude Include="..\Header\PlayerDeshAttack.h" />
     <ClInclude Include="..\Header\PlayerHit.h" />
     <ClInclude Include="..\Header\PlayerHP.h" />
@@ -216,6 +218,12 @@
     <ClInclude Include="..\Header\PlayerInfo.h" />
     <ClInclude Include="..\Header\PlayerWapon.h" />
     <ClInclude Include="..\Header\ScarecrowIdle.h" />
+    <ClInclude Include="..\Header\SoldierSpearAttack1.h" />
+    <ClInclude Include="..\Header\SoldierSpearDeath.h" />
+    <ClInclude Include="..\Header\SoldierSpearHit.h" />
+    <ClInclude Include="..\Header\SoldierSpearIdle.h" />
+    <ClInclude Include="..\Header\SoldierSpearMaintenance.h" />
+    <ClInclude Include="..\Header\SoldierSpearMove.h" />
     <ClInclude Include="..\Header\TitleScene.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Client.h" />
@@ -244,7 +252,9 @@
     <ClCompile Include="..\Code\MonsterFSM.cpp" />
     <ClCompile Include="..\Code\Player.cpp" />
     <ClCompile Include="..\Code\PlayerAttack.cpp" />
+    <ClCompile Include="..\Code\PlayerAttack2.cpp" />
     <ClCompile Include="..\Code\PlayerDeath.cpp" />
+    <ClCompile Include="..\Code\PlayerDebug.cpp" />
     <ClCompile Include="..\Code\PlayerDeshAttack.cpp" />
     <ClCompile Include="..\Code\PlayerHit.cpp" />
     <ClCompile Include="..\Code\PlayerHP.cpp" />
@@ -252,6 +262,12 @@
     <ClCompile Include="..\Code\PlayerMove.cpp" />
     <ClCompile Include="..\Code\PlayerWapon.cpp" />
     <ClCompile Include="..\Code\ScarecrowIdle.cpp" />
+    <ClCompile Include="..\Code\SoldierSpearAttack1.cpp" />
+    <ClCompile Include="..\Code\SoldierSpearDeath.cpp" />
+    <ClCompile Include="..\Code\SoldierSpearHit.cpp" />
+    <ClCompile Include="..\Code\SoldierSpearIdle.cpp" />
+    <ClCompile Include="..\Code\SoldierSpearMaintenance.cpp" />
+    <ClCompile Include="..\Code\SoldierSpearMove.cpp" />
     <ClCompile Include="..\Code\TitleScene.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="stdafx.cpp">

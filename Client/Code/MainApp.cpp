@@ -10,6 +10,7 @@
 #pragma region Monster
 #include "ScarecrowIdle.h"
 #include "DrakenIdle.h"
+#include "SoldierSpearIdle.h"
 #pragma endregion
 
 CMainApp::CMainApp(void)
@@ -217,7 +218,7 @@ void CMainApp::Monster()
 	scarecrow->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(1, 10, 1), vector3Zero));
 	Engine::CObjectFactory::GetInstance()->AddPrototype(scarecrow);
 
-	SHARED(Engine::CGameObject) draken = Engine::CGameObject::Create(L"Monster", L"Draken", true);
+	SHARED(Engine::CGameObject) draken = Engine::CGameObject::Create(L"Boss", L"Draken", true);
 	draken->SetName(L"Draken");
 	draken->SetPosition(vector3(0, 0, 0));
 	draken->SetScale(vector3(0.01f, 0.01f, 0.01f));
@@ -227,6 +228,17 @@ void CMainApp::Monster()
 	draken->GetComponent<Engine::CRigidBodyComponent>()->SetMass(80);
 	draken->AddComponent<Engine::CAnimMeshRenderComponent>()->MeshInput(L"../../Resource/Mesh/Static/DynamicMesh/Boss/", L"boss.X");
 	Engine::CObjectFactory::GetInstance()->AddPrototype(draken);
+
+	SHARED(Engine::CGameObject) soldier = Engine::CGameObject::Create(L"Monster", L"Soldier_spear", true);
+	soldier->SetName(L"Draken");
+	soldier->SetPosition(vector3(0, 0, 0));
+	soldier->SetScale(vector3(0.01f, 0.01f, 0.01f));
+	soldier->AddComponent<CMonster>()->AddFSM<CSoldierSpearIdle>();
+	soldier->AddComponent<Engine::CRigidBodyComponent>();
+	soldier->GetComponent<Engine::CRigidBodyComponent>()->SetBounciness(0.0f);
+	soldier->GetComponent<Engine::CRigidBodyComponent>()->SetMass(80);
+	soldier->AddComponent<Engine::CAnimMeshRenderComponent>()->MeshInput(L"../../Resource/Mesh/Static/DynamicMesh/Soldier_spear/", L"Soldier_spear.X");
+	Engine::CObjectFactory::GetInstance()->AddPrototype(soldier);
 }
 
 void CMainApp::Player()
