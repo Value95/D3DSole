@@ -34,7 +34,7 @@ void CPlayerWapon::Start(SHARED(CComponent) spSelf)
 
 	SHARED(Engine::CAnimMeshRenderComponent) playerMeshCom = Engine::GET_CUR_SCENE->FindObjectByName(L"Player")->GetComponent<Engine::CAnimMeshRenderComponent>();
 
-	const Engine::D3DXFRAME_DERIVED* pFrame = playerMeshCom->Get_FrameByName("R_ARM2");
+	const Engine::D3DXFRAME_DERIVED* pFrame = playerMeshCom->Get_FrameByName("Finger_L_001");
 
 	m_parentBoneMatrix = &pFrame->CombinedTransformationMatrix;
 

@@ -15,11 +15,12 @@ void CPlayerIdle::Start()
 {
 	m_player->GetAnim()->GetAnimCtrl()->SetSpeed(1.0f);
 
-	if (m_player->GetAnim()->GetAnimValue() == 9)
+	/*if (m_player->GetAnim()->GetAnimValue() == 9)
 		m_player->GetAnim()->Set_AnimationSet(37);
 	else
-		m_player->GetAnim()->Set_AnimationSet(110);
+		m_player->GetAnim()->Set_AnimationSet(110);*/
 
+	m_player->GetAnim()->Set_AnimationSet(0);
 	//m_player->ChangeFSM(CPlayer::STATE::DEBUGMODE);
 }
 
@@ -38,7 +39,7 @@ _uint CPlayerIdle::FixedUpdate()
 
 _uint CPlayerIdle::Update()
 {
-	if (m_player->GetIdleLook())
+	/*if (m_player->GetIdleLook())
 	{
 		if (m_player->GetAnim()->GetAnimValue() != 110)
 		{
@@ -78,7 +79,7 @@ _uint CPlayerIdle::Update()
 	if (Engine::CInputManager::GetInstance()->KeyPress(KEY_LBUTTON))
 	{
 		m_player->ChangeFSM(CPlayer::STATE::ATTACK);
-	}
+	}*/
 
 	return NO_EVENT;
 }

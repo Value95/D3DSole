@@ -56,20 +56,21 @@ void CDongilScene::Start(void)
 	{
 		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
 		pObj->SetName(L"Sword");
+		pObj->SetScale(vector3(0.5f, 0.5f, 0.5f));
 		pObj->SetRotation(vector3(0, 90, 0));
 		pObj->AddComponent<CPlayerWapon>();
-		pObj->AddComponent<Engine::CMeshComponent>()->SetMeshKey(L"Wapon_Sword_000.X");
+		pObj->AddComponent<Engine::CMeshComponent>()->SetMeshKey(L"Wapon_LongHammer_000.X");
 		pObj->AddComponent<Engine::CStaticMeshRenderComponent>();
 	}
 
-	{
+	/*{
 		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
 		pObj->SetName(L"Sword");
 		pObj->SetRotation(vector3(90, 0, 0));
 		pObj->AddComponent<CDrakenWapon>();
 		pObj->AddComponent<Engine::CMeshComponent>()->SetMeshKey(L"Boss_Sword.X");
 		pObj->AddComponent<Engine::CStaticMeshRenderComponent>();
-	}
+	}*/
 
 	m_pMainCamera->GetOwner()->SetTarget(Engine::GET_CUR_SCENE->FindObjectByName(L"Player").get());
 }
