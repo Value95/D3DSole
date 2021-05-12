@@ -41,8 +41,9 @@ protected:
 	GETTOR_SETTOR(_BOOL3, m_freezePosition, _BOOL3(false, false, false), FreezePosition) 
 	GETTOR_SETTOR(_BOOL3, m_freezeRotation, _BOOL3(false, false, false), FreezeRotation) 
 	GETTOR_SETTOR(_bool, m_groundCheck, false, GroundCheck)
-	GETTOR_SETTOR(vector3, m_velocity, GRAVITY, Velocity) 
+	GETTOR_SETTOR(vector3, m_velocity, vector3(0, -9.807f, 0), Velocity)
 	GETTOR_SETTOR(vector3, m_netForce, vector3Zero, NetForce)
+	GETTOR_SETTOR(_float, m_gravity, -9.807f, Gravity)
 
 	_float m_damping = 2.999f;	
 	vector3 m_separatingVelocity; 

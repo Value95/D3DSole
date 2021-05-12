@@ -97,6 +97,8 @@ void CInputManager::KeyUpdate(void)
 		m_key |= KEY_F4;
 	if (GetAsyncKeyState(VK_F5) & 0x8000)
 		m_key |= KEY_F5;
+	if (GetAsyncKeyState(VK_F6) & 0x8000)
+		m_key |= KEY_F6;
 	if (GetAsyncKeyState(0x57) & 0x8000)
 		m_key |= KEY_W;
 	if (GetAsyncKeyState(0x41) & 0x8000)

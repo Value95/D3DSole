@@ -48,13 +48,12 @@
 #define KEY_CTRL	536870912
 #define KEY_F		1073741824
 #define KEY_DEL		2147483648
+#define KEY_F6		4294967296
 
 #define _CRTDBG_MAP_ALLOC
 #ifdef _DEBUG
 #define new new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
 #endif
-
-#define GRAVITY			vector3(0,  -9.807f, 0)
 
 #define vector3Zero		vector3(0,  0,  0)
 #define vector3One		vector3(1,  1,  1)

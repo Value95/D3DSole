@@ -6,17 +6,10 @@ class CPlayerMove :
 {
 private:
 	_float m_rotation;
-
 	_float m_speed;
 	_float cameraY;
-
 	_float m_moveCheckDir;
-
-	_float m_dashCehckTime;
-	_float m_dashCehckTimer;
-	_bool m_deshOn;
 	_bool W, A, S, D;
-	_bool WW, AA, SS, DD;
 
 public:
 	CPlayerMove(CPlayer* player);
@@ -35,11 +28,9 @@ private:
 	bool Move();
 	void Rotation();
 	bool Attack();
-	bool DeshAttack();
 	bool Jump();
-	bool Desh();
-	bool DeshActivation();
-
+	bool Roll();
 	bool MoveCheck(vector3 dir);
+	bool MiniPickaxe();
 };
 

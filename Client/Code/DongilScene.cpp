@@ -4,6 +4,7 @@
 
 #include "ScarecrowIdle.h"
 #include "PlayerWapon.h"
+#include "PlayerMiniGock.h"
 #include "DrakenWapon.h"
 
 CDongilScene::CDongilScene()
@@ -56,10 +57,21 @@ void CDongilScene::Start(void)
 	{
 		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
 		pObj->SetName(L"Sword");
-		pObj->SetScale(vector3(0.5f, 0.5f, 0.5f));
-		pObj->SetRotation(vector3(0, 90, 0));
+		pObj->SetScale(vector3(0.1f, 0.1f, 0.1f));
+		pObj->SetRotation(vector3(325, 175, 364));
 		pObj->AddComponent<CPlayerWapon>();
 		pObj->AddComponent<Engine::CMeshComponent>()->SetMeshKey(L"Wapon_LongHammer_000.X");
+		pObj->AddComponent<Engine::CStaticMeshRenderComponent>();
+	}
+
+	{
+		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
+		pObj->SetIsEnabled(false);
+		pObj->SetName(L"MiniGock");
+		pObj->SetScale(vector3(0.01f, 0.01f, 0.01f));
+		pObj->SetRotation(vector3(415, 414, 0));
+		pObj->AddComponent<CPlayerMiniGock>();
+		pObj->AddComponent<Engine::CMeshComponent>()->SetMeshKey(L"MiniGock.X");
 		pObj->AddComponent<Engine::CStaticMeshRenderComponent>();
 	}
 

@@ -6,16 +6,22 @@ class CPlayerInfo;
 class CPlayerHP;
 class CPlayer final : public Engine::CComponent
 {
-public:	enum STATE {IDLE, MOVE, ATTACK, DEATH, DESHATTACK, HIT, DEBUGMODE, ATTACK2, STATEEND};
+public:	enum STATE {IDLE, MOVE, ATTACK, DEATH, HIT, DEBUGMODE, UPPERCUT, ROLL, MINIPICKAXE, STATEEND};
 
 private:
 	FSM* m_playerFSM[STATE::STATEEND];
 	GETTOR(STATE, m_playerState, STATE::IDLE, PlayerState);
+	GETTOR(STATE, m_playerOldState, STATE::IDLE, PlayerOldState);
 	GETTOR_SETTOR(CPlayerInfo*, m_playerInfo, {}, PlayerInfo);
 	GETTOR_SETTOR(_bool, m_idleLook, {}, IdleLook);
 
 	GETTOR_SETTOR(SHARED(Engine::CAnimMeshRenderComponent), m_anim, nullptr, Anim);
 	CPlayerHP* m_playerHP;
+
+	GETTOR_SETTOR(_int, m_uppercutCount, 0, UppercutCount);
+	GETTOR(_int, m_uppercutMaxCount, 3, UppercutMaxCount);
+
+	GETTOR_SETTOR(_int, m_waponPosNumber, 0, WaponPosNumber);
 public:
 	explicit CPlayer(void);
 	virtual	 ~CPlayer(void);
@@ -37,10 +43,10 @@ public:
 
 	void ChangeFSM(STATE state);
 	void Attack(Engine::CGameObject* gameObject, _float damage);
-	void UpAttack(Engine::CGameObject* gameObject, _float force);
 	void Hit(_int damage, _int hitType);
 	void IdleLookState();
 	void IdleLookEnd();
+	void UpperCutCountReset();
 private:
 	void FSMCreate();
 };

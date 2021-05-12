@@ -1,13 +1,15 @@
 #ifndef PLAYERWAPON_H
 #define PLAYERWAPON_H
 
+class CPlayer;
 class CPlayerWapon  final : public Engine::CComponent
 {
 private:
-	const matrix4x4* m_parentBoneMatrix = nullptr;
+	 vector<const matrix4x4*> m_parentBoneMatrix;
 	const matrix4x4* m_parentWorldMatrix = nullptr;
 
 	SHARED(Engine::CGameObject)	m_playerObj;
+	SHARED(CPlayer)	m_playerCom;
 public:
 	explicit CPlayerWapon();
 	virtual ~CPlayerWapon();
@@ -28,6 +30,8 @@ public:
 	void OnDisable(void) override;
 
 private:
+	void Wapon0();
+	void Wapon1();
 };
 
 #endif // !PLAYERWAPON_H

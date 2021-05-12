@@ -88,9 +88,6 @@
     <Filter Include="02.Script\00.Player\02.PlayerWapon">
       <UniqueIdentifier>{ddd9f313-09aa-4dee-879e-99e0d5aba116}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.Script\00.Player\00.PlayerFMS\04.DeshAttack">
-      <UniqueIdentifier>{ff56a6ff-33fb-4917-9825-cbf38a187849}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.Script\00.Player\00.PlayerFMS\05.Hit">
       <UniqueIdentifier>{0465eaf7-ef5f-471f-b841-0c516801980e}</UniqueIdentifier>
     </Filter>
@@ -148,9 +145,6 @@
     <Filter Include="02.Script\00.Player\00.PlayerFMS\06.Debug">
       <UniqueIdentifier>{653c09d0-f6f4-499b-a896-d775070b166c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.Script\00.Player\00.PlayerFMS\07.Attack2">
-      <UniqueIdentifier>{07beca14-ac12-4cff-b64e-9c9b5577add6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.Script\01.Monster\00.MonsterFSM\03.SoldierSpear">
       <UniqueIdentifier>{de2fb575-4ff6-49a5-9250-05bb419878e3}</UniqueIdentifier>
     </Filter>
@@ -171,6 +165,21 @@
     </Filter>
     <Filter Include="02.Script\01.Monster\00.MonsterFSM\03.SoldierSpear\00.SoldierSpearMaintenance">
       <UniqueIdentifier>{ba076d16-fcc8-437c-9294-af2d784bb470}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Script\00.Player\00.PlayerFMS\04.Uppercut">
+      <UniqueIdentifier>{07beca14-ac12-4cff-b64e-9c9b5577add6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Script\00.Player\00.PlayerFMS\07.Roll">
+      <UniqueIdentifier>{6621febb-0a49-41a8-a61d-b2d19d719d84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Script\00.Player\00.PlayerFMS\08.MiniPickaxe">
+      <UniqueIdentifier>{6dd3b416-0d4d-4b68-a47f-61e0c8e8fef1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Script\00.Player\02.PlayerWapon\00.NormalWapon">
+      <UniqueIdentifier>{e55e5b4e-9d42-46bf-babd-5bc1e0ab1b76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Script\00.Player\02.PlayerWapon\01.MiniGock">
+      <UniqueIdentifier>{c185fc08-bd99-4ca3-9abb-dd18c924a6fe}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -255,14 +264,8 @@
     <ClInclude Include="..\Header\ScarecrowIdle.h">
       <Filter>02.Script\01.Monster\00.MonsterFSM\00.Scarecrow\00.ScarecrowIdle</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\PlayerWapon.h">
-      <Filter>02.Script\00.Player\02.PlayerWapon</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\PlayerHit.h">
       <Filter>02.Script\00.Player\00.PlayerFMS\05.Hit</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\PlayerDeshAttack.h">
-      <Filter>02.Script\00.Player\00.PlayerFMS\04.DeshAttack</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\DrakenIdle.h">
       <Filter>02.Script\01.Monster\00.MonsterFSM\02.Draken\01.DrakenIdle</Filter>
@@ -306,9 +309,6 @@
     <ClInclude Include="..\Header\PlayerDebug.h">
       <Filter>02.Script\00.Player\00.PlayerFMS\06.Debug</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\PlayerAttack2.h">
-      <Filter>02.Script\00.Player\00.PlayerFMS\07.Attack2</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\SoldierSpearIdle.h">
       <Filter>02.Script\01.Monster\00.MonsterFSM\03.SoldierSpear\01.SoldierSpearIdle</Filter>
     </ClInclude>
@@ -326,6 +326,21 @@
     </ClInclude>
     <ClInclude Include="..\Header\SoldierSpearMaintenance.h">
       <Filter>02.Script\01.Monster\00.MonsterFSM\03.SoldierSpear\00.SoldierSpearMaintenance</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PlayerUppercut.h">
+      <Filter>02.Script\00.Player\00.PlayerFMS\04.Uppercut</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PlayerRoll.h">
+      <Filter>02.Script\00.Player\00.PlayerFMS\07.Roll</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PlayerMiniPickaxe.h">
+      <Filter>02.Script\00.Player\00.PlayerFMS\08.MiniPickaxe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PlayerWapon.h">
+      <Filter>02.Script\00.Player\02.PlayerWapon\00.NormalWapon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PlayerMiniGock.h">
+      <Filter>02.Script\00.Player\02.PlayerWapon\01.MiniGock</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -377,12 +392,6 @@
     <ClCompile Include="..\Code\ScarecrowIdle.cpp">
       <Filter>02.Script\01.Monster\00.MonsterFSM\00.Scarecrow\00.ScarecrowIdle</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\PlayerWapon.cpp">
-      <Filter>02.Script\00.Player\02.PlayerWapon</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\PlayerDeshAttack.cpp">
-      <Filter>02.Script\00.Player\00.PlayerFMS\04.DeshAttack</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\PlayerHit.cpp">
       <Filter>02.Script\00.Player\00.PlayerFMS\05.Hit</Filter>
     </ClCompile>
@@ -428,9 +437,6 @@
     <ClCompile Include="..\Code\PlayerDebug.cpp">
       <Filter>02.Script\00.Player\00.PlayerFMS\06.Debug</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\PlayerAttack2.cpp">
-      <Filter>02.Script\00.Player\00.PlayerFMS\07.Attack2</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\SoldierSpearIdle.cpp">
       <Filter>02.Script\01.Monster\00.MonsterFSM\03.SoldierSpear\01.SoldierSpearIdle</Filter>
     </ClCompile>
@@ -448,6 +454,21 @@
     </ClCompile>
     <ClCompile Include="..\Code\SoldierSpearMaintenance.cpp">
       <Filter>02.Script\01.Monster\00.MonsterFSM\03.SoldierSpear\00.SoldierSpearMaintenance</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerUppercut.cpp">
+      <Filter>02.Script\00.Player\00.PlayerFMS\04.Uppercut</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerRoll.cpp">
+      <Filter>02.Script\00.Player\00.PlayerFMS\07.Roll</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerMiniPickaxe.cpp">
+      <Filter>02.Script\00.Player\00.PlayerFMS\08.MiniPickaxe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerWapon.cpp">
+      <Filter>02.Script\00.Player\02.PlayerWapon\00.NormalWapon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerMiniGock.cpp">
+      <Filter>02.Script\00.Player\02.PlayerWapon\01.MiniGock</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

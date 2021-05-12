@@ -114,7 +114,7 @@ void CRigidBodyComponent::GravityDrag(vector3 & velocity)
 	vector3 drag = velocity;
 	D3DXVec3Normalize(&drag, &drag);
 
-	velocity.y += GRAVITY.y * deltaTime;
+	velocity.y += m_gravity * deltaTime;
 
 	/*drag.y = -drag.y * ((1 - drag.y) + (10 * (drag.y * drag.y)));
 	velocity.y -= drag.y;*/

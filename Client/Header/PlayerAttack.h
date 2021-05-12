@@ -7,8 +7,6 @@ class CPlayerAttack :
 private:
 	Engine::CCollider* collision;
 	_bool init;
-	_int m_attackAnimNumber;
-	_bool m_nextAttack;
 public:
 	CPlayerAttack(CPlayer* player);
 	virtual ~CPlayerAttack();
@@ -23,7 +21,7 @@ public:
 	virtual void OnDestroy(void) override;
 
 private:
-	void GroundAttack();
-	void JumpAttack();
+	bool Move();
+	bool MoveCheck(vector3 dir);
 };
 

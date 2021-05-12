@@ -27,7 +27,7 @@ _uint CPlayerDeath::FixedUpdate()
 
 _uint CPlayerDeath::Update()
 {
-	if (m_player->GetAnim()->GetAnimValue() == 3 && m_player->GetOwner()->GetComponent<Engine::CAnimMeshRenderComponent>()->GetAnimCtrl()->Is_AnimationSetEnd())
+	if (m_player->GetAnim()->GetAnimValue() == 3 && m_player->GetAnim()->GetAnimCtrl()->Is_AnimationSetEnd())
 	{
 		m_player->GetAnim()->Set_AnimationSet(2);
 	}

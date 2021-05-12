@@ -14,7 +14,7 @@ CPlayerHit::~CPlayerHit()
 void CPlayerHit::Start()
 {
 	m_player->GetAnim()->GetAnimCtrl()->SetSpeed(1.0f);
-	m_player->GetAnim()->Set_AnimationSet(10);
+	m_player->GetAnim()->Set_AnimationSet(9);
 }
 
 void CPlayerHit::End()
@@ -28,7 +28,7 @@ _uint CPlayerHit::FixedUpdate()
 
 _uint CPlayerHit::Update()
 {
-	if (m_player->GetOwner()->GetComponent<Engine::CAnimMeshRenderComponent>()->GetAnimCtrl()->Is_AnimationSetEnd())
+	if (m_player->GetAnim()->GetAnimCtrl()->Is_AnimationSetEnd())
 	{
 		m_player->ChangeFSM(CPlayer::STATE::IDLE);
 	}

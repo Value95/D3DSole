@@ -14,13 +14,8 @@ CPlayerIdle::~CPlayerIdle()
 void CPlayerIdle::Start()
 {
 	m_player->GetAnim()->GetAnimCtrl()->SetSpeed(1.0f);
+	m_player->GetAnim()->Set_AnimationSet(8);
 
-	/*if (m_player->GetAnim()->GetAnimValue() == 9)
-		m_player->GetAnim()->Set_AnimationSet(37);
-	else
-		m_player->GetAnim()->Set_AnimationSet(110);*/
-
-	m_player->GetAnim()->Set_AnimationSet(0);
 	//m_player->ChangeFSM(CPlayer::STATE::DEBUGMODE);
 }
 
@@ -39,47 +34,20 @@ _uint CPlayerIdle::FixedUpdate()
 
 _uint CPlayerIdle::Update()
 {
-	/*if (m_player->GetIdleLook())
+	if (m_player->GetIdleLook())
 	{
-		if (m_player->GetAnim()->GetAnimValue() != 110)
+		if (m_player->GetAnim()->GetAnimValue() != 8)
 		{
-			m_player->GetAnim()->Set_AnimationSet(110);
+			m_player->GetAnim()->Set_AnimationSet(8);
 		}
 
 		return NO_EVENT;
 	}
+	
+	if (Move()) return NO_EVENT;
+	if (Attack()) return NO_EVENT;
 
-
-	if (m_player->GetAnim()->GetAnimValue() == 37 && m_player->GetAnim()->GetAnimCtrl()->Is_AnimationSetEnd())
-	{
-		m_player->GetAnim()->Set_AnimationSet(110);
-	}
-
-
-	if (Engine::CInputManager::GetInstance()->KeyPress(KEY_W) ||
-		Engine::CInputManager::GetInstance()->KeyPress(KEY_A) ||
-		Engine::CInputManager::GetInstance()->KeyPress(KEY_S) ||
-		Engine::CInputManager::GetInstance()->KeyPress(KEY_D) ||
-		Engine::CInputManager::GetInstance()->KeyPress(KEY_SPACE))
-	{
-		m_player->ChangeFSM(CPlayer::STATE::MOVE);
-	}
-
-	if (!m_player->GetOwner()->GetComponent<Engine::CRigidBodyComponent>()->GetGroundCheck())
-	{
-		m_player->ChangeFSM(CPlayer::STATE::MOVE);
-		m_player->GetOwner()->GetComponent<Engine::CAnimMeshRenderComponent>()->Set_AnimationSet(100);
-	}
-
-	if (Engine::CInputManager::GetInstance()->KeyPress(KEY_Q) && m_player->GetOwner()->GetComponent<Engine::CRigidBodyComponent>()->GetGroundCheck())
-	{
-		m_player->ChangeFSM(CPlayer::STATE::ATTACK2);
-	}
-
-	if (Engine::CInputManager::GetInstance()->KeyPress(KEY_LBUTTON))
-	{
-		m_player->ChangeFSM(CPlayer::STATE::ATTACK);
-	}*/
+	m_player->UpperCutCountReset();
 
 	return NO_EVENT;
 }
@@ -89,12 +57,52 @@ _uint CPlayerIdle::LateUpdate()
 	if (m_player->GetIdleLook())
 		return NO_EVENT;
 
-
 	return NO_EVENT;
 }
 
 void CPlayerIdle::OnDestroy(void)
 {
+}
+
+_bool CPlayerIdle::Move()
+{
+	if (Engine::CInputManager::GetInstance()->KeyPress(KEY_W) ||
+		Engine::CInputManager::GetInstance()->KeyPress(KEY_A) ||
+		Engine::CInputManager::GetInstance()->KeyPress(KEY_S) ||
+		Engine::CInputManager::GetInstance()->KeyPress(KEY_D) ||
+		Engine::CInputManager::GetInstance()->KeyPress(KEY_SPACE))
+	{
+		m_player->ChangeFSM(CPlayer::STATE::MOVE);
+		return true;
+	}
+	return false;
+}
+
+_bool CPlayerIdle::Attack()
+{
+	if (Engine::CInputManager::GetInstance()->KeyPress(KEY_LBUTTON))
+	{
+		m_player->ChangeFSM(CPlayer::STATE::ATTACK);
+		return true;
+	}
+
+	if (Engine::CInputManager::GetInstance()->KeyPress(KEY_RBUTTON))
+	{
+		if(m_player->GetUppercutCount() != m_player->GetUppercutMaxCount())
+			m_player->ChangeFSM(CPlayer::STATE::UPPERCUT);
+		return true;
+	}
+	return false;
+}
+
+_bool CPlayerIdle::Roll()
+{
+	if (Engine::CInputManager::GetInstance()->KeyDown(KEY_SHIFT))
+	{
+		m_player->ChangeFSM(CPlayer::STATE::ROLL);
+		return true;
+	}
+	return false;
 }
 
 

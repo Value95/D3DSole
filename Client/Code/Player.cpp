@@ -9,10 +9,11 @@
 #include "PlayerMove.h"
 #include "PlayerAttack.h"
 #include "PlayerDeath.h"
-#include "PlayerDeshAttack.h"
 #include "PlayerHit.h"
 #include "PlayerDebug.h"
-#include "PlayerAttack2.h"
+#include "PlayerUppercut.h"
+#include "PlayerRoll.h"
+#include "PlayerMiniPickaxe.h"
 
 CPlayer::CPlayer()
 {
@@ -95,6 +96,7 @@ void CPlayer::OnDisable(void)
 void CPlayer::ChangeFSM(STATE state)
 {
 	m_playerFSM[m_playerState]->End();
+	m_playerOldState = m_playerState;
 	m_playerState = state;
 	m_playerFSM[m_playerState]->Start();
 }
@@ -108,18 +110,6 @@ void CPlayer::Attack(Engine::CGameObject* gameObject, _float damage)
 	else if (gameObject->GetLayerKey() == L"Boss")
 	{
 		gameObject->GetComponent<CMonster>()->Hit(damage);
-	}
-}
-
-void CPlayer::UpAttack(Engine::CGameObject * gameObject, _float force)
-{
-	if (gameObject->GetLayerKey() == L"Monster")
-	{
-		gameObject->GetComponent<CMonster>()->GetOwner()->GetComponent<Engine::CRigidBodyComponent>()->AddForce(vector3Up * force);
-	}
-	else if (gameObject->GetName() == L"Boss")
-	{
-
 	}
 }
 
@@ -148,16 +138,25 @@ void CPlayer::IdleLookEnd()
 	m_idleLook = false;
 }
 
+void CPlayer::UpperCutCountReset()
+{
+	if (GetOwner()->GetComponent<Engine::CRigidBodyComponent>()->GetGroundCheck())
+	{
+		m_uppercutCount = 0;
+	}
+}
+
 void CPlayer::FSMCreate()
 {
 	m_playerFSM[STATE::IDLE] = new CPlayerIdle(this);
 	m_playerFSM[STATE::MOVE] = new CPlayerMove(this);
 	m_playerFSM[STATE::ATTACK] = new CPlayerAttack(this);
-	m_playerFSM[STATE::DESHATTACK] = new CPlayerDeshAttack(this);
 	m_playerFSM[STATE::HIT] = new CPlayerHit(this);
 	m_playerFSM[STATE::DEATH] = new CPlayerDeath(this);
 	m_playerFSM[STATE::DEBUGMODE] = new CPlayerDebug(this);
-	m_playerFSM[STATE::ATTACK2] = new CPlayerAttack2(this);
+	m_playerFSM[STATE::UPPERCUT] = new CPlayerUppercut(this);
+	m_playerFSM[STATE::ROLL] = new CPlayerRoll(this);
+	m_playerFSM[STATE::MINIPICKAXE] = new CPlayerMiniPickaxe(this);
 
 	m_playerFSM[STATE::IDLE]->Start();
 }
