@@ -32,5 +32,6 @@ private:
 	bool Roll();
 	bool MoveCheck(vector3 dir);
 	bool MiniPickaxe();
+	_bool Rush();
 };
 

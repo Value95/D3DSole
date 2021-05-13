@@ -5,7 +5,7 @@ class MonsterFSM;
 class CMonsterInfo;
 class CMonster final : public Engine::CComponent
 {
-public:	enum DRAKEN_STATE { IDLE, MOVE, ATTACK1, ATTACK2, PRODUCTION, DEATH, STATEEND };
+public:	enum SM_STATE { SM_IDLE, SM_MOVE, SM_ATTACK1, SM_ATTACK2, SM_ATTACK3, SM_ATTACK4, SM_HALFHEALTH, SM_DEATH, SM_STATEEND };
 public:	enum SOLDIERSPEAR_STATE { SOLDIERSPEARIDLE, SOLDIERSPEARMOVE, SOLDIERSPEARATTACK1, SOLDIERSPEARHIT, SOLDIERSPEARDEATH, SOLDIERSPEARSTATEEND };
 
 private:
@@ -19,6 +19,7 @@ private:
 	GETTOR(_bool, m_hitCheck, 0, HitCheck);
 
 	GETTOR_SETTOR(SHARED(Engine::CAnimMeshRenderComponent), m_anim, nullptr, Anim);
+	GETTOR_SETTOR(SHARED(Engine::CRigidBodyComponent), m_rigidBody, nullptr, RigidBody);
 
 public:
 	explicit CMonster(void);
@@ -42,15 +43,15 @@ public:
 	void ChangeFSM(_int state);
 
 	void Hit(_int damage);
-	void AddFSM(MonsterFSM* fsm);
 	void Attack(_float damage);
 
+	void AddFSM(MonsterFSM* fsm, _int fsmNumber);
 	template <typename FSMType>
 	void AddFSM(void)
 	{
-		m_monsterState = 0;
 		FSMType* fsm = new FSMType(this);
 		m_monsterFSM.emplace_back(fsm);
+		m_monsterFSM.emplace_back(nullptr);
 	}
 
 private:

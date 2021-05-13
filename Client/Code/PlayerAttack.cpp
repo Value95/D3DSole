@@ -7,7 +7,7 @@
 CPlayerAttack::CPlayerAttack(CPlayer* player)
 {
 	m_player = player;
-	collision = Engine::CBoxCollider::Create(vector3(1, 4, 3), vector3(0, 0.9, -1));
+	collision = Engine::CBoxCollider::Create(vector3(1, 1, 3), vector3(0, 1.2, -1.6));
 }
 
 CPlayerAttack::~CPlayerAttack()
@@ -23,9 +23,10 @@ void CPlayerAttack::Start()
 
 	m_player->GetAnim()->GetAnimCtrl()->SetSpeed(m_player->GetPlayerInfo()->GetAttackSpeed());
 
-	init = false;
+	init = true;
+	m_attack = true;
 	
-	if (m_player->GetOwner()->GetComponent<Engine::CRigidBodyComponent>()->GetGroundCheck())
+	if (m_player->GetRigidBody()->GetGroundCheck())
 	{
 		m_player->GetAnim()->Set_AnimationSet(13);
 	}
@@ -37,6 +38,7 @@ void CPlayerAttack::Start()
 
 void CPlayerAttack::End()
 {
+	init = false;
 	m_player->GetAnim()->GetAnimCtrl()->SetSpeed(1);
 	m_player->SetWaponPosNumber(0);
 
@@ -52,11 +54,10 @@ _uint CPlayerAttack::FixedUpdate()
 			for (auto& object : col)
 			{
 				m_player->Attack(object, m_player->GetPlayerInfo()->GetDamageA());
-				init = true;
 			}
 		}
 	}
-
+	init = true;
 	return NO_EVENT;
 }
 
@@ -66,12 +67,20 @@ _uint CPlayerAttack::Update()
 	{
 		if (Engine::CInputManager::GetInstance()->KeyPress(KEY_LBUTTON))
 		{
-			init = false;
+			m_player->GetAnim()->GetAnimCtrl()->SetPeriod(m_player->GetAnim()->GetAnimCtrl()->GetPeriod() + m_player->GetAnim()->GetAnimCtrl()->GetSavePeriod());
+			m_player->ChangeFSM(CPlayer::ATTACK);
 		}
 		else
 		{
 			m_player->ChangeFSM(CPlayer::STATE::IDLE);
 		}
+		return NO_EVENT;
+	}
+
+	if (m_attack && m_player->GetAnim()->GetAnimCtrl()->CurentTime() >= 0.7f)
+	{
+		m_attack = false;
+		init = false;
 	}
 
 	Move();

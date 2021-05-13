@@ -50,7 +50,7 @@ void CAniCtrl::Set_AnimationSet(const _uint & iIndex)
 	_int blendTime = -0.0f;
 
 	m_dPeriod = pAS->GetPeriod() + blendTime;	// 현재 애니메이션 셋이 지닌 전체 재생 시간 반환
-
+	m_dSavePeriod = m_dPeriod;
 	////m_pAniCtrl->GetAnimationSetByName();
 	m_pAniCtrl->SetTrackAnimationSet(m_iNewTrack, pAS);
 

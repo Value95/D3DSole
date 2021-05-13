@@ -228,6 +228,9 @@ void CInspectorView::ObjectAddString()
 	m_objectKeyComboBox.AddString(TEXT("UI"));
 	m_objectKeyComboBox.AddString(TEXT("Player"));
 	m_objectKeyComboBox.AddString(TEXT("Map"));
+
+	// ∏ÛΩ∫≈Õ
+	m_objectKeyComboBox.AddString(TEXT("SanwaMoney"));
 }
 
 void CInspectorView::ColliderAddString()

@@ -7,7 +7,7 @@
 CPlayerUppercut::CPlayerUppercut(CPlayer* player)
 {
 	m_player = player;
-	collision = Engine::CBoxCollider::Create(vector3(1, 4, 3), vector3(0, 0.9, -1));
+	collision = Engine::CBoxCollider::Create(vector3(1, 3, 1), vector3(0, 1.8, -0.7));
 }
 
 CPlayerUppercut::~CPlayerUppercut()
@@ -18,6 +18,7 @@ void CPlayerUppercut::Start()
 {
 	m_player->SetWaponPosNumber(1);
 	m_upInit = false;
+	init = true;
 
 	m_player->GetAnim()->GetAnimCtrl()->SetSpeed(2.0f);
 	m_player->GetAnim()->Set_AnimationSet(1);
@@ -57,6 +58,7 @@ _uint CPlayerUppercut::Update()
 	if (!m_upInit && m_player->GetAnim()->GetAnimCtrl()->CurentTime() >= 0.5416666f)
 	{
 		m_upInit = true;
+		init = false;
 		m_player->GetOwner()->GetComponent<Engine::CRigidBodyComponent>()->SetForce(vector3Up * 5);
 	}
 

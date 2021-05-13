@@ -46,6 +46,13 @@ _uint CPlayerIdle::Update()
 	
 	if (Move()) return NO_EVENT;
 	if (Attack()) return NO_EVENT;
+	if (Rush()) return NO_EVENT;
+
+	if (Engine::CInputManager::GetInstance()->KeyDown(KEY_F))
+	{
+		m_player->ChangeFSM(CPlayer::STATE::MINIPICKAXE);
+		return true;
+	}
 
 	m_player->UpperCutCountReset();
 
@@ -100,6 +107,16 @@ _bool CPlayerIdle::Roll()
 	if (Engine::CInputManager::GetInstance()->KeyDown(KEY_SHIFT))
 	{
 		m_player->ChangeFSM(CPlayer::STATE::ROLL);
+		return true;
+	}
+	return false;
+}
+
+_bool CPlayerIdle::Rush()
+{
+	if (Engine::CInputManager::GetInstance()->KeyDown(KEY_CTRL))
+	{
+		m_player->ChangeFSM(CPlayer::STATE::RUSH);
 		return true;
 	}
 	return false;

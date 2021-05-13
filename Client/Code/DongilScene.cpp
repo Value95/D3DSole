@@ -2,10 +2,8 @@
 #include "DongilScene.h"
 #include "SceneManager.h"
 
-#include "ScarecrowIdle.h"
 #include "PlayerWapon.h"
 #include "PlayerMiniGock.h"
-#include "DrakenWapon.h"
 
 CDongilScene::CDongilScene()
 {
@@ -48,12 +46,6 @@ void CDongilScene::Start(void)
 		pObj->AddComponent<Engine::CSkyBoxComponent>()->SetTextureKey(L"burger0");
 	}
 
-	{ // ¶óÀÌÆ®
-		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
-		pObj->SetRotation(vector3(30, -50, 0));
-		pObj->AddComponent<Engine::CDirectionalLightComponent>();
-	}
-
 	{
 		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
 		pObj->SetName(L"Sword");
@@ -75,14 +67,6 @@ void CDongilScene::Start(void)
 		pObj->AddComponent<Engine::CStaticMeshRenderComponent>();
 	}
 
-	/*{
-		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
-		pObj->SetName(L"Sword");
-		pObj->SetRotation(vector3(90, 0, 0));
-		pObj->AddComponent<CDrakenWapon>();
-		pObj->AddComponent<Engine::CMeshComponent>()->SetMeshKey(L"Boss_Sword.X");
-		pObj->AddComponent<Engine::CStaticMeshRenderComponent>();
-	}*/
 
 	m_pMainCamera->GetOwner()->SetTarget(Engine::GET_CUR_SCENE->FindObjectByName(L"Player").get());
 }

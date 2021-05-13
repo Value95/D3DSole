@@ -62,6 +62,7 @@ _uint CCameraMove::FixedUpdate(SHARED(CComponent) spThis)
 _uint CCameraMove::Update(SHARED(CComponent) spThis)
 {
 	Sight();
+	//GetOwner()->SetCameraDirPos(vector3(0, 2, -6));
 	//CameraCrush();
 	return NO_EVENT;
 }

@@ -127,19 +127,19 @@ c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\default\stdafx.h(68): war
 c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\default\resource.h(5): warning C4005: 'IDD_ABOUTBOX': 매크로 재정의
   c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\wndapp.h(9): note: 'IDD_ABOUTBOX'의 이전 정의를 참조하십시오.
 c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\default\3deditor.cpp(15): warning C4005: 'new': 매크로 재정의
-  c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\enginedefine.h(54): note: 'new'의 이전 정의를 참조하십시오.
+  c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\enginedefine.h(55): note: 'new'의 이전 정의를 참조하십시오.
   ProjectView.cpp
 c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\default\resource.h(5): warning C4005: 'IDD_ABOUTBOX': 매크로 재정의
   c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\wndapp.h(9): note: 'IDD_ABOUTBOX'의 이전 정의를 참조하십시오.
 c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\projectview.cpp(11): warning C4005: 'new': 매크로 재정의
-  c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\enginedefine.h(54): note: 'new'의 이전 정의를 참조하십시오.
+  c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\enginedefine.h(55): note: 'new'의 이전 정의를 참조하십시오.
   PrefabManager.cpp
   NavMeshManager.cpp
   MainFrm.cpp
 c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\default\resource.h(5): warning C4005: 'IDD_ABOUTBOX': 매크로 재정의
   c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\wndapp.h(9): note: 'IDD_ABOUTBOX'의 이전 정의를 참조하십시오.
 c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\mainfrm.cpp(16): warning C4005: 'new': 매크로 재정의
-  c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\enginedefine.h(54): note: 'new'의 이전 정의를 참조하십시오.
+  c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\enginedefine.h(55): note: 'new'의 이전 정의를 참조하십시오.
 c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\mainfrm.cpp(108): warning C4244: '초기화 중': 'float'에서 '_uint'(으)로 변환하면서 데이터가 손실될 수 있습니다.
 c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\mainfrm.cpp(111): warning C4244: '초기화 중': 'float'에서 '_uint'(으)로 변환하면서 데이터가 손실될 수 있습니다.
 c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\mainfrm.cpp(112): warning C4244: '초기화 중': 'float'에서 '_uint'(으)로 변환하면서 데이터가 손실될 수 있습니다.
@@ -148,18 +148,18 @@ c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\mainfrm.cpp(112): wa
 c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\default\resource.h(5): warning C4005: 'IDD_ABOUTBOX': 매크로 재정의
   c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\wndapp.h(9): note: 'IDD_ABOUTBOX'의 이전 정의를 참조하십시오.
 c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\inspectorview.cpp(11): warning C4005: 'new': 매크로 재정의
-  c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\enginedefine.h(54): note: 'new'의 이전 정의를 참조하십시오.
+  c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\enginedefine.h(55): note: 'new'의 이전 정의를 참조하십시오.
 c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\inspectorview.cpp(168): warning C4800: 'BOOL': 'true' 또는 'false'로 bool 값을 강제하고 있습니다(성능 경고).
   HierarchyView.cpp
 c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\default\resource.h(5): warning C4005: 'IDD_ABOUTBOX': 매크로 재정의
   c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\wndapp.h(9): note: 'IDD_ABOUTBOX'의 이전 정의를 참조하십시오.
 c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\hierarchyview.cpp(9): warning C4005: 'new': 매크로 재정의
-  c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\enginedefine.h(54): note: 'new'의 이전 정의를 참조하십시오.
+  c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\enginedefine.h(55): note: 'new'의 이전 정의를 참조하십시오.
   FeatureView.cpp
 c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\default\resource.h(5): warning C4005: 'IDD_ABOUTBOX': 매크로 재정의
   c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\wndapp.h(9): note: 'IDD_ABOUTBOX'의 이전 정의를 참조하십시오.
 c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\featureview.cpp(7): warning C4005: 'new': 매크로 재정의
-  c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\enginedefine.h(54): note: 'new'의 이전 정의를 참조하십시오.
+  c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\enginedefine.h(55): note: 'new'의 이전 정의를 참조하십시오.
   EditorScene.cpp
 c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\editorscene.cpp(298): warning C4018: '<=': signed 또는 unsigned가 일치하지 않습니다.
 c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\editorscene.cpp(519): warning C4018: '<=': signed 또는 unsigned가 일치하지 않습니다.
@@ -170,12 +170,12 @@ c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\editorscene.cpp(537)
 c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\default\resource.h(5): warning C4005: 'IDD_ABOUTBOX': 매크로 재정의
   c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\wndapp.h(9): note: 'IDD_ABOUTBOX'의 이전 정의를 참조하십시오.
 c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\3deditorview.cpp(22): warning C4005: 'new': 매크로 재정의
-  c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\enginedefine.h(54): note: 'new'의 이전 정의를 참조하십시오.
+  c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\enginedefine.h(55): note: 'new'의 이전 정의를 참조하십시오.
   3DEditorDoc.cpp
 c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\default\resource.h(5): warning C4005: 'IDD_ABOUTBOX': 매크로 재정의
   c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\wndapp.h(9): note: 'IDD_ABOUTBOX'의 이전 정의를 참조하십시오.
 c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\3deditordoc.cpp(17): warning C4005: 'new': 매크로 재정의
-  c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\enginedefine.h(54): note: 'new'의 이전 정의를 참조하십시오.
+  c:\users\ehddl\onedrive\바탕 화면\d3dsole\reference\header\enginedefine.h(55): note: 'new'의 이전 정의를 참조하십시오.
   코드를 생성하고 있습니다...
 c:\users\ehddl\onedrive\바탕 화면\d3dsole\3deditor\code\navmeshmanager.cpp(250): warning C4715: 'CNavMeshManager::ObjectPicking': 모든 제어 경로에서 값을 반환하지는 않습니다.
 3DEditorDoc.obj : warning LNK4258: '/entry:WinMainCRTStartup' 지시문은 '/ENTRY:wWinMainCRTStartup' 스위치와 호환되지 않습니다. 무시됩니다.

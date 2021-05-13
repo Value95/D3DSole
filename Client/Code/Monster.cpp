@@ -4,7 +4,6 @@
 #include "MonsterFSM.h"
 
 #include "PlayerInfo.h"
-#include "DrakenIdle.h"
 
 CMonster::CMonster()
 {
@@ -45,9 +44,12 @@ void CMonster::Start(SHARED(CComponent) spThis)
 	m_player = Engine::GET_CUR_SCENE->FindObjectByName(L"Player");
 	m_playerCom = m_player->GetComponent<CPlayer>();
 	m_anim = GetOwner()->GetComponent<Engine::CAnimMeshRenderComponent>();
+	m_rigidBody = GetOwner()->GetComponent<Engine::CRigidBodyComponent>();
+	m_monsterState = 0;
+
+
 
 	m_monsterFSM[0]->SetMonster(this);
-
 	m_monsterFSM[0]->Start();
 	m_monsterMaintenanceFSM->Start();
 
@@ -57,7 +59,7 @@ void CMonster::Start(SHARED(CComponent) spThis)
 _uint CMonster::FixedUpdate(SHARED(CComponent) spThis)
 {
 	m_monsterFSM[m_monsterState]->FixedUpdate();
-	//m_monsterMaintenanceFSM->FixedUpdate();
+	m_monsterMaintenanceFSM->FixedUpdate();
 
 	return NO_EVENT;
 }
@@ -65,7 +67,7 @@ _uint CMonster::FixedUpdate(SHARED(CComponent) spThis)
 _uint CMonster::Update(SHARED(CComponent) spThis)
 {
 	m_monsterFSM[m_monsterState]->Update();
-	//m_monsterMaintenanceFSM->Update();
+	m_monsterMaintenanceFSM->Update();
 
 	return NO_EVENT;
 }
@@ -73,7 +75,7 @@ _uint CMonster::Update(SHARED(CComponent) spThis)
 _uint CMonster::LateUpdate(SHARED(CComponent) spThis)
 {
 	m_monsterFSM[m_monsterState]->LateUpdate();
-	//m_monsterMaintenanceFSM->LateUpdate();
+	m_monsterMaintenanceFSM->LateUpdate();
 
 	m_hitCheck = true;
 	return NO_EVENT;
@@ -109,12 +111,14 @@ void CMonster::Hit(_int damage)
 {
 	m_hitCheck = true;
 	m_monsterInfo->AddHp(-damage);
+	cout << "몬스터 체력 : " << m_monsterInfo->GetHP() << endl;
 	HitEffect();
 }
 
-void CMonster::AddFSM(MonsterFSM * fsm)
+void CMonster::AddFSM(MonsterFSM * fsm, _int fsmNumber)
 {
-	m_monsterFSM.emplace_back(fsm);
+	m_monsterFSM[fsmNumber] = fsm;
+	m_monsterFSM.emplace_back(nullptr);
 }
 
 void CMonster::Attack(_float damage)

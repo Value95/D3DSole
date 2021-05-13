@@ -22,5 +22,6 @@ private:
 	_bool Move();
 	_bool Attack();
 	_bool Roll();
+	_bool Rush();
 };
 

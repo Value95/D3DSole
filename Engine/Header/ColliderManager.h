@@ -28,14 +28,16 @@ private:
 	CGameObject* m_gameObject2;
 
 	// OBB를 위한 변수------------------------
-	vector3 m_obj1Vectex[4];
-	vector3 m_obj2Vectex[4];
+	vector3 m_obj1Vectex[5];
+	vector3 m_obj2Vectex[5];
 
 	vector3 m_box1UP;
 	vector3 m_box1Right;
+	vector3 m_box1Forward;
 
 	vector3 m_box2UP;
 	vector3 m_box2Right;
+	vector3 m_box2Forward;
 
 	vector3 box1Size;
 	vector3 box2Size;

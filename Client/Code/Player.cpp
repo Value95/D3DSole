@@ -14,6 +14,7 @@
 #include "PlayerUppercut.h"
 #include "PlayerRoll.h"
 #include "PlayerMiniPickaxe.h"
+#include "PlayerRush.h"
 
 CPlayer::CPlayer()
 {
@@ -49,6 +50,7 @@ void CPlayer::Start(SHARED(CComponent) spThis)
 	__super::Start(spThis);
 	m_playerHP = new CPlayerHP(&m_playerInfo->GetHP(), &m_playerInfo->GetHpMax());
 	m_anim = GetOwner()->GetComponent<Engine::CAnimMeshRenderComponent>();
+	m_rigidbody = GetOwner()->GetComponent<Engine::CRigidBodyComponent>();
 	FSMCreate();
 }
 
@@ -117,13 +119,26 @@ void CPlayer::Hit(_int damage, _int hitType)
 {
 	m_playerInfo->DownHP(damage);
 
+
 	if (m_playerInfo->GetHP() <= 0)
 	{
 		ChangeFSM(STATE::DEATH);
 		return;
 	}
 
-	ChangeFSM(STATE::HIT);
+	switch (hitType)
+	{
+	case 0:
+		break;
+	case 1:
+		m_playerInfo->DownHP(damage);
+		ChangeFSM(STATE::HIT);
+		break;
+	default:
+		break;
+	}
+
+
 	return;
 }
 
@@ -157,6 +172,7 @@ void CPlayer::FSMCreate()
 	m_playerFSM[STATE::UPPERCUT] = new CPlayerUppercut(this);
 	m_playerFSM[STATE::ROLL] = new CPlayerRoll(this);
 	m_playerFSM[STATE::MINIPICKAXE] = new CPlayerMiniPickaxe(this);
+	m_playerFSM[STATE::RUSH] = new CPlayerRush(this);
 
 	m_playerFSM[STATE::IDLE]->Start();
 }

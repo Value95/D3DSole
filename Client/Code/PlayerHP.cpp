@@ -17,7 +17,6 @@ CPlayerHP::CPlayerHP(_int* hp, _int* hpMax)
 	m_downSpeed = 10;
 }
 
-
 CPlayerHP::~CPlayerHP()
 {
 }

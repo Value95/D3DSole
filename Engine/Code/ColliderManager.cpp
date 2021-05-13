@@ -194,14 +194,6 @@ void CColliderManager::OBB(std::vector<CGameObject*>& returnCollider, CBoxCollid
 	m_gameObject1->OutTranslate(box1->GetOffset());
 	m_gameObject2->OutTranslate(box2->GetOffset());
 
-	float distanceZ = fabs((m_gameObject1->GetPosition().z + box1->GetOffset().z) - (m_gameObject2->GetPosition().z + box2->GetOffset().z));
-	float radCZ = box1->GetBoxSize().z * 0.5f + box2->GetBoxSize().z * 0.5f;
-
-	if (distanceZ > radCZ) // Z검사 (원래라면 이것도 백터 길이구해서 비교하는게 맞으나 현재 게임에 z축 회전으로 인한 충돌 문제는 없어서 좀더 간결하게 하기위해서 z는 이런식으로 제외함)
-	{
-		return;
-	}
-
 	//------------------------------------------ 네모 박스의 각 점의 위치
 	m_obj1Vectex[0] = m_gameObject1->GetPosition();
 	m_obj1Vectex[0].x += box1->GetBoxSize().x * 0.5f;
@@ -222,6 +214,11 @@ void CColliderManager::OBB(std::vector<CGameObject*>& returnCollider, CBoxCollid
 	m_obj1Vectex[3].x -= box1->GetBoxSize().x * 0.5f;
 	m_obj1Vectex[3].y += box1->GetBoxSize().y * 0.5f;
 	m_obj1Vectex[3].z = 0;
+
+	m_obj1Vectex[4] = m_gameObject1->GetPosition();
+	m_obj1Vectex[4].x += box1->GetBoxSize().x * 0.5f;
+	m_obj1Vectex[4].y += box1->GetBoxSize().y * 0.5f;
+	m_obj1Vectex[4].z -= box1->GetBoxSize().z * 0.5f;
 	//-----------------------------------
 	m_obj2Vectex[0] = m_gameObject2->GetPosition();
 	m_obj2Vectex[0].x += box2->GetBoxSize().x * 0.5f;
@@ -242,6 +239,12 @@ void CColliderManager::OBB(std::vector<CGameObject*>& returnCollider, CBoxCollid
 	m_obj2Vectex[3].x -= box2->GetBoxSize().x * 0.5f;
 	m_obj2Vectex[3].y += box2->GetBoxSize().y * 0.5f;
 	m_obj2Vectex[3].z = 0;
+
+	m_obj2Vectex[4] = m_gameObject2->GetPosition();
+	m_obj2Vectex[4].x += box2->GetBoxSize().x * 0.5f;
+	m_obj2Vectex[4].y += box2->GetBoxSize().y * 0.5f;
+	m_obj2Vectex[4].z -= box2->GetBoxSize().z * 0.5f;
+
 	//---------------------------------- 축 구하기
 	matrix4x4 rotation;
 	D3DXMatrixRotationYawPitchRoll(&rotation, D3DXToRadian(m_gameObject1->GetRotation().y), D3DXToRadian(m_gameObject1->GetRotation().x), D3DXToRadian(m_gameObject1->GetRotation().z));
@@ -254,6 +257,12 @@ void CColliderManager::OBB(std::vector<CGameObject*>& returnCollider, CBoxCollid
 	D3DXVec3TransformNormal(&m_box1Right, &m_box1Right, &rotation);
 	D3DXVec3Normalize(&m_box1Right, &m_box1Right);
 
+	vector3 T1 = m_obj1Vectex[0];
+	T1.z += box1->GetBoxSize().z * 0.5f;
+	m_box1Forward = m_obj1Vectex[4] - T1;
+	D3DXVec3TransformNormal(&m_box1Forward, &m_box1Forward, &rotation);
+	D3DXVec3Normalize(&m_box1Forward, &m_box1Forward);
+
 	//--------------------------------------------
 	D3DXMatrixRotationYawPitchRoll(&rotation, D3DXToRadian(m_gameObject2->GetRotation().y), D3DXToRadian(m_gameObject2->GetRotation().x), D3DXToRadian(m_gameObject2->GetRotation().z));
 	
@@ -264,13 +273,19 @@ void CColliderManager::OBB(std::vector<CGameObject*>& returnCollider, CBoxCollid
 	m_box2Right = m_obj2Vectex[3] - m_obj2Vectex[0];
 	D3DXVec3TransformNormal(&m_box2Right, &m_box2Right, &rotation);
 	D3DXVec3Normalize(&m_box2Right, &m_box2Right);
+
+	vector3 T2 = m_obj2Vectex[0];
+	T2.z += box2->GetBoxSize().z * 0.5f;
+	m_box2Forward = m_obj2Vectex[4] - T2;
+	D3DXVec3TransformNormal(&m_box2Forward, &m_box2Forward, &rotation);
+	D3DXVec3Normalize(&m_box2Forward, &m_box2Forward);
 	//-------------------------------------------
 	box1Size = box1->GetBoxSize();
 	box2Size = box2->GetBoxSize();
 	m_distance = (m_gameObject1->GetPosition() + box1->GetOffset()) - (m_gameObject2->GetPosition() + box2->GetOffset());
-	m_distance.z = 0;
+	//m_distance.z = 0;
 
-	if (CheckShaft(m_box1UP) && CheckShaft(m_box2UP) && CheckShaft(m_box1Right) && CheckShaft(m_box2Right))
+	if (CheckShaft(m_box1UP) && CheckShaft(m_box2UP) && CheckShaft(m_box1Right) && CheckShaft(m_box2Right) && CheckShaft(m_box1Forward) && CheckShaft(m_box2Forward))
 	{
 		returnCollider.emplace_back(m_gameObject2);
 	}
@@ -286,8 +301,10 @@ bool CColliderManager::CheckShaft(vector3 shaft)
 
 	_float T = abs(D3DXVec3Dot(&shaft, &(m_box1UP * box1Size.y * 0.5)))
 			 + abs(D3DXVec3Dot(&shaft, &(m_box1Right * box1Size.x * 0.5)))
+			 + abs(D3DXVec3Dot(&shaft, &(m_box1Forward * box1Size.z * 0.5)))
 			 + abs(D3DXVec3Dot(&shaft, &(m_box2UP * box2Size.y * 0.5)))
-			 + abs(D3DXVec3Dot(&shaft, &(m_box2Right * box2Size.x * 0.5)));
+			 + abs(D3DXVec3Dot(&shaft, &(m_box2Right * box2Size.x * 0.5)))
+			 + abs(D3DXVec3Dot(&shaft, &(m_box2Forward * box2Size.z * 0.5)));
 
 	if (distance > T)
 	{

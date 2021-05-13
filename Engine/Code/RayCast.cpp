@@ -190,8 +190,12 @@ CGameObject * CRaycast::BoxRayCast(vector3 origin, vector3 direction, _float max
 		if (object->GetPosition() == origin)
 			continue;
 
+		if (object->GetComponent<Engine::CColliderComponent>()->GetColliders()[0] == nullptr)
+			continue;
+
 		_float tMin = 0;
 		_float tMax = maxDistance;
+
 		CCollider* collider = object->GetComponent<Engine::CColliderComponent>()->GetColliders()[0];
 
 		vector3 minPos;

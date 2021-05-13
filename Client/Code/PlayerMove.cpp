@@ -43,6 +43,7 @@ _uint CPlayerMove::Update()
 	if (Attack()) return NO_EVENT;
 	if (Roll()) return NO_EVENT;
 	if (MiniPickaxe()) return NO_EVENT;
+	if (Rush()) return NO_EVENT;
 
 	m_player->UpperCutCountReset();
 
@@ -251,6 +252,16 @@ bool CPlayerMove::MiniPickaxe()
 	if (Engine::CInputManager::GetInstance()->KeyDown(KEY_F))
 	{
 		m_player->ChangeFSM(CPlayer::STATE::MINIPICKAXE);
+		return true;
+	}
+	return false;
+}
+
+_bool CPlayerMove::Rush()
+{
+	if (Engine::CInputManager::GetInstance()->KeyDown(KEY_CTRL))
+	{
+		m_player->ChangeFSM(CPlayer::STATE::RUSH);
 		return true;
 	}
 	return false;

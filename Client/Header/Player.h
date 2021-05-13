@@ -6,7 +6,7 @@ class CPlayerInfo;
 class CPlayerHP;
 class CPlayer final : public Engine::CComponent
 {
-public:	enum STATE {IDLE, MOVE, ATTACK, DEATH, HIT, DEBUGMODE, UPPERCUT, ROLL, MINIPICKAXE, STATEEND};
+public:	enum STATE {IDLE, MOVE, ATTACK, DEATH, HIT, DEBUGMODE, UPPERCUT, ROLL, MINIPICKAXE, RUSH, STATEEND};
 
 private:
 	FSM* m_playerFSM[STATE::STATEEND];
@@ -16,6 +16,7 @@ private:
 	GETTOR_SETTOR(_bool, m_idleLook, {}, IdleLook);
 
 	GETTOR_SETTOR(SHARED(Engine::CAnimMeshRenderComponent), m_anim, nullptr, Anim);
+	GETTOR_SETTOR(SHARED(Engine::CRigidBodyComponent), m_rigidbody, nullptr, RigidBody);
 	CPlayerHP* m_playerHP;
 
 	GETTOR_SETTOR(_int, m_uppercutCount, 0, UppercutCount);

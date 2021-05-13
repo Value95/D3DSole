@@ -11,7 +11,8 @@ private:
 	_uint m_iNewTrack;
 	_float m_fAccTime;
 	_uint m_iOldAniIdx;
-	GETTOR(_double,	m_dPeriod, 0, Period);
+	GETTOR_SETTOR(_double,	m_dPeriod, 0, Period);
+	GETTOR(_double, m_dSavePeriod, 0, SavePeriod);
 	GETTOR_SETTOR(_float, m_speed, 1, Speed);
 private:
 	explicit CAniCtrl(LPD3DXANIMATIONCONTROLLER pAniCtrl);
