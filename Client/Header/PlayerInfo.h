@@ -10,6 +10,7 @@ protected:
 	GETTOR_SETTOR(_float, m_speed, 200, Speed)
 	GETTOR_SETTOR(_float, m_speedRush, 1000, SpeedRush)
 	GETTOR_SETTOR(_float, m_roolSpeed, 500, RollSpeed)
+	GETTOR_SETTOR(_float, m_dushGauge, 100, DushGague)
 	GETTOR_SETTOR(_float, m_mouseSensitivity, 5, MouseSensitivity);
 	GETTOR_SETTOR(_int, m_damageA, 100, DamageA);
 	GETTOR_SETTOR(_int, m_damageB, 100, DamageB);
@@ -25,6 +26,11 @@ public:
 	void DownHP(_float damage)
 	{
 		m_hp = Engine::MathfMax(m_hp - damage, 0);
+	}
+
+	void AddDushGague(_int value)
+	{
+		m_dushGauge = Engine::MathfMin(m_dushGauge + value, 100);
 	}
 };
 

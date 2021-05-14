@@ -4,6 +4,7 @@
 class FSM;
 class CPlayerInfo;
 class CPlayerHP;
+class CPlayerDushUI;
 class CPlayerUI;
 class CPlayer final : public Engine::CComponent
 {
@@ -18,6 +19,7 @@ private:
 	GETTOR_SETTOR(SHARED(Engine::CAnimMeshRenderComponent), m_anim, nullptr, Anim);
 	GETTOR_SETTOR(SHARED(Engine::CRigidBodyComponent), m_rigidbody, nullptr, RigidBody);
 	CPlayerHP* m_playerHP;
+	CPlayerDushUI* m_playerDushUI;
 	CPlayerUI* m_playerUI;
 
 	GETTOR_SETTOR(_int, m_uppercutCount, 0, UppercutCount);

@@ -224,10 +224,13 @@ bool CPlayerMove::Jump()
 
 bool CPlayerMove::Roll()
 {
-	if (Engine::CInputManager::GetInstance()->KeyPress(KEY_SHIFT))
+	if (m_player->GetPlayerInfo()->GetDushGague() == 100)
 	{
-		m_player->ChangeFSM(CPlayer::STATE::ROLL);
-		return true;
+		if (Engine::CInputManager::GetInstance()->KeyPress(KEY_SHIFT))
+		{
+			m_player->ChangeFSM(CPlayer::STATE::ROLL);
+			return true;
+		}
 	}
 	return false;
 }

@@ -67,9 +67,6 @@
     <Filter Include="02.Script\01.Monster\00.MonsterFSM\00.Scarecrow">
       <UniqueIdentifier>{bc2bd289-9f87-45c6-be8a-3cff45016db6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.Script\01.Monster\00.MonsterFSM\00.Scarecrow\00.ScarecrowIdle">
-      <UniqueIdentifier>{8eba8643-6f77-483a-be22-e809cc6f67ff}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.Script\01.Monster\00.MonsterFSM\01.CrystalSpider">
       <UniqueIdentifier>{2d896bdd-ef61-4bdb-8eff-e37f5ea6e905}</UniqueIdentifier>
     </Filter>
@@ -172,6 +169,15 @@
     <Filter Include="02.Script\00.Player\04.PlayerUI">
       <UniqueIdentifier>{00a468b3-f511-49cd-b920-95ee1905a0f0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.Script\00.Player\05.PlayerDush">
+      <UniqueIdentifier>{f9062f5b-b8c5-4798-9632-422877247e92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Script\01.Monster\00.MonsterFSM\00.Scarecrow\01.ScarecrowIdle">
+      <UniqueIdentifier>{8eba8643-6f77-483a-be22-e809cc6f67ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Script\01.Monster\00.MonsterFSM\00.Scarecrow\00.ScarecrowMaintenance">
+      <UniqueIdentifier>{2f0641c8-76b5-40f3-a961-987476347afc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -253,7 +259,7 @@
       <Filter>02.Script\01.Monster\01.MonsterInfo</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ScarecrowIdle.h">
-      <Filter>02.Script\01.Monster\00.MonsterFSM\00.Scarecrow\00.ScarecrowIdle</Filter>
+      <Filter>02.Script\01.Monster\00.MonsterFSM\00.Scarecrow\01.ScarecrowIdle</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\PlayerHit.h">
       <Filter>02.Script\00.Player\00.PlayerFMS\05.Hit</Filter>
@@ -327,6 +333,12 @@
     <ClInclude Include="..\Header\PlayerUI.h">
       <Filter>02.Script\00.Player\04.PlayerUI</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\PlayerDushUI.h">
+      <Filter>02.Script\00.Player\05.PlayerDush</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ScarecrowMaintenance.h">
+      <Filter>02.Script\01.Monster\00.MonsterFSM\00.Scarecrow\00.ScarecrowMaintenance</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -375,7 +387,7 @@
       <Filter>02.Script\00.Player\00.PlayerFMS\00.Idle</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ScarecrowIdle.cpp">
-      <Filter>02.Script\01.Monster\00.MonsterFSM\00.Scarecrow\00.ScarecrowIdle</Filter>
+      <Filter>02.Script\01.Monster\00.MonsterFSM\00.Scarecrow\01.ScarecrowIdle</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\PlayerHit.cpp">
       <Filter>02.Script\00.Player\00.PlayerFMS\05.Hit</Filter>
@@ -448,6 +460,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\PlayerUI.cpp">
       <Filter>02.Script\00.Player\04.PlayerUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerDushUI.cpp">
+      <Filter>02.Script\00.Player\05.PlayerDush</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ScarecrowMaintenance.cpp">
+      <Filter>02.Script\01.Monster\00.MonsterFSM\00.Scarecrow\00.ScarecrowMaintenance</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

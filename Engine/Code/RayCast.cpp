@@ -7,7 +7,6 @@
 
 USING(Engine)
 
-
 CRaycast::CRaycast()
 {
 }

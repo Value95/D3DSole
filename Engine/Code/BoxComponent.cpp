@@ -22,6 +22,9 @@ SHARED(CComponent) CBoxComponent::MakeClone(CGameObject* pObject)
 	pClone->SetOwner(pObject);
 	pClone->SetName(m_name);
 
+	pClone->SetSize(m_size);
+	pClone->SetOffSet(m_offSet);
+
 	pClone->SetIsAwaked(m_isAwaked);
 
 
@@ -80,7 +83,10 @@ _uint CBoxComponent::Render(void)
 	if(m_mesh != nullptr)
 		m_mesh->Release();
 
-	D3DXCreateBox(GET_DEVICE, m_size.x, m_size.y, m_size.z, &m_mesh, NULL); // D3D 함수
+	/*GetOwner()->OutTranslate(m_size);
+	GetOwner()->OutTranslate(m_offSet);*/
+
+	D3DXCreateBox(GET_DEVICE, m_size.x + m_offSet.x, m_size.y + m_offSet.y, m_size.z + m_offSet.z, &m_mesh, NULL); // D3D 함수
 
 	m_mesh->DrawSubset(0);
 

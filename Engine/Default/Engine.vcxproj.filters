@@ -166,6 +166,9 @@
     <Filter Include="00.Engine\03.Graphics\04.FontManager">
       <UniqueIdentifier>{c7910602-63fa-4330-a1cb-6f172e7fd3fe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00.Engine\12.Slider">
+      <UniqueIdentifier>{34a46325-9136-412f-a4cf-243b023b4968}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\WndApp.cpp">

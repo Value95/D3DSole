@@ -229,11 +229,14 @@ void CInspectorView::ObjectAddString()
 	m_objectKeyComboBox.AddString(TEXT("UI"));
 	m_objectKeyComboBox.AddString(TEXT("Player"));
 	m_objectKeyComboBox.AddString(TEXT("Map"));
-	m_objectKeyComboBox.AddString(TEXT("BossStatue"));
-	m_objectKeyComboBox.AddString(TEXT("Scarecrow"));
+
+	// 동상
+	m_objectKeyComboBox.AddString(TEXT("SMStatue")); // 산화머니
+	m_objectKeyComboBox.AddString(TEXT("CSPStatue")); // 크리스탈 스파이더
 
 	// 몬스터
 	m_objectKeyComboBox.AddString(TEXT("SanwaMoney"));
+	m_objectKeyComboBox.AddString(TEXT("Scarecrow"));
 }
 
 void CInspectorView::ColliderAddString()

@@ -223,6 +223,7 @@ void CMainApp::Monster()
 	SHARED(Engine::CGameObject) scarecrow = Engine::CGameObject::Create(L"Monster", L"Scarecrow", true);
 	scarecrow->SetName(L"Scarecrow");
 	scarecrow->SetScale(vector3(0.01f, 0.01f, 0.01f));
+	scarecrow->AddComponent<CMonster>()->AddFSM<CScarecrowIdle>();
 	scarecrow->AddComponent<Engine::CStaticMeshRenderComponent>();
 	Engine::CObjectFactory::GetInstance()->AddPrototype(scarecrow);
 
@@ -235,6 +236,8 @@ void CMainApp::Monster()
 	sanwaMoney->GetComponent<Engine::CRigidBodyComponent>()->SetBounciness(0.0f);
 	sanwaMoney->GetComponent<Engine::CRigidBodyComponent>()->SetMass(80);
 	sanwaMoney->AddComponent<Engine::CAnimMeshRenderComponent>()->MeshInput(L"../../Resource/Mesh/Static/DynamicMesh/Boss/AgentSanwaMoney/", L"Boss_AgentSanwaMoney_000.X");
+	sanwaMoney->AddComponent<Engine::CBoxComponent>()->SetSize(vector3(3, 4, 11) * 100);
+	sanwaMoney->GetComponent<Engine::CBoxComponent>()->SetOffSet(vector3(0, 2, -0.5f));
 	Engine::CObjectFactory::GetInstance()->AddPrototype(sanwaMoney);
 }
 
@@ -255,8 +258,13 @@ void CMainApp::Player()
 
 void CMainApp::Interaction()
 {
-	SHARED(Engine::CGameObject) mess = Engine::CGameObject::Create(L"Interaction", L"BossStatue", true);
-	mess->AddComponent<Engine::CMeshComponent>();
-	mess->AddComponent<Engine::CStaticMeshRenderComponent>();
-	Engine::CObjectFactory::GetInstance()->AddPrototype(mess);
+	SHARED(Engine::CGameObject) CSPStatue = Engine::CGameObject::Create(L"Interaction", L"CSPStatue", true);
+	CSPStatue->AddComponent<Engine::CMeshComponent>();
+	CSPStatue->AddComponent<Engine::CStaticMeshRenderComponent>();
+	Engine::CObjectFactory::GetInstance()->AddPrototype(CSPStatue);
+
+	SHARED(Engine::CGameObject) SMStatue = Engine::CGameObject::Create(L"Interaction", L"SMStatue", true);
+	SMStatue->AddComponent<Engine::CMeshComponent>();
+	SMStatue->AddComponent<Engine::CStaticMeshRenderComponent>();
+	Engine::CObjectFactory::GetInstance()->AddPrototype(SMStatue);
 }

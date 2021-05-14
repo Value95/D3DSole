@@ -66,8 +66,6 @@ void CDongilScene::Start(void)
 		pObj->AddComponent<Engine::CMeshComponent>()->SetMeshKey(L"MiniGock.X");
 		pObj->AddComponent<Engine::CStaticMeshRenderComponent>();
 	}
-
-
 }
 
 _uint CDongilScene::FixedUpdate(void)

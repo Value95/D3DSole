@@ -9,6 +9,7 @@ private:
 	LPD3DXMESH m_mesh;
 
 	GETTOR_SETTOR(vector3, m_size, vector3Zero, Size);
+	GETTOR_SETTOR(vector3, m_offSet, vector3Zero, OffSet);
 public:
 	explicit CBoxComponent(void);
 	virtual	 ~CBoxComponent(void);

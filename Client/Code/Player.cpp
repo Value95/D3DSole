@@ -17,6 +17,8 @@
 #include "PlayerRush.h"
 #include "PlayerInteraction.h"
 #include "PlayerUI.h"
+#include "PlayerDushUI.h"
+
 CPlayer::CPlayer()
 {
 }
@@ -50,6 +52,7 @@ void CPlayer::Start(SHARED(CComponent) spThis)
 {
 	__super::Start(spThis);
 	m_playerHP = new CPlayerHP(&m_playerInfo->GetHP(), &m_playerInfo->GetHpMax());
+	m_playerDushUI = new CPlayerDushUI(&m_playerInfo->GetDushGague());
 	m_playerUI = new CPlayerUI(m_playerInfo);
 	m_anim = GetOwner()->GetComponent<Engine::CAnimMeshRenderComponent>();
 	m_rigidbody = GetOwner()->GetComponent<Engine::CRigidBodyComponent>();
@@ -68,7 +71,9 @@ _uint CPlayer::Update(SHARED(CComponent) spThis)
 	m_playerFSM[m_playerState]->Update();
 	m_playerHP->Update();
 	m_playerUI->Update();
-
+	m_playerDushUI->Update();
+	m_playerInfo->AddDushGague(deltaTime * 100);
+	cout << m_playerInfo->GetDushGague() << endl;
 	return NO_EVENT;
 }
 

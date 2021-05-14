@@ -3,6 +3,8 @@
 #include "Monster.h"
 #include "MonsterInfo.h"
 
+#include "ScarecrowMaintenance.h"
+
 CScarecrowIdle::CScarecrowIdle(CMonster* monster)
 {
 	m_monster = monster;
@@ -21,7 +23,7 @@ void CScarecrowIdle::Start()
 		m_monster->GetMonsterInfo()->SetHP(1000);
 		m_monster->GetMonsterInfo()->SetMaxHP(1000);
 		m_pastHP = m_monster->GetMonsterInfo()->GetHP();
-		//m_monster->SetMonsterMaintenanceFSM();
+		m_monster->SetMonsterMaintenanceFSM(new CScarecrowMaintenance(m_monster));
 		m_resetTimeMax = 5;
 		m_resetTime = m_resetTimeMax;
 	}

@@ -200,6 +200,7 @@
     <ClInclude Include="..\Header\PlayerAttack.h" />
     <ClInclude Include="..\Header\PlayerDeath.h" />
     <ClInclude Include="..\Header\PlayerDebug.h" />
+    <ClInclude Include="..\Header\PlayerDushUI.h" />
     <ClInclude Include="..\Header\PlayerHit.h" />
     <ClInclude Include="..\Header\PlayerHP.h" />
     <ClInclude Include="..\Header\PlayerIdle.h" />
@@ -224,6 +225,7 @@
     <ClInclude Include="..\Header\SanwaMoneyMove.h" />
     <ClInclude Include="..\Header\SanwaMoneyUI.h" />
     <ClInclude Include="..\Header\ScarecrowIdle.h" />
+    <ClInclude Include="..\Header\ScarecrowMaintenance.h" />
     <ClInclude Include="..\Header\TitleScene.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Client.h" />
@@ -245,6 +247,7 @@
     <ClCompile Include="..\Code\PlayerAttack.cpp" />
     <ClCompile Include="..\Code\PlayerDeath.cpp" />
     <ClCompile Include="..\Code\PlayerDebug.cpp" />
+    <ClCompile Include="..\Code\PlayerDushUI.cpp" />
     <ClCompile Include="..\Code\PlayerHit.cpp" />
     <ClCompile Include="..\Code\PlayerHP.cpp" />
     <ClCompile Include="..\Code\PlayerHRush.cpp" />
@@ -268,6 +271,7 @@
     <ClCompile Include="..\Code\SanwaMoneyMove.cpp" />
     <ClCompile Include="..\Code\SanwaMoneyUI.cpp" />
     <ClCompile Include="..\Code\ScarecrowIdle.cpp" />
+    <ClCompile Include="..\Code\ScarecrowMaintenance.cpp" />
     <ClCompile Include="..\Code\TitleScene.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="stdafx.cpp">
