@@ -143,6 +143,17 @@ CGameObject * CRaycast::BoxRayCast(vector3 origin, vector3 direction, _float max
 		vector3 minPos = (object->GetScale()* 0.5f) * -1;
 		vector3 maxPos = (object->GetScale()* 0.5f);
 
+		object->OutTranslate(minPos);
+		object->OutTranslate(maxPos);
+
+		minPos.x = minPos.x / object->GetScale().x;
+		minPos.y = minPos.y / object->GetScale().y;
+		minPos.z = minPos.z / object->GetScale().z;
+
+		maxPos.x = maxPos.x / object->GetScale().x;
+		maxPos.y = maxPos.y / object->GetScale().y;
+		maxPos.z = maxPos.z / object->GetScale().z;
+
 		D3DXVec3TransformCoord(&minPos, &minPos, &object->GetWorldMatrix());
 		D3DXVec3TransformCoord(&maxPos, &maxPos, &object->GetWorldMatrix());
 
@@ -158,8 +169,6 @@ CGameObject * CRaycast::BoxRayCast(vector3 origin, vector3 direction, _float max
 				maxPos[i] = temp;
 			}
 		}
-
-		// D3DXIntersectTri
 
 		if (!RayIntersectCheck(direction.x, origin.x, minPos.x, maxPos.x, tMin, tMax))
 			continue;
@@ -212,6 +221,17 @@ CGameObject * CRaycast::BoxRayCast(vector3 origin, vector3 direction, _float max
 			collider = dynamic_cast<Engine::CSphereCollider*>(collider);
 		}
 
+		object->OutTranslate(minPos);
+		object->OutTranslate(maxPos);
+
+		minPos.x = minPos.x / object->GetScale().x;
+		minPos.y = minPos.y / object->GetScale().y;
+		minPos.z = minPos.z / object->GetScale().z;
+
+		maxPos.x = maxPos.x / object->GetScale().x;
+		maxPos.y = maxPos.y / object->GetScale().y;
+		maxPos.z = maxPos.z / object->GetScale().z;
+
 		D3DXVec3TransformCoord(&minPos, &minPos, &object->GetWorldMatrix());
 		D3DXVec3TransformCoord(&maxPos, &maxPos, &object->GetWorldMatrix());
 
@@ -248,9 +268,9 @@ CGameObject * CRaycast::BoxRayCast(vector3 origin, vector3 direction, _float max
 }
 
 _bool CRaycast::RayIntersectCheck(_float rayAxisDir, _float rayAxisStart,
-									   _float aabbAxisMin, _float aabbAxisMax, 
-									   _float& tMin, _float& tMax)
-{ 
+	_float aabbAxisMin, _float aabbAxisMax,
+	_float& tMin, _float& tMax)
+{
 	if (abs(rayAxisDir) < EPSILON)
 	{
 		//no hit if origin not within axis

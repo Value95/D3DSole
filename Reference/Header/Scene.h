@@ -43,7 +43,7 @@ public:
 
 	void AllDelete();
 	_uint FindObjectsWithKey(std::wstring objectKey, std::vector<SHARED(CGameObject)>& gameObjects);
-	void LoadObject(std::wstring path);
+	static void LoadObject(std::wstring path);
 
 	void AddObjectCount(_int value) { m_objectCount += value; }
 protected:
@@ -52,7 +52,7 @@ protected:
 	void AddLayer(std::wstring layerName);
 
 private:
-	std::wstring LoadWstring(HANDLE* file, DWORD* dwByte);
+	static std::wstring LoadWstring(HANDLE* file, DWORD* dwByte);
 };
 END
 

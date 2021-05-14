@@ -13,10 +13,9 @@ CPlayerIdle::~CPlayerIdle()
 
 void CPlayerIdle::Start()
 {
+	m_player->SetWaponPosNumber(0);
 	m_player->GetAnim()->GetAnimCtrl()->SetSpeed(1.0f);
 	m_player->GetAnim()->Set_AnimationSet(8);
-
-	//m_player->ChangeFSM(CPlayer::STATE::DEBUGMODE);
 }
 
 void CPlayerIdle::End()
@@ -50,7 +49,7 @@ _uint CPlayerIdle::Update()
 
 	if (Engine::CInputManager::GetInstance()->KeyDown(KEY_F))
 	{
-		m_player->ChangeFSM(CPlayer::STATE::MINIPICKAXE);
+		m_player->ChangeFSM(CPlayer::STATE::INTERACTION);
 		return true;
 	}
 

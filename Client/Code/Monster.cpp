@@ -126,6 +126,39 @@ void CMonster::Attack(_float damage)
 	m_playerCom->GetPlayerInfo()->DownHP(damage);
 }
 
+_bool CMonster::Collision(Engine::CCollider * collision, Engine::CGameObject* object)
+{
+	std::vector<Engine::CGameObject*> col;
+	if (Engine::CColliderManager::GetInstance()->OnColliderEnter(collision, object, col))
+	{
+		for (auto& object : col)
+		{
+			if (object->GetName() == L"Player")
+			{
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+_bool CMonster::MoveCheck(vector3 dir, _float moveCheckDir)
+{
+	vector3 orgine = GetOwner()->GetPosition();
+	orgine.y += 0.9;
+	Engine::CGameObject* obj = Engine::CRaycast::BoxRayCast(orgine, dir, moveCheckDir, L"Collider");
+
+	if (obj == nullptr)
+		obj = Engine::CRaycast::BoxRayCast(orgine, dir, moveCheckDir, L"Map");
+
+
+	if (obj != nullptr)
+	{
+		return false;
+	}
+	return true;
+}
+
 void CMonster::HitEffect()
 {
 	//std::cout << "HitEffect" << endl;

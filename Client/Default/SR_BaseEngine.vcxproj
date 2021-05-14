@@ -203,12 +203,14 @@
     <ClInclude Include="..\Header\PlayerHit.h" />
     <ClInclude Include="..\Header\PlayerHP.h" />
     <ClInclude Include="..\Header\PlayerIdle.h" />
+    <ClInclude Include="..\Header\PlayerInteraction.h" />
     <ClInclude Include="..\Header\PlayerMiniGock.h" />
     <ClInclude Include="..\Header\PlayerMiniPickaxe.h" />
     <ClInclude Include="..\Header\PlayerMove.h" />
     <ClInclude Include="..\Header\PlayerInfo.h" />
     <ClInclude Include="..\Header\PlayerRoll.h" />
     <ClInclude Include="..\Header\PlayerRush.h" />
+    <ClInclude Include="..\Header\PlayerUI.h" />
     <ClInclude Include="..\Header\PlayerUppercut.h" />
     <ClInclude Include="..\Header\PlayerWapon.h" />
     <ClInclude Include="..\Header\SanwaMoneyAttack1.h" />
@@ -247,10 +249,12 @@
     <ClCompile Include="..\Code\PlayerHP.cpp" />
     <ClCompile Include="..\Code\PlayerHRush.cpp" />
     <ClCompile Include="..\Code\PlayerIdle.cpp" />
+    <ClCompile Include="..\Code\PlayerInteraction.cpp" />
     <ClCompile Include="..\Code\PlayerMiniGock.cpp" />
     <ClCompile Include="..\Code\PlayerMiniPickaxe.cpp" />
     <ClCompile Include="..\Code\PlayerMove.cpp" />
     <ClCompile Include="..\Code\PlayerRoll.cpp" />
+    <ClCompile Include="..\Code\PlayerUI.cpp" />
     <ClCompile Include="..\Code\PlayerUppercut.cpp" />
     <ClCompile Include="..\Code\PlayerWapon.cpp" />
     <ClCompile Include="..\Code\SanwaMoneyAttack1.cpp" />

@@ -15,7 +15,8 @@
 #include "PlayerRoll.h"
 #include "PlayerMiniPickaxe.h"
 #include "PlayerRush.h"
-
+#include "PlayerInteraction.h"
+#include "PlayerUI.h"
 CPlayer::CPlayer()
 {
 }
@@ -49,6 +50,7 @@ void CPlayer::Start(SHARED(CComponent) spThis)
 {
 	__super::Start(spThis);
 	m_playerHP = new CPlayerHP(&m_playerInfo->GetHP(), &m_playerInfo->GetHpMax());
+	m_playerUI = new CPlayerUI(m_playerInfo);
 	m_anim = GetOwner()->GetComponent<Engine::CAnimMeshRenderComponent>();
 	m_rigidbody = GetOwner()->GetComponent<Engine::CRigidBodyComponent>();
 	FSMCreate();
@@ -65,6 +67,7 @@ _uint CPlayer::Update(SHARED(CComponent) spThis)
 {
 	m_playerFSM[m_playerState]->Update();
 	m_playerHP->Update();
+	m_playerUI->Update();
 
 	return NO_EVENT;
 }
@@ -161,6 +164,25 @@ void CPlayer::UpperCutCountReset()
 	}
 }
 
+bool CPlayer::MoveCheck(vector3 dir, _float moveCheckDir)
+{
+	vector3 orgine = GetOwner()->GetPosition();
+	orgine.y += 0.9;
+	Engine::CGameObject* obj = Engine::CRaycast::BoxRayCast(orgine, dir, moveCheckDir, L"Collider");
+
+	if (obj == nullptr)
+		obj = Engine::CRaycast::BoxRayCast(orgine, dir, moveCheckDir, L"Map");
+
+	if (obj == nullptr)
+		obj = Engine::CRaycast::BoxRayCast(orgine, dir, moveCheckDir, L"Boss");
+
+	if (obj != nullptr)
+	{
+		return false;
+	}
+	return true;
+}
+
 void CPlayer::FSMCreate()
 {
 	m_playerFSM[STATE::IDLE] = new CPlayerIdle(this);
@@ -173,6 +195,7 @@ void CPlayer::FSMCreate()
 	m_playerFSM[STATE::ROLL] = new CPlayerRoll(this);
 	m_playerFSM[STATE::MINIPICKAXE] = new CPlayerMiniPickaxe(this);
 	m_playerFSM[STATE::RUSH] = new CPlayerRush(this);
+	m_playerFSM[STATE::INTERACTION] = new CPlayerInteraction(this);
 
 	m_playerFSM[STATE::IDLE]->Start();
 }

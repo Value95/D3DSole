@@ -5,7 +5,7 @@
 CPlayerRush::CPlayerRush(CPlayer* player)
 {
 	m_player = player;
-	collision = Engine::CBoxCollider::Create(vector3(1, 2.5, 1), vector3(0, 1.8, -0.7));
+	collision = Engine::CBoxCollider::Create(vector3(0.6, 1.6, 2), vector3(0, 0.9, -1));
 }
 
 CPlayerRush::~CPlayerRush()
@@ -14,6 +14,7 @@ CPlayerRush::~CPlayerRush()
 
 void CPlayerRush::Start()
 {
+	m_player->SetWaponPosNumber(0);
 	m_player->GetAnim()->GetAnimCtrl()->SetSpeed(1.0f);
 	m_player->GetAnim()->Set_AnimationSet(3);
 	m_player->GetRigidBody()->SetVelocity(vector3Zero);

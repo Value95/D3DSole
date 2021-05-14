@@ -68,12 +68,12 @@ void CDongilScene::Start(void)
 	}
 
 
-	m_pMainCamera->GetOwner()->SetTarget(Engine::GET_CUR_SCENE->FindObjectByName(L"Player").get());
 }
 
 _uint CDongilScene::FixedUpdate(void)
 {
 	__super::FixedUpdate();
+	m_pMainCamera->GetOwner()->SetTarget(Engine::GET_CUR_SCENE->FindObjectByName(L"Player").get());
 
 
 	return NO_EVENT;
@@ -122,6 +122,7 @@ void CDongilScene::InitLayers(void)
 	AddLayer(L"MapObject");
 	AddLayer(L"Collider");
 	AddLayer(L"Map");
+	AddLayer(L"Interaction");
 }
 
 void CDongilScene::InitPrototypes(void)

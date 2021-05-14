@@ -7,7 +7,7 @@
 CPlayerAttack::CPlayerAttack(CPlayer* player)
 {
 	m_player = player;
-	collision = Engine::CBoxCollider::Create(vector3(1, 1, 3), vector3(0, 1.2, -1.6));
+	collision = Engine::CBoxCollider::Create(vector3(0.6, 3, 6), vector3(0, 0.9, -3));
 }
 
 CPlayerAttack::~CPlayerAttack()
@@ -40,8 +40,6 @@ void CPlayerAttack::End()
 {
 	init = false;
 	m_player->GetAnim()->GetAnimCtrl()->SetSpeed(1);
-	m_player->SetWaponPosNumber(0);
-
 }
 
 _uint CPlayerAttack::FixedUpdate()
@@ -63,6 +61,8 @@ _uint CPlayerAttack::FixedUpdate()
 
 _uint CPlayerAttack::Update()
 {
+	Move();
+
 	if (m_player->GetAnim()->GetAnimCtrl()->Is_AnimationSetEnd())
 	{
 		if (Engine::CInputManager::GetInstance()->KeyPress(KEY_LBUTTON))
@@ -83,7 +83,6 @@ _uint CPlayerAttack::Update()
 		init = false;
 	}
 
-	Move();
 
 	return NO_EVENT;
 }
@@ -136,12 +135,16 @@ bool CPlayerAttack::Move()
 
 bool CPlayerAttack::MoveCheck(vector3 dir)
 {
+	_float moveCheckDir = 1.0f;
 	vector3 orgine = m_player->GetOwner()->GetPosition();
 	orgine.y += 0.9;
-	Engine::CGameObject* obj = Engine::CRaycast::BoxRayCast(orgine, dir, 0.8, L"Collider");
+	Engine::CGameObject* obj = Engine::CRaycast::BoxRayCast(orgine, dir, moveCheckDir, L"Collider");
 
 	if (obj == nullptr)
-		obj = Engine::CRaycast::BoxRayCast(orgine, dir, 0.8, L"Map");
+		obj = Engine::CRaycast::BoxRayCast(orgine, dir, moveCheckDir, L"Map");
+
+	if (obj == nullptr)
+		obj = Engine::CRaycast::BoxRayCast(orgine, dir, moveCheckDir, L"Boss");
 
 	if (obj != nullptr)
 	{

@@ -7,7 +7,7 @@ CPlayerMove::CPlayerMove(CPlayer* player)
 	m_player = player;
 	m_rotation = 0;
 	cameraY = 0;
-	m_moveCheckDir = 0.8f;
+	m_moveCheckDir = 1.0f;
 
 }
 
@@ -17,6 +17,7 @@ CPlayerMove::~CPlayerMove()
 
 void CPlayerMove::Start()
 {
+	m_player->SetWaponPosNumber(0);
 	m_player->GetAnim()->GetAnimCtrl()->SetSpeed(1.0f);
 
 	m_speed = 0;
@@ -67,26 +68,26 @@ bool CPlayerMove::Move()
 	if (!m_player->GetOwner()->GetComponent<Engine::CRigidBodyComponent>()->GetGroundCheck())
 		m_speed *= 0.6f;
 
-	if (Engine::CInputManager::GetInstance()->KeyPress(KEY_W) && MoveCheck(Engine::GET_MAIN_CAM->GetOwner()->ReturnTranslate(vector3Forward)))
+	if (Engine::CInputManager::GetInstance()->KeyPress(KEY_W) && m_player->MoveCheck(Engine::GET_MAIN_CAM->GetOwner()->ReturnTranslate(vector3Forward), m_moveCheckDir))
 	{
 		m_player->GetOwner()->SetRotationY(Engine::GET_MAIN_CAM->GetOwner()->GetRotation().y);
 		m_player->GetOwner()->Translate(vector3Forward * deltaTime * m_speed);
 		W = true;
 	}
-	else if (Engine::CInputManager::GetInstance()->KeyPress(KEY_S) && MoveCheck(Engine::GET_MAIN_CAM->GetOwner()->ReturnTranslate(vector3Back)))
+	else if (Engine::CInputManager::GetInstance()->KeyPress(KEY_S) && m_player->MoveCheck(Engine::GET_MAIN_CAM->GetOwner()->ReturnTranslate(vector3Back), m_moveCheckDir))
 	{
 		m_player->GetOwner()->SetRotationY(Engine::GET_MAIN_CAM->GetOwner()->GetRotation().y);
 		m_player->GetOwner()->Translate(vector3Back * deltaTime * m_speed);
 		S = true;
 	}
 
-	if (Engine::CInputManager::GetInstance()->KeyPress(KEY_A) && MoveCheck(Engine::GET_MAIN_CAM->GetOwner()->ReturnTranslate(vector3Left)))
+	if (Engine::CInputManager::GetInstance()->KeyPress(KEY_A) && m_player->MoveCheck(Engine::GET_MAIN_CAM->GetOwner()->ReturnTranslate(vector3Left), m_moveCheckDir))
 	{
 		m_player->GetOwner()->SetRotationY(Engine::GET_MAIN_CAM->GetOwner()->GetRotation().y);
 		m_player->GetOwner()->Translate(vector3Left * deltaTime * m_speed);
 		A = true;
 	}
-	else if (Engine::CInputManager::GetInstance()->KeyPress(KEY_D) && MoveCheck(Engine::GET_MAIN_CAM->GetOwner()->ReturnTranslate(vector3Right)))
+	else if (Engine::CInputManager::GetInstance()->KeyPress(KEY_D) && m_player->MoveCheck(Engine::GET_MAIN_CAM->GetOwner()->ReturnTranslate(vector3Right), m_moveCheckDir))
 	{
 		m_player->GetOwner()->SetRotationY(Engine::GET_MAIN_CAM->GetOwner()->GetRotation().y);
 		m_player->GetOwner()->Translate(vector3Right * deltaTime * m_speed);
@@ -231,25 +232,9 @@ bool CPlayerMove::Roll()
 	return false;
 }
 
-bool CPlayerMove::MoveCheck(vector3 dir)
-{
-	vector3 orgine = m_player->GetOwner()->GetPosition();
-	orgine.y += 0.9;
-	Engine::CGameObject* obj = Engine::CRaycast::BoxRayCast(orgine, dir, m_moveCheckDir, L"Collider");
-
-	if(obj == nullptr)
-		obj = Engine::CRaycast::BoxRayCast(orgine, dir, m_moveCheckDir, L"Map");
-
-	if (obj != nullptr)
-	{
-		return false;
-	}
-	return true;
-}
-
 bool CPlayerMove::MiniPickaxe()
 {
-	if (Engine::CInputManager::GetInstance()->KeyDown(KEY_F))
+	if (!m_player->GetRigidBody()->GetGroundCheck() && Engine::CInputManager::GetInstance()->KeyDown(KEY_F))
 	{
 		m_player->ChangeFSM(CPlayer::STATE::MINIPICKAXE);
 		return true;

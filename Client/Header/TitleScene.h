@@ -29,5 +29,6 @@ private:
 	void InitLayers(void) override;
 	void InitPrototypes(void) override;
 
+	void NextScene();
 };
 

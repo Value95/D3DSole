@@ -166,6 +166,12 @@
     <Filter Include="02.Script\01.Monster\00.MonsterFSM\02.SanwaMoney\08.SanwaMoneyHalfHealth">
       <UniqueIdentifier>{429dbde4-825e-4e02-ab7d-2c780812848d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.Script\00.Player\00.PlayerFMS\10.Interaction">
+      <UniqueIdentifier>{5a6052a5-3d03-4c39-9d3d-ea84e8924745}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Script\00.Player\04.PlayerUI">
+      <UniqueIdentifier>{00a468b3-f511-49cd-b920-95ee1905a0f0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -315,6 +321,12 @@
     <ClInclude Include="..\Header\SanwaMoneyHalfHealth.h">
       <Filter>02.Script\01.Monster\00.MonsterFSM\02.SanwaMoney\08.SanwaMoneyHalfHealth</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\PlayerInteraction.h">
+      <Filter>02.Script\00.Player\00.PlayerFMS\10.Interaction</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PlayerUI.h">
+      <Filter>02.Script\00.Player\04.PlayerUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -430,6 +442,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\SanwaMoneyHalfHealth.cpp">
       <Filter>02.Script\01.Monster\00.MonsterFSM\02.SanwaMoney\08.SanwaMoneyHalfHealth</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerInteraction.cpp">
+      <Filter>02.Script\00.Player\00.PlayerFMS\10.Interaction</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerUI.cpp">
+      <Filter>02.Script\00.Player\04.PlayerUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

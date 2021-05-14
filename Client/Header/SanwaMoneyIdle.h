@@ -27,5 +27,7 @@ public:
 
 private:
 	void ReSet();
+	void MoveCheck();
+
 };
 

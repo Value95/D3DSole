@@ -10,6 +10,7 @@
 #include "InputManager.h"
 #include "DebugRendeerManager.h"
 #include "ColliderManager.h"
+#include "FontManager.h"
 
 #include "WndApp.h"
 #include "FRC.h"

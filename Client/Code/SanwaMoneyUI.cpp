@@ -30,7 +30,7 @@ void CSanwaMoneyUI::DateInput(_int * hp, _int * hpMax)
 	m_curHp = *m_hp;
 	m_hpMax = hpMax;
 	m_oldPos = m_hpUI->GetPosition();
-	m_downSpeed = 10;
+	m_downSpeed = 100;
 }
 
 void CSanwaMoneyUI::Update()

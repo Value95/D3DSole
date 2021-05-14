@@ -4,7 +4,7 @@ class CPlayerInfo
 protected:
 	GETTOR_SETTOR(_int, m_hp, 200, HP)
 	GETTOR_SETTOR(_int, m_hpMax, 200, HpMax)
-	GETTOR_SETTOR(_int, m_attackSpeed, 2, AttackSpeed)
+	GETTOR_SETTOR(_int, m_attackSpeed, 3, AttackSpeed)
 	GETTOR_SETTOR(_float, m_rotationSpeed, 20, RotationSpeed)
 	GETTOR_SETTOR(_float, m_jumpPower, 5, JumpPower)
 	GETTOR_SETTOR(_float, m_speed, 200, Speed)
@@ -16,13 +16,11 @@ protected:
 	GETTOR_SETTOR(_int, m_damageC, 100, DamageC);
 	GETTOR_SETTOR(_int, m_damageD, 10, DamageD);
 	GETTOR_SETTOR(_int, m_damageRush, 50, DamageRush);
+
+	GETTOR_SETTOR(_int, m_gold, 50, Gold);
 public:
-	CPlayerInfo::CPlayerInfo()
-	{
-	}
-	CPlayerInfo::~CPlayerInfo()
-	{
-	}
+	CPlayerInfo::CPlayerInfo(){}
+	CPlayerInfo::~CPlayerInfo(){}
 
 	void DownHP(_float damage)
 	{

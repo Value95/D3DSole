@@ -46,15 +46,25 @@ void CSanwaMoneyMove::OnDestroy(void)
 
 void CSanwaMoneyMove::Move()
 {
-	if (Engine::Distance(m_monster->GetOwner()->GetPosition(), m_monster->GetPlayer()->GetPosition()) >= 7.8f)
+	if (Engine::Distance(m_monster->GetOwner()->GetPosition(), m_monster->GetPlayer()->GetPosition()) >= 7.5f)
 	{
 		m_monster->GetOwner()->LookAtX(m_monster->GetPlayer()->GetPosition());
 		m_monster->GetOwner()->AddRotationY(180);
 		m_monster->GetOwner()->Translate(vector3Back * m_monster->GetMonsterInfo()->GetSpeed());
+
+		MoveCheck();
 	}
 	else
 	{
 		m_monster->ChangeFSM(CMonster::SM_STATE::SM_IDLE);
+	}
+}
+
+void CSanwaMoneyMove::MoveCheck()
+{
+	if (m_monster->Collision(m_monster->GetOwner()->GetComponent<Engine::CColliderComponent>()->GetColliders()[0], m_monster->GetOwner()))
+	{
+		m_monster->GetPlayer()->Translate(vector3Forward * m_monster->GetMonsterInfo()->GetSpeed() * 2);
 	}
 }
 

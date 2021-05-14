@@ -13,6 +13,7 @@ CPlayerDeath::~CPlayerDeath()
 
 void CPlayerDeath::Start()
 {
+	m_player->SetWaponPosNumber(0);
 	m_player->GetAnim()->Set_AnimationSet(3);
 }
 

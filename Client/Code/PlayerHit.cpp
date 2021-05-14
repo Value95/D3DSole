@@ -13,6 +13,7 @@ CPlayerHit::~CPlayerHit()
 
 void CPlayerHit::Start()
 {
+	m_player->SetWaponPosNumber(0);
 	m_player->GetAnim()->GetAnimCtrl()->SetSpeed(1.0f);
 	m_player->GetAnim()->Set_AnimationSet(9);
 }

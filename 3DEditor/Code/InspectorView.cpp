@@ -215,6 +215,7 @@ void CInspectorView::LayerAddString()
 	m_layerComboBox.AddString(TEXT("Boss"));
 	m_layerComboBox.AddString(TEXT("Player"));
 	m_layerComboBox.AddString(TEXT("Map"));
+	m_layerComboBox.AddString(TEXT("Interaction"));
 }
 
 void CInspectorView::ObjectAddString()
@@ -228,6 +229,8 @@ void CInspectorView::ObjectAddString()
 	m_objectKeyComboBox.AddString(TEXT("UI"));
 	m_objectKeyComboBox.AddString(TEXT("Player"));
 	m_objectKeyComboBox.AddString(TEXT("Map"));
+	m_objectKeyComboBox.AddString(TEXT("BossStatue"));
+	m_objectKeyComboBox.AddString(TEXT("Scarecrow"));
 
 	// ∏ÛΩ∫≈Õ
 	m_objectKeyComboBox.AddString(TEXT("SanwaMoney"));

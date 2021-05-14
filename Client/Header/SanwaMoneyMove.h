@@ -20,5 +20,7 @@ public:
 
 private:
 	void Move();
+
+	void MoveCheck();
 };
 

@@ -1,10 +1,10 @@
 #include "stdafx.h"
 #include "TitleScene.h"
+#include "MainRoomScene.h"
 
 CTitleScene::CTitleScene()
 {
 }
-
 
 CTitleScene::~CTitleScene()
 {
@@ -27,9 +27,8 @@ void CTitleScene::Awake(void)
 void CTitleScene::Start(void)
 {
 	__super::Start();
-
+	
 	LoadObject(L"TitleScene");
-
 
 	{
 		m_pMainCamera = Engine::ADD_CLONE(L"Camera", L"Camera", true)->GetComponent<Engine::CCameraComponent>();
@@ -49,6 +48,11 @@ _uint CTitleScene::Update(void)
 	_uint event = 0;
 	if (event = __super::Update())
 		return event;
+
+	if (Engine::CInputManager::GetInstance()->KeyDown(KEY_Q))
+	{
+		NextScene();
+	}
 
 	return event;
 }
@@ -77,14 +81,20 @@ void CTitleScene::OnDisable(void)
 
 void CTitleScene::InitLayers(void)
 {
-	AddLayer(L"Light");
 	AddLayer(L"Camera");
 	AddLayer(L"Default");
+	AddLayer(L"UI");
+
 }
 
 void CTitleScene::InitPrototypes(void)
 {
 
+}
+
+void CTitleScene::NextScene()
+{
+	Engine::CSceneManager::GetInstance()->SceneChange(CMainRoomScene::Create());
 }
 
 

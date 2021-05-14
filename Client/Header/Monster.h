@@ -54,6 +54,8 @@ public:
 		m_monsterFSM.emplace_back(nullptr);
 	}
 
+	_bool Collision(Engine::CCollider* collision, Engine::CGameObject* object);
+	_bool MoveCheck(vector3 dir, _float moveCheckDir);
 private:
 	void HitEffect();
 };

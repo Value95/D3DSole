@@ -37,6 +37,7 @@ private:
 	void UI();
 	void Monster();
 	void Player();
+	void Interaction();
 };
 
 #endif

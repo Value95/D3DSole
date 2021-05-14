@@ -2,6 +2,7 @@
 #include "MainApp.h"
 
 #pragma region IncludeScenes
+#include "TitleScene.h"
 #include "DongilScene.h"
 #pragma endregion
 
@@ -40,6 +41,7 @@ void CMainApp::Awake(void)
 	Engine::CDebugRendeerManager::GetInstance()->Awake();
 	Engine::CColliderManager::GetInstance()->Awake();
 	Engine::CSoundManager::GetInstance()->Awake();
+	Engine::CFontManager::GetInstance()->Awake();
 }
 
 void CMainApp::Start(void)
@@ -55,6 +57,7 @@ void CMainApp::Start(void)
 	Engine::CUIManager::GetInstance()->Start();
 	Engine::CDebugRendeerManager::GetInstance()->Start();
 	Engine::CColliderManager::GetInstance()->Start();
+	Engine::CFontManager::GetInstance()->Start();
 }
 
 _uint CMainApp::FixedUpdate(void)
@@ -109,6 +112,9 @@ _uint CMainApp::Render(void)
 	if (event = Engine::CDebugRendeerManager::GetInstance()->PreRender())	return event;
 	if (event = Engine::CDebugRendeerManager::GetInstance()->Render())	return event;
 
+	if (event = Engine::CFontManager::GetInstance()->PreRender())	return event;
+	if (event = Engine::CFontManager::GetInstance()->Render())	return event;
+
 	return event;
 }
 
@@ -119,6 +125,7 @@ _uint CMainApp::PostRender(void)
 	if (event = Engine::CAnimMeshRenderManager::GetInstance()->PostRender())	return event;
 	if (event = Engine::CUIManager::GetInstance()->PostRender())		return event;
 	if (event = Engine::CDebugRendeerManager::GetInstance()->PostRender())	return event;
+	if (event = Engine::CFontManager::GetInstance()->PostRender())	return event;
 	return event;
 }
 
@@ -133,6 +140,7 @@ void CMainApp::OnDestroy(void)
 	Engine::CSoundManager::GetInstance()->DestroyInstance();
 	Engine::CDebugRendeerManager::DestroyInstance();
 	Engine::CUIManager::GetInstance()->DestroyInstance();
+	Engine::CFontManager::GetInstance()->DestroyInstance();
 }
 
 void CMainApp::OnEnable(void)
@@ -163,6 +171,7 @@ void CMainApp::InitStaticPrototype(void)
 	UI();
 	Monster();
 	Player();
+	Interaction();
 }
 
 void CMainApp::Default()
@@ -213,20 +222,20 @@ void CMainApp::Monster()
 {
 	SHARED(Engine::CGameObject) scarecrow = Engine::CGameObject::Create(L"Monster", L"Scarecrow", true);
 	scarecrow->SetName(L"Scarecrow");
-	scarecrow->SetScale(vector3(0.005f, 0.005f, 0.005f));
-	scarecrow->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(1, 10, 1), vector3Zero));
+	scarecrow->SetScale(vector3(0.01f, 0.01f, 0.01f));
+	scarecrow->AddComponent<Engine::CStaticMeshRenderComponent>();
 	Engine::CObjectFactory::GetInstance()->AddPrototype(scarecrow);
 
-	SHARED(Engine::CGameObject) draken = Engine::CGameObject::Create(L"Boss", L"SanwaMoney", true);
-	draken->SetName(L"SanwaMoney");
-	draken->SetPosition(vector3(0, 0, 0));
-	draken->SetScale(vector3(0.01f, 0.01f, 0.01f));
-	draken->AddComponent<CMonster>()->AddFSM<CSanwaMoneyIdle>();
-	draken->AddComponent<Engine::CRigidBodyComponent>();
-	draken->GetComponent<Engine::CRigidBodyComponent>()->SetBounciness(0.0f);
-	draken->GetComponent<Engine::CRigidBodyComponent>()->SetMass(80);
-	draken->AddComponent<Engine::CAnimMeshRenderComponent>()->MeshInput(L"../../Resource/Mesh/Static/DynamicMesh/Boss/AgentSanwaMoney/", L"Boss_AgentSanwaMoney_000.X");
-	Engine::CObjectFactory::GetInstance()->AddPrototype(draken);
+	SHARED(Engine::CGameObject) sanwaMoney = Engine::CGameObject::Create(L"Boss", L"SanwaMoney", true);
+	sanwaMoney->SetName(L"SanwaMoney");
+	sanwaMoney->SetPosition(vector3(0, 0, 0));
+	sanwaMoney->SetScale(vector3(0.01f, 0.01f, 0.01f));
+	sanwaMoney->AddComponent<CMonster>()->AddFSM<CSanwaMoneyIdle>();
+	sanwaMoney->AddComponent<Engine::CRigidBodyComponent>();
+	sanwaMoney->GetComponent<Engine::CRigidBodyComponent>()->SetBounciness(0.0f);
+	sanwaMoney->GetComponent<Engine::CRigidBodyComponent>()->SetMass(80);
+	sanwaMoney->AddComponent<Engine::CAnimMeshRenderComponent>()->MeshInput(L"../../Resource/Mesh/Static/DynamicMesh/Boss/AgentSanwaMoney/", L"Boss_AgentSanwaMoney_000.X");
+	Engine::CObjectFactory::GetInstance()->AddPrototype(sanwaMoney);
 }
 
 void CMainApp::Player()
@@ -242,4 +251,12 @@ void CMainApp::Player()
 	player->AddComponent<Engine::CAnimMeshRenderComponent>()->MeshInput(L"../../Resource/Mesh/Static/DynamicMesh/Player/", L"Player_Player_000.X");
 	Engine::CObjectFactory::GetInstance()->AddPrototype(player);
 
+}
+
+void CMainApp::Interaction()
+{
+	SHARED(Engine::CGameObject) mess = Engine::CGameObject::Create(L"Interaction", L"BossStatue", true);
+	mess->AddComponent<Engine::CMeshComponent>();
+	mess->AddComponent<Engine::CStaticMeshRenderComponent>();
+	Engine::CObjectFactory::GetInstance()->AddPrototype(mess);
 }

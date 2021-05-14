@@ -48,11 +48,13 @@ void CPlayerWapon::Start(SHARED(CComponent) spSelf)
 _uint CPlayerWapon::FixedUpdate(SHARED(CComponent) spSelf)
 {
 
+
 	return NO_EVENT;
 }
 
 _uint CPlayerWapon::Update(SHARED(CComponent) spThis)
 {
+	
 	return NO_EVENT;
 }
 
@@ -68,7 +70,6 @@ _uint CPlayerWapon::LateUpdate(SHARED(CComponent) spThis)
 		break;
 	}
 
-	
 	return NO_EVENT;
 }
 
@@ -84,42 +85,47 @@ void CPlayerWapon::OnDisable(void)
 {
 }
 
+// 위치 vector3(-10, 0, -12)
+// 회전 vector3(-90, 45, 0)
 void CPlayerWapon::Wapon0()
 {
+	if (GetOwner()->GetRotation() != vector3(-90, 45, 0))
+	{
+		GetOwner()->SetRotation(vector3(-90, 45, 0));
+		GetOwner()->SetWorldMatrix(m_world * m_bone);
+		return;
+	}
+
 	GetOwner()->SetPosition(m_playerObj->GetPosition());
-	matrix4x4 bone = *m_parentBoneMatrix[0] * *m_parentWorldMatrix;
+	m_bone = *m_parentBoneMatrix[0] * *m_parentWorldMatrix;
 
-	matrix4x4 world = GetOwner()->GetWorldMatrix();
-	world._41 = -10.0f;
-	world._42 = 0.0f;
-	world._43 = -12.0f;
+	m_world = GetOwner()->GetWorldMatrix();
+	m_world._41 = -10.0f;
+	m_world._42 = 0.0f;
+	m_world._43 = -12.0f;
 
-	GetOwner()->SetRotation(vector3(-90, 45, 0));
-
-	// 위치 vector3(-10, 0, -12)
-	// 회전 vector3(-90, 45, 0)
-
-	// 위치 vector3(-4.313, 28.600, 20.1628)
-	// 회전 vector3(325, 175, 364)
-
-	GetOwner()->SetWorldMatrix(world * bone);
+	GetOwner()->SetWorldMatrix(m_world * m_bone);
 }
 
+// 위치 vector3(-4.313, 28.600, 20.1628)
+// 회전 vector3(325, 175, 364)
 void CPlayerWapon::Wapon1()
 {
+	if (GetOwner()->GetRotation() != vector3(325, 175, 364))
+	{
+		GetOwner()->SetRotation(vector3(325, 175, 364));
+		GetOwner()->SetWorldMatrix(m_world * m_bone);
+		return;
+	}
+
 	GetOwner()->SetPosition(m_playerObj->GetPosition());
-	matrix4x4 bone = *m_parentBoneMatrix[1] * *m_parentWorldMatrix;
+	m_bone = *m_parentBoneMatrix[1] * *m_parentWorldMatrix;
 
-	matrix4x4 world = GetOwner()->GetWorldMatrix();
-	world._41 = -4.313f;
-	world._42 = 28.600f;
-	world._43 = 20.1628f;
+	m_world = GetOwner()->GetWorldMatrix();
+	m_world._41 = -4.313f;
+	m_world._42 = 28.600f;
+	m_world._43 = 20.1628f;
 
-	GetOwner()->SetRotation(vector3(325, 175, 364));
-
-	// 위치 vector3(-4.313, 28.600, 20.1628)
-	// 회전 vector3(325, 175, 364)
-
-	GetOwner()->SetWorldMatrix(world * bone);
+	GetOwner()->SetWorldMatrix(m_world * m_bone);
 }
 

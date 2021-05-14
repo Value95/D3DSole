@@ -29,7 +29,7 @@ void CSanwaMoneyIdle::Start()
 	}
 
 	m_monster->GetAnim()->GetAnimCtrl()->SetSpeed(1.0f);
-	m_monster->GetAnim()->Set_AnimationSet(0);
+	m_monster->GetAnim()->Set_AnimationSet(1);
 
 }
 
@@ -47,7 +47,12 @@ _uint CSanwaMoneyIdle::Update()
 	if (Engine::Distance(m_monster->GetOwner()->GetPosition(), m_monster->GetPlayer()->GetPosition()) >= 8.0f)
 	{
 		m_monster->ChangeFSM(CMonster::SM_STATE::SM_MOVE);
+		return NO_EVENT;
 	}
+	MoveCheck();
+	m_monster->GetOwner()->LookAtX(m_monster->GetPlayer()->GetPosition());
+	m_monster->GetOwner()->AddRotationY(180);
+
 	return NO_EVENT;
 }
 
@@ -87,6 +92,14 @@ void CSanwaMoneyIdle::ReSet()
 	m_monster->AddFSM(new CSanwaMoneyHalfHealth(m_monster), CMonster::SM_STATE::SM_HALFHEALTH);
 	m_monster->AddFSM(new CSanwaMoneyDeath(m_monster), CMonster::SM_STATE::SM_DEATH);
 }
+
+void CSanwaMoneyIdle::MoveCheck()
+{
+	if (m_monster->Collision(m_monster->GetOwner()->GetComponent<Engine::CColliderComponent>()->GetColliders()[0], m_monster->GetOwner()))
+	{
+		m_monster->GetPlayer()->Translate(vector3Forward * m_monster->GetMonsterInfo()->GetSpeed() * 10);
+	}
+}	
 
 
 

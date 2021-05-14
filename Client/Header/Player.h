@@ -4,25 +4,28 @@
 class FSM;
 class CPlayerInfo;
 class CPlayerHP;
+class CPlayerUI;
 class CPlayer final : public Engine::CComponent
 {
-public:	enum STATE {IDLE, MOVE, ATTACK, DEATH, HIT, DEBUGMODE, UPPERCUT, ROLL, MINIPICKAXE, RUSH, STATEEND};
+public:	enum STATE {IDLE, MOVE, ATTACK, DEATH, HIT, DEBUGMODE, UPPERCUT, ROLL, MINIPICKAXE, RUSH, INTERACTION, STATEEND};
 
 private:
 	FSM* m_playerFSM[STATE::STATEEND];
 	GETTOR(STATE, m_playerState, STATE::IDLE, PlayerState);
 	GETTOR(STATE, m_playerOldState, STATE::IDLE, PlayerOldState);
 	GETTOR_SETTOR(CPlayerInfo*, m_playerInfo, {}, PlayerInfo);
-	GETTOR_SETTOR(_bool, m_idleLook, {}, IdleLook);
 
 	GETTOR_SETTOR(SHARED(Engine::CAnimMeshRenderComponent), m_anim, nullptr, Anim);
 	GETTOR_SETTOR(SHARED(Engine::CRigidBodyComponent), m_rigidbody, nullptr, RigidBody);
 	CPlayerHP* m_playerHP;
+	CPlayerUI* m_playerUI;
 
 	GETTOR_SETTOR(_int, m_uppercutCount, 0, UppercutCount);
 	GETTOR(_int, m_uppercutMaxCount, 3, UppercutMaxCount);
-
 	GETTOR_SETTOR(_int, m_waponPosNumber, 0, WaponPosNumber);
+
+	GETTOR_SETTOR(_bool, m_idleLook, {}, IdleLook);
+
 public:
 	explicit CPlayer(void);
 	virtual	 ~CPlayer(void);
@@ -48,6 +51,8 @@ public:
 	void IdleLookState();
 	void IdleLookEnd();
 	void UpperCutCountReset();
+	bool MoveCheck(vector3 dir, _float moveCheckDir);
+
 private:
 	void FSMCreate();
 };

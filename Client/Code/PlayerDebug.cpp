@@ -13,6 +13,7 @@ CPlayerDebug::~CPlayerDebug()
 
 void CPlayerDebug::Start()
 {
+	m_player->SetWaponPosNumber(0);
 	m_animCount = 0;
 	m_player->GetAnim()->GetAnimCtrl()->SetSpeed(1.0f);
 	m_player->GetAnim()->Set_AnimationSet(m_animCount);

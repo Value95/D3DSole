@@ -65,7 +65,7 @@ _uint CSanwaMoneyAttack3::Update()
 		m_monster->GetOwner()->AddRotationY(180);
 	}
 
-	if (!m_attack && !init)
+	if (!m_attack && m_monster->GetAnim()->GetAnimCtrl()->CurentTime() < 0.93f && m_monster->MoveCheck(vector3Forward, 22.0f))
 	{
 		Move();
 	}

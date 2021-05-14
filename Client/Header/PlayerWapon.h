@@ -10,6 +10,9 @@ private:
 
 	SHARED(Engine::CGameObject)	m_playerObj;
 	SHARED(CPlayer)	m_playerCom;
+
+	matrix4x4 m_bone;
+	matrix4x4 m_world;
 public:
 	explicit CPlayerWapon();
 	virtual ~CPlayerWapon();

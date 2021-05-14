@@ -66,7 +66,7 @@ _uint CSanwaMoneyAttack1::Update()
 		
 	}
 
-	if (!m_attack && !init)
+	if (!m_attack && !init && m_monster->MoveCheck(vector3Forward, 2.8f))
 	{
 		Move();
 	}

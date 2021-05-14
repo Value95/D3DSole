@@ -1,4 +1,4 @@
-#include "stdafx.h"
+	#include "stdafx.h"
 #include "PlayerUppercut.h"
 #include "PlayerInfo.h"
 
@@ -7,7 +7,7 @@
 CPlayerUppercut::CPlayerUppercut(CPlayer* player)
 {
 	m_player = player;
-	collision = Engine::CBoxCollider::Create(vector3(1, 3, 1), vector3(0, 1.8, -0.7));
+	collision = Engine::CBoxCollider::Create(vector3(0.6, 1.6, 4), vector3(0, 0.9, -2));	
 }
 
 CPlayerUppercut::~CPlayerUppercut()
@@ -28,7 +28,6 @@ void CPlayerUppercut::Start()
 
 void CPlayerUppercut::End()
 {
-	m_player->SetWaponPosNumber(0);
 }
 
 _uint CPlayerUppercut::FixedUpdate()

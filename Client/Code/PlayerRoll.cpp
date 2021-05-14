@@ -13,6 +13,7 @@ CPlayerRoll::~CPlayerRoll()
 
 void CPlayerRoll::Start()
 {
+	m_player->SetWaponPosNumber(0);
 	m_player->GetAnim()->GetAnimCtrl()->SetSpeed(1.0f);
 	m_player->GetAnim()->Set_AnimationSet(4);
 }
@@ -34,7 +35,7 @@ _uint CPlayerRoll::Update()
 		return NO_EVENT;
 	}
 
-	if(m_player->GetAnim()->GetAnimCtrl()->CurentTime() <= 0.869565f)
+	if (m_player->GetAnim()->GetAnimCtrl()->CurentTime() <= 0.869565f && m_player->MoveCheck(Engine::GET_MAIN_CAM->GetOwner()->ReturnTranslate(vector3Forward), 1.2f))
 		m_player->GetOwner()->Translate(vector3Back * deltaTime * m_player->GetPlayerInfo()->GetRollSpeed());
 
 	return NO_EVENT;
