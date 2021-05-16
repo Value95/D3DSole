@@ -23,13 +23,13 @@ CGameObject * CRaycast::MeshRayCast(vector3 origin, vector3 direction, _float ma
 	_float u, v, dist;
 	HRESULT hr;
 
-	CGameObject* gameObject = nullptr;
-
 	CLayer* pLayer = GET_CUR_SCENE->GetLayers()[layerKey].get();
 
 	vector3 Torigin;
 	vector3 Tdirection;
 
+	CGameObject* gameObject = nullptr;
+	_float minDist = 999999;
 	for (auto& object : pLayer->GetGameObjects())
 	{
 		SHARED(Engine::CMeshComponent) meshCom = object->GetComponent<Engine::CMeshComponent>();
@@ -53,8 +53,6 @@ CGameObject * CRaycast::MeshRayCast(vector3 origin, vector3 direction, _float ma
 
 		if (hit == true && maxDistance >= dist)
 		{
-
-
 			outHit = vector3(origin + (dist * direction)); // 맞은위치 충돌위치를
 			if (EPSILON > outHit.x && -EPSILON < outHit.x)
 				outHit.x = 0.f;
@@ -63,8 +61,11 @@ CGameObject * CRaycast::MeshRayCast(vector3 origin, vector3 direction, _float ma
 			if (EPSILON > outHit.z && -EPSILON < outHit.z)
 				outHit.z = 0.f;
 
-			gameObject = object.get();
-			return gameObject;
+			if (dist <= minDist)
+			{
+				minDist = dist;
+				gameObject = object.get();
+			}
 		}
 	}
 	return gameObject;
@@ -77,13 +78,14 @@ CGameObject * CRaycast::MeshRayCast(vector3 origin, vector3 direction, _float ma
 	_float u, v, dist;
 	HRESULT hr;
 
-	CGameObject* gameObject = nullptr;
 
 	CLayer* pLayer = GET_CUR_SCENE->GetLayers()[layerKey].get();
 
 	vector3 Torigin;
 	vector3 Tdirection;
 
+	CGameObject* gameObject = nullptr;
+	_float minDist = 999999;
 	for (auto& object : pLayer->GetGameObjects())
 	{
 		SHARED(Engine::CMeshComponent) meshCom = object->GetComponent<Engine::CMeshComponent>();
@@ -115,8 +117,11 @@ CGameObject * CRaycast::MeshRayCast(vector3 origin, vector3 direction, _float ma
 			if (EPSILON > outHit.z && -EPSILON < outHit.z)
 				outHit.z = 0.f;
 
-			gameObject = object.get();
-			return gameObject;
+			if (dist <= minDist)
+			{
+				minDist = dist;
+				gameObject = object.get();
+			}			
 		}
 	}
 	return gameObject;
@@ -186,20 +191,27 @@ CGameObject * CRaycast::BoxRayCast(vector3 origin, vector3 direction, _float max
 	return pGameObject;
 }
 
-CGameObject * CRaycast::BoxRayCast(vector3 origin, vector3 direction, _float maxDistance, std::wstring layerKey)
+CGameObject* CRaycast::BoxRayCast(vector3 origin, vector3 direction, _float maxDistance, std::wstring layerKey)
 {
 	_float t = FLT_MAX;
 	CGameObject* pGameObject = nullptr;
 
 	CLayer* pLayer = GET_CUR_SCENE->GetLayers()[layerKey].get();
 
+	if(pLayer == nullptr)
+		return pGameObject;
+
 	for (auto& object : pLayer->GetGameObjects())
 	{
 		if (object->GetPosition() == origin)
 			continue;
 
+		if (object->GetComponent<Engine::CColliderComponent>() == nullptr)
+			continue;
+
 		if (object->GetComponent<Engine::CColliderComponent>()->GetColliders()[0] == nullptr)
 			continue;
+		
 
 		_float tMin = 0;
 		_float tMax = maxDistance;
@@ -212,8 +224,8 @@ CGameObject * CRaycast::BoxRayCast(vector3 origin, vector3 direction, _float max
 		if (collider->GetColliderType() == (int)EColliderType::Box)
 		{
 			CBoxCollider* boxCollider = static_cast<Engine::CBoxCollider*>(collider);
-			minPos = (boxCollider->GetBoxSize() * 0.5f) * -1;
-			maxPos = (boxCollider->GetBoxSize() * 0.5f);
+			minPos = ((boxCollider->GetBoxSize() * 0.5f) * -1) + (boxCollider->GetOffset());
+			maxPos = (boxCollider->GetBoxSize() * 0.5f) + (boxCollider->GetOffset());
 		}
 		else if (collider->GetColliderType() == (int)EColliderType::Sphere)
 		{
@@ -231,8 +243,19 @@ CGameObject * CRaycast::BoxRayCast(vector3 origin, vector3 direction, _float max
 		maxPos.y = maxPos.y / object->GetScale().y;
 		maxPos.z = maxPos.z / object->GetScale().z;
 
+		matrix4x4 rotation;
+		D3DXMatrixRotationYawPitchRoll(&rotation, D3DXToRadian(object->GetRotation().y), D3DXToRadian(object->GetRotation().x), D3DXToRadian(object->GetRotation().z));
+
+		D3DXVec3TransformNormal(&minPos, &minPos, &rotation);
+		D3DXVec3Normalize(&minPos, &minPos);
+
+		D3DXVec3TransformNormal(&maxPos, &maxPos, &rotation);
+		D3DXVec3Normalize(&maxPos, &maxPos);
+
 		D3DXVec3TransformCoord(&minPos, &minPos, &object->GetWorldMatrix());
 		D3DXVec3TransformCoord(&maxPos, &maxPos, &object->GetWorldMatrix());
+
+		
 
 		// 문제는 오브젝트의크기
 		// 플레이어의 0.001과 돌의 1은 같은 크기이다. 근데 이것을 월드로보면 플레이어는 돌에 100배작다.
@@ -264,6 +287,134 @@ CGameObject * CRaycast::BoxRayCast(vector3 origin, vector3 direction, _float max
 	}
 
 	return pGameObject;
+}
+
+CGameObject* CRaycast::BoxRayCast(vector3 origin, vector3 direction, _float maxDistance, CGameObject* originObject)
+{
+	_float t = FLT_MAX;
+	CGameObject* pGameObject = nullptr;
+
+	for (auto pLayer = GET_CUR_SCENE->GetLayers().begin(); pLayer != GET_CUR_SCENE->GetLayers().end(); pLayer++)
+	{
+
+		if (pLayer->second == nullptr)
+			continue;
+
+		for (auto& object : pLayer->second->GetGameObjects())
+		{
+			if (originObject == object.get())
+				continue;
+
+			if (object->GetComponent<Engine::CColliderComponent>() == nullptr)
+				continue;
+
+			if (object->GetComponent<Engine::CColliderComponent>()->GetColliders()[0] == nullptr)
+				continue;
+
+
+			_float tMin = 0;
+			_float tMax = maxDistance;
+
+			CCollider* collider = object->GetComponent<Engine::CColliderComponent>()->GetColliders()[0];
+
+			vector3 minPos;
+			vector3 maxPos;
+
+			if (collider->GetColliderType() == (int)EColliderType::Box)
+			{
+				CBoxCollider* boxCollider = static_cast<Engine::CBoxCollider*>(collider);
+				minPos = ((boxCollider->GetBoxSize() * 0.5f) * -1);
+				maxPos = (boxCollider->GetBoxSize() * 0.5f);
+
+				object->OutTranslate(minPos);
+				object->OutTranslate(maxPos);
+
+				minPos.x = minPos.x / object->GetScale().x;
+				minPos.y = minPos.y / object->GetScale().y;
+				minPos.z = minPos.z / object->GetScale().z;
+
+				maxPos.x = maxPos.x / object->GetScale().x;
+				maxPos.y = maxPos.y / object->GetScale().y;
+				maxPos.z = maxPos.z / object->GetScale().z;
+
+				D3DXVec3TransformCoord(&minPos, &minPos, &object->GetWorldMatrix());
+				D3DXVec3TransformCoord(&maxPos, &maxPos, &object->GetWorldMatrix());
+
+				minPos += (boxCollider->GetOffset());
+				maxPos += (boxCollider->GetOffset());
+			}
+			else if (collider->GetColliderType() == (int)EColliderType::Sphere)
+			{
+				collider = dynamic_cast<Engine::CSphereCollider*>(collider);
+			}
+
+
+
+			// 문제는 오브젝트의크기
+			// 플레이어의 0.001과 돌의 1은 같은 크기이다. 근데 이것을 월드로보면 플레이어는 돌에 100배작다.
+
+			for (int i = 0; i < 3; ++i)
+			{
+				if (minPos[i] > maxPos[i])
+				{
+					_float temp = minPos[i];
+					minPos[i] = maxPos[i];
+					maxPos[i] = temp;
+				}
+			}
+
+			// D3DXIntersectTri
+
+			if (!RayIntersectCheck(direction.x, origin.x, minPos.x, maxPos.x, tMin, tMax))
+				continue;
+			if (!RayIntersectCheck(direction.y, origin.y, minPos.y, maxPos.y, tMin, tMax))
+				continue;
+			if (!RayIntersectCheck(direction.z, origin.z, minPos.z, maxPos.z, tMin, tMax))
+				continue;
+
+			if (tMin < t)
+			{
+				t = tMin;
+				pGameObject = object.get();
+			}
+		}
+	}
+
+	return pGameObject;
+}
+
+vector<CGameObject*> CRaycast::UIRayCast(std::wstring layerKey)
+{
+	POINT point;
+	GetCursorPos(&point);
+	ScreenToClient(CWndApp::GetInstance()->GetHWnd(), &point);
+
+	point.x -= CWndApp::GetInstance()->GetWndWidth() *0.5f;
+	point.y -= CWndApp::GetInstance()->GetWndHeight() *0.5f;
+
+	cout << point.x << endl;
+	cout << point.y << endl << endl;
+
+	CLayer* pLayer = GET_CUR_SCENE->GetLayers()[layerKey].get();
+
+	vector<CGameObject*> returnObject;
+
+	for (auto& object : pLayer->GetGameObjects())
+	{
+		float distanceX = fabs(fabs(object->GetPosition().x) - fabs(point.x));
+		float radCX = object->GetScale().x * 0.5f;
+
+		float distanceY = fabs(fabs(object->GetPosition().y) - fabs(point.y));
+		float radCY = object->GetScale().y * 0.5f;
+
+		if (distanceX <= radCX && distanceY <= radCY)
+		{
+			returnObject.emplace_back(object.get());
+		}
+
+	}
+
+	return returnObject;
 }
 
 _bool CRaycast::RayIntersectCheck(_float rayAxisDir, _float rayAxisStart,

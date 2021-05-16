@@ -283,7 +283,6 @@ void CColliderManager::OBB(std::vector<CGameObject*>& returnCollider, CBoxCollid
 	box1Size = box1->GetBoxSize();
 	box2Size = box2->GetBoxSize();
 	m_distance = (m_gameObject1->GetPosition() + box1->GetOffset()) - (m_gameObject2->GetPosition() + box2->GetOffset());
-	//m_distance.z = 0;
 
 	if (CheckShaft(m_box1UP) && CheckShaft(m_box2UP) && CheckShaft(m_box1Right) && CheckShaft(m_box2Right) && CheckShaft(m_box1Forward) && CheckShaft(m_box2Forward))
 	{

@@ -5,7 +5,7 @@
 CPlayerMiniPickaxe::CPlayerMiniPickaxe(CPlayer* player)
 {
 	m_player = player;
-	collision = Engine::CBoxCollider::Create(vector3(0.5, 0.5, 1.2), vector3(0.0, 1.8, -0.3));
+	collision = Engine::CBoxCollider::Create(vector3(0.5, 0.5, 1.5), vector3(0.0, 1.8, -0.3));
 	m_miniGock = Engine::GET_CUR_SCENE->FindObjectByName(L"MiniGock");
 }
 

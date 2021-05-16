@@ -46,7 +46,7 @@ _uint CAnimMeshRenderManager::LateUpdate(void)
 _uint CAnimMeshRenderManager::PreRender(void)
 {
 	GET_DEVICE->BeginScene();
-	GET_DEVICE->SetRenderState(D3DRS_LIGHTING, FALSE);
+	GET_DEVICE->SetRenderState(D3DRS_LIGHTING, TRUE);
 
 	return NO_EVENT;
 }

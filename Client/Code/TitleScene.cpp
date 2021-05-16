@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "TitleScene.h"
 #include "MainRoomScene.h"
+#include "CameraMove.h"
 
 CTitleScene::CTitleScene()
 {
@@ -27,11 +28,13 @@ void CTitleScene::Awake(void)
 void CTitleScene::Start(void)
 {
 	__super::Start();
-	
+	ShowCursor(true);
+
 	LoadObject(L"TitleScene");
 
 	{
 		m_pMainCamera = Engine::ADD_CLONE(L"Camera", L"Camera", true)->GetComponent<Engine::CCameraComponent>();
+		m_pMainCamera->GetOwner()->GetComponent<CCameraMove>()->SetIsEnabled(false);
 	}
 
 }
@@ -49,9 +52,20 @@ _uint CTitleScene::Update(void)
 	if (event = __super::Update())
 		return event;
 
-	if (Engine::CInputManager::GetInstance()->KeyDown(KEY_Q))
+	if (Engine::CInputManager::GetInstance()->KeyDown(KEY_LBUTTON))
 	{
-		NextScene();
+		vector<Engine::CGameObject*> obj = Engine::CRaycast::UIRayCast(L"UI");
+
+		if (!obj.empty())
+		{
+			for (auto iter : obj)
+			{
+				if (iter->GetName() == L"NextButton")
+				{
+					NextScene();
+				}
+			}
+		}
 	}
 
 	return event;
@@ -84,7 +98,6 @@ void CTitleScene::InitLayers(void)
 	AddLayer(L"Camera");
 	AddLayer(L"Default");
 	AddLayer(L"UI");
-
 }
 
 void CTitleScene::InitPrototypes(void)
@@ -95,6 +108,7 @@ void CTitleScene::InitPrototypes(void)
 void CTitleScene::NextScene()
 {
 	Engine::CSceneManager::GetInstance()->SceneChange(CMainRoomScene::Create());
+	ShowCursor(false);
 }
 
 

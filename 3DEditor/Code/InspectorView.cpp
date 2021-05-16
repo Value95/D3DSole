@@ -208,27 +208,27 @@ void CInspectorView::LayerAddString()
 	m_layerComboBox.AddString(TEXT("Default"));
 	m_layerComboBox.AddString(TEXT("Light"));
 	m_layerComboBox.AddString(TEXT("UI"));
-	m_layerComboBox.AddString(TEXT("MapObject"));
 	m_layerComboBox.AddString(TEXT("Collider"));
-	m_layerComboBox.AddString(TEXT("Light"));
 	m_layerComboBox.AddString(TEXT("Monster"));
 	m_layerComboBox.AddString(TEXT("Boss"));
 	m_layerComboBox.AddString(TEXT("Player"));
 	m_layerComboBox.AddString(TEXT("Map"));
 	m_layerComboBox.AddString(TEXT("Interaction"));
+	m_layerComboBox.AddString(TEXT("NPC"));
 }
 
 void CInspectorView::ObjectAddString()
 {
 	m_objectKeyComboBox.AddString(TEXT("Default"));
-	m_objectKeyComboBox.AddString(TEXT("Tile"));
-	m_objectKeyComboBox.AddString(TEXT("Mess"));
 	m_objectKeyComboBox.AddString(TEXT("Collider"));
 	m_objectKeyComboBox.AddString(TEXT("NavMesh"));
 	m_objectKeyComboBox.AddString(TEXT("DirectionalLight"));
 	m_objectKeyComboBox.AddString(TEXT("UI"));
 	m_objectKeyComboBox.AddString(TEXT("Player"));
 	m_objectKeyComboBox.AddString(TEXT("Map"));
+
+	//NPC
+	m_objectKeyComboBox.AddString(TEXT("MuscleMan"));
 
 	// 동상
 	m_objectKeyComboBox.AddString(TEXT("SMStatue")); // 산화머니

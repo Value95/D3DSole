@@ -2,7 +2,7 @@
 #include "ScarecrowIdle.h"
 #include "Monster.h"
 #include "MonsterInfo.h"
-
+#include "PlayerInfo.h"
 #include "ScarecrowMaintenance.h"
 
 CScarecrowIdle::CScarecrowIdle(CMonster* monster)
@@ -63,7 +63,9 @@ _uint CScarecrowIdle::LateUpdate()
 
 	if (m_monster->GetHitCheck())
 	{
+		m_monster->SetHitCheck(false);
 		m_pastHP = m_monster->GetMonsterInfo()->GetHP();
+		m_monster->GetPlayerCom()->GetPlayerInfo()->SetGold(m_monster->GetPlayerCom()->GetPlayerInfo()->GetGold() + 100);
 	}
 
 	return NO_EVENT;

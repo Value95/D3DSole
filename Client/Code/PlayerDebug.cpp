@@ -34,7 +34,6 @@ _uint CPlayerDebug::Update()
 	{
 		m_animCount++;
 		m_player->GetAnim()->Set_AnimationSet(m_animCount);
-		cout << m_animCount << endl;
 	}
 
 	if (Engine::CInputManager::GetInstance()->KeyDown(KEY_RBUTTON))

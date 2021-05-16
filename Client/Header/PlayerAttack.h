@@ -8,6 +8,8 @@ private:
 	Engine::CCollider* collision;
 	_bool init;
 	_bool m_attack;
+
+	_float m_moveCheckDir;
 public:
 	CPlayerAttack(CPlayer* player);
 	virtual ~CPlayerAttack();
@@ -23,6 +25,5 @@ public:
 
 private:
 	bool Move();
-	bool MoveCheck(vector3 dir);
 };
 

@@ -38,6 +38,7 @@ private:
 	void Monster();
 	void Player();
 	void Interaction();
+	void Npc();
 };
 
 #endif

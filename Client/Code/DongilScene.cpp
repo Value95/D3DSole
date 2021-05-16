@@ -5,6 +5,8 @@
 #include "PlayerWapon.h"
 #include "PlayerMiniGock.h"
 
+#include "ShaderMesh.h"
+
 CDongilScene::CDongilScene()
 {
 }
@@ -32,6 +34,7 @@ void CDongilScene::Start(void)
 {
 	__super::Start();
 	LoadObject(L"TestScene");
+	LoadObject(L"StatReinforceShop");
 
 	{ // Ä«¸Þ¶ó
 		m_pMainCamera = Engine::ADD_CLONE(L"Camera", L"Camera", true)->GetComponent<Engine::CCameraComponent>();
@@ -53,7 +56,7 @@ void CDongilScene::Start(void)
 		pObj->SetRotation(vector3(325, 175, 364));
 		pObj->AddComponent<CPlayerWapon>();
 		pObj->AddComponent<Engine::CMeshComponent>()->SetMeshKey(L"Wapon_LongHammer_000.X");
-		pObj->AddComponent<Engine::CStaticMeshRenderComponent>();
+		pObj->AddComponent<Engine::CStaticMeshRenderComponent>()->SetShader(new CShaderMesh());
 	}
 
 	{
@@ -64,14 +67,16 @@ void CDongilScene::Start(void)
 		pObj->SetRotation(vector3(415, 414, 0));
 		pObj->AddComponent<CPlayerMiniGock>();
 		pObj->AddComponent<Engine::CMeshComponent>()->SetMeshKey(L"MiniGock.X");
-		pObj->AddComponent<Engine::CStaticMeshRenderComponent>();
+		pObj->AddComponent<Engine::CStaticMeshRenderComponent>()->SetShader(new CShaderMesh());
 	}
+
+	m_pMainCamera->GetOwner()->SetTarget(Engine::GET_CUR_SCENE->FindObjectByName(L"Player").get());
+
 }
 
 _uint CDongilScene::FixedUpdate(void)
 {
 	__super::FixedUpdate();
-	m_pMainCamera->GetOwner()->SetTarget(Engine::GET_CUR_SCENE->FindObjectByName(L"Player").get());
 
 
 	return NO_EVENT;
@@ -110,14 +115,12 @@ void CDongilScene::OnDisable(void)
 
 void CDongilScene::InitLayers(void)
 {
-	AddLayer(L"Light");
 	AddLayer(L"Camera");
 	AddLayer(L"Player");
 	AddLayer(L"Default");
 	AddLayer(L"Monster");
 	AddLayer(L"Boss");
 	AddLayer(L"UI");
-	AddLayer(L"MapObject");
 	AddLayer(L"Collider");
 	AddLayer(L"Map");
 	AddLayer(L"Interaction");

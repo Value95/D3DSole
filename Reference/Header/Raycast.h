@@ -15,7 +15,8 @@ public:
 	static CGameObject* MeshRayCast(vector3 origin, vector3 direction, _float maxDistance, std::wstring layerKey);
 	static CGameObject* BoxRayCast(vector3 origin, vector3 direction, _float maxDistance, std::wstring layerKey, vector3& outHit);
 	static CGameObject* BoxRayCast(vector3 origin, vector3 direction, _float maxDistance, std::wstring layerKey);
-	//static CGameObject* UIRayCast(vector3 origin, vector3 direction, std::wstring layerKey);
+	static CGameObject* BoxRayCast(vector3 origin, vector3 direction, _float maxDistance, CGameObject* originObject = nullptr);
+	static vector<CGameObject*> UIRayCast(std::wstring layerKey);
 	// 모든 오브젝트가 월드에있을때
 
 

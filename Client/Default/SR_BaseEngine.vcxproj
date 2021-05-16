@@ -178,6 +178,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Resource\Shader\Static\Shader_Blend.hpp" />
+    <ClInclude Include="..\..\Resource\Shader\Static\Shader_Mesh.hpp" />
+    <ClInclude Include="..\..\Resource\Shader\Static\Shader_Sample.hpp" />
+    <ClInclude Include="..\..\Resource\Shader\Static\Shader_Shade.hpp" />
+    <ClInclude Include="..\..\Resource\Shader\Static\Shader_SkyBox.hpp" />
+    <ClInclude Include="..\..\Resource\Shader\Static\Shader_Terrain.hpp" />
     <ClInclude Include="..\Header\AgentSanwaMoneyRoomScene.h" />
     <ClInclude Include="..\Header\CameraMove.h" />
     <ClInclude Include="..\Header\ClientComponent.h" />
@@ -211,6 +217,7 @@
     <ClInclude Include="..\Header\PlayerInfo.h" />
     <ClInclude Include="..\Header\PlayerRoll.h" />
     <ClInclude Include="..\Header\PlayerRush.h" />
+    <ClInclude Include="..\Header\PlayerStatReinforceShop.h" />
     <ClInclude Include="..\Header\PlayerUI.h" />
     <ClInclude Include="..\Header\PlayerUppercut.h" />
     <ClInclude Include="..\Header\PlayerWapon.h" />
@@ -226,6 +233,8 @@
     <ClInclude Include="..\Header\SanwaMoneyUI.h" />
     <ClInclude Include="..\Header\ScarecrowIdle.h" />
     <ClInclude Include="..\Header\ScarecrowMaintenance.h" />
+    <ClInclude Include="..\Header\ShaderMesh.h" />
+    <ClInclude Include="..\Header\ShaderSkyBox.h" />
     <ClInclude Include="..\Header\TitleScene.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Client.h" />
@@ -257,6 +266,7 @@
     <ClCompile Include="..\Code\PlayerMiniPickaxe.cpp" />
     <ClCompile Include="..\Code\PlayerMove.cpp" />
     <ClCompile Include="..\Code\PlayerRoll.cpp" />
+    <ClCompile Include="..\Code\PlayerStatReinforceShop.cpp" />
     <ClCompile Include="..\Code\PlayerUI.cpp" />
     <ClCompile Include="..\Code\PlayerUppercut.cpp" />
     <ClCompile Include="..\Code\PlayerWapon.cpp" />
@@ -272,7 +282,10 @@
     <ClCompile Include="..\Code\SanwaMoneyUI.cpp" />
     <ClCompile Include="..\Code\ScarecrowIdle.cpp" />
     <ClCompile Include="..\Code\ScarecrowMaintenance.cpp" />
+    <ClCompile Include="..\Code\ShaderMesh.cpp" />
+    <ClCompile Include="..\Code\ShaderSkyBox.cpp" />
     <ClCompile Include="..\Code\TitleScene.cpp" />
+    <ClCompile Include="..\Header\PlayerInfo.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

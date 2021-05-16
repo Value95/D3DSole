@@ -26,7 +26,7 @@ _uint CStaticMeshRenderManager::Update(void)
 {
 	GET_DEVICE->Clear(0, nullptr,
 		D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
-		D3DCOLOR_ARGB(255, 128, 128, 128),
+		D3DCOLOR_ARGB(255, 0, 0, 225),
 		1.f, 0);
 
 	return NO_EVENT;
@@ -51,6 +51,7 @@ _uint CStaticMeshRenderManager::LateUpdate(void)
 _uint CStaticMeshRenderManager::PreRender(void)
 {
 	GET_DEVICE->BeginScene();
+	GET_DEVICE->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	
 	return NO_EVENT;

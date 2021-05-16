@@ -82,7 +82,7 @@ void CSceneManager::SceneChange(SHARED(CScene) pScene, bool needToBeCleaned/* = 
 
 	OrganizeScene();
 }
-// m_needToBeCleaned이 정확하게 무엇을하는 놈인지 물어보자
+
 void CSceneManager::OrganizeScene(void)
 {
 	if (m_needToBeCleaned)

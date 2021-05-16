@@ -16,7 +16,7 @@ private:
 	GETTOR(SHARED(Engine::CGameObject), m_player, {}, Player);
 	GETTOR(SHARED(CPlayer), m_playerCom, {}, PlayerCom);
 
-	GETTOR(_bool, m_hitCheck, 0, HitCheck);
+	GETTOR_SETTOR(_bool, m_hitCheck, false, HitCheck);
 
 	GETTOR_SETTOR(SHARED(Engine::CAnimMeshRenderComponent), m_anim, nullptr, Anim);
 	GETTOR_SETTOR(SHARED(Engine::CRigidBodyComponent), m_rigidBody, nullptr, RigidBody);

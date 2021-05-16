@@ -76,6 +76,43 @@ public:
 
 		return true;
 	}
+
+	template <typename T>
+	bool SetValue(_bool isStatic, std::wstring sectionKey, std::wstring objectKey, std::wstring varKey, T& result)
+	{
+		_DataKeyMap* pDataMap = nullptr;
+		if (isStatic)
+			pDataMap = &m_mStaticDataMap;
+		else
+			pDataMap = &m_mCurDataMap;
+
+		auto& iter_section = pDataMap->find(sectionKey);
+		if (iter_section == pDataMap->end())
+		{
+			MSG_BOX(__FILE__, (L"sectionKey [" + sectionKey + L"] is missing in GetValue").c_str());
+			return false;
+		}
+
+		auto& iter_object = iter_section->second.find(objectKey);
+		if (iter_object == iter_section->second.end())
+		{
+			MSG_BOX(__FILE__, (L"objectKey [" + objectKey + L"] is missing in GetValue").c_str());
+			return false;
+		}
+
+		auto& iter_var = iter_object->second.find(varKey);
+		if (iter_var == iter_object->second.end())
+		{
+			MSG_BOX(__FILE__,
+				(L"object : [" + objectKey +
+					L"] var: [" + varKey + L"] Missing varKey in GetValue").c_str());
+			return false;
+		}
+		
+		iter_var->second = result;
+
+		return true;
+	}
 };
 END
 #endif // !DATASTORE_H

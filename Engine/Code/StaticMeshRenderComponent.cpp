@@ -24,6 +24,7 @@ SHARED(CComponent) CStaticMeshRenderComponent::MakeClone(CGameObject* pObject)
 	pClone->SetIsAwaked(m_isAwaked);
 
 	pClone->SetRenderID(m_renderID);
+	pClone->SetShader(m_shader);
 
 	return pClone;
 }
@@ -37,10 +38,11 @@ void CStaticMeshRenderComponent::Start(SHARED(CComponent) spThis)
 {
 	__super::Start(spThis);
 	m_mesh = m_pOwner->GetComponent<CMeshComponent>();
-
 	if (m_shader)
-		m_shader->SetEffectShader(*CShaderStore::GetInstance()->GetShaderData(m_shader->GetShaderKey()));
-
+	{
+		m_shader->State();
+		m_shader->SetGameObject(GetOwner());
+	}
 }
 
 _uint CStaticMeshRenderComponent::FixedUpdate(SHARED(CComponent) spThis)
@@ -73,12 +75,7 @@ _uint CStaticMeshRenderComponent::PreRender(void)
 
 	if (m_shader)
 	{
-		m_shader->GetEffectShader()->SetMatrix("g_matWorld", &GetOwner()->GetWorldMatrix());
-		m_shader->GetEffectShader()->SetMatrix("g_matView", &GET_CUR_SCENE->GetMainCamera()->GetViewMatrix());
-		m_shader->GetEffectShader()->SetMatrix("g_matProj", &GET_CUR_SCENE->GetMainCamera()->GetProjMatrix());
-
-		m_shader->GetEffectShader()->SetTexture("g_BaseTexture", m_mesh->GetMeshData()->texture[0]);
-
+		m_shader->PreRender();
 		m_shader->ShaderReady();
 	}
 
@@ -91,6 +88,13 @@ _uint CStaticMeshRenderComponent::Render(void)
 	for (_ulong i = 0; i < m_mesh->GetMeshData()->materialsCount; i++)
 	{
 		GET_DEVICE->SetTexture(0, m_mesh->GetMeshData()->texture[i]);
+
+		if (m_shader)
+		{
+			m_shader->Render();
+			m_shader->GetEffectShader()->CommitChanges();
+		}
+
 		m_mesh->GetMeshData()->mesh->DrawSubset(i);
 	}
 
@@ -99,6 +103,8 @@ _uint CStaticMeshRenderComponent::Render(void)
 
 _uint CStaticMeshRenderComponent::PostRender(void)
 {
+	if (m_shader)
+		m_shader->ShaderEnd();
 
 	return _uint();
 }

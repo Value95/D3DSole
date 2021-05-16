@@ -154,6 +154,8 @@ void ClassName::DestroyInstance(void)												\
 #define GET_VALUE(isStatic, sectionKey, objectKey, varKey, result)					\
 CDataStore::GetInstance()->GetValue(isStatic, sectionKey, objectKey, varKey, result)
 
+#define SET_VALUE(isStatic, sectionKey, objectKey, varKey, result)					\
+CDataStore::GetInstance()->SetValue(isStatic, sectionKey, objectKey, varKey, result)
 
 //ObjectFactory Macro
 #define ADD_CLONE(layerKey, objectKey, isStatic)									\

@@ -8,6 +8,7 @@ CPlayerUppercut::CPlayerUppercut(CPlayer* player)
 {
 	m_player = player;
 	collision = Engine::CBoxCollider::Create(vector3(0.6, 1.6, 4), vector3(0, 0.9, -2));	
+	m_moveCheckDir = 1.0f;
 }
 
 CPlayerUppercut::~CPlayerUppercut()
@@ -49,9 +50,12 @@ _uint CPlayerUppercut::FixedUpdate()
 
 _uint CPlayerUppercut::Update()
 {
+	Move();
+
 	if (m_player->GetAnim()->GetAnimCtrl()->Is_AnimationSetEnd())
 	{
 		m_player->ChangeFSM(CPlayer::STATE::IDLE);
+		return NO_EVENT;
 	}
 
 	if (!m_upInit && m_player->GetAnim()->GetAnimCtrl()->CurentTime() >= 0.5416666f)
@@ -71,4 +75,41 @@ _uint CPlayerUppercut::LateUpdate()
 
 void CPlayerUppercut::OnDestroy(void)
 {
+}
+
+bool CPlayerUppercut::Move()
+{
+	if (!m_player->GetOwner()->GetComponent<Engine::CRigidBodyComponent>()->GetGroundCheck())
+	{
+		_float m_speed = m_player->GetPlayerInfo()->GetSpeed() * 0.6f;
+
+		if (Engine::CInputManager::GetInstance()->KeyPress(KEY_W) &&
+			m_player->MoveCheck(Engine::GET_MAIN_CAM->GetOwner()->ReturnTranslate(vector3Forward), m_moveCheckDir))
+		{
+			m_player->GetOwner()->SetRotationY(Engine::GET_MAIN_CAM->GetOwner()->GetRotation().y + 180);
+			m_player->GetOwner()->Translate(vector3Back * deltaTime * m_speed);
+		}
+		else if (Engine::CInputManager::GetInstance()->KeyPress(KEY_S) &&
+			m_player->MoveCheck(Engine::GET_MAIN_CAM->GetOwner()->ReturnTranslate(vector3Back), m_moveCheckDir))
+		{
+			m_player->GetOwner()->SetRotationY(Engine::GET_MAIN_CAM->GetOwner()->GetRotation().y + 180);
+			m_player->GetOwner()->Translate(vector3Forward * deltaTime * m_speed);
+		}
+
+		if (Engine::CInputManager::GetInstance()->KeyPress(KEY_A) &&
+			m_player->MoveCheck(Engine::GET_MAIN_CAM->GetOwner()->ReturnTranslate(vector3Left), m_moveCheckDir))
+		{
+			m_player->GetOwner()->SetRotationY(Engine::GET_MAIN_CAM->GetOwner()->GetRotation().y + 180);
+			m_player->GetOwner()->Translate(vector3Right * deltaTime * m_speed);
+		}
+		else if (Engine::CInputManager::GetInstance()->KeyPress(KEY_D) &&
+			m_player->MoveCheck(Engine::GET_MAIN_CAM->GetOwner()->ReturnTranslate(vector3Right), m_moveCheckDir))
+		{
+			m_player->GetOwner()->SetRotationY(Engine::GET_MAIN_CAM->GetOwner()->GetRotation().y + 180);
+			m_player->GetOwner()->Translate(vector3Left * deltaTime * m_speed);
+		}
+
+	}
+
+	return false;
 }

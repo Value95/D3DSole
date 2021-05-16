@@ -2,6 +2,7 @@
 #include "PlayerInteraction.h"
 
 #include "TitleScene.h"
+#include "DongilScene.h"
 
 CPlayerInteraction::CPlayerInteraction(CPlayer* player)
 {
@@ -32,6 +33,11 @@ _uint CPlayerInteraction::FixedUpdate()
 			if (object->GetLayerKey() == L"Interaction")
 			{
 				Interaction(object->GetObjectKey());
+				return SCENE_CHANGE;
+			}
+			else if (object->GetName() == L"MuscleMan")
+			{
+				m_player->ChangeFSM(CPlayer::STATE::STATREINFORCESHOP);
 			}
 		}
 	}
@@ -54,15 +60,16 @@ void CPlayerInteraction::OnDestroy(void)
 {
 }
 
-void CPlayerInteraction::Interaction(std::wstring objectKeys)
+void CPlayerInteraction::Interaction(std::wstring objectKey)
 {
-	Engine::CSceneManager::GetInstance()->SceneChange(CTitleScene::Create());
+	Engine::CSceneManager::GetInstance()->SceneChange(CDongilScene::Create());
+	/*if (objectKey == L"")
+	{
+		Engine::CSceneManager::GetInstance()->SceneChange(CDongilScene::Create());
+	}
+	else if (objectKey == L"")
+	{
+		Engine::CSceneManager::GetInstance()->SceneChange(CTitleScene::Create());
+	}*/
 
 }
-
-// 충돌한다음에 해당 오브젝트가 무엇인지 판단
-// 그에맞는 함수를 실행
-
-// NPC가 UI를관리
-// UI가 NPC를관리 
-// 어떤게좋을까?

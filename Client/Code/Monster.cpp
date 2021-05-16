@@ -52,8 +52,6 @@ void CMonster::Start(SHARED(CComponent) spThis)
 	m_monsterFSM[0]->SetMonster(this);
 	m_monsterFSM[0]->Start();
 	m_monsterMaintenanceFSM->Start();
-
-	m_hitCheck = false;
 }
 
 _uint CMonster::FixedUpdate(SHARED(CComponent) spThis)
@@ -77,7 +75,6 @@ _uint CMonster::LateUpdate(SHARED(CComponent) spThis)
 	m_monsterFSM[m_monsterState]->LateUpdate();
 	m_monsterMaintenanceFSM->LateUpdate();
 
-	m_hitCheck = true;
 	return NO_EVENT;
 }
 
@@ -111,7 +108,6 @@ void CMonster::Hit(_int damage)
 {
 	m_hitCheck = true;
 	m_monsterInfo->AddHp(-damage);
-	cout << "몬스터 체력 : " << m_monsterInfo->GetHP() << endl;
 	HitEffect();
 }
 

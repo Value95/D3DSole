@@ -178,6 +178,21 @@
     <Filter Include="02.Script\01.Monster\00.MonsterFSM\00.Scarecrow\00.ScarecrowMaintenance">
       <UniqueIdentifier>{2f0641c8-76b5-40f3-a961-987476347afc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.Script\00.Player\00.PlayerFMS\11.StatReinforceShop">
+      <UniqueIdentifier>{e980b069-5747-4f07-8b77-274c598decfb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Shader">
+      <UniqueIdentifier>{424b1373-6aa9-486b-985a-166f84a3e7cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.ShaderHPP">
+      <UniqueIdentifier>{d7be5ede-5c95-408d-b33b-5d75a6527700}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Shader\00.Mesh">
+      <UniqueIdentifier>{4ebc097e-b8e4-4635-979c-d883d8974a23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Shader\01.SkyBox">
+      <UniqueIdentifier>{bb80e114-500d-48c7-aa51-907d71f8f972}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -339,6 +354,33 @@
     <ClInclude Include="..\Header\ScarecrowMaintenance.h">
       <Filter>02.Script\01.Monster\00.MonsterFSM\00.Scarecrow\00.ScarecrowMaintenance</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\PlayerStatReinforceShop.h">
+      <Filter>02.Script\00.Player\00.PlayerFMS\11.StatReinforceShop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Resource\Shader\Static\Shader_Mesh.hpp">
+      <Filter>05.ShaderHPP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ShaderMesh.h">
+      <Filter>04.Shader\00.Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Resource\Shader\Static\Shader_Blend.hpp">
+      <Filter>05.ShaderHPP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Resource\Shader\Static\Shader_Sample.hpp">
+      <Filter>05.ShaderHPP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Resource\Shader\Static\Shader_Shade.hpp">
+      <Filter>05.ShaderHPP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Resource\Shader\Static\Shader_SkyBox.hpp">
+      <Filter>05.ShaderHPP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Resource\Shader\Static\Shader_Terrain.hpp">
+      <Filter>05.ShaderHPP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ShaderSkyBox.h">
+      <Filter>04.Shader\01.SkyBox</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -466,6 +508,18 @@
     </ClCompile>
     <ClCompile Include="..\Code\ScarecrowMaintenance.cpp">
       <Filter>02.Script\01.Monster\00.MonsterFSM\00.Scarecrow\00.ScarecrowMaintenance</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerStatReinforceShop.cpp">
+      <Filter>02.Script\00.Player\00.PlayerFMS\11.StatReinforceShop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Header\PlayerInfo.cpp">
+      <Filter>02.Script\00.Player\01.PlayerInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ShaderMesh.cpp">
+      <Filter>04.Shader\00.Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ShaderSkyBox.cpp">
+      <Filter>04.Shader\01.SkyBox</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

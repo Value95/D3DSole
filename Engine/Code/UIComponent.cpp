@@ -50,9 +50,6 @@ void CUIComponent::Start(SHARED(CComponent) spThis)
 	if ((m_pTexData = CTextureStore::GetInstance()->GetTextureData(m_textureKey)) == nullptr)
 		m_pTexData = CTextureStore::GetInstance()->GetTextureData(L"Error");
 
-	if (m_shader)
-		m_shader->SetEffectShader(*CShaderStore::GetInstance()->GetShaderData(m_shader->GetShaderKey()));
-
 	DateInit();
 }
 
@@ -96,17 +93,6 @@ _uint CUIComponent::PreRender(void)
 	GET_DEVICE->SetTransform(D3DTS_VIEW, &identityMatrix);
 	GET_DEVICE->SetTransform(D3DTS_PROJECTION, &GET_CUR_SCENE->GetMainCamera()->GetOrthoMatrix());
 
-	if (m_shader)
-	{
-		m_shader->GetEffectShader()->SetMatrix("g_matWorld", &GetOwner()->GetWorldMatrix());
-		m_shader->GetEffectShader()->SetMatrix("g_matView", &identityMatrix);
-		m_shader->GetEffectShader()->SetMatrix("g_matProj", &GET_CUR_SCENE->GetMainCamera()->GetOrthoMatrix());
-
-		m_shader->GetEffectShader()->SetTexture("g_BaseTexture", m_pTexData->pTexture);
-
-		m_shader->ShaderReady();
-	}
-
 	GET_DEVICE->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	GET_DEVICE->SetRenderState(D3DRS_LIGHTING, FALSE);
 
@@ -127,11 +113,7 @@ _uint CUIComponent::Render(void)
 
 _uint CUIComponent::PostRender(void)
 {
-	if (m_shader)
-		m_shader->ShaderEnd();
-
 	GET_DEVICE->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE); // 알파모드 헤제
-
 
 	return _uint();
 }

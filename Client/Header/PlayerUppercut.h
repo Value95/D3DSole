@@ -8,6 +8,7 @@ private:
 	Engine::CCollider* collision;
 	_bool init;
 	_bool m_upInit;
+	_float m_moveCheckDir;
 public:
 	CPlayerUppercut(CPlayer* player);
 	virtual ~CPlayerUppercut();
@@ -20,5 +21,8 @@ public:
 	virtual _uint Update() override;
 	virtual _uint LateUpdate() override;
 	virtual void OnDestroy(void) override;
+
+private:
+	bool Move();
 };
 

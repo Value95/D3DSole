@@ -29,6 +29,7 @@ SHARED(CComponent) CAnimMeshRenderComponent::MakeClone(CGameObject* pObject)
 	pClone->SetRootFrame(m_pRootFrame);
 	pClone->SetAnimCtrl(m_pAniCtrl);
 	pClone->SetMeshContainers(m_vMeshContainers);
+	pClone->SetShader(m_shader);
 
 	return pClone;
 }
@@ -40,6 +41,12 @@ void CAnimMeshRenderComponent::Awake(void)
 void CAnimMeshRenderComponent::Start(SHARED(CComponent) spThis)
 {
 	__super::Start(spThis);
+
+	if (m_shader)
+	{
+		m_shader->State();
+		m_shader->SetGameObject(GetOwner());
+	}
 }
 
 _uint CAnimMeshRenderComponent::FixedUpdate(SHARED(CComponent) spThis)
@@ -67,6 +74,12 @@ _uint CAnimMeshRenderComponent::PreRender(void)
 	GET_DEVICE->SetTransform(D3DTS_WORLD, &GetOwner()->GetWorldMatrix());
 	GET_DEVICE->SetTransform(D3DTS_VIEW, &GET_CUR_SCENE->GetMainCamera()->GetViewMatrix());
 	GET_DEVICE->SetTransform(D3DTS_PROJECTION, &GET_CUR_SCENE->GetMainCamera()->GetProjMatrix());
+
+	if (m_shader)
+	{
+		m_shader->PreRender();
+		m_shader->ShaderReady();
+	}
 
 	return NO_EVENT;
 }
@@ -97,6 +110,14 @@ _uint CAnimMeshRenderComponent::Render(void)
 		for (_ulong i = 0; i < pMeshContainer->NumMaterials; ++i)
 		{
 			GET_DEVICE->SetTexture(0, pMeshContainer->ppTexture[i]);
+
+			if (m_shader)
+			{
+				m_shader->Render();
+				m_shader->GetEffectShader()->SetTexture("g_BaseTexture", pMeshContainer->ppTexture[i]);
+				m_shader->GetEffectShader()->CommitChanges();
+			}
+
 			pMeshContainer->MeshData.pMesh->DrawSubset(i);
 		}
 
@@ -109,6 +130,9 @@ _uint CAnimMeshRenderComponent::Render(void)
 
 _uint CAnimMeshRenderComponent::PostRender(void)
 {
+	if (m_shader)
+		m_shader->ShaderEnd();
+
 	return _uint();
 }
 

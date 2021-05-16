@@ -78,6 +78,27 @@ void CCameraMove::OnDestroy(void)
 
 void CCameraMove::OnEnable(void)
 {
+	RECT rect;
+
+	GetClientRect(Engine::CWndApp::GetInstance()->GetHWnd(), &rect);
+
+	POINT p1, p2;
+	p1.x = rect.left;
+	p1.y = rect.top;
+	p2.x = rect.right;
+	p2.y = rect.bottom;
+
+	ClientToScreen(Engine::CWndApp::GetInstance()->GetHWnd(), &p1);
+	ClientToScreen(Engine::CWndApp::GetInstance()->GetHWnd(), &p2);
+
+	rect.left = p1.x;
+	rect.top = p1.y;
+	rect.right = p2.x;
+	rect.bottom = p2.y;
+
+	m_centerPt.x = (p1.x + p2.x) / 2;
+	m_centerPt.y = (p1.y + p2.y) / 2;
+	SetCursorPos(m_centerPt.x, m_centerPt.y);
 }
 
 void CCameraMove::OnDisable(void)

@@ -58,8 +58,11 @@ void CShaderStore::ParsingMesh(std::wstring filePath, std::wstring fileName)
 {
 	LPD3DXEFFECT* effectShader = new LPD3DXEFFECT;
 
+	CString a = L"\\";
+	CString FullPath = filePath.c_str() + a + fileName.c_str();
+
 	D3DXCreateEffectFromFile(GET_DEVICE,
-		L"..\\..\\Resource\\Shader\\Static\\Shader_Sample.hpp",
+		FullPath,
 		NULL,
 		NULL,
 		D3DXSHADER_DEBUG, NULL,

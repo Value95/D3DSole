@@ -21,6 +21,6 @@ public:
 	virtual void OnDestroy(void) override;
 
 private:
-	void Interaction(std::wstring objectKeys);
+	void Interaction(std::wstring objectKey);
 };
 
