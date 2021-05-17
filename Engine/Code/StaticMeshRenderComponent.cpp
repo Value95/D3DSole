@@ -24,7 +24,9 @@ SHARED(CComponent) CStaticMeshRenderComponent::MakeClone(CGameObject* pObject)
 	pClone->SetIsAwaked(m_isAwaked);
 
 	pClone->SetRenderID(m_renderID);
-	pClone->SetShader(m_shader);
+
+	if(m_shader)
+		pClone->SetShader(m_shader->Create());
 
 	return pClone;
 }
@@ -68,7 +70,7 @@ _uint CStaticMeshRenderComponent::PreRender(void)
 		MSG_BOX(__FILE__, L"m_pMesh is nullptr");
 
 	GET_DEVICE->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	GET_DEVICE->SetRenderState(D3DRS_LIGHTING, FALSE);
+	GET_DEVICE->SetRenderState(D3DRS_LIGHTING, TRUE);
 
 	GET_DEVICE->SetTransform(D3DTS_WORLD, &GetOwner()->GetWorldMatrix());
 	GET_DEVICE->SetTransform(D3DTS_VIEW, &GET_CUR_SCENE->GetMainCamera()->GetViewMatrix());
@@ -77,9 +79,9 @@ _uint CStaticMeshRenderComponent::PreRender(void)
 	if (m_shader)
 	{
 		m_shader->PreRender();
+		//m_shader->GetEffectShader()->SetTexture("g_BaseTexture", m_mesh->GetMeshData()->texture[0]);
 		m_shader->ShaderReady();
 	}
-
 
 	return NO_EVENT;
 }
@@ -88,7 +90,18 @@ _uint CStaticMeshRenderComponent::Render(void)
 {
 	for (_ulong i = 0; i < m_mesh->GetMeshData()->materialsCount; i++)
 	{
-		GET_DEVICE->SetTexture(0, m_mesh->GetMeshData()->texture[i]);
+
+		if (m_shader)
+		{
+			m_shader->Render();
+			m_shader->GetEffectShader()->SetTexture("g_BaseTexture", m_mesh->GetMeshData()->texture[i]);
+			m_shader->GetEffectShader()->CommitChanges();
+		}
+		else
+		{
+			GET_DEVICE->SetTexture(0, m_mesh->GetMeshData()->texture[i]);
+		}
+
 		m_mesh->GetMeshData()->mesh->DrawSubset(i);
 	}
 

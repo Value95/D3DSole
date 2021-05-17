@@ -22,6 +22,9 @@ void CPlayerRush::Start()
 
 void CPlayerRush::End()
 {
+	Engine::GET_MAIN_CAM->GetOwner()->GetComponent<CCameraShake>()->CameraShakeActivation(0.1f, 5);
+	m_player->GetOwner()->Translate(vector3Forward * deltaTime * (m_player->GetPlayerInfo()->GetSpeedRush() * 2));
+	m_player->GetRigidBody()->TranslateForce((vector3Forward + vector3Up) * 4);
 }
 
 _uint CPlayerRush::FixedUpdate()
@@ -33,8 +36,6 @@ _uint CPlayerRush::FixedUpdate()
 		{
 			m_player->Attack(object, m_player->GetPlayerInfo()->GetDamageRush());
 			m_player->Hit(m_player->GetPlayerInfo()->GetDamageRush(), 0);
-			m_player->GetOwner()->Translate(vector3Forward * deltaTime * (m_player->GetPlayerInfo()->GetSpeedRush() *2));
-			m_player->GetRigidBody()->TranslateForce((vector3Forward + vector3Up) * 4);
 			m_player->ChangeFSM(CPlayer::STATE::IDLE);
 		}
 	}

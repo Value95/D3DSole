@@ -5,6 +5,7 @@
 #include "SceneManager.h"
 #include "Scene.h"
 #include "TextureStore.h"
+#include "ShaderStore.h"
 
 USING(Engine)
 CSkyBoxComponent::CSkyBoxComponent()
@@ -27,6 +28,9 @@ SHARED(CComponent) CSkyBoxComponent::MakeClone(CGameObject* pObject)
 	pClone->SetTextureKey(m_textureKey);
 	pClone->SetTexData(m_pTexData);
 
+	if (m_shader)
+		pClone->SetShader(m_shader->Create());
+
 	return pClone;
 }
 
@@ -45,6 +49,12 @@ void CSkyBoxComponent::Start(SHARED(CComponent) spThis)
 	std::wstring objectKey = m_pOwner->GetObjectKey();
 
 	m_pTexData = CTextureStore::GetInstance()->GetSkyTextureData(m_textureKey);
+
+	if (m_shader)
+	{
+		m_shader->State();
+		m_shader->SetGameObject(GetOwner());
+	}
 
 	DateInit();
 }
@@ -90,6 +100,13 @@ _uint CSkyBoxComponent::PreRender(void)
 	GET_DEVICE->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 	GET_DEVICE->SetRenderState(D3DRS_LIGHTING, FALSE);
 
+	if (m_shader)
+	{
+		m_shader->PreRender();
+
+		m_shader->ShaderReady();
+	}
+
 	return _uint();
 }
 
@@ -98,6 +115,12 @@ _uint CSkyBoxComponent::Render(void)
 	GET_DEVICE->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, m_meshDate.vertexCount, 0, m_meshDate.faceCount);
 	GET_DEVICE->SetTransform(D3DTS_PROJECTION, &GET_CUR_SCENE->GetMainCamera()->GetProjMatrix());
 
+	if (m_shader)
+	{
+		m_shader->Render();
+		m_shader->GetEffectShader()->CommitChanges();
+	}
+
 	return _uint();
 }
 
@@ -105,6 +128,9 @@ _uint CSkyBoxComponent::PostRender(void)
 {
 	GET_DEVICE->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 	GET_DEVICE->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+
+	if (m_shader)
+		m_shader->ShaderEnd();
 
 	return _uint();
 }

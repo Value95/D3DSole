@@ -2,10 +2,12 @@
 #define SKYBOXCOMPONENT_H
 
 BEGIN(Engine)
-
+class CShader;
 class ENGINE_DLL CSkyBoxComponent final : public CComponent
 {
 private:
+	GETTOR_SETTOR(CShader*, m_shader,{}, Shader)
+
 	GETTOR_SETTOR(std::wstring, m_textureKey, L"", TextureKey) // 이미지를 불러올 키값
 	GETTOR_SETTOR(IDirect3DBaseTexture9*, m_pTexData, nullptr, TexData) // 이미지를 저장할 변수
 

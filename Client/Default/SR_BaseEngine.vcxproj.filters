@@ -193,6 +193,9 @@
     <Filter Include="04.Shader\01.SkyBox">
       <UniqueIdentifier>{bb80e114-500d-48c7-aa51-907d71f8f972}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.Script\02.Camera\01.CameraShake">
+      <UniqueIdentifier>{ef4e0617-ebd8-4748-9c1a-0151d4e82ab2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -381,6 +384,9 @@
     <ClInclude Include="..\Header\ShaderSkyBox.h">
       <Filter>04.Shader\01.SkyBox</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CameraShake.h">
+      <Filter>02.Script\02.Camera\01.CameraShake</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -520,6 +526,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\ShaderSkyBox.cpp">
       <Filter>04.Shader\01.SkyBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CameraShake.cpp">
+      <Filter>02.Script\02.Camera\01.CameraShake</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

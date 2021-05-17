@@ -17,6 +17,7 @@ public:
 	virtual	~CShader(void);
 
 public:
+	virtual CShader* Create() PURE;
 	virtual void State() PURE;
 	virtual void Update() PURE;
 	virtual void PreRender() PURE;

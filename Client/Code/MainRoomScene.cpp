@@ -42,6 +42,11 @@ void CMainRoomScene::Start(void)
 	}
 
 	{
+		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Light", L"DirectionalLight", true);
+		pObj->SetRotation(vector3(50, -30, 0));
+	}
+
+	{
 		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
 		pObj->SetName(L"Sword");
 		pObj->SetScale(vector3(0.1f, 0.1f, 0.1f));
@@ -106,6 +111,7 @@ void CMainRoomScene::OnDisable(void)
 
 void CMainRoomScene::InitLayers(void)
 {
+	AddLayer(L"Light");
 	AddLayer(L"Camera");
 	AddLayer(L"Player");
 	AddLayer(L"Default");

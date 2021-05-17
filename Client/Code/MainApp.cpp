@@ -168,6 +168,7 @@ void CMainApp::InitStaticPrototype(void)
 	pCamera->SetRotation(vector3Zero);
 	pCamera->AddComponent<Engine::CCameraComponent>();
 	pCamera->AddComponent<CCameraMove>();
+	pCamera->AddComponent<CCameraShake>();
 	Engine::CObjectFactory::GetInstance()->AddPrototype(pCamera);
 
 	Default();
@@ -193,7 +194,7 @@ void CMainApp::Default()
 
 	SHARED(Engine::CGameObject) map = Engine::CGameObject::Create(L"Map", L"Map", true);
 	map->AddComponent<Engine::CMeshComponent>();
-	map->AddComponent<Engine::CStaticMeshRenderComponent>();
+	map->AddComponent<Engine::CStaticMeshRenderComponent>();// ->SetShader(new CShaderMesh());
 	Engine::CObjectFactory::GetInstance()->AddPrototype(map);
 }
 
@@ -248,6 +249,7 @@ void CMainApp::Player()
 	player->GetComponent<Engine::CRigidBodyComponent>()->SetMass(80);
 	player->AddComponent<CPlayer>();
 	player->AddComponent<Engine::CAnimMeshRenderComponent>()->MeshInput(L"../../Resource/Mesh/Static/DynamicMesh/Player/", L"Player_Player_000.X");
+	player->GetComponent<Engine::CAnimMeshRenderComponent>()->SetShader(new CShaderMesh());
 	Engine::CObjectFactory::GetInstance()->AddPrototype(player);
 
 }

@@ -186,6 +186,7 @@
     <ClInclude Include="..\..\Resource\Shader\Static\Shader_Terrain.hpp" />
     <ClInclude Include="..\Header\AgentSanwaMoneyRoomScene.h" />
     <ClInclude Include="..\Header\CameraMove.h" />
+    <ClInclude Include="..\Header\CameraShake.h" />
     <ClInclude Include="..\Header\ClientComponent.h" />
     <ClInclude Include="..\Header\ClientDefine.h" />
     <ClInclude Include="..\Header\ClientEnum.h" />
@@ -244,6 +245,7 @@
   <ItemGroup>
     <ClCompile Include="..\Code\AgentSanwaMoneyRoomScene.cpp" />
     <ClCompile Include="..\Code\CameraMove.cpp" />
+    <ClCompile Include="..\Code\CameraShake.cpp" />
     <ClCompile Include="..\Code\CrystalSpiderRoomScene.cpp" />
     <ClCompile Include="..\Code\DongilScene.cpp" />
     <ClCompile Include="..\Code\FSM.cpp" />

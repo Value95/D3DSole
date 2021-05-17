@@ -97,7 +97,10 @@ void CSanwaMoneyIdle::MoveCheck()
 {
 	if (m_monster->Collision(m_monster->GetOwner()->GetComponent<Engine::CColliderComponent>()->GetColliders()[0], m_monster->GetOwner()))
 	{
-		m_monster->GetPlayer()->Translate(vector3Forward * m_monster->GetMonsterInfo()->GetSpeed() * 10);
+		vector3 dir = m_monster->GetPlayer()->GetPosition() - m_monster->GetOwner()->GetPosition();
+		D3DXVec3Normalize(&dir, &dir);
+		dir.y = 0;
+		m_monster->GetPlayer()->AddPosition(dir * m_monster->GetMonsterInfo()->GetSpeed() * deltaTime * 10);
 	}
 }	
 

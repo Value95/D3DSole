@@ -7,6 +7,7 @@ public:
 	CShaderMesh();
 	virtual ~CShaderMesh();
 
+	virtual Engine::CShader* Create();
 	virtual void State();
 	virtual void Update();
 	virtual void PreRender();

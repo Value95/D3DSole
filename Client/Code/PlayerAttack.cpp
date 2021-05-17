@@ -24,6 +24,8 @@ void CPlayerAttack::Start()
 
 	m_player->GetAnim()->GetAnimCtrl()->SetSpeed(m_player->GetPlayerInfo()->GetAttackSpeed());
 
+	Engine::GET_MAIN_CAM->GetOwner()->GetComponent<CCameraShake>()->CameraShakeActivation(0.1f, 1);
+
 	init = true;
 	m_attack = true;
 	

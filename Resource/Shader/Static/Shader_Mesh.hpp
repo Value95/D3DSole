@@ -1,8 +1,10 @@
-matrix		g_matWorld;		
+matrix		g_matWorld;
 matrix		g_matView;
 matrix		g_matProj;
 
 texture		g_BaseTexture;
+
+float       g_fAlpha;
 
 sampler BaseSampler = sampler_state
 {
@@ -11,6 +13,21 @@ sampler BaseSampler = sampler_state
 	minfilter = linear;
 	magfilter = linear;
 };
+
+vector g_vLightDir;
+vector g_vCamPos;
+
+vector g_vLightDiffuse;
+vector g_vLightSpecular;
+vector g_vLightAmbient;
+
+vector	g_vMtrlDiffuse;
+vector	g_vMtrlSpecular;
+vector	g_vMtrlAmbient;
+
+float	g_fPower;
+float	g_fDetail;
+
 
 struct VS_IN
 {
@@ -23,9 +40,9 @@ struct VS_IN
 struct VS_OUT
 {
 	vector		vPosition : POSITION;	
-	vector		vNormal : NORMAL;
+	vector		vShade : COLOR0;
+	vector		vSpecular : COLOR1;
 	float2		vTexUV : TEXCOORD0;
-	vector		vProjPos : TEXCOORD1;
 };
 
 // 버텍스쉐이더
@@ -36,32 +53,44 @@ VS_OUT		VS_MAIN(VS_IN In)
 
 	matrix			matWV, matWVP;
 
-	matWV  = mul(g_matWorld, g_matView);
+	matWV = mul(g_matWorld, g_matView);
 	matWVP = mul(matWV, g_matProj);
 
 	Out.vPosition = mul(vector(In.vPosition.xyz, 1.f), matWVP);
-	Out.vNormal = normalize(mul(vector(In.vNormal.xyz, 0.f), g_matWorld));
-		
-	Out.vTexUV = In.vTexUV;
 
-	Out.vProjPos = Out.vPosition;
+	vector vWorldNormal = mul(vector(In.vNormal.xyz, 0.f), g_matWorld);
+	vector vWorldDir = g_vLightDir * -1.f;
+
+	float fIntensity = saturate(dot(normalize(vWorldNormal), normalize(vWorldDir)));
+	// max(dot(normalize(vWorldNormal), normalize(vWorldDir), 0.f);
+
+	Out.vShade = fIntensity;
+	Out.vShade.a = 1.f;
+
+	// 스펙큘러의 세기 값 구하기
+	vector	vReflect = reflect(normalize(g_vLightDir), normalize(vWorldNormal));
+	vector  vWorldPos = mul(vector(In.vPosition.xyz, 1.f), g_matWorld);
+
+	vector vLook = vWorldPos - g_vCamPos;
+
+	Out.vSpecular = pow(saturate(dot(normalize(vLook) * -1.f, normalize(vReflect))), g_fPower);
+	Out.vSpecular.a = 1.f;
+
+	Out.vTexUV = In.vTexUV;
 
 	return Out;
 }
 
 struct PS_IN
 {
-	vector		vNormal : NORMAL;
+	vector		vShade		: COLOR0;
+	vector		vSpecular	: COLOR1;
 	float2		vTexUV		: TEXCOORD0;
-	vector		vProjPos : TEXCOORD1;
 };
 
 struct PS_OUT
 {
-	vector		vColor : COLOR0;	
-	vector		vNormal : COLOR1;
-	vector		vDepth : COLOR2;
-	
+	vector		vColor : COLOR0;
 };
 
 // 픽셀 쉐이더
@@ -69,18 +98,15 @@ struct PS_OUT
 PS_OUT		PS_MAIN(PS_IN In)
 {
 	PS_OUT		Out = (PS_OUT)0;
-	
-	Out.vColor = tex2D(BaseSampler, In.vTexUV);
 
-	// -1 ~ 1 -> 0 ~ 1
-	// 단위 벡터 상태인 월드의 법선 값을 텍스쳐 uv 값으로 강제 변환
-	Out.vNormal = vector(In.vNormal.xyz * 0.5f + 0.5f, 0.f);
-	
-	Out.vDepth = vector(In.vProjPos.z / In.vProjPos.w,	// R에 위치에 z나누기 끝난 투영 공간의 z값을 보관(0 ~ 1)값
-		In.vProjPos.w * 0.001f,			// G에 위치에 far 평면의 z로 나눈 뷰스페이스의 z값을 보관(뷰스페이스 상태에서 near는 0.1로 far는 1000으로 설정한 상황) : 우리가 보관하고자 하는 형태는 컬러값(컬러값의 범위는 0~1)
-		0.f,
-		0.f);
+	vector vColor = tex2D(BaseSampler, In.vTexUV);
 
+	Out.vColor = ((In.vShade * vColor) * (g_vLightDiffuse * g_vMtrlDiffuse)) + (g_vLightAmbient * g_vMtrlAmbient) /*+ (In.vSpecular * (g_vLightSpecular * g_vMtrlSpecular))*/;
+
+
+	// Out.vColor = (vColor) * (g_vLightDiffuse * g_vMtrlDiffuse) + (In.vShade) * (g_vLightAmbient * g_vMtrlAmbient);
+
+	// Out.vColor = (vColor) * (g_vLightDiffuse * g_vMtrlDiffuse) * ((In.vShade) + (g_vLightAmbient * g_vMtrlAmbient));
 	return Out;
 }
 
@@ -90,6 +116,18 @@ PS_OUT		PS_ALPHA(PS_IN In)
 
 	Out.vColor = tex2D(BaseSampler, In.vTexUV);
 		 
+	return Out;
+}
+
+PS_OUT		PS_SHADE(PS_IN In)
+{
+	PS_OUT		Out = (PS_OUT)0;
+
+	Out.vColor = tex2D(BaseSampler, In.vTexUV);
+
+	Out.vColor.rgb = 0.f;
+	Out.vColor.a = g_fAlpha;
+
 	return Out;
 }
 
@@ -110,6 +148,13 @@ technique Default_Device
 
 		vertexshader = compile vs_3_0 VS_MAIN();
 		pixelshader = compile ps_3_0 PS_ALPHA();
+	}
+
+	pass
+	{
+		alphablendenable = true;
+		vertexshader = compile vs_3_0 VS_MAIN();
+		pixelshader  = compile ps_3_0 PS_SHADE();
 	}
 
 };

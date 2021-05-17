@@ -142,11 +142,7 @@ _bool CMonster::MoveCheck(vector3 dir, _float moveCheckDir)
 {
 	vector3 orgine = GetOwner()->GetPosition();
 	orgine.y += 0.9;
-	Engine::CGameObject* obj = Engine::CRaycast::BoxRayCast(orgine, dir, moveCheckDir, L"Collider");
-
-	if (obj == nullptr)
-		obj = Engine::CRaycast::BoxRayCast(orgine, dir, moveCheckDir, L"Map");
-
+	Engine::CGameObject* obj = Engine::CRaycast::BoxRayCast(orgine, dir, moveCheckDir);
 
 	if (obj != nullptr)
 	{
