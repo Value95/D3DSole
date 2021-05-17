@@ -193,7 +193,7 @@ void CMainApp::Default()
 
 	SHARED(Engine::CGameObject) map = Engine::CGameObject::Create(L"Map", L"Map", true);
 	map->AddComponent<Engine::CMeshComponent>();
-	map->AddComponent<Engine::CStaticMeshRenderComponent>();
+	map->AddComponent<Engine::CStaticMeshRenderComponent>()->SetShader(new CShaderMesh());
 	Engine::CObjectFactory::GetInstance()->AddPrototype(map);
 }
 
@@ -256,12 +256,12 @@ void CMainApp::Interaction()
 {
 	SHARED(Engine::CGameObject) CSPStatue = Engine::CGameObject::Create(L"Interaction", L"CSPStatue", true);
 	CSPStatue->AddComponent<Engine::CMeshComponent>();
-	CSPStatue->AddComponent<Engine::CStaticMeshRenderComponent>();
+	CSPStatue->AddComponent<Engine::CStaticMeshRenderComponent>()->SetShader(new CShaderMesh());
 	Engine::CObjectFactory::GetInstance()->AddPrototype(CSPStatue);
 
 	SHARED(Engine::CGameObject) SMStatue = Engine::CGameObject::Create(L"Interaction", L"SMStatue", true);
 	SMStatue->AddComponent<Engine::CMeshComponent>();
-	SMStatue->AddComponent<Engine::CStaticMeshRenderComponent>();
+	SMStatue->AddComponent<Engine::CStaticMeshRenderComponent>()->SetShader(new CShaderMesh());
 	Engine::CObjectFactory::GetInstance()->AddPrototype(SMStatue);
 }
 

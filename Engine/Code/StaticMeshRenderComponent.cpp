@@ -75,6 +75,7 @@ _uint CStaticMeshRenderComponent::PreRender(void)
 
 	if (m_shader)
 	{
+		m_shader->GetEffectShader()->SetMatrix("g_matWorld", &GetOwner()->GetWorldMatrix());
 		m_shader->PreRender();
 		m_shader->ShaderReady();
 	}
@@ -92,6 +93,7 @@ _uint CStaticMeshRenderComponent::Render(void)
 		if (m_shader)
 		{
 			m_shader->Render();
+			m_shader->GetEffectShader()->SetTexture("g_BaseTexture", m_mesh->GetMeshData()->texture[i]);
 			m_shader->GetEffectShader()->CommitChanges();
 		}
 
