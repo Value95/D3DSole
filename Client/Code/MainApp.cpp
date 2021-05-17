@@ -193,7 +193,7 @@ void CMainApp::Default()
 
 	SHARED(Engine::CGameObject) map = Engine::CGameObject::Create(L"Map", L"Map", true);
 	map->AddComponent<Engine::CMeshComponent>();
-	map->AddComponent<Engine::CStaticMeshRenderComponent>()->SetShader(new CShaderMesh());
+	map->AddComponent<Engine::CStaticMeshRenderComponent>();
 	Engine::CObjectFactory::GetInstance()->AddPrototype(map);
 }
 

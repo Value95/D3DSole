@@ -38,6 +38,7 @@ void CStaticMeshRenderComponent::Start(SHARED(CComponent) spThis)
 {
 	__super::Start(spThis);
 	m_mesh = m_pOwner->GetComponent<CMeshComponent>();
+
 	if (m_shader)
 	{
 		m_shader->State();
@@ -75,7 +76,6 @@ _uint CStaticMeshRenderComponent::PreRender(void)
 
 	if (m_shader)
 	{
-		m_shader->GetEffectShader()->SetMatrix("g_matWorld", &GetOwner()->GetWorldMatrix());
 		m_shader->PreRender();
 		m_shader->ShaderReady();
 	}
@@ -89,14 +89,6 @@ _uint CStaticMeshRenderComponent::Render(void)
 	for (_ulong i = 0; i < m_mesh->GetMeshData()->materialsCount; i++)
 	{
 		GET_DEVICE->SetTexture(0, m_mesh->GetMeshData()->texture[i]);
-
-		if (m_shader)
-		{
-			m_shader->Render();
-			m_shader->GetEffectShader()->SetTexture("g_BaseTexture", m_mesh->GetMeshData()->texture[i]);
-			m_shader->GetEffectShader()->CommitChanges();
-		}
-
 		m_mesh->GetMeshData()->mesh->DrawSubset(i);
 	}
 

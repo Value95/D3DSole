@@ -21,9 +21,11 @@ void CShaderMesh::Update()
 
 void CShaderMesh::PreRender()
 {
-	//m_effectShader->SetMatrix("g_matWorld", &m_gameobject->GetWorldMatrix());
+	m_effectShader->SetMatrix("g_matWorld", &m_gameobject->GetWorldMatrix());
 	m_effectShader->SetMatrix("g_matView", &Engine::GET_CUR_SCENE->GetMainCamera()->GetViewMatrix());
 	m_effectShader->SetMatrix("g_matProj", &Engine::GET_CUR_SCENE->GetMainCamera()->GetProjMatrix());
+	m_effectShader->SetTexture("g_BaseTexture", m_gameobject->GetComponent<Engine::CStaticMeshRenderComponent>()->GetMesh()->GetMeshData()->texture[0]);
+
 }
 
 void CShaderMesh::Render()
