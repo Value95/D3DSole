@@ -61,10 +61,10 @@ _uint CDirectionalLightComponent::LateUpdate(SHARED(CComponent) spSelf)
 	light.Diffuse.r = 1.0f;							/// 광원의 색깔과 밝기
 	light.Diffuse.g = 1.0f;
 	light.Diffuse.b = 1.0f;
-	vecDir = D3DXVECTOR3(GetOwner()->GetRotation().x, GetOwner()->GetRotation().y, GetOwner()->GetRotation().z);
+	vecDir = D3DXVECTOR3(D3DXToRadian(GetOwner()->GetRotation().x), D3DXToRadian(GetOwner()->GetRotation().y), D3DXToRadian(GetOwner()->GetRotation().z));
 
 	D3DXVec3Normalize((D3DXVECTOR3*)&light.Direction, &vecDir);	/// 광원의 방향을 단위벡터로 만든다.
-	light.Range = 10000.0f;									/// 광원이 다다를수 있는 최대거리
+	light.Range = 1000.0f;									/// 광원이 다다를수 있는 최대거리
 	GET_DEVICE->SetLight(0, &light);							/// 디바이스에 0번 광원 설치
 	GET_DEVICE->LightEnable(0, TRUE);							/// 0번 광원을 켠다
 	GET_DEVICE->SetRenderState(D3DRS_LIGHTING, TRUE);			/// 광원설정을 켠다

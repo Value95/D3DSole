@@ -33,7 +33,9 @@ void CColliderComponent::Awake(void)
 void CColliderComponent::Start(SHARED(CComponent) spThis)
 {
 	__super::Start(spThis);
-
+	/*CBoxCollider* a = static_cast<CBoxCollider*>(m_vColliders[0]);
+	GetOwner()->AddComponent<CBoxComponent>()->SetSize(a->GetBoxSize() * 1000);
+	GetOwner()->GetComponent<CBoxComponent>()->SetOffSet(a->GetOffset());*/
 	CColliderManager::GetInstance()->ColliderInput(std::dynamic_pointer_cast<CColliderComponent>(spThis));
 }
 

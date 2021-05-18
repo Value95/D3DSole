@@ -123,6 +123,15 @@ void CPlayerStatReinforceShop::OnDestroy(void)
 
 void CPlayerStatReinforceShop::Health()
 {
+	if (m_player->GetPlayerInfo()->GetHP() > 1000)
+		return;
+
+	if (m_player->GetPlayerInfo()->GetGold() >= (m_player->GetPlayerInfo()->GetHP() * 5))
+	{
+		m_player->GetPlayerInfo()->SetGold(m_player->GetPlayerInfo()->GetGold() - (m_player->GetPlayerInfo()->GetHP() * 5));
+		m_player->GetPlayerInfo()->SetHpMax(m_player->GetPlayerInfo()->GetHpMax() + 200);
+		m_player->GetPlayerInfo()->SetHP(m_player->GetPlayerInfo()->GetHP() + 200);
+	}
 }
 
 void CPlayerStatReinforceShop::HealthFont()

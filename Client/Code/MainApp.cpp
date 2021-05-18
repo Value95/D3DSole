@@ -269,10 +269,11 @@ void CMainApp::Interaction()
 
 void CMainApp::Npc()
 {
-	SHARED(Engine::CGameObject) player = Engine::CGameObject::Create(L"NPC", L"MuscleMan", true);
-	player->SetName(L"MuscleMan");
-	player->SetPosition(vector3(0, 0, 0));
-	player->SetScale(vector3(0.01f, 0.01f, 0.01f));
-	player->AddComponent<Engine::CAnimMeshRenderComponent>()->MeshInput(L"../../Resource/Mesh/Static/DynamicMesh/NPC/MuscleMan/", L"NPC_MuscleMan.X");
-	Engine::CObjectFactory::GetInstance()->AddPrototype(player);
+	SHARED(Engine::CGameObject) MuscleMan = Engine::CGameObject::Create(L"NPC", L"MuscleMan", true);
+	MuscleMan->SetName(L"MuscleMan");
+	MuscleMan->SetPosition(vector3(0, 0, 0));
+	MuscleMan->SetScale(vector3(0.01f, 0.01f, 0.01f));
+	MuscleMan->AddComponent<Engine::CColliderComponent>()->SetIsTrigger(false);
+	MuscleMan->AddComponent<Engine::CAnimMeshRenderComponent>()->MeshInput(L"../../Resource/Mesh/Static/DynamicMesh/NPC/MuscleMan/", L"NPC_MuscleMan.X");
+	Engine::CObjectFactory::GetInstance()->AddPrototype(MuscleMan);
 }

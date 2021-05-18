@@ -142,7 +142,7 @@ _bool CMonster::MoveCheck(vector3 dir, _float moveCheckDir)
 {
 	vector3 orgine = GetOwner()->GetPosition();
 	orgine.y += 0.9;
-	Engine::CGameObject* obj = Engine::CRaycast::BoxRayCast(orgine, dir, moveCheckDir);
+	Engine::CGameObject* obj = Engine::CRaycast::BoxRayCast(orgine, dir, moveCheckDir, GetOwner());
 
 	if (obj != nullptr)
 	{
@@ -153,6 +153,5 @@ _bool CMonster::MoveCheck(vector3 dir, _float moveCheckDir)
 
 void CMonster::HitEffect()
 {
-	//std::cout << "HitEffect" << endl;
 }
 

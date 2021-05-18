@@ -19,6 +19,8 @@ protected:
 	GETTOR_SETTOR(_int, m_damageRush, 0, DamageRush);
 
 	GETTOR_SETTOR(_int, m_gold, 0, Gold);
+
+	_float m_naturalRecoveryTime = 1;
 public:
 	CPlayerInfo::CPlayerInfo(){}
 	CPlayerInfo::~CPlayerInfo(){}
@@ -33,6 +35,19 @@ public:
 	void AddDushGague(_int value)
 	{
 		m_dushGauge = Engine::MathfMin(m_dushGauge + value, 100);
+	}
+
+	void NaturalRecovery()
+	{
+		m_naturalRecoveryTime -= deltaTime;
+		if (m_naturalRecoveryTime <= 0)
+		{
+			if (m_hp < m_hpMax)
+			{
+				m_hp = Engine::MathfMin(m_hp + 1, m_hpMax);
+				m_naturalRecoveryTime = 1;
+			}
+		}
 	}
 };
 

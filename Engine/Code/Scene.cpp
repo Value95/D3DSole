@@ -29,6 +29,7 @@ void CScene::Awake(void)
 		CMeshStore::GetInstance()->InitMeshForScene(m_name);
 		CTextureStore::GetInstance()->InitTextureForScene(m_name);
 		CShaderStore::GetInstance()->InitShaderForScene(m_name);
+		return;
 	}
 }
 
@@ -242,7 +243,15 @@ void CScene::LoadObject(std::wstring path)
 
 		if (colliderData->colliderType == L"BOX")
 		{
-			obj->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(colliderData->boxsize, colliderData->offset));
+			if (obj->GetComponent<Engine::CColliderComponent>())
+			{
+				obj->GetComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(colliderData->boxsize, colliderData->offset));
+
+			}
+			else
+			{
+				obj->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(colliderData->boxsize, colliderData->offset));
+			}
 		}
 		else if (colliderData->colliderType == L"SPHERE")
 		{

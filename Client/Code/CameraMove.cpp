@@ -158,7 +158,6 @@ void CCameraMove::CameraCrush()
 	else
 	{
 		distance = Engine::MathfMax((Engine::Distance(outHit, GetOwner()->GetTarget()->GetPosition()) * -1), -8);
-		cout << distance << endl;
 		vector3 cameraDirPos = vector3(0, 3, distance);
 		GetOwner()->SetCameraDirPos(cameraDirPos);
 	}

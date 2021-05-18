@@ -39,7 +39,6 @@ _uint CSanwaMoneyAttack2::FixedUpdate()
 				if (object->GetName() == L"Player")
 				{
 					m_monster->GetPlayerCom()->Hit(m_monster->GetMonsterInfo()->GetDamage()[0], 1);
-					cout << "플레이어 체력 : " << m_monster->GetPlayerCom()->GetPlayerInfo()->GetHP() << endl;
 				}
 			}
 		}

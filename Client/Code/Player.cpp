@@ -73,6 +73,10 @@ _uint CPlayer::Update(SHARED(CComponent) spThis)
 	m_playerUI->Update();
 	m_playerDushUI->Update();
 	m_playerInfo->AddDushGague(deltaTime * 100);
+
+	if(m_playerState != STATE::DEATH)
+		m_playerInfo->NaturalRecovery();
+
 	return NO_EVENT;
 }
 
@@ -176,13 +180,7 @@ bool CPlayer::MoveCheck(vector3 dir, _float moveCheckDir)
 	orgine.y += 0.9;
 	Engine::CGameObject* obj = Engine::CRaycast::BoxRayCast(orgine, dir, moveCheckDir, GetOwner());
 
-/*	if (obj == nullptr)
-		obj = Engine::CRaycast::BoxRayCast(orgine, dir, moveCheckDir, L"Map");
-
-	if (obj == nullptr)
-		obj = Engine::CRaycast::BoxRayCast(orgine, dir, moveCheckDir, L"Boss");*/
-
-	if (obj != nullptr)
+	if (obj != nullptr && obj->GetComponent<Engine::CColliderComponent>()->GetIsTrigger() == true)
 	{
 		return false;
 	}

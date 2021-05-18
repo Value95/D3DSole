@@ -392,9 +392,6 @@ vector<CGameObject*> CRaycast::UIRayCast(std::wstring layerKey)
 	point.x -= CWndApp::GetInstance()->GetWndWidth() *0.5f;
 	point.y -= CWndApp::GetInstance()->GetWndHeight() *0.5f;
 
-	cout << point.x << endl;
-	cout << point.y << endl << endl;
-
 	CLayer* pLayer = GET_CUR_SCENE->GetLayers()[layerKey].get();
 
 	vector<CGameObject*> returnObject;

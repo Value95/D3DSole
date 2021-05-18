@@ -39,7 +39,6 @@ _uint CSanwaMoneyAttack1::FixedUpdate()
 				if (object->GetName() == L"Player")
 				{
 					m_monster->GetPlayerCom()->Hit(m_monster->GetPlayerCom()->GetPlayerInfo()->GetHpMax(), 0);
-					cout << "플레이어 체력 : " << m_monster->GetPlayerCom()->GetPlayerInfo()->GetHP() << endl;
 					init = true;
 				}
 			}
@@ -91,11 +90,5 @@ void CSanwaMoneyAttack1::OnDestroy(void)
 
 void CSanwaMoneyAttack1::Move()
 {
-
 	m_monster->GetOwner()->Translate(vector3Back * deltaTime * 1000);
 }
-// 속도 시간 거리
-// 20    1   20 
-
-
-
