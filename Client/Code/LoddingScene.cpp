@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "LoddingScene.h"
 #include "DongilScene.h"
+#include "MainRoomScene.h"
 CLoddingScene::CLoddingScene()
 {
 }
@@ -84,13 +85,13 @@ void CLoddingScene::InitLayers(void)
 	AddLayer(L"Camera");
 	AddLayer(L"Player");
 	AddLayer(L"Default");
-	AddLayer(L"Monster");
 	AddLayer(L"Boss");
+	AddLayer(L"Monster");
 	AddLayer(L"UI");
-	AddLayer(L"MapObject");
 	AddLayer(L"Collider");
 	AddLayer(L"Map");
 	AddLayer(L"Interaction");
+	AddLayer(L"NPC");
 }
 
 void CLoddingScene::InitPrototypes(void)
@@ -100,9 +101,20 @@ void CLoddingScene::InitPrototypes(void)
 
 unsigned CLoddingScene::LoadDataObject(LPVOID pArg)
 {
-	Engine::CSceneManager::GetInstance()->SceneChange(CDongilScene::Create());
+	CLoddingScene* pLoad = static_cast<CLoddingScene*>(pArg);
+
 	cout << "로딩 시작" << endl;
-	CLoddingScene::LoadObject(L"TestScene");
+
+	if (pLoad->m_nextScene == L"CDolngilScene")
+	{
+		Engine::CSceneManager::GetInstance()->SceneChange(CDongilScene::Create());
+
+	}
+	else if (pLoad->m_nextScene == L"MainRoom")
+	{
+		Engine::CSceneManager::GetInstance()->SceneChange(CMainRoomScene::Create());
+	}
+
 	cout << "로딩 끝" << endl;
 
 	return 0;

@@ -37,11 +37,11 @@ _uint CSanwaMoneyMaintenance::Update()
 	HalfHealth();
 	m_sanwaMouneyUI->Update();
 
-	/*if (m_monster->GetMonsterState() != CMonster::SM_STATE::SM_DEATH)
+	if (!m_debug && m_monster->GetMonsterState() != CMonster::SM_STATE::SM_DEATH)
 	{
 		PatternTimer();
 		ChangePattern();
-	}*/
+	}
 
 	Debug();
 
@@ -71,7 +71,8 @@ void CSanwaMoneyMaintenance::PatternTimer()
 	if (m_monster->GetMonsterState() == CMonster::SM_STATE::SM_MOVE || m_monster->GetMonsterState() == CMonster::SM_STATE::SM_IDLE)
 	{
 		m_monster->GetMonsterInfo()->GetPatternTime()[0] -= deltaTime;
-		//m_monster->GetMonsterInfo()->GetPatternTime()[1] -= deltaTime;
+		m_monster->GetMonsterInfo()->GetPatternTime()[1] -= deltaTime;
+		m_monster->GetMonsterInfo()->GetPatternTime()[2] -= deltaTime;
 	}
 }
 
@@ -82,10 +83,14 @@ void CSanwaMoneyMaintenance::ChangePattern()
 		m_monster->ChangeFSM(CMonster::SM_STATE::SM_ATTACK1);
 		m_monster->GetMonsterInfo()->GetPatternTime()[0] = m_monster->GetMonsterInfo()->GetPatternTimeMax()[0];
 	}
-	else if (m_monster->GetMonsterInfo()->GetPatternTime()[1] <= 0)
-	{
+	else if (m_monster->GetMonsterInfo()->GetPatternTime()[1] <= 0 && Engine::Distance(m_monster->GetOwner()->GetPosition(), m_monster->GetPlayer()->GetPosition()) <= 7)	{
 		m_monster->ChangeFSM(CMonster::SM_STATE::SM_ATTACK2);
 		m_monster->GetMonsterInfo()->GetPatternTime()[1] = m_monster->GetMonsterInfo()->GetPatternTimeMax()[1];
+	}
+	else if (m_monster->GetMonsterInfo()->GetPatternTime()[2] <= 0)
+	{
+		m_monster->ChangeFSM(CMonster::SM_STATE::SM_ATTACK2);
+		m_monster->GetMonsterInfo()->GetPatternTime()[2] = m_monster->GetMonsterInfo()->GetPatternTimeMax()[2];
 	}
 }
 
@@ -118,6 +123,11 @@ void CSanwaMoneyMaintenance::Debug()
 	if (Engine::CInputManager::GetInstance()->KeyDown(KEY_4))
 	{
 		m_monster->ChangeFSM(CMonster::SM_STATE::SM_HALFHEALTH);
+	}
+
+	if (Engine::CInputManager::GetInstance()->KeyDown(KEY_F1))
+	{
+		m_debug = true;
 	}
 }
 

@@ -73,14 +73,17 @@ _uint CSkyBoxComponent::LateUpdate(SHARED(CComponent) spThis)
 {
 	CStaticMeshRenderManager::GetInstance()->AddToSkyBox(std::dynamic_pointer_cast<CSkyBoxComponent>(spThis));
 	GetOwner()->SetPosition(GET_MAIN_CAM->GetOwner()->GetPosition());
-	//GetOwner()->AddPositionY(3);
+	GetOwner()->AddPositionY(3);
 	return NO_EVENT;
 }
 
 _uint CSkyBoxComponent::PreRender(void)
 {
 	if (GetOwner() == nullptr)
-		MSG_BOX(__FILE__, L"Owner is nullptr");
+	{
+		//MSG_BOX(__FILE__, L"Owner is nullptr");
+		return NO_EVENT;
+	}
 
 	GET_DEVICE->SetStreamSource(0, m_meshDate.vertexBuffer, 0, m_meshDate.vertexSize);
 	GET_DEVICE->SetFVF(m_meshDate.FVF);

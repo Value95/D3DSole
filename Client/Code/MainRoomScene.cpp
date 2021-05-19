@@ -41,6 +41,13 @@ void CMainRoomScene::Start(void)
 		m_pMainCamera->GetOwner()->SetPosition(vector3(0, 0, 0));
 	}
 
+	{ // 스카이박스
+		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
+		pObj->SetPosition(vector3(0, 0, 0));
+		pObj->SetScale(vector3(10, 10, 10));
+		pObj->AddComponent<Engine::CSkyBoxComponent>()->SetTextureKey(L"burger1");
+	}
+
 	{
 		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Light", L"DirectionalLight", true);
 		pObj->SetRotation(vector3(50, -30, 0));
@@ -68,7 +75,6 @@ void CMainRoomScene::Start(void)
 	}
 
 	m_pMainCamera->GetOwner()->SetTarget(Engine::GET_CUR_SCENE->FindObjectByName(L"Player").get());
-
 }
 
 _uint CMainRoomScene::FixedUpdate(void)
@@ -121,6 +127,7 @@ void CMainRoomScene::InitLayers(void)
 	AddLayer(L"Map");
 	AddLayer(L"Interaction");
 	AddLayer(L"NPC");
+	AddLayer(L"Effect");
 }
 
 void CMainRoomScene::InitPrototypes(void)

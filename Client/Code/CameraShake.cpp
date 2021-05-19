@@ -87,26 +87,4 @@ void CCameraShake::CameraShake()
 		vector3 aMount = m_oldPosition + vector3(x, y, 0);
 		GetOwner()->SetCameraDirPos(aMount);
 	}
-	else
-	{
-		GetOwner()->SetCameraDirPos(m_oldPosition);
-	}
 }
-
-/*
-minBound = bound.bounds.min;
-maxBound = bound.bounds.max;
-
-tPlayer = player.transform.position;
-
-tPlayer.y += y;
-tPlayer.z = z;
-transform.position = Vector3.Lerp(transform.position, tPlayer, speed);
-
-float clampedX = Mathf.Clamp(this.transform.position.x, minBound.x + haifWidth, maxBound.x - haifWidth);
-float clampedY = Mathf.Clamp(this.transform.position.y, minBound.y + haifHight, maxBound.y - haifHight);
-
-tPlayer = new Vector3(clampedX, clampedY, this.transform.position.z);
-tPlayer += (Vector3)Random.insideUnitCircle * amount;
-this.transform.position = Vector3.Lerp(this.transform.position, tPlayer, speed * 40)
-*/

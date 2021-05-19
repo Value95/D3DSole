@@ -7,7 +7,7 @@ private:
 	_float m_speed = 500;
 	_float m_activationTime = 0;
 	_int m_aMount = 0;
-	vector3 m_oldPosition = vector3(0, 3, -8);
+	GETTOR_SETTOR(vector3, m_oldPosition, vector3(0, 3, -8), OldPosition);
 public:
 	explicit CCameraShake(void);
 	virtual	 ~CCameraShake(void);

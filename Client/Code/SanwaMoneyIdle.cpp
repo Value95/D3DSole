@@ -76,10 +76,13 @@ void CSanwaMoneyIdle::ReSet()
 	m_monster->GetMonsterInfo()->SetMaxHP(1000);
 	m_monster->GetMonsterInfo()->SetSpeed(1);
 
-	m_monster->GetMonsterInfo()->AddPatternTime(7);
+	m_monster->GetMonsterInfo()->AddPatternTime(30);
 	m_monster->GetMonsterInfo()->AddDamager(10);
 
-	m_monster->GetMonsterInfo()->AddPatternTime(10);
+	m_monster->GetMonsterInfo()->AddPatternTime(5);
+	m_monster->GetMonsterInfo()->AddDamager(15);
+
+	m_monster->GetMonsterInfo()->AddPatternTime(8);
 	m_monster->GetMonsterInfo()->AddDamager(15);
 
 

@@ -2,6 +2,7 @@
 #include "TitleScene.h"
 #include "MainRoomScene.h"
 #include "CameraMove.h"
+#include "LoddingScene.h"
 
 CTitleScene::CTitleScene()
 {

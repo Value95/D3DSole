@@ -178,6 +178,7 @@ void CMainApp::InitStaticPrototype(void)
 	Player();
 	Interaction();
 	Npc();
+	Effect();
 }
 
 void CMainApp::Default()
@@ -276,4 +277,8 @@ void CMainApp::Npc()
 	MuscleMan->AddComponent<Engine::CColliderComponent>()->SetIsTrigger(false);
 	MuscleMan->AddComponent<Engine::CAnimMeshRenderComponent>()->MeshInput(L"../../Resource/Mesh/Static/DynamicMesh/NPC/MuscleMan/", L"NPC_MuscleMan.X");
 	Engine::CObjectFactory::GetInstance()->AddPrototype(MuscleMan);
+}
+
+void CMainApp::Effect()
+{
 }

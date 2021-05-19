@@ -154,12 +154,6 @@ pObj->AddComponent<Engine::CAnimMeshRenderComponent>();
 	pObj->GetComponent<Engine::CUIComponent>()->SetShader(Engine::CShader::Create(L"Shader_Sample.hpp"));
 }*/
 
-/*{
-SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
-pObj->SetPosition(vector3(0, 0, 5));
-pObj->SetScale(vector3(30, 30, 1));
-pObj->AddComponent<Engine::CUIComponent>()->SetTextureKey(L"Blue");
-}*/
 
 /*{
 SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);

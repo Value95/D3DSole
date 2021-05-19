@@ -16,6 +16,8 @@ CPlayerMiniPickaxe::~CPlayerMiniPickaxe()
 void CPlayerMiniPickaxe::Start()
 {
 	m_player->SetWaponPosNumber(0);
+	m_player->GetRigidBody()->SetVelocity(vector3Zero);
+
 	init = false;
 }
 
@@ -32,8 +34,7 @@ _uint CPlayerMiniPickaxe::FixedUpdate()
 	{
 		init = true;
 		m_miniGock->SetIsEnabled(true);
-		m_player->GetRigidBody()->SetVelocity(vector3Zero);
-		m_player->GetRigidBody()->SetGravity(-0.5f);
+		m_player->GetRigidBody()->SetGravity(-1.0f);
 		m_player->GetAnim()->GetAnimCtrl()->SetSpeed(1.0f);
 		m_player->GetAnim()->Set_AnimationSet(14);
 	}

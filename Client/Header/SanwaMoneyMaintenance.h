@@ -8,6 +8,8 @@ class CSanwaMoneyMaintenance :
 private:
 	_bool m_halfHealthCheck;
 	CSanwaMoneyUI* m_sanwaMouneyUI;
+
+	_bool m_debug = true;
 public:
 	CSanwaMoneyMaintenance(CMonster* monster);
 	virtual ~CSanwaMoneyMaintenance();
