@@ -17,6 +17,11 @@ CMainRoomScene::~CMainRoomScene()
 SHARED(Engine::CScene) CMainRoomScene::Create(void)
 {
 	SHARED(CMainRoomScene) pCLogoScene(new CMainRoomScene, Engine::SmartDeleter<CMainRoomScene>);
+	pCLogoScene->InitLayers();
+	pCLogoScene->InitPrototypes();
+	pCLogoScene->LoadObject(L"MainRoom", pCLogoScene);
+	pCLogoScene->LoadObject(L"StatReinforceShop", pCLogoScene);
+
 	return pCLogoScene;
 }
 
@@ -24,16 +29,12 @@ void CMainRoomScene::Awake(void)
 {
 	__super::Awake();
 
-	InitLayers();
-	InitPrototypes();
 }
 
 void CMainRoomScene::Start(void)
 {
 	__super::Start();
 
-	LoadObject(L"MainRoom");
-	LoadObject(L"StatReinforceShop");
 
 	{ // Ä«¸Þ¶ó
 		m_pMainCamera = Engine::ADD_CLONE(L"Camera", L"Camera", true)->GetComponent<Engine::CCameraComponent>();

@@ -19,6 +19,10 @@ CDongilScene::~CDongilScene()
 SHARED(Engine::CScene) CDongilScene::Create(void)
 {
 	SHARED(CDongilScene) pCLogoScene(new CDongilScene, Engine::SmartDeleter<CDongilScene>);
+	pCLogoScene->InitLayers();
+	pCLogoScene->InitPrototypes();
+	pCLogoScene->LoadObject(L"TestScene", pCLogoScene);
+	pCLogoScene->LoadObject(L"StatReinforceShop", pCLogoScene);
 	return pCLogoScene;
 }
 
@@ -26,15 +30,13 @@ void CDongilScene::Awake(void)
 {
 	__super::Awake();
 
-	InitLayers();
-	InitPrototypes();
+
 }
 
 void CDongilScene::Start(void)
 {
 	__super::Start();
-	LoadObject(L"TestScene");
-	LoadObject(L"StatReinforceShop");
+
 
 	{ // Ä«¸Þ¶ó
 		m_pMainCamera = Engine::ADD_CLONE(L"Camera", L"Camera", true)->GetComponent<Engine::CCameraComponent>();

@@ -4,6 +4,7 @@
 #include "Engine.h"
 
 BEGIN(Engine)
+class CScene;
 class CGameObject;
 class ENGINE_DLL CObjectFactory final : public CEngine
 {
@@ -24,6 +25,7 @@ public:
 
 	HRESULT	AddPrototype(SHARED(CGameObject) pPrototype);
 	SHARED(CGameObject)	AddClone(const std::wstring& layerKey, const std::wstring& objectKey, _bool isStatic = false);
+	SHARED(CGameObject)	AddClone(const std::wstring& layerKey, const std::wstring& objectKey, SHARED(CScene) scene, _bool isStatic = false);
 
 	void ClearCurPrototype(void);
 };

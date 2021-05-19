@@ -31,15 +31,24 @@ void CLoddingScene::Start(void)
 {
 	__super::Start();
 
-	m_hThread = (HANDLE)_beginthreadex(nullptr, 0, CLoddingScene::LoadDataObject, this, 0, nullptr);
-
+	LoadObject(L"Lodding");
 	m_pMainCamera = Engine::ADD_CLONE(L"Camera", L"Camera", true)->GetComponent<Engine::CCameraComponent>();
+	m_pMainCamera->GetOwner()->GetComponent<CCameraMove>()->SetIsEnabled(false);
 
+	m_init = false;
+	m_initt = true;
 }
 
 _uint CLoddingScene::FixedUpdate(void)
 {
 	__super::FixedUpdate();
+	if (m_init && m_initt)
+	{
+		m_hThread = (HANDLE)_beginthreadex(nullptr, 0, CLoddingScene::LoadDataObject, this, 0, nullptr);
+		m_init = false;
+		m_initt = false;
+	}
+	m_init = true;
 
 	return NO_EVENT;
 }
@@ -50,9 +59,8 @@ _uint CLoddingScene::Update(void)
 	if (event = __super::Update())
 		return event;
 
-	WaitForSingleObject(m_hThread, INFINITE);
-	CloseHandle(m_hThread);
-
+/*	WaitForSingleObject(m_hThread, INFINITE);
+	CloseHandle(m_hThread);*/
 
 	return event;
 }
@@ -81,17 +89,9 @@ void CLoddingScene::OnDisable(void)
 
 void CLoddingScene::InitLayers(void)
 {
-	AddLayer(L"Light");
 	AddLayer(L"Camera");
-	AddLayer(L"Player");
 	AddLayer(L"Default");
-	AddLayer(L"Boss");
-	AddLayer(L"Monster");
 	AddLayer(L"UI");
-	AddLayer(L"Collider");
-	AddLayer(L"Map");
-	AddLayer(L"Interaction");
-	AddLayer(L"NPC");
 }
 
 void CLoddingScene::InitPrototypes(void)
@@ -107,12 +107,14 @@ unsigned CLoddingScene::LoadDataObject(LPVOID pArg)
 
 	if (pLoad->m_nextScene == L"CDolngilScene")
 	{
-		Engine::CSceneManager::GetInstance()->SceneChange(CDongilScene::Create());
+		SHARED(Engine::CScene) scene = CDongilScene::Create();
+		Engine::CSceneManager::GetInstance()->SceneChange(scene);
 
 	}
 	else if (pLoad->m_nextScene == L"MainRoom")
 	{
-		Engine::CSceneManager::GetInstance()->SceneChange(CMainRoomScene::Create());
+		SHARED(Engine::CScene) scene = CMainRoomScene::Create();
+		Engine::CSceneManager::GetInstance()->SceneChange(scene);
 	}
 
 	cout << "·Îµù ³¡" << endl;

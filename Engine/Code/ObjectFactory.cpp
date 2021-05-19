@@ -87,6 +87,41 @@ SHARED(CGameObject) CObjectFactory::AddClone(const std::wstring & layerKey,
 	return pClone;
 }
 
+SHARED(CGameObject) CObjectFactory::AddClone(const std::wstring & layerKey, const std::wstring & objectKey, SHARED(CScene) scene, _bool isStatic)
+{
+	_PROTOTYPES* pCurPrototypes = nullptr;
+
+	if (isStatic)
+		pCurPrototypes = &m_mStaticPrototypes;
+	else
+		pCurPrototypes = &m_mCurPrototypes;
+
+
+	auto iter_find_prototype = pCurPrototypes->find(objectKey);
+	if (pCurPrototypes->end() == iter_find_prototype)
+	{
+		MSG_BOX(__FILE__, (objectKey + L" is not found in AddClone").c_str());
+		return nullptr;
+	}
+
+	SHARED(CGameObject) pClone = iter_find_prototype->second->MakeClone();
+	if (pClone == nullptr)
+	{
+		MSG_BOX(__FILE__, (objectKey + L" failed to make clone in AddClone").c_str());
+		return nullptr;
+	}
+
+	auto iter_find_layer = scene->GetLayers().find(layerKey);
+	if (iter_find_layer == scene->GetLayers().end())
+	{
+		MSG_BOX(__FILE__, (objectKey + L" failed to find layer in AddClone").c_str());
+		return nullptr;
+	}
+	scene->GetLayers()[layerKey]->GetGameObjects().push_back(pClone);
+	scene->AddObjectCount(1);
+	return pClone;
+}
+
 void CObjectFactory::ClearCurPrototype(void)
 {
 	for (auto& prototype : m_mCurPrototypes)

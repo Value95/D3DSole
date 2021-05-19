@@ -82,9 +82,6 @@ void CCameraComponent::Awake(void)
 	m_objectKey = GetCurClassName(this);
 }
 
-// 에디터에서는 마우스를 고정하지않는다 처음에는
-// 우클릭했을때만 고정한다.
-
 void CCameraComponent::Start(SHARED(CComponent) spThis)
 {
 	__super::Start(spThis);

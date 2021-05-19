@@ -7,6 +7,8 @@ class CLoddingScene final : public Engine::CScene
 private:
 	HANDLE m_hThread;
 	GETTOR_SETTOR(std::wstring, m_nextScene, {}, NextScene);
+	_bool m_init;
+	_bool m_initt;
 private:
 	explicit CLoddingScene(void);
 	~CLoddingScene(void);

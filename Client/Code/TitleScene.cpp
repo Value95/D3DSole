@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "TitleScene.h"
 #include "MainRoomScene.h"
-#include "CameraMove.h"
 #include "LoddingScene.h"
 
 CTitleScene::CTitleScene()
@@ -108,7 +107,7 @@ void CTitleScene::InitPrototypes(void)
 
 void CTitleScene::NextScene()
 {
-	Engine::CSceneManager::GetInstance()->SceneChange(CMainRoomScene::Create());
+	Engine::CSceneManager::GetInstance()->SceneChange(CLoddingScene::Create(L"MainRoom"));
 	ShowCursor(false);
 }
 

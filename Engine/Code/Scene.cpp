@@ -264,6 +264,89 @@ void CScene::LoadObject(std::wstring path)
 	CloseHandle(hFile);
 }
 
+void CScene::LoadObject(std::wstring path, SHARED(CScene) scene)
+{
+	std::wstring fullPath = L"../../Data/";
+	fullPath += path;
+	fullPath += L".dat";
+
+	CString wstrFilePath = fullPath.c_str();
+
+	HANDLE hFile = CreateFile(wstrFilePath.GetString(), GENERIC_READ, 0, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+	if (INVALID_HANDLE_VALUE == hFile)
+	{
+		return;
+	}
+	DWORD dwByte = 0;
+	DWORD dwStringSize = 0;
+
+	// 오브젝트------------------------------------------------------------------------------------
+
+	_int objectCount = 0;
+	ReadFile(hFile, &objectCount, sizeof(_int), &dwByte, nullptr);
+
+	for (int i = 0; i < objectCount; i++)
+	{
+		std::wstring strName = LoadWstring(&hFile, &dwByte); // 이름
+
+		std::wstring layerKey = LoadWstring(&hFile, &dwByte); // 레이어
+
+		std::wstring objectKey = LoadWstring(&hFile, &dwByte); // 오브젝트
+
+		SHARED(CGameObject) obj = CObjectFactory::GetInstance()->AddClone(layerKey, objectKey, scene, true);
+		obj->SetName(strName);
+
+		if (obj->GetComponent<Engine::CUIComponent>())
+		{
+			obj->GetComponent<Engine::CUIComponent>()->SetTextureKey(LoadWstring(&hFile, &dwByte));
+		}
+		else if (obj->GetComponent<Engine::CMeshComponent>())
+		{
+			obj->GetComponent<Engine::CMeshComponent>()->SetMeshKey(LoadWstring(&hFile, &dwByte));
+		}
+		else
+			LoadWstring(&hFile, &dwByte);
+
+		ReadFile(hFile, &obj->GetIsEnabled(), sizeof(bool), &dwByte, nullptr);
+		ReadFile(hFile, &obj->GetPosition(), sizeof(vector3), &dwByte, nullptr);
+		ReadFile(hFile, &obj->GetRotation(), sizeof(vector3), &dwByte, nullptr);
+		ReadFile(hFile, &obj->GetScale(), sizeof(vector3), &dwByte, nullptr);
+
+		ColliderData* colliderData = new ColliderData();
+
+		ReadFile(hFile, &dwStringSize, sizeof(DWORD), &dwByte, nullptr); // 이름
+		TCHAR* colliderType = new TCHAR[dwStringSize];
+		ReadFile(hFile, colliderType, dwStringSize, &dwByte, nullptr);
+
+		colliderData->colliderType = colliderType;
+		ReadFile(hFile, &colliderData->offset, sizeof(vector3), &dwByte, nullptr);
+		ReadFile(hFile, &colliderData->boxsize, sizeof(vector3), &dwByte, nullptr);
+		ReadFile(hFile, &colliderData->radius, sizeof(_float), &dwByte, nullptr);
+
+
+		if (colliderData->colliderType == L"BOX")
+		{
+			if (obj->GetComponent<Engine::CColliderComponent>())
+			{
+				obj->GetComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(colliderData->boxsize, colliderData->offset));
+
+			}
+			else
+			{
+				obj->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(colliderData->boxsize, colliderData->offset));
+			}
+		}
+		else if (colliderData->colliderType == L"SPHERE")
+		{
+			obj->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CSphereCollider::Create(colliderData->radius));
+		}
+		SafeDelete(colliderType);
+		SafeDelete(colliderData);
+	}
+
+	CloseHandle(hFile);
+}
+
 void CScene::AddLayer(std::wstring layerName)
 {
 	m_mLayers[layerName] = CLayer::Create(layerName);

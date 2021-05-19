@@ -84,6 +84,8 @@ _uint CPlayer::LateUpdate(SHARED(CComponent) spThis)
 {
 	m_playerFSM[m_playerState]->LateUpdate();
 
+	m_playerInfo->End();
+
 	return NO_EVENT;
 }
 

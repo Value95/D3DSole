@@ -1,8 +1,7 @@
 #include "stdafx.h"
 #include "PlayerInteraction.h"
-
+#include "LoddingScene.h"
 #include "TitleScene.h"
-#include "DongilScene.h"
 
 CPlayerInteraction::CPlayerInteraction(CPlayer* player)
 {
@@ -62,14 +61,5 @@ void CPlayerInteraction::OnDestroy(void)
 
 void CPlayerInteraction::Interaction(std::wstring objectKey)
 {
-	Engine::CSceneManager::GetInstance()->SceneChange(CDongilScene::Create());
-	/*if (objectKey == L"")
-	{
-		Engine::CSceneManager::GetInstance()->SceneChange(CDongilScene::Create());
-	}
-	else if (objectKey == L"")
-	{
-		Engine::CSceneManager::GetInstance()->SceneChange(CTitleScene::Create());
-	}*/
-
+	Engine::CSceneManager::GetInstance()->SceneChange(CLoddingScene::Create(L"CDolngilScene"));
 }

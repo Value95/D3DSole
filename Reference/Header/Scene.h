@@ -44,6 +44,7 @@ public:
 	void AllDelete();
 	_uint FindObjectsWithKey(std::wstring objectKey, std::vector<SHARED(CGameObject)>& gameObjects);
 	static void LoadObject(std::wstring path);
+	static void LoadObject(std::wstring path, SHARED(CScene) scene);
 
 	void AddObjectCount(_int value) { m_objectCount += value; }
 protected:
