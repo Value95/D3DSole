@@ -40,6 +40,7 @@ SHARED(CGameObject) CGameObject::MakeClone(void)
 	pGameObject->SetPosition(m_position);
 	pGameObject->SetRotation(m_rotation);
 	pGameObject->SetScale(m_scale);
+	pGameObject->SetIsEnabled(m_isEnabled);
 	pGameObject->Awake();
 
 	for (auto& component : m_mComponents)
@@ -54,17 +55,11 @@ SHARED(CGameObject) CGameObject::MakeClone(void)
 
 void CGameObject::Awake(void)
 {
-	if (!m_isEnabled)
-		return;
-
 	m_isAwaked = true;
 }
 
 void CGameObject::Start(void)
 {
-	if (!m_isEnabled)
-		return;
-
 	m_isStarted = true;
 }
 

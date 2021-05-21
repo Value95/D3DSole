@@ -29,14 +29,11 @@ SHARED(Engine::CScene) CDongilScene::Create(void)
 void CDongilScene::Awake(void)
 {
 	__super::Awake();
-
-
 }
 
 void CDongilScene::Start(void)
 {
-	__super::Start();
-
+	Engine::CSoundManager::GetInstance()->PlayBGM(L"Map_Fx_City_01.wav");
 
 	{ // Ä«¸Þ¶ó
 		m_pMainCamera = Engine::ADD_CLONE(L"Camera", L"Camera", true)->GetComponent<Engine::CCameraComponent>();
@@ -76,6 +73,8 @@ void CDongilScene::Start(void)
 		pObj->AddComponent<Engine::CMeshComponent>()->SetMeshKey(L"MiniGock.X");
 		pObj->AddComponent<Engine::CStaticMeshRenderComponent>()->SetShader(new CShaderMesh());
 	}
+
+	__super::Start();
 
 	m_pMainCamera->GetOwner()->SetTarget(Engine::GET_CUR_SCENE->FindObjectByName(L"Player").get());
 
@@ -118,6 +117,8 @@ void CDongilScene::OnEnable(void)
 
 void CDongilScene::OnDisable(void)
 {
+	Engine::CSoundManager::GetInstance()->StopAll();
+
 }
 
 void CDongilScene::InitLayers(void)
@@ -138,104 +139,3 @@ void CDongilScene::InitPrototypes(void)
 {
 
 }
-
-/*
-
-{
-SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
-pObj->SetPosition(vector3(5, 0, 0));
-pObj->AddComponent<Engine::CEffectComponent>()->Reset(L"Explosion", 89);
-pObj->AddComponent<Engine::CAnimMeshRenderComponent>();
-}
-
-{
-	SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"UI", L"UI", true);
-	pObj->SetPosition(vector3(0, 0, 0));
-	pObj->SetScale(vector3(800, 600, 0));
-	pObj->GetComponent<Engine::CUIComponent>()->SetTextureKey(L"MainLogo");
-	pObj->GetComponent<Engine::CUIComponent>()->SetShader(Engine::CShader::Create(L"Shader_Sample.hpp"));
-}*/
-
-
-/*{
-SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
-pObj->SetName(L"Player");
-pObj->SetPosition(vector3(0, 0, 2));
-pObj->SetScale(vector3(1, 1, 1));
-pObj->AddComponent<Engine::CTriangleComponent>();
-pObj->AddComponent<CPlayer>();
-}*/
-
-/*{
-SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
-pObj->SetPosition(vector3(0, 0, 0));
-pObj->SetScale(vector3(0.5f, 0.5f, 0.5f));
-pObj->AddComponent<Engine::CLineComponent>()->EndLinePosition(vector3(5,0,5));
-}
-
-{
-SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
-pObj->SetPosition(vector3(0, 0, 4));
-pObj->SetScale(vector3(0.5f, 0.5f, 0.5f));
-pObj->AddComponent<Engine::CBoxComponent>();
-}*/
-
-/*{
-SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
-pObj->SetPosition(vector3(0, 0, 7));
-pObj->AddComponent<CPlayer>();
-pObj->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(1, 1, 1), vector3Zero));
-pObj->AddComponent<Engine::CMeshComponent>()->SetMeshKey(L"sylva.X");
-pObj->AddComponent<Engine::CStaticMeshRenderComponent>();
-}*/
-
-/*{
-SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
-pObj->SetPosition(vector3(0, 0, 7));
-pObj->SetScale(vector3(0.01f, 0.01f, 0.01f));
-pObj->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(1, 1, 1), vector3Zero));
-pObj->AddComponent<Engine::CAnimMeshRenderComponent>()->MeshInput(L"../../Resource/Mesh/Static/Pick/", L"Pick.X");
-}
-
-{
-SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Player", L"Player", true);
-pObj->AddComponent<CPlayer>();
-pObj->SetPosition(vector3(0, 0, 0));
-}*/
-
-/*
-{
-SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
-pObj->SetPosition(vector3(7, 0, 0));
-pObj->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(1, 1, 1), vector3Zero));
-pObj->AddComponent<Engine::CMeshComponent>();
-pObj->AddComponent<Engine::CTextureComponent>();
-pObj->AddComponent<Engine::CStaticMeshRenderComponent>();
-}
-
-{
-SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
-pObj->SetPosition(vector3(-7, 0, 0));
-pObj->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(1, 1, 1), vector3Zero));
-pObj->AddComponent<Engine::CMeshComponent>();
-pObj->AddComponent<Engine::CTextureComponent>();
-pObj->AddComponent<Engine::CStaticMeshRenderComponent>();
-}
-
-{
-SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
-pObj->SetPosition(vector3(0, 7, 0));
-pObj->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(1, 1, 1), vector3Zero));
-pObj->AddComponent<Engine::CMeshComponent>();
-pObj->AddComponent<Engine::CTextureComponent>();
-pObj->AddComponent<Engine::CStaticMeshRenderComponent>();
-}
-
-{
-SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
-pObj->SetPosition(vector3(0, -7, 0));
-pObj->AddComponent<Engine::CColliderComponent>()->AddCollider(Engine::CBoxCollider::Create(vector3(1, 1, 1), vector3Zero));
-pObj->AddComponent<Engine::CMeshComponent>();
-pObj->AddComponent<Engine::CTextureComponent>();
-pObj->AddComponent<Engine::CStaticMeshRenderComponent>();
-}*/

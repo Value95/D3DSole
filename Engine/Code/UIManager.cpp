@@ -14,7 +14,7 @@ void CUIManager::Awake(void)
 
 void CUIManager::Start(void)
 {
-	m_uiRenderList.resize(100);
+	m_uiRenderList.resize(10);
 }
 
 _uint CUIManager::FixedUpdate(void)

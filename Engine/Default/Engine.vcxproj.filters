@@ -169,6 +169,9 @@
     <Filter Include="00.Engine\12.Slider">
       <UniqueIdentifier>{34a46325-9136-412f-a4cf-243b023b4968}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.Components\05.ParticleSystem">
+      <UniqueIdentifier>{5d310dd5-fe92-4eac-b9db-322444c87cc5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\WndApp.cpp">
@@ -314,6 +317,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\FontManager.cpp">
       <Filter>00.Engine\03.Graphics\04.FontManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ParticleSystem.cpp">
+      <Filter>02.Components\05.ParticleSystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -487,6 +493,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\FontManager.h">
       <Filter>00.Engine\03.Graphics\04.FontManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ParticleSystem.h">
+      <Filter>02.Components\05.ParticleSystem</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

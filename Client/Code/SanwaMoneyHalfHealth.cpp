@@ -16,10 +16,13 @@ void CSanwaMoneyHalfHealth::Start()
 {
 	m_monster->GetAnim()->GetAnimCtrl()->SetSpeed(1.0f);
 	m_monster->GetAnim()->Set_AnimationSet(2);
+	Engine::CSoundManager::GetInstance()->StartSound(L"Boss_Skill_Roar_01.wav", Engine::CHANNELID::ROAR);
 }
 
 void CSanwaMoneyHalfHealth::End()
 {
+	Engine::CSoundManager::GetInstance()->StopSound(Engine::CHANNELID::ROAR);
+
 }
 
 _uint CSanwaMoneyHalfHealth::FixedUpdate()

@@ -70,7 +70,7 @@ _uint CLayer::Update(void)
 				(*it)->Start();
 
 
-			else if (event = (*it)->Update())
+			if (event = (*it)->Update())
 				return event;
 
 			++it;

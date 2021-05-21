@@ -39,7 +39,7 @@ private:
 	void Player();
 	void Interaction();
 	void Npc();
-	void Effect();
+	void Particle();
 };
 
 #endif

@@ -178,7 +178,7 @@ void CMainApp::InitStaticPrototype(void)
 	Player();
 	Interaction();
 	Npc();
-	Effect();
+	Particle();
 }
 
 void CMainApp::Default()
@@ -225,6 +225,7 @@ void CMainApp::Monster()
 	scarecrow->AddComponent<CMonster>()->AddFSM<CScarecrowIdle>();
 	scarecrow->AddComponent<Engine::CMeshComponent>();
 	scarecrow->AddComponent<Engine::CStaticMeshRenderComponent>();
+	scarecrow->AddComponent<Engine::CParticleSystem>()->Init(L"Blood", 5, 5);
 	Engine::CObjectFactory::GetInstance()->AddPrototype(scarecrow);
 
 	SHARED(Engine::CGameObject) sanwaMoney = Engine::CGameObject::Create(L"Boss", L"SanwaMoney", true);
@@ -279,6 +280,12 @@ void CMainApp::Npc()
 	Engine::CObjectFactory::GetInstance()->AddPrototype(MuscleMan);
 }
 
-void CMainApp::Effect()
+void CMainApp::Particle()
 {
+	SHARED(Engine::CGameObject) blood = Engine::CGameObject::Create(L"Particle", L"Blood", true);
+	blood->SetScale(vector3(0.01f, 0.01f, 0.01f));
+	blood->SetIsEnabled(true);
+	blood->AddComponent<Engine::CMeshComponent>()->SetMeshKey(L"Cat.X");
+	blood->AddComponent<Engine::CStaticMeshRenderComponent>();
+	Engine::CObjectFactory::GetInstance()->AddPrototype(blood);
 }

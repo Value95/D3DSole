@@ -16,6 +16,10 @@ SHARED(Engine::CScene) CLoddingScene::Create(std::wstring nextScene)
 	SHARED(CLoddingScene) pCLogoScene(new CLoddingScene, Engine::SmartDeleter<CLoddingScene>);
 	pCLogoScene->SetNextScene(nextScene);
 
+	pCLogoScene->InitLayers();
+	pCLogoScene->InitPrototypes();
+	pCLogoScene->LoadObject(L"Lodding", pCLogoScene);
+
 	return pCLogoScene;
 }
 
@@ -23,20 +27,17 @@ void CLoddingScene::Awake(void)
 {
 	__super::Awake();
 
-	InitLayers();
-	InitPrototypes();
 }
 
 void CLoddingScene::Start(void)
 {
-	__super::Start();
-
-	LoadObject(L"Lodding");
 	m_pMainCamera = Engine::ADD_CLONE(L"Camera", L"Camera", true)->GetComponent<Engine::CCameraComponent>();
 	m_pMainCamera->GetOwner()->GetComponent<CCameraMove>()->SetIsEnabled(false);
 
 	m_init = false;
 	m_initt = true;
+
+	__super::Start();
 }
 
 _uint CLoddingScene::FixedUpdate(void)
@@ -44,9 +45,9 @@ _uint CLoddingScene::FixedUpdate(void)
 	__super::FixedUpdate();
 	if (m_init && m_initt)
 	{
-		m_hThread = (HANDLE)_beginthreadex(nullptr, 0, CLoddingScene::LoadDataObject, this, 0, nullptr);
 		m_init = false;
 		m_initt = false;
+		m_hThread = (HANDLE)_beginthreadex(nullptr, 0, CLoddingScene::LoadDataObject, this, 0, nullptr);
 	}
 	m_init = true;
 
@@ -58,9 +59,6 @@ _uint CLoddingScene::Update(void)
 	_uint event = 0;
 	if (event = __super::Update())
 		return event;
-
-/*	WaitForSingleObject(m_hThread, INFINITE);
-	CloseHandle(m_hThread);*/
 
 	return event;
 }
@@ -76,6 +74,8 @@ _uint CLoddingScene::LateUpdate(void)
 
 void CLoddingScene::OnDestroy(void)
 {
+	WaitForSingleObject(m_hThread, INFINITE);
+	CloseHandle(m_hThread);
 	__super::OnDestroy();
 }
 

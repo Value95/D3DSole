@@ -196,6 +196,12 @@
     <Filter Include="02.Script\02.Camera\01.CameraShake">
       <UniqueIdentifier>{ef4e0617-ebd8-4748-9c1a-0151d4e82ab2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.Script\03.Particle">
+      <UniqueIdentifier>{af93e950-8fab-4ed7-afb0-7c10e55a6dc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Script\03.Particle\00.Blood">
+      <UniqueIdentifier>{016bc353-6a19-40f9-aecf-5183d0ef3ceb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">

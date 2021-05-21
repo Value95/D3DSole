@@ -78,7 +78,6 @@ void CCameraShake::CameraShake()
 	{
 		m_activationTime = Engine::MathfMax(m_activationTime - deltaTime, 0);
 
-		// 내가 5를넣으면 -5 ~ 5 사이의 값이 나와야한다 실수포함
 		_float x = (rand() % (m_aMount * 2)) - m_aMount;
 		x /= 10;
 		_float y = (rand() % (m_aMount * 2)) - m_aMount;

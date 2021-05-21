@@ -27,6 +27,7 @@ void CPlayerMove::Start()
 // Start에서 bool값키기 이동끝나고 다음 이동들어올때 특정 bool이켜져있따면 대쉬
 void CPlayerMove::End()
 {
+	Engine::CSoundManager::GetInstance()->StopSound(Engine::CHANNELID::MOVE);
 }
 
 _uint CPlayerMove::FixedUpdate()
@@ -102,6 +103,7 @@ bool CPlayerMove::Move()
 			m_player->GetOwner()->GetComponent<Engine::CRigidBodyComponent>()->GetGroundCheck())
 		{
 			m_player->GetAnim()->Set_AnimationSet(2);
+			Engine::CSoundManager::GetInstance()->StartSound(L"SE_CHA_Warking_Ground_01.wav", Engine::CHANNELID::MOVE);
 		}
 
 		cameraY = Engine::GET_MAIN_CAM->GetOwner()->GetCameraY();
@@ -194,6 +196,7 @@ bool CPlayerMove::Jump()
 
 		m_player->GetOwner()->OutTranslate(translate);
 		m_player->GetOwner()->GetComponent<Engine::CRigidBodyComponent>()->AddForce(translate * m_player->GetPlayerInfo()->GetJumpPower());
+		Engine::CSoundManager::GetInstance()->StopSound(Engine::CHANNELID::MOVE);
 
 		return false;
 	}

@@ -23,14 +23,8 @@ namespace Engine
 
 	enum CHANNELID
 	{
-		PLAYER,
-		LAND_HUMAN,
-		LAND,
-		JUMP,
-		DOOR,
-		BOX,
-		HAT,
-		UI,
+		MOVE,
+		ROAR,
 		BGM,
 		MAXCHANNEL
 	};

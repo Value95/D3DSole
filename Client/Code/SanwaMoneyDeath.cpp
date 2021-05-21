@@ -16,10 +16,12 @@ void CSanwaMoneyDeath::Start()
 {
 	m_monster->GetAnim()->GetAnimCtrl()->SetSpeed(1.0f);
 	m_monster->GetAnim()->Set_AnimationSet(4);
+	Engine::CSoundManager::GetInstance()->StartSound(L"Boss_Skill_Roar_01.wav", Engine::CHANNELID::ROAR);
 }
 
 void CSanwaMoneyDeath::End()
 {
+	Engine::CSoundManager::GetInstance()->StopSound(Engine::CHANNELID::ROAR);
 }
 
 _uint CSanwaMoneyDeath::FixedUpdate()
@@ -31,6 +33,7 @@ _uint CSanwaMoneyDeath::Update()
 {
 	if (m_monster->GetAnim()->GetAnimValue() == 4 && m_monster->GetAnim()->GetAnimCtrl()->Is_AnimationSetEnd())
 	{
+		Engine::CSoundManager::GetInstance()->StopSound(Engine::CHANNELID::ROAR);
 		m_monster->GetAnim()->Set_AnimationSet(3);
 	}
 

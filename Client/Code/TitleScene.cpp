@@ -20,7 +20,7 @@ SHARED(Engine::CScene) CTitleScene::Create(void)
 void CTitleScene::Awake(void)
 {
 	__super::Awake();
-
+	m_nextScene = CLoddingScene::Create(L"MainRoom");
 	InitLayers();
 	InitPrototypes();
 }
@@ -29,6 +29,7 @@ void CTitleScene::Start(void)
 {
 	__super::Start();
 	ShowCursor(true);
+	Engine::CSoundManager::GetInstance()->PlayBGM(L"Map_Fx_City_01.wav");
 
 	LoadObject(L"TitleScene");
 
@@ -43,11 +44,6 @@ _uint CTitleScene::FixedUpdate(void)
 {
 	__super::FixedUpdate();
 
-	return NO_EVENT;
-}
-
-_uint CTitleScene::Update(void)
-{
 	_uint event = 0;
 	if (event = __super::Update())
 		return event;
@@ -71,6 +67,13 @@ _uint CTitleScene::Update(void)
 	return event;
 }
 
+_uint CTitleScene::Update(void)
+{
+	_uint event = 0;
+	
+	return event;
+}
+
 _uint CTitleScene::LateUpdate(void)
 {
 	_uint event = 0;
@@ -91,6 +94,7 @@ void CTitleScene::OnEnable(void)
 
 void CTitleScene::OnDisable(void)
 {
+	Engine::CSoundManager::GetInstance()->StopAll();
 }
 
 void CTitleScene::InitLayers(void)
@@ -107,7 +111,7 @@ void CTitleScene::InitPrototypes(void)
 
 void CTitleScene::NextScene()
 {
-	Engine::CSceneManager::GetInstance()->SceneChange(CLoddingScene::Create(L"MainRoom"));
+	Engine::CSceneManager::GetInstance()->SceneChange(m_nextScene);
 	ShowCursor(false);
 }
 

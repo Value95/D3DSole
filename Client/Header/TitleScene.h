@@ -5,7 +5,7 @@ class CTitleScene final : public Engine::CScene
 {
 	SMART_DELETER_REGISTER;
 private:
-
+	SHARED(Engine::CScene) m_nextScene;
 private:
 	explicit CTitleScene(void);
 	~CTitleScene(void);

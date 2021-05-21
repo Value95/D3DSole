@@ -142,12 +142,15 @@ void CCameraMove::Sight()
 
 void CCameraMove::CameraCrush()
 {
+	if (!GetOwner()->GetTarget())
+		return;
+
 	vector3 target = GetOwner()->GetTarget()->GetPosition();
 	target.y += 0.9f;
 	vector3 orgine = target + GetOwner()->ReturnTranslate(vector3(0,3,-8));
 	vector3 dir = target - orgine;
 	D3DXVec3Normalize(&dir, &dir);
-	_float distance = Engine::Distance(orgine, target) - 0.5f; //0.1f 바닥을 체크하지않기위한값
+	_float distance = Engine::Distance(orgine, target); //0.1f 바닥을 체크하지않기위한값
 	vector3 outHit;
 	Engine::CGameObject* obj = Engine::CRaycast::MeshRayCast(orgine, dir, distance, L"Map", outHit);
 
@@ -161,7 +164,7 @@ void CCameraMove::CameraCrush()
 	{
 		distance = Engine::MathfMax((Engine::Distance(outHit, target) * -1), -8);
 
-		if (outHit.y >= 3)
+		if (outHit.y >= 20)
 			outHit.y = 1.5f;
 
 		vector3 cameraDirPos = vector3(0, outHit.y, distance + 1.0f);

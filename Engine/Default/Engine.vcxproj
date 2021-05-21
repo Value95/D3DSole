@@ -54,6 +54,7 @@
     <ClInclude Include="..\Header\LineComponent.h" />
     <ClInclude Include="..\Header\MeshComponent.h" />
     <ClInclude Include="..\Header\MeshStore.h" />
+    <ClInclude Include="..\Header\ParticleSystem.h" />
     <ClInclude Include="..\Header\Raycast.h" />
     <ClInclude Include="..\Header\RigidBodyComponent.h" />
     <ClInclude Include="..\Header\ObjectFactory.h" />
@@ -104,6 +105,7 @@
     <ClCompile Include="..\Code\LineComponent.cpp" />
     <ClCompile Include="..\Code\MeshComponent.cpp" />
     <ClCompile Include="..\Code\MeshStore.cpp" />
+    <ClCompile Include="..\Code\ParticleSystem.cpp" />
     <ClCompile Include="..\Code\RayCast.cpp" />
     <ClCompile Include="..\Code\RigidBodyComponent.cpp" />
     <ClCompile Include="..\Code\ObjectFactory.cpp" />

@@ -33,8 +33,7 @@ void CMainRoomScene::Awake(void)
 
 void CMainRoomScene::Start(void)
 {
-	__super::Start();
-
+	Engine::CSoundManager::GetInstance()->PlayBGM(L"Map_Fx_City_01.wav");
 
 	{ // Ä«¸Þ¶ó
 		m_pMainCamera = Engine::ADD_CLONE(L"Camera", L"Camera", true)->GetComponent<Engine::CCameraComponent>();
@@ -75,7 +74,10 @@ void CMainRoomScene::Start(void)
 		pObj->AddComponent<Engine::CStaticMeshRenderComponent>();
 	}
 
+	__super::Start();
+
 	m_pMainCamera->GetOwner()->SetTarget(Engine::GET_CUR_SCENE->FindObjectByName(L"Player").get());
+
 }
 
 _uint CMainRoomScene::FixedUpdate(void)
@@ -114,6 +116,8 @@ void CMainRoomScene::OnEnable(void)
 
 void CMainRoomScene::OnDisable(void)
 {
+	Engine::CSoundManager::GetInstance()->StopAll();
+
 }
 
 void CMainRoomScene::InitLayers(void)
@@ -128,7 +132,7 @@ void CMainRoomScene::InitLayers(void)
 	AddLayer(L"Map");
 	AddLayer(L"Interaction");
 	AddLayer(L"NPC");
-	AddLayer(L"Effect");
+	AddLayer(L"Particle");
 }
 
 void CMainRoomScene::InitPrototypes(void)

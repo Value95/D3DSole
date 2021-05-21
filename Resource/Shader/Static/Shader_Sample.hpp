@@ -25,13 +25,16 @@ struct VS_IN
 struct VS_OUT
 {
 	vector		vPosition : POSITION;		
-	float2		vTexUV : TEXCOORD0;
+	float2		vTexUV : TEXCOORD1;
 };
 
 // 버텍스쉐이더
 
 VS_OUT		VS_MAIN(VS_IN In)
 {
+	// 해당 물체가 어디에있는지 어떤텍스쳐를 쓰고있는지 도대체 어떻게 연결해주는거야
+	// In으로 받아올값을 어디서 정의해주는거야
+
 	VS_OUT		Out = (VS_OUT)0;
 
 	matrix			matWV, matWVP;
@@ -48,7 +51,7 @@ VS_OUT		VS_MAIN(VS_IN In)
 
 struct PS_IN
 {
-	float2		vTexUV : TEXCOORD0;
+	float2		vTexUV : TEXCOORD1;
 };
 
 struct PS_OUT
@@ -65,7 +68,7 @@ PS_OUT		PS_MAIN(PS_IN In)
 	Out.vColor = tex2D(BaseSampler, In.vTexUV);		// 2차원 텍스처로부터 UV 값에 해당하는 픽셀의 색상을 추출하는 함수, 반환타입은 VECTOR 타입
 
 	if(In.vTexUV.x >= 0.5f)
-		Out.vColor.rg = 0.9f;
+		Out.vColor.rg = 0.9f;o
 	else if(In.vTexUV.x < 0.5f)
 		Out.vColor.rg = 0.1f;
 
