@@ -26,6 +26,7 @@ namespace Engine
 		MOVE,
 		ROAR,
 		BGM,
+		ATTACK,
 		MAXCHANNEL
 	};
 }

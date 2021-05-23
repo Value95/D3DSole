@@ -3,6 +3,7 @@
 class CShaderMesh :
 	public Engine::CShader
 {
+	SHARED(Engine::CDirectionalLightComponent) m_light;
 public:
 	CShaderMesh();
 	virtual ~CShaderMesh();

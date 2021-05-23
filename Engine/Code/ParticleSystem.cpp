@@ -20,6 +20,7 @@ SHARED(CComponent) CParticleSystem::MakeClone(CGameObject * pObject)
 	pClone->SetParticleKey(m_particleKey);
 	pClone->SetLifeTime(m_lifeTime);
 	pClone->SetEnableCout(m_enableCount);
+	pClone->SetSpawnPosition(m_spawnPosition);
 	return pClone;
 }
 
@@ -32,11 +33,9 @@ void CParticleSystem::Start(SHARED(CComponent) spThis)
 {
 	__super::Start(spThis);
 
-	for (int i = 0; i <= m_enableCount * 5; i++)
+	for (int i = 0; i < m_enableCount * 5; i++)
 	{
-		SHARED(CGameObject) a = CObjectFactory::GetInstance()->AddClone(L"Particle", m_particleKey, true);
-		a->SetIsEnabled(false);
-		m_offObject.emplace_back(a);
+		m_offObject.emplace_back(CObjectFactory::GetInstance()->AddClone(L"Particle", m_particleKey, true));
 	}
 }
 
@@ -69,29 +68,28 @@ void CParticleSystem::OnDisable(void)
 {
 }
 
-void CParticleSystem::Init(std::wstring keyValue, _float lifeTime, _int enableCount)
+void CParticleSystem::Init(std::wstring keyValue, _float lifeTime, _int enableCount, vector3 spawnPosition)
 {
-	m_particleKey = keyValue;
 	m_lifeTime = lifeTime;
 	m_enableCount = enableCount;
+	m_spawnPosition = spawnPosition;
+	m_particleKey = keyValue;
 }
 
 void CParticleSystem::play()
 {
 	// 오브젝트 활성화
-	for (int i = 0; i <= m_enableCount; i++)
+	for (int i = 0; i < m_enableCount; i++)
 	{
-		if (m_offObject.empty())
+		if (m_offObject.size() <= m_enableCount * 4)
 		{
-			SHARED(CGameObject) a = CObjectFactory::GetInstance()->AddClone(L"Particle", m_particleKey, true);
-			a->SetIsEnabled(false);
-			m_offObject.emplace_back(a);
+			m_offObject.insert(m_offObject.begin(), CObjectFactory::GetInstance()->AddClone(L"Particle", m_particleKey, true));
 		}
 
 		particleObj obj;
 		obj.Push(m_offObject.back(), m_lifeTime);
+		obj.object->SetPosition(GetOwner()->GetPosition() + m_spawnPosition);
 		obj.object->SetIsEnabled(true);
-		obj.object->SetPosition(GetOwner()->GetPosition());
 		m_offObject.pop_back();
 		m_onObject.emplace_back(obj);
 		m_curCount++;

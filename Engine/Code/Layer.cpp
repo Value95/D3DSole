@@ -52,7 +52,7 @@ _uint CLayer::Update(void)
 {
 	_uint event = NO_EVENT;	
 
-	for (auto& it = m_vGameObjects.begin(); it != m_vGameObjects.end();)
+	for (auto& it = m_vGameObjects.begin(); it != m_vGameObjects.end(); ++it)
 	{
 
 		if ((*it)->GetIsNeedToBeDeleted())
@@ -63,17 +63,20 @@ _uint CLayer::Update(void)
 		}
 		else
 		{
-			if (m_vGameObjects.empty() || (*it)->GetIsEnabled() == false)
+			if (m_vGameObjects.empty())
+			{
 				return event;
+			}
 
-			else if ((*it)->GetIsStarted() == false)
+			if ((*it)->GetIsStarted() == false)
+			{
 				(*it)->Start();
-
+			}
 
 			if (event = (*it)->Update())
+			{
 				return event;
-
-			++it;
+			}
 		}
 	}
 	return event;

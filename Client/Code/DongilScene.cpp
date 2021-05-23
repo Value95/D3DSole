@@ -133,6 +133,7 @@ void CDongilScene::InitLayers(void)
 	AddLayer(L"Collider");
 	AddLayer(L"Map");
 	AddLayer(L"Interaction");
+	AddLayer(L"Particle");
 }
 
 void CDongilScene::InitPrototypes(void)

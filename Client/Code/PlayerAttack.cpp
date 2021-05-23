@@ -42,6 +42,7 @@ void CPlayerAttack::Start()
 void CPlayerAttack::End()
 {
 	init = false;
+	//Engine::CSoundManager::GetInstance()->StopSound(Engine::CHANNELID::ATTACK);
 	m_player->GetAnim()->GetAnimCtrl()->SetSpeed(1);
 }
 
@@ -54,6 +55,7 @@ _uint CPlayerAttack::FixedUpdate()
 		{
 			for (auto& object : col)
 			{
+				Engine::CSoundManager::GetInstance()->StartSound(L"Grenade_Bounce6.wav", Engine::CHANNELID::ATTACK);
 				m_player->Attack(object, m_player->GetPlayerInfo()->GetDamageA());
 			}
 		}

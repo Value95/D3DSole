@@ -203,6 +203,7 @@
     <ClInclude Include="..\Header\Monster.h" />
     <ClInclude Include="..\Header\MonsterFSM.h" />
     <ClInclude Include="..\Header\MonsterInfo.h" />
+    <ClInclude Include="..\Header\ParticleBlood.h" />
     <ClInclude Include="..\Header\Player.h" />
     <ClInclude Include="..\Header\PlayerAttack.h" />
     <ClInclude Include="..\Header\PlayerDeath.h" />
@@ -254,6 +255,7 @@
     <ClCompile Include="..\Code\MainRoomScene.cpp" />
     <ClCompile Include="..\Code\Monster.cpp" />
     <ClCompile Include="..\Code\MonsterFSM.cpp" />
+    <ClCompile Include="..\Code\ParticleBlood.cpp" />
     <ClCompile Include="..\Code\Player.cpp" />
     <ClCompile Include="..\Code\PlayerAttack.cpp" />
     <ClCompile Include="..\Code\PlayerDeath.cpp" />

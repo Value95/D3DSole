@@ -7,8 +7,8 @@
 CPlayerUI::CPlayerUI(CPlayerInfo * playerInfo)
 {
 	m_playerInfo = playerInfo;
-	Engine::CFontManager::GetInstance()->AddText(L"PlayerHP", L"HP : 000", vector3(-70, 35, 0), D3DXCOLOR(1, 1, 1, 1));
-	Engine::CFontManager::GetInstance()->AddText(L"PlayerGold", L"Gold : 000", vector3(-70, 55, 0), D3DXCOLOR(1, 1, 1, 1));
+	Engine::CFontManager::GetInstance()->AddText(L"PlayerHP", L"HP : 000", vector3(10, 35, 0), D3DXCOLOR(1, 1, 1, 1));
+	Engine::CFontManager::GetInstance()->AddText(L"PlayerGold", L"Gold : 000", vector3(10, 55, 0), D3DXCOLOR(1, 1, 1, 1));
 }
 
 CPlayerUI::~CPlayerUI()

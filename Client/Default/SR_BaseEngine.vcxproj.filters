@@ -393,6 +393,9 @@
     <ClInclude Include="..\Header\CameraShake.h">
       <Filter>02.Script\02.Camera\01.CameraShake</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\ParticleBlood.h">
+      <Filter>02.Script\03.Particle\00.Blood</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -535,6 +538,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CameraShake.cpp">
       <Filter>02.Script\02.Camera\01.CameraShake</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ParticleBlood.cpp">
+      <Filter>02.Script\03.Particle\00.Blood</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

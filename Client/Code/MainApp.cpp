@@ -17,6 +17,8 @@
 #include "ShaderMesh.h"
 #pragma endregion
 
+#include "ParticleBlood.h"
+
 CMainApp::CMainApp(void)
 {
 }
@@ -195,13 +197,14 @@ void CMainApp::Default()
 
 	SHARED(Engine::CGameObject) map = Engine::CGameObject::Create(L"Map", L"Map", true);
 	map->AddComponent<Engine::CMeshComponent>();
-	map->AddComponent<Engine::CStaticMeshRenderComponent>();// ->SetShader(new CShaderMesh());
+	map->AddComponent<Engine::CStaticMeshRenderComponent>()->SetShader(new CShaderMesh());
 	Engine::CObjectFactory::GetInstance()->AddPrototype(map);
 }
 
 void CMainApp::Light()
 {
 	SHARED(Engine::CGameObject) directionalLight = Engine::CGameObject::Create(L"Light", L"DirectionalLight", true);
+	directionalLight->SetName(L"DirectionalLight");
 	directionalLight->AddComponent<Engine::CDirectionalLightComponent>();
 	Engine::CObjectFactory::GetInstance()->AddPrototype(directionalLight);
 }
@@ -225,7 +228,7 @@ void CMainApp::Monster()
 	scarecrow->AddComponent<CMonster>()->AddFSM<CScarecrowIdle>();
 	scarecrow->AddComponent<Engine::CMeshComponent>();
 	scarecrow->AddComponent<Engine::CStaticMeshRenderComponent>();
-	scarecrow->AddComponent<Engine::CParticleSystem>()->Init(L"Blood", 5, 5);
+	scarecrow->AddComponent<Engine::CParticleSystem>()->Init(L"Cat", 5, 5, vector3Zero);
 	Engine::CObjectFactory::GetInstance()->AddPrototype(scarecrow);
 
 	SHARED(Engine::CGameObject) sanwaMoney = Engine::CGameObject::Create(L"Boss", L"SanwaMoney", true);
@@ -236,6 +239,7 @@ void CMainApp::Monster()
 	sanwaMoney->AddComponent<Engine::CRigidBodyComponent>();
 	sanwaMoney->GetComponent<Engine::CRigidBodyComponent>()->SetBounciness(0.0f);
 	sanwaMoney->GetComponent<Engine::CRigidBodyComponent>()->SetMass(80);
+	sanwaMoney->AddComponent<Engine::CParticleSystem>()->Init(L"Blood", 5, 5, vector3Up * 5);
 	sanwaMoney->AddComponent<Engine::CAnimMeshRenderComponent>()->MeshInput(L"../../Resource/Mesh/Static/DynamicMesh/Boss/AgentSanwaMoney/", L"Boss_AgentSanwaMoney_000.X");
 	Engine::CObjectFactory::GetInstance()->AddPrototype(sanwaMoney);
 }
@@ -284,8 +288,23 @@ void CMainApp::Particle()
 {
 	SHARED(Engine::CGameObject) blood = Engine::CGameObject::Create(L"Particle", L"Blood", true);
 	blood->SetScale(vector3(0.01f, 0.01f, 0.01f));
-	blood->SetIsEnabled(true);
+	blood->SetIsEnabled(false);
+	blood->AddComponent<CParticleBlood>()->SetForce(vector3(10, 5, 10));
+	blood->AddComponent<Engine::CRigidBodyComponent>();
+	blood->GetComponent<Engine::CRigidBodyComponent>()->SetBounciness(0.0f);
+	blood->GetComponent<Engine::CRigidBodyComponent>()->SetMass(80);
 	blood->AddComponent<Engine::CMeshComponent>()->SetMeshKey(L"Cat.X");
 	blood->AddComponent<Engine::CStaticMeshRenderComponent>();
 	Engine::CObjectFactory::GetInstance()->AddPrototype(blood);
+
+	SHARED(Engine::CGameObject) cat = Engine::CGameObject::Create(L"Particle", L"Cat", true);
+	cat->SetScale(vector3(0.005f, 0.005f, 0.005f));
+	cat->SetIsEnabled(false);
+	cat->AddComponent<CParticleBlood>()->SetForce(vector3(8,8,8));
+	cat->AddComponent<Engine::CRigidBodyComponent>();
+	cat->GetComponent<Engine::CRigidBodyComponent>()->SetBounciness(0.0f);
+	cat->GetComponent<Engine::CRigidBodyComponent>()->SetMass(80);
+	cat->AddComponent<Engine::CMeshComponent>()->SetMeshKey(L"Cat.X");
+	cat->AddComponent<Engine::CStaticMeshRenderComponent>();
+	Engine::CObjectFactory::GetInstance()->AddPrototype(cat);
 }

@@ -128,6 +128,8 @@ void CPlayer::Attack(Engine::CGameObject* gameObject, _float damage)
 	else if (gameObject->GetLayerKey() == L"Boss")
 	{
 		gameObject->GetComponent<CMonster>()->Hit(damage);
+		gameObject->GetComponent<Engine::CParticleSystem>()->play();
+
 	}
 }
 

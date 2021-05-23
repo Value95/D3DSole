@@ -51,7 +51,7 @@ VS_OUT		VS_MAIN(VS_IN In)
 {
 	VS_OUT		Out = (VS_OUT)0;
 
-	matrix			matWV, matWVP;
+	matrix		matWV, matWVP;
 
 	matWV = mul(g_matWorld, g_matView);
 	matWVP = mul(matWV, g_matProj);
@@ -62,7 +62,6 @@ VS_OUT		VS_MAIN(VS_IN In)
 	vector vWorldDir = g_vLightDir * -1.f;
 
 	float fIntensity = saturate(dot(normalize(vWorldNormal), normalize(vWorldDir)));
-	// max(dot(normalize(vWorldNormal), normalize(vWorldDir), 0.f);
 
 	Out.vShade = fIntensity;
 	Out.vShade.a = 1.f;
@@ -94,19 +93,13 @@ struct PS_OUT
 };
 
 // «»ºø Ω¶¿Ã¥ı
-
 PS_OUT		PS_MAIN(PS_IN In)
 {
 	PS_OUT		Out = (PS_OUT)0;
 
 	vector vColor = tex2D(BaseSampler, In.vTexUV);
 
-	Out.vColor = ((In.vShade * vColor) * (g_vLightDiffuse * g_vMtrlDiffuse)) + (g_vLightAmbient * g_vMtrlAmbient) /*+ (In.vSpecular * (g_vLightSpecular * g_vMtrlSpecular))*/;
-
-
-	// Out.vColor = (vColor) * (g_vLightDiffuse * g_vMtrlDiffuse) + (In.vShade) * (g_vLightAmbient * g_vMtrlAmbient);
-
-	// Out.vColor = (vColor) * (g_vLightDiffuse * g_vMtrlDiffuse) * ((In.vShade) + (g_vLightAmbient * g_vMtrlAmbient));
+	Out.vColor = ((In.vShade * vColor) * (g_vLightDiffuse * g_vMtrlDiffuse)) + (g_vLightAmbient * g_vMtrlAmbient);
 	return Out;
 }
 

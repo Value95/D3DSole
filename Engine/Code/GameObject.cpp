@@ -91,16 +91,16 @@ _uint CGameObject::Update(void)
 {
 	_uint event = NO_EVENT;
 
-	if (!m_isEnabled)
-		return event;
-
 	for (auto& component : m_mComponents)
 	{
-		if (m_mComponents.empty() || component.second->GetIsEnabled() == false)
+		if (m_mComponents.empty())
 			continue;
 
 		if (component.second->GetIsStarted() == false)
 			component.second->Start(component.second);
+
+		if (component.second->GetIsEnabled() == false)
+			continue;
 
 		if (event = component.second->Update(component.second))
 			return event;
@@ -141,13 +141,17 @@ void CGameObject::OnDestroy(void)
 
 void CGameObject::OnEnable(void)
 {
-	if (!m_isAwaked)
-		return;
+	for (auto& component : m_mComponents)
+	{
+		component.second->OnEnable();
+	}
 }
 
 
 void CGameObject::OnDisable(void)
 {
-	if (!m_isAwaked)
-		return;
+	for (auto& component : m_mComponents)
+	{
+		component.second->OnDisable();
+	}
 }

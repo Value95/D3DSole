@@ -6,6 +6,22 @@ BEGIN(Engine)
 class CCollider;
 class ENGINE_DLL CDirectionalLightComponent final : public CComponent
 {
+private:
+	GETTOR_SETTOR(D3DLIGHT9, m_light, {}, Light);
+
+	vector3 m_lightDir;
+	vector3 m_camPos;
+
+	vector3 m_lightDiffuse;
+	vector3 m_lightSpecular;
+	vector3 m_lightAmbient;
+			
+	vector3 m_mtrlDiffuse;
+	vector3 m_mtrlSpecular;
+	vector3 m_mtrlAmbient;
+			
+	vector3 m_power;
+	vector3 m_detail;
 public:
 	explicit CDirectionalLightComponent(void);
 	~CDirectionalLightComponent(void);

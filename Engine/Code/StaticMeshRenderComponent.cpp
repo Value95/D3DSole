@@ -40,7 +40,7 @@ void CStaticMeshRenderComponent::Start(SHARED(CComponent) spThis)
 {
 	__super::Start(spThis);
 	m_mesh = m_pOwner->GetComponent<CMeshComponent>();
-
+	m_fixedCheck = false;
 	if (m_shader)
 	{
 		m_shader->State();
@@ -50,6 +50,7 @@ void CStaticMeshRenderComponent::Start(SHARED(CComponent) spThis)
 
 _uint CStaticMeshRenderComponent::FixedUpdate(SHARED(CComponent) spThis)
 {
+	m_fixedCheck = true;
 	return _uint();
 }
 
@@ -60,7 +61,11 @@ _uint CStaticMeshRenderComponent::Update(SHARED(CComponent) spThis /* Shared poi
 
 _uint CStaticMeshRenderComponent::LateUpdate(SHARED(CComponent) spThis)
 {
-	CStaticMeshRenderManager::GetInstance()->AddToRenderList(m_renderID, std::dynamic_pointer_cast<CStaticMeshRenderComponent>(spThis));
+	if (GetOwner()->GetLayerKey() != L"Particle"|| m_fixedCheck)
+	{
+		CStaticMeshRenderManager::GetInstance()->AddToRenderList(m_renderID, std::dynamic_pointer_cast<CStaticMeshRenderComponent>(spThis));
+	}
+
 	return NO_EVENT;
 }
 

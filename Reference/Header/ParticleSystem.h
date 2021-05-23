@@ -21,6 +21,7 @@ protected:
 	std::vector<SHARED(CGameObject)> m_offObject;
 	std::vector<particleObj> m_onObject;
 
+	GETTOR_SETTOR(vector3, m_spawnPosition, {}, SpawnPosition)
 	GETTOR_SETTOR(std::wstring, m_particleKey, {}, ParticleKey)
 	GETTOR_SETTOR(_float, m_lifeTime, 0, LifeTime)
 	GETTOR_SETTOR(_int, m_enableCount, 0, EnableCout) // 한번 돌때 나올 오브젝트의 갯수
@@ -44,7 +45,7 @@ public:
 	virtual void OnEnable(void) override;
 	virtual void OnDisable(void) override;
 
-	void Init(std::wstring keyValue, _float lifeTime, _int enableCount);
+	void Init(std::wstring keyValue, _float lifeTime, _int enableCount, vector3 spawnPosition);
 	void play();
 
 private:

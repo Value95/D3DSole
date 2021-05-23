@@ -76,10 +76,10 @@ void CFontManager::DrawMyText(_Text* pText)
 		return;
 
 	DWORD format = DT_EXPANDTABS;
-	format |= DT_RIGHT;
+	format |= DT_LEFT;
 
 	std::basic_string<WCHAR> msg = pText->m_message.c_str();
 
-	RECT rect = { int(pText->m_position.x), int(pText->m_position.y), int(pText->m_position.x + 150), int(pText->m_position.y + 150) };
+	RECT rect = { int(pText->m_position.x), int(pText->m_position.y), int(pText->m_position.x + 200), int(pText->m_position.y + 200) };
 	m_pFont->DrawText(NULL, msg.c_str(), -1, &rect, format, pText->m_color);
 }
