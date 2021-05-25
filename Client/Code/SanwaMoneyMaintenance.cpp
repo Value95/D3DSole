@@ -8,6 +8,7 @@ CSanwaMoneyMaintenance::CSanwaMoneyMaintenance(CMonster* monster)
 {
 	m_monster = monster;
 	m_sanwaMouneyUI = new CSanwaMoneyUI(m_monster);
+	m_debug = true;
 }
 
 CSanwaMoneyMaintenance::~CSanwaMoneyMaintenance()
@@ -127,7 +128,7 @@ void CSanwaMoneyMaintenance::Debug()
 
 	if (Engine::CInputManager::GetInstance()->KeyDown(KEY_F1))
 	{
-		m_debug = true;
+		m_debug = false;
 	}
 }
 

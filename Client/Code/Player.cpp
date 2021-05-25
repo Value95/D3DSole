@@ -122,11 +122,13 @@ void CPlayer::Attack(Engine::CGameObject* gameObject, _float damage)
 {
 	if (gameObject->GetLayerKey() == L"Monster")
 	{
+		Engine::CSoundManager::GetInstance()->StartSound(L"Grenade_Bounce6.wav", Engine::CHANNELID::ATTACK);
 		gameObject->GetComponent<CMonster>()->Hit(damage);
 		gameObject->GetComponent<Engine::CParticleSystem>()->play();
 	}
 	else if (gameObject->GetLayerKey() == L"Boss")
 	{
+		Engine::CSoundManager::GetInstance()->StartSound(L"Grenade_Bounce6.wav", Engine::CHANNELID::ATTACK);
 		gameObject->GetComponent<CMonster>()->Hit(damage);
 		gameObject->GetComponent<Engine::CParticleSystem>()->play();
 

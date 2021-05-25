@@ -44,8 +44,8 @@ void CDongilScene::Start(void)
 	{ // 스카이박스
 		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
 		pObj->SetPosition(vector3(0, 0, 0));
-		pObj->SetScale(vector3(10, 10, 10));
-		pObj->AddComponent<Engine::CSkyBoxComponent>()->SetTextureKey(L"burger0");
+		pObj->SetScale(vector3(100, 100, 100));
+		pObj->AddComponent<Engine::CSkyBoxComponent>()->SetTextureKey(L"SkyBox1");
 	}
 
 	{

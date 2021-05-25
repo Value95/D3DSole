@@ -6,6 +6,7 @@ class CPlayerInteraction :
 {
 private:
 	Engine::CCollider* collision;
+	SHARED(Engine::CScene) m_nextScene;
 
 public:
 	CPlayerInteraction(CPlayer* player);

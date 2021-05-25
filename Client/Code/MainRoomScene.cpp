@@ -5,6 +5,7 @@
 #include "PlayerMiniGock.h"
 
 #include "DongilScene.h"
+
 CMainRoomScene::CMainRoomScene()
 {
 }
@@ -28,7 +29,6 @@ SHARED(Engine::CScene) CMainRoomScene::Create(void)
 void CMainRoomScene::Awake(void)
 {
 	__super::Awake();
-
 }
 
 void CMainRoomScene::Start(void)
@@ -44,8 +44,8 @@ void CMainRoomScene::Start(void)
 	{ // 스카이박스
 		SHARED(Engine::CGameObject) pObj = Engine::CObjectFactory::GetInstance()->AddClone(L"Default", L"Default", true);
 		pObj->SetPosition(vector3(0, 0, 0));
-		pObj->SetScale(vector3(10, 10, 10));
-		pObj->AddComponent<Engine::CSkyBoxComponent>()->SetTextureKey(L"burger1");
+		pObj->SetScale(vector3(100, 100, 100));
+		pObj->AddComponent<Engine::CSkyBoxComponent>()->SetTextureKey(L"SkyBox0");
 	}
 
 	{

@@ -7,6 +7,7 @@ CPlayerInteraction::CPlayerInteraction(CPlayer* player)
 {
 	m_player = player;
 	collision = Engine::CBoxCollider::Create(vector3(0.6, 3, 6), vector3(0, 0.9, -3));
+	m_nextScene = CLoddingScene::Create(L"CDolngilScene");
 }
 
 CPlayerInteraction::~CPlayerInteraction()
@@ -61,5 +62,5 @@ void CPlayerInteraction::OnDestroy(void)
 
 void CPlayerInteraction::Interaction(std::wstring objectKey)
 {
-	Engine::CSceneManager::GetInstance()->SceneChange(CLoddingScene::Create(L"CDolngilScene"));
+	Engine::CSceneManager::GetInstance()->SceneChange(m_nextScene);
 }

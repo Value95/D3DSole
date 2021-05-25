@@ -26,7 +26,7 @@ _uint CStaticMeshRenderManager::Update(void)
 {
 	GET_DEVICE->Clear(0, nullptr,
 		D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
-		D3DCOLOR_ARGB(255, 0, 0, 225),
+		D3DCOLOR_ARGB(255, 128, 128, 128),
 		1.f, 0);
 
 	return NO_EVENT;

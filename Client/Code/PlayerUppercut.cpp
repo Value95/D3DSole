@@ -29,6 +29,7 @@ void CPlayerUppercut::Start()
 
 void CPlayerUppercut::End()
 {
+	Engine::CSoundManager::GetInstance()->StopSound(Engine::CHANNELID::ATTACK);
 }
 
 _uint CPlayerUppercut::FixedUpdate()

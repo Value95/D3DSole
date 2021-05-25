@@ -24,6 +24,7 @@ void CPlayerRush::End()
 {
 	Engine::GET_MAIN_CAM->GetOwner()->GetComponent<CCameraShake>()->CameraShakeActivation(0.1f, 5);
 	m_player->GetOwner()->Translate(vector3Forward * deltaTime * (m_player->GetPlayerInfo()->GetSpeedRush() * 2));
+	Engine::CSoundManager::GetInstance()->StopSound(Engine::CHANNELID::ATTACK);
 	m_player->GetRigidBody()->TranslateForce((vector3Forward + vector3Up) * 4);
 }
 

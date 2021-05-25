@@ -239,7 +239,7 @@ void CMainApp::Monster()
 	sanwaMoney->AddComponent<Engine::CRigidBodyComponent>();
 	sanwaMoney->GetComponent<Engine::CRigidBodyComponent>()->SetBounciness(0.0f);
 	sanwaMoney->GetComponent<Engine::CRigidBodyComponent>()->SetMass(80);
-	sanwaMoney->AddComponent<Engine::CParticleSystem>()->Init(L"Blood", 5, 5, vector3Up * 5);
+	sanwaMoney->AddComponent<Engine::CParticleSystem>()->Init(L"Blood", 2, 15, vector3Up * 2.5);
 	sanwaMoney->AddComponent<Engine::CAnimMeshRenderComponent>()->MeshInput(L"../../Resource/Mesh/Static/DynamicMesh/Boss/AgentSanwaMoney/", L"Boss_AgentSanwaMoney_000.X");
 	Engine::CObjectFactory::GetInstance()->AddPrototype(sanwaMoney);
 }
@@ -289,12 +289,12 @@ void CMainApp::Particle()
 	SHARED(Engine::CGameObject) blood = Engine::CGameObject::Create(L"Particle", L"Blood", true);
 	blood->SetScale(vector3(0.01f, 0.01f, 0.01f));
 	blood->SetIsEnabled(false);
-	blood->AddComponent<CParticleBlood>()->SetForce(vector3(10, 5, 10));
+	blood->AddComponent<CParticleBlood>()->SetForce(vector3(5, 5, 5));
 	blood->AddComponent<Engine::CRigidBodyComponent>();
 	blood->GetComponent<Engine::CRigidBodyComponent>()->SetBounciness(0.0f);
 	blood->GetComponent<Engine::CRigidBodyComponent>()->SetMass(80);
-	blood->AddComponent<Engine::CMeshComponent>()->SetMeshKey(L"Cat.X");
-	blood->AddComponent<Engine::CStaticMeshRenderComponent>();
+	blood->AddComponent<Engine::CMeshComponent>()->SetMeshKey(L"sphere.X");
+	blood->AddComponent<Engine::CStaticMeshRenderComponent>()->SetShader(new CShaderMesh());
 	Engine::CObjectFactory::GetInstance()->AddPrototype(blood);
 
 	SHARED(Engine::CGameObject) cat = Engine::CGameObject::Create(L"Particle", L"Cat", true);
@@ -305,6 +305,6 @@ void CMainApp::Particle()
 	cat->GetComponent<Engine::CRigidBodyComponent>()->SetBounciness(0.0f);
 	cat->GetComponent<Engine::CRigidBodyComponent>()->SetMass(80);
 	cat->AddComponent<Engine::CMeshComponent>()->SetMeshKey(L"Cat.X");
-	cat->AddComponent<Engine::CStaticMeshRenderComponent>();
+	cat->AddComponent<Engine::CStaticMeshRenderComponent>()->SetShader(new CShaderMesh());
 	Engine::CObjectFactory::GetInstance()->AddPrototype(cat);
 }

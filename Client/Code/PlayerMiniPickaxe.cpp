@@ -24,6 +24,7 @@ void CPlayerMiniPickaxe::Start()
 void CPlayerMiniPickaxe::End()
 {
 	m_miniGock->SetIsEnabled(false);
+	Engine::CSoundManager::GetInstance()->StopSound(Engine::CHANNELID::ATTACK);
 	m_player->GetRigidBody()->SetGravity(-9.807f);
 }
 
